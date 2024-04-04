@@ -1,0 +1,2304 @@
+\documentclass[12pt]{article}
+
+\usepackage{ishn}
+
+\makeindex[intoc]
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1em}
+		\Huge
+		\textbf{II Algebraic Topology}
+
+		\vspace{1em}
+		\large
+		Ishan Nath, Lent 2024
+
+		\vspace{1.5em}
+
+		\Large
+
+		Based on Lectures by Prof. Oscar Randal-Williams
+
+		\vspace{1em}
+
+		\large
+		\today
+	\end{center}
+	
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\tableofcontents
+
+\newpage
+
+\setcounter{section}{-1}
+
+\section{Introduction}
+\label{sec:intro}
+
+A basic problem in topology is the following:
+
+(Extension problem). If $X$ is a space and $A \subset X$ a subspace, and $f : A \to Y$ is a continuous function, is there a continuous $F : X \to Y$ such that $F|_A = f$?
+
+In fact, the answer is no.
+
+\begin{theorem}
+	There is no continuous $F : D^n \to S^{n-1}$ such that
+	\[
+		S^{n-1} \overset{\text{incl}}{\injto} D^n \overset{F}{\to} S^{n-1}
+	\]
+	is the identity.
+\end{theorem}
+
+What does this have to do with algebra? In fact, we will reduce this problem to showing the corresponding problem in algebra.
+
+\begin{theorem}
+	There is no group homomorphism $F : \{0\} \to \mathbb{Z}$ such that
+	\[
+		\mathbb{Z} \to \{0\} \overset{F}{\to} \mathbb{Z}
+	\]
+	is the identity.
+\end{theorem}
+
+Of course, this is now trivial. One more thing we can show is:
+\begin{theorem}
+	$\mathbb{R}^n \cong \mathbb{R}^m \iff n = m$.
+\end{theorem}
+Once again, this will be proved by relating it to a problem in algebra.
+
+We can do it the other way round as well.
+
+\begin{theorem}[Fundamental Theorem of Algebra]
+	Any non-constant polynomial in $\mathbb{C}$ has a root.
+\end{theorem}
+
+This can be proven by looking at $\mathbb{C}$ as a topological space.
+
+\subsection{Recollections}
+\label{sub:rec}
+
+We say that a continuous function is called a \emph{map}\index{map}.
+
+Here are a couple of useful lemmas.
+
+\begin{lemma}[Gluing Lemma]
+	Let $f : X \to Y$ be a function between topological spaces, and let $C, K \subset X$ be closed sets such that $X = C \cup K$.
+
+	Then $f$ is continuous $\iff f|_C, f|_K$ is continuous.
+\end{lemma}
+
+\begin{lemma}[Lebesgue Number Lemma]
+	Let $(X, d)$ be a metric space, and assume it is compact. For any open cover $\mathcal{U} = \{U_\alpha\}$, there is $\delta > 0$ such that each $B_\delta(x)$ is contained in some $U_\alpha$.
+\end{lemma}
+
+Here is a way of making reasonable spaces out of reasonable spaces.
+
+\begin{definition}
+	For a space $X$ and a map $f : S^{n-1} \to X$, the space obtained by attaching an $n$-cell to $X$ is
+	\[
+	X \cup_{f} D^n = (X \sqcup D^n) / (z \in S^{n-1} \subset D^{n-1} \sim f(z) \in X).
+	\]
+\end{definition}
+
+\begin{definition}
+	A (finite) \emph{cell complex}\index{cell complex} is a space $X$ obtained by the following:
+	\begin{enumerate}[(i)]
+		\item Start with a finite set $X^0$ with the discrete topology.
+		\item If $X^{n-1}$ has been defined, form $X^n$ by attaching a finite collection of $n$-cells along some maps $\{f_n : S^{n-1} \to X^{n-1}\}$. This $X^n$ is called an \emph{$n$-skeleton}\index{$n$-skeleton}.
+		\item Stop with $X = X^k$, where $k$ is called the \emph{dimension} of $X$.
+	\end{enumerate}
+\end{definition}
+
+\newpage
+
+\section{Homotopy}
+\label{sec:homotopy}
+
+In the following let $I = [0, 1]$.
+
+\begin{definition}
+	Let $f, g : X \to Y$ be maps. A \emph{homotopy}\index{homotopy} from $f$ to $g$ is a map $H : X \times I \to Y$ such that
+	\[
+	H(x, 0) = f(x), \qquad H(x, 1) = g(x).
+	\]
+	If such an $H$ exists, we say $f$ is \emph{homotopic} to $g$, and we write $f \simeq g$.
+
+	If $A \subset X$ is a subspace, we say $H$ is a \emph{homotopy relative to} $A$ if $H(a, t) = H(a, 0)$ for all $t \in I$ and $a \in A$. We write $f \simeq g$ rel $A$.
+\end{definition}
+
+\begin{proposition}
+	Being homotopic relative to $A$ is an equivalence relation on the set of maps from $X$ to $Y$.
+\end{proposition}
+
+\begin{proofbox}
+	We show it is an equivalence relation.
+	\begin{enumerate}[(i)]
+		\item $f \simeq f$ via $H(x, t) = f(x)$.
+		\item If $f \simeq g$ via $H$, let $H'(x, t) = H(x, 1-t)$. This is a homotopy from $g$ to $f$.
+		\item If $f \simeq g$ via $H$, and $g \simeq h$ via $H'$, then let
+			\[
+			H''(x, t) =
+			\begin{cases}
+				H(x, 2t) & 0 \leq t \leq 1/2,\\
+				H'(x, 2t - 1) & 1/2 \leq t \leq 1.
+			\end{cases}
+			\]
+			This is continuous on $X \times [0, 1/2]$ and $X \times [1/2, 1]$, so by the gluing lemma it is continuous on $X \times I$.
+	\end{enumerate}
+\end{proofbox}
+
+\begin{definition}
+	A map $f : X \to Y$ is a \emph{homotopy equivalence}\index{homotopy equivalence} if there is a $g : Y \to X$ such that
+	\[
+	f \circ g \simeq \id_Y, \qquad g \circ f \simeq \id_X.
+	\]
+	Say $X$ is \emph{homotopy equivalent to} $Y$, written $X \simeq Y$, if a homotopy equivalence $f : X \to Y$ exists.
+\end{definition}
+
+\begin{exbox}
+	Let $X = S^1$, and $Y = \mathbb{R}^2 \setminus \{0\}$.
+
+	Let $i : X \to Y$ be the inclusion, and let $r : Y \to X$ by $x \mapsto x/|x|$ be the normalizing function. This is continuous.
+
+	Now $r \circ i = \id_X$. On the other hand, $i \circ r : Y \to Y$ is not the identity. But
+	\[
+	H(x, t) = \frac{x}{t + |x|(1-t)}
+	\]
+	is a homotopy from $\id_Y$ to $i \circ r$.
+
+	So $\mathbb{R}^2 \setminus \{0\} \simeq S^1$, but they are not homeomorphic.
+\end{exbox}
+
+\begin{definition}
+	$X$ is called \emph{contractible}\index{contractible} if $X \simeq \{\ast\}$, the one-point space.
+\end{definition}
+
+\begin{lemma}
+	Let $f_0, f_1 : X \to Y$ and $g_0, g_1 : Y \to Z$ be homotopic maps.
+
+	Then $g_0 \circ f_0 \simeq g_1 \circ f_1$.
+\end{lemma}
+
+\begin{proofbox}
+	Let's show that $g_0 \circ f_0 \simeq g_0 \circ f_1 \simeq g_1 \circ f_1$.
+
+	For the first equivalence, if $H$ is a homotopy from $f_0$ to $f_1$, then $g_0 \circ H : X \times I \to Z$ is a homotopy of $g_0 \circ f_0$ to $g_0 \circ f_1$.
+
+	Now if $G$ is a homotopy from $g_0$ to $g_1$, then $G \circ (f+1 \times \id_I) : X \times I \to Z$ is a homotopy of $g_0 \circ f_1$ to $g_1 \circ f_1$.
+\end{proofbox}
+
+%lecture 2
+
+\begin{proposition}
+	\begin{enumerate}[\normalfont(i)]
+		\item[]
+		\item $X \simeq X$.
+		\item If $X \simeq Y$, then $Y \simeq X$.
+		\item If $X \simeq Y$ and $Y \simeq Z$, then $X \simeq Z$.
+	\end{enumerate}	
+\end{proposition}
+
+\begin{proofbox}
+	
+	\begin{enumerate}[(i)]
+		\item Take $f = g = \id_X$, and the stationary homotopies.
+		\item Given $f : X \to Y$ and $g : Y \to X$ with $f \circ g \simeq_H \id_Y$ and $g \circ f \simeq_G \id_X$, then this is the same data as $Y \simeq X$.
+		\item Suppose we have maps
+			\[
+			\begin{tikzcd}
+				X \arrow[r, bend left, "f"] & Y \arrow[r, bend left, "f'"] \arrow[l, bend left, "g"] & Z\arrow[l, bend left, "g'"]
+			\end{tikzcd}
+			\]
+			with $f \circ g \simeq \id_Y$, $g \circ f \simeq \id_X$, $f' \circ g' \simeq \id_Z$, $g' \circ f' \simeq \id_Y$.
+
+			Consider $f' \circ f : X \to Z$ and $g \circ g' : Z \to X$. We claim these generate the required functions. Indeed,
+			\[
+				(g \circ g') \circ (f' \circ f) = g \circ (g' \circ f') \circ f \simeq g \circ \id_Y \circ f = g \circ f \simeq \id_X,
+			\]
+			and the other composition is similar.
+	\end{enumerate}
+\end{proofbox}
+
+\begin{definition}
+	If $i : A \to X$ is the inclusion of a subspace, then
+	\begin{enumerate}[(i)]
+		\item a \emph{retraction}\index{retraction} is a $r : X \to A$ such that $r \circ i = \id_A$.
+		\item a \emph{deformation retraction}\index{deformation retraction} is a retraction such that also $i \circ r \simeq \id_X$.
+	\end{enumerate}
+\end{definition}
+
+\subsection{Paths}
+\label{sub:path}
+
+\begin{definition}
+	For a space $X$ and points $x_0, x_1 \in X$, a \emph{path}\index{path} from $x_0$ to $x_1$ is a map $\upgamma : I = [0, 1] \to X$ such that $\upgamma(0) = x_0, \upgamma(1) = x_1$. If $x_0 = x_1$, we call $\upgamma$ a \emph{loop}\index{loop} based at $x_0$.
+
+	If $\upgamma$ is a path from $x_0$ to $x_1$, and $\upgamma'$ is a path from $x_1$ to $x_2$, then we can form the \emph{concatenation}\index{concatenation} $\upgamma \cdot \upgamma' : I \to X$ via
+	\[
+		(\upgamma \cdot \upgamma')(t) =
+		\begin{cases}
+			\upgamma(2t) & 0 \leq t \leq 1/2,\\
+			\upgamma'(2t) & 1/2 \leq t \leq 1.
+		\end{cases}
+	\]
+	This is continuous via the gluing lemma, and is a path from $x_0$ to $x_2$.
+
+	Also define the \emph{inverse}\index{inverse path} $\upgamma^{-1} : I \to X$ via
+	\[
+	\upg^{-1}(t) = \upg(1 - t).
+	\]
+	Define the \emph{constant path}\index{constant path} $c_{x_0} : I \to X$ via $c_{x_0}(t) = x_0$, and define an equivalence relation on $X$ via
+	\[
+		x_0 \sim x_1 \iff \text{there exists a path } \upg \text{ from } x_0 \text{ to } x_1.
+	\]
+\end{definition}
+
+\begin{definition}
+	The equivalence class of $\sim$ are called \emph{path components}\index{path components} of $X$. We say $X$ is \emph{path-connected}\index{path-connected} if there is only one equivalence class. Let
+	\[
+	\pi_0(X) = X/\sim.
+	\]
+\end{definition}
+
+\begin{proposition}
+	For a map $f : X \to Y$, there is a well-defined function
+	\[
+	\pi_0(f) : \pi_0(X) \to \pi_0(Y)
+	\]
+	given by $\pi_0(f)([x]) = [f(x)]$. Furthermore,
+	\begin{enumerate}[\normalfont(i)]
+		\item If $f \simeq g$, then $\pi_0(f) = \pi_0(g)$.
+		\item For $A \overset{h}{\to} b \overset{k}{\to} C$, then $\pi_0(k \circ h) = \pi_0(k) \circ \pi_0(h)$.
+		\item $\pi_0(\id_X) = \id_{\pi_0(X)}$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proofbox}
+	To see this is well defined, if $[x] = [x']$, then there is a path $\upg$ from $x$ to $x'$. Then $(f \circ \upg) : I \to Y$ is a path from $f(x)$ to $f(x')$, so $[f(x)] = [f(x')]$.
+
+	Now properties (ii) and (iii) are immediate. For (i), let $H : X \times I \to Y$ be a homotopy from $f$ to $g$. Now
+	\[
+		H|_{\{x\} \times I} : \{x\} \times I \to Y
+	\]
+	is a path from $f(x)$ to $g(x)$, so $[f(x)] = [g(x)]$, hence $\pi_0(f)([x]) = \pi_0(g)([x])$.
+\end{proofbox}
+
+\begin{corollary}
+	If $f : X \to Y$ is a homotopy equivalence, then $\pi_0(f)$ is a bijection.
+\end{corollary}
+
+\begin{proofbox}
+	If $g : Y \to X$ is a homotopy inverse, then
+	\[
+	\pi_0(f) \circ \pi_0(g) = \pi_0(f \circ g) = \pi_0(\id_Y) = \id_{\pi_0(Y)},
+	\]
+	and similarly $\pi_0(g) \circ \pi_0(f) = \id_{\pi_0(X)}$, so $\pi_0(f)$ is a bijection.
+\end{proofbox}
+
+\begin{exbox}
+	The space $\{-1, +1\}$ with the discrete topology is not contractible. This is because any path in this space is constant, so
+	\[
+		\pi_0(\{-1, +1\}) = \{-1, +1\},
+	\]
+	whereas $\pi_0(\{\ast\}) = \{\ast\}$ has cardinality 1.
+\end{exbox}
+
+\begin{exbox}
+	The space $[-1, 1]$ does not retract onto $\{-1, +1\}$. Suppose it does, then
+	\[
+	\begin{tikzcd}
+		\id : \{-1, +1\} \arrow[r, hookrightarrow, "\mathrm{inj}"] & \![-1, 1] \arrow[r, "r"] \arrow[d, "\pi_0", Rightarrow] & \{-1, +1\} \\
+		\id : \{-1, +1\} \arrow[r, "\pi_0(\mathrm{inc})"] & \pi_0[-1, 1] \arrow[r, "\pi_0(r)"] & \{-1, +1\}.
+	\end{tikzcd}
+	\]
+\end{exbox}
+
+\begin{definition}
+	Two paths $\upg, \upg' : I \to X$ both from $x_0$ to $x_1$ are called \emph{homotopic as paths}\index{homotopic as paths} if they are homotopic relative to $\{0, 1\} \subset I$ as in the previous lecture. We say $\upg \simeq \upg'$, relative to $x_0$ and $x_1$.
+\end{definition}
+
+\begin{lemma}
+	If $\upg_0 \simeq \upg_1$ are paths from $x_0$ to $x_1$, and $\upg_0' \simeq \upg_1'$ as paths from $x_1$ to $x_2$, then $\upg_0 \cdot \upg_0' \simeq \upg_1 \cdot \upg_1'$ as paths from $x_0$ to $x_2$.
+\end{lemma}
+
+\begin{proofbox}
+	Let $H$ be the homotopy from $\upg_0$ to $\upg_1$ rel. $x_0$ and $x_1$, and $H'$ be the homotopy from $\upg_0'$ to $\upg_1$ rel. $x_1$ and $x_2$. Then define
+	\[
+	H''(s, t) =
+	\begin{cases}
+		H(2s, t) & 0 \leq s \leq 1/2, \\
+		H'(2s-1, t) & 1/2 \leq s \leq 1.
+	\end{cases}
+	\]
+	This is a homotopy from $\upg_0 \cdot \upg_0'$ to $\upg_1 \cdot \upg_1'$ rel. $x_0$ and $x_2$.
+\end{proofbox}
+
+%lecture 3
+
+\begin{proposition}
+	Let $\upg_0$ be a path from $x_0$ to $x_1$, $\upg_1$ be a path from $x_1$ to $x_2$, and $\upg_2$ be a path from $x_2$ to $x_3$. Then,
+	\begin{enumerate}[(i)]
+		\item $(\upg_0 \cdot \upg_1) \cdot \upg_2 \simeq \upg_0 \cdot (\upg_1 \cdot \upg_2)$ rel. $x_0$ and $x_3$.
+		\item $\upg_0 \cdot c_{x_1} \simeq \upg_0 \simeq c_{x_0} \cdot \upg_0$ rel. $x_0$ and $x_1$.
+		\item $\upg_0 \cdot \upg_0^{-1} \simeq c_{x_0}$, rel. $x_0$ and $x_0$, and $\upg_0^{-1} \cdot \upg_0 \simeq c_{x_1}$ rel. $x_1$ and $x_1$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proofbox}
+	Look at a cute little diagram for all three cases. This motivates the following homotopy for the first case:
+	\[
+	H(s, t) =
+	\begin{cases}
+		\gamma_0(\frac{4s}{t+1}) & 0 \leq s \leq \frac{t + 1}{4},\\
+		\gamma_1(4s-1-t) & \frac{t+1}{4} \leq s \leq \frac{t+2}{4},\\
+		\gamma_2(1 - \frac{4(1-s)}{2 - t}) & \frac{t+2}{4} \leq s \leq 1.
+	\end{cases}
+	\]
+	For the second case we can take
+	\[
+	H(s, t)=
+	\begin{cases}
+		\gamma_0(\frac{2s}{t + 1}) & 0 \leq s \leq \frac{t+1}{2}, \\
+		x_1 & \frac{t+1}{2} \leq s \leq 1.
+	\end{cases}
+	\]
+	For the third case, we have
+	\[
+	H(s, t) =
+	\begin{cases}
+		\gamma_0(2s) & 0 \leq s \leq \frac{1 - t}{2}, \\
+		\gamma_0(1-t) & \frac{1 - t}{2} \leq s \leq \frac{1 + t}{2}, \\
+		\gamma_0(2 - 2s) & \frac{1 + t}{2} \leq s \leq 1.
+	\end{cases}
+	\]
+\end{proofbox}
+
+\subsection{The Fundamental Group}
+\label{sub:fun_g}
+
+\begin{theorem}
+	Let $X$ be a space, and $x_0 \in X$. Let $\pi_1(X, x_0)$ be the set of homotopy classes of loops in $X$, starting and ending at $x_0$. Then the rule
+	\[
+		[\upg] \cdot [\upg'] = [\upg \cdot \upg']
+	\]
+	makes $(\pi_1(X, x_0), \cdot, [c_{x_0}])$ into a group.
+\end{theorem}
+
+\begin{proofbox}
+	The lemma from last lecture shows that this is well defined, and the previous proposition shows that this group exists.
+\end{proofbox}
+
+\begin{definition}
+	A \emph{basic space}\index{basic space} is a space $X$ with a chosen point $x_0 \in X$, called the \emph{basic point}\index{basic point}. A \emph{map} $f : (X, x_0) \to (Y, y_0)$ of basic spaces is a map $X \overset{f}{\to} Y$ such that $f(x_0) = y_0$. A \emph{based homotopy}\index{based homotopy} is a homotopy relative to $\{x_0\} \in X$.
+\end{definition}
+
+\begin{proposition}
+	To a based map $f : (X, x_0) \to (Y, y_0)$ there is associated a function $\pi_1(f) : \pi_1(X, x_0) \to \pi_1(Y, y_0)$ given by
+	\[
+		\pi_1(f) ([\upg]) = [f \circ \upg].
+	\]
+	It satisfies:
+	\begin{enumerate}[\normalfont(i)]
+		\item It is a group homomorphism.
+		\item If $f$ is a based homotopic to $f'$, then $\pi_1(f) = \pi_1(f')$.
+		\item If $(A, a) \overset{h}{\to} (B, b) \overset{k}{\to} (C, c)$ are based maps, then $\pi_1(k \circ h) = \pi_1(k) \circ \pi_1(h)$.
+		\item $\pi_1(\id_X) = \id_{\pi_1(X, x_0)}$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proofbox}
+	The proposed function is well-defined, as if $\upg \simeq \upg'$ as paths, then $f \circ \upg \simeq f \circ \upg'$ as paths.
+
+	(i) We verify the group axioms. Note that $f \circ c_{x_0} = c_{y_0}$, so $\pi_1(f)$ preserves the identity element, and
+	\[
+	f \circ (\upg \cdot \upg') = (f \circ \upg) \cdot (f \circ \upg'),
+	\]
+	so $\pi_1(f)$ is a homomorphism.
+
+	Then (ii), (iii) and (iv) are elementary.
+\end{proofbox}
+
+From now on, we let $\pi_1(f) = f_\ast$.
+
+\begin{proposition}
+	Let $u$ be a path from $x_0$ to $x_1$ in $X$. It induces a homomorphism $u_{\#} : \pi_1(X, x_0) \to \pi_1(X, x_1)$ satisfying
+	\[
+		[\upg] \mapsto [u^{-1} \cdot \upg \cdot u].
+	\]
+	This satisfies:
+	\begin{enumerate}[\normalfont(i)]
+		\item If $u \simeq u'$ as paths, then $u_{\#} = u_{\#}'$.
+		\item $(c_{x_0})_{\#} = \id_{\pi_1(X, x_0)}$.
+		\item If $v$ is a path from $x_1$ to $x_2$, then $(u \cdot v)_{\#} = v_{\#} \circ u_{\#}$.
+		\item If $f : X \to Y$ sends $x_0$ to $y_0$ and $x_1$ to $y_1$, then the following diagram commutes:
+			\[
+			\begin{tikzcd}
+				\pi_1(X, x_0) \arrow[r, "f_\ast"] \arrow[d, "u_{\#}"] & \pi_1(Y, y_0) \arrow[d, "(f \circ u)_{\#}"] \\
+				\pi_1(X, x_1) \arrow[r, "f_\ast"] & \pi_1(Y, y_1)
+			\end{tikzcd}
+			\]
+		\item If $u$ is a path from $x_0$ to $x_0$, then $u_{\#}$ is conjugation by $[u] \in \pi_1(X, x_0)$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proofbox}
+	$u_{\#}$ is a group homorphism via
+	\begin{align*}
+		u_{\#}([\upg]) u_{\#}([\upg']) &= [u^{-1} \cdot \upg \cdot u] [u^{-1} \cdot \upg' \cdot u] = [u^{-1} \cdot \upg \cdot u \cdot u^{-1} \cdot \upg' \cdot u] \\
+					       &= [u^{-1} \cdot \upg \cdot c_{x_1} \cdot \upg' \cdot u] \\
+					       &= [u^{-1} \cdot \upg \cdot \upg' \cdot u] = u_{\#}([\upg] \cdot [\upg']).
+	\end{align*}
+	It is an isomorphism as $(u^{-1})_{\#}$ is an inverse.
+
+	For (iv), note
+	\begin{align*}
+		((f \circ u)_{\#})([\upg]) &= (f \circ u)_{\#}([f \circ \upg]) = [(f \circ u)^{-1} \cdot f \circ \upg \cdot f \circ u] \\
+					   &= [f \circ (u^{-1} \cdot \upg \cdot u)] = f_\ast([u^{-1} \cdot \upg \cdot u]) \\
+					   &= (f_\ast \circ u_{\#})([\upg]).
+	\end{align*}
+\end{proofbox}
+
+\begin{lemma}
+	If $H : X \times I \to Y$ is a homotopy from $f$ to $g$ and $x_0 \in X$ is a base point, then $u = H(x_0, t) : I \to Y$ is a path from $f(x_0)$ to $g(x_0)$.
+
+	Then the following is a commutative diagram:
+	\[
+	\begin{tikzcd}
+		\pi_1(X, x_0) \arrow[r, "f_\ast"] \arrow[d, "g_\ast"] & \pi_1(Y, f(x_0)) \arrow[dl, "u_{\#}"] \\
+		\pi_1(Y, g(x_0)) &
+	\end{tikzcd}
+\]
+\end{lemma}
+
+\begin{proofbox}
+	Draw a cool looking diagram. Look at the map
+	\[
+	\begin{tikzcd}
+		I \times I \arrow[r, "\upg \times \id"] & X \times I \arrow[r, "H"] & Y.
+	\end{tikzcd}
+	\]
+	We want $g \circ \upg \simeq u^{-1} \cdot (f \circ \upg) \cdot u$ as loops. If we look at the square, the top edge in the square is homotopic to the concatenation of the other edges. Applying $H \circ (\upg\times \id_I)$ gives us the required homotopy.
+\end{proofbox}
+
+%lecture 4
+
+\begin{theorem}
+	If $f : X \to Y$ is a homotopy equivalence, and $x_0 \in X$, then
+	\[
+	f_\ast : \pi_1(X, x_0) \to \pi_1(Y, f(x_0))
+	\]
+	is an isomorphism.
+\end{theorem}
+
+\begin{proofbox}
+	Let $g : Y \to X$ be a homotopy inverse, with $f \circ g \simeq_H \id_Y$, $g \circ f \simeq_{H'} \id_X$. Let $u' : I \to X$ be $u'(t) = H'(x_0, 1-t)$ be a path from $x_0$ to $g \circ f(x_0)$. Then,
+	\[
+		u'_{\#} = (g \circ f)_{\ast} : \pi_1(X, x_0) \overset{f_\ast}{\injto} \pi_1(Y, f(x_0)) \overset{g_\ast}{\surjto} \pi_1(X, g \circ f(x_0))
+	\]
+	gives an isomorphism, by the previous lemma on the maps $\id$ and $g \circ f$. We want the first map to be an isomorphism, hence it is enough to show the second map is injective. But now consider $u(t) = H(f(x_0), 1-t)$, and this gives us an isomorphism
+	\[
+		u_{\#} = (f \circ g)_{\ast} : \pi_1(Y, f(x_0)) \overset{g_\ast}{\injto} \pi_1(X, g \circ f(x_0)) \overset{f_\ast}{\surjto} \pi_1(Y, f \circ g \circ f(x_0)).
+	\]
+	Hence the first map is injective, and so $f_\ast = g_\ast^{-1} \circ u_{\#}'$ is an isomorphism.
+\end{proofbox}
+
+\begin{definition}
+	A space $X$ is \emph{simply-connected}\index{simply-connected} if it is path connected and $\pi_1(X, x_0) = \{e\}$ for some (hence all) $x_0 \in X$.
+\end{definition}
+
+\begin{exbox}
+	A contractible space is simply connected; $X \simeq \ast$, so $\pi_0(X)$ and $\pi_1(X, x_0)$ are trivial.
+\end{exbox}
+
+\begin{lemma}
+	$X$ is simply connected if and only if, for all $x_0, x_1 \in X$, there is a unique homotopy class of points from $x_0$ to $x_1$.
+\end{lemma}
+
+\begin{proofbox}
+	Let $X$ be simply-connected, and $x_0, x_1 \in X$. As $X$ is path-connected, there exists a path from $x_0$ to $x_1$. If $\upg, \upg'$ are two such paths, then $\upg^{-1} \cdot \upg'$ is a loop based at $x_1$, so $[\upg^{-1} \cdot \upg] \in \pi_1(X, x_1) = \{e\}$, hence $\upg^{-1} \cdot \upg' \simeq c_{x_1}$, rel. $x_1$. Hence 
+	\[
+	\upg' \simeq \upg \cdot \upg^{-1} \cdot \upg' \simeq \upg \cdot c_{x_1} \simeq \upg,
+	\]
+	relative to the endpoints.
+
+	Conversely, if $X$ has the stated property, then
+	\begin{enumerate}[(i)]
+		\item It is path connected, as there exists a path between any two points.
+		\item Any loop based at $x_0$ is homotopic to $c_{x_0}$ as loops, by uniqueness.
+	\end{enumerate}
+	Hence $\pi_1(X, x_0) = \{e\}$.
+\end{proofbox}
+
+\newpage
+
+\section{Covering Spaces}
+\label{sec:cov_spac}
+
+\begin{definition}
+	A \emph{covering map}\index{covering map} $p : \tilde X \to X$ is a continuous map such that for any $x \in X$, there exists an open neighbourhood $U \ni x$ such that
+	\[
+	p^{-1}(U) = \bigsqcup_{\alpha \in I} V_\alpha,
+	\]
+	where
+	\[
+	p|_{V_\alpha} : V_{\alpha} \to U
+	\]
+	is a homeomorphism.
+\end{definition}
+
+\begin{exbox}
+	\begin{enumerate}[(i)]
+		\item A homomorphism is a covering map.
+		\item If $p : \tilde X \to X$ and $q : \tilde Y \to Y$, then $p \times q : \tilde X \times \tilde Y \to X \times Y$ are covering maps.
+	\end{enumerate}
+\end{exbox}
+
+\begin{exbox}
+	Let $S^1 \subset \mathbb{C}$ be the unit complex numbers, and
+	\begin{align*}
+		p : \mathbb{R} & \to S^1 \\
+		t &\mapsto e^{2\pi i t} = (\cos(2 \pi t), \sin(2 \pi t)).
+	\end{align*}
+	Let $U_{y > 0} = \{x + iu \in S^1 \mid y > 0\}$. Then,
+	\[
+	p^{-1}(U_{y > 0}) = \bigsqcup_{j \in \mathbb{Z}}(j, j + 1/2).
+	\]
+	Now we can verify that $p|_{(j, j+1/2)}$ is a homeomorphism, via
+	\begin{align*}
+		(j, j + 1/2) &\to U_{y>0} \\
+		j + \frac{\arccos(x)}{2 \pi} &\mapsfrom x + iu.
+	\end{align*}
+	Similarly, $U_{y < 0}$, $U_{x > 0}$ and $U_{x < 0}$ satisfy these properties, so $p$ is a covering map.
+\end{exbox}
+
+\begin{exbox}
+	Let $S^1$ be as before, and
+	\begin{align*}
+		p : S^1 &\to S^1 \\
+		z &\mapsto z^n,
+	\end{align*}
+	for $n > 0$ an integer. Let $y \in S^1$, and consider $p^{-1}(y)$, the $n$'th roots of $y$. Choosing a root $\xi$ and letting $\zeta = e^{2 \pi i/n}$, then these roots are $\{\xi, \zeta \xi, \zeta^2 \xi, \ldots, \zeta^{n-1} \xi\}$.
+
+	Then $S^1 - \{y\}$ is open, and $p^{-1}(S^1 - \{y\}) = S^1 - \{\xi, \zeta \xi, \ldots, \zeta^{n-1} \xi\}$. Now let
+	\[
+		V_0 = \left\{z \in S^1 \mid 0 < \arg \left( \frac{\zeta}{\xi} \right) < \frac{2 \pi}{n} \right\},
+	\]
+	and define $V_i = \zeta^i \cdot V_0$. Then each $x \neq y \in S^1$ has a unique $n$'th root in each $V_i$, so $p|_{V_i} : V_i \to S - \{y\}$ is a bijection, in fact a homeomorphism. Hence $p$ is a covering map.
+\end{exbox}
+
+\begin{exbox}
+	Let $S^2 \subset \mathbb{R}^3$ be the unit vectors, and let
+	\[
+		\mathbb{RP}^2 = S^2/\{x \sim -x\}.
+	\]
+	We will define
+	\begin{align*}
+		p : S^2 &\to \mathbb{RP}^2 \\
+		x &\mapsto [x]
+	\end{align*}
+	Let $V = \{(x, y, z) \in S^2 \mid z \neq 0\}$, and $U = p(V)$. Then $p^{-1}(U) = V$ is open, so $U$ is open in $\mathbb{RP}^2$. Now $p^{-1}(U) = V = V_{z > 0} \sqcup V_{z < 0}$.
+
+	Then we claim that $p|_{V_{z > 0}} : V_{z > 0} \to U$ and $p|_{V_{z < 0}}$ are homeomorphisms.
+
+	Indeed, to construct an inverse $g : U \to V_{z > 0}$, we use the definition of the product topology. Consider
+	\begin{align*}
+		t : V &\to V_{z > 0}\\
+		(x, y, z) &\mapsto
+		\begin{cases}
+			(x, y, z) & z > 0,\\
+			(-x,-y,-z) & z < 0.
+		\end{cases}
+	\end{align*}
+	Note that $t$ descends to $T : U \to V_{z > 0}$ as a map of sets, hence it is a continuous map by the definition of the quotient topology. It is the inverse to $p|_{V_{z > 0}}$.
+
+	Doing the same with the $x$ and $y$-coordinates will let us cover $\mathbb{RP}^2$.
+\end{exbox}
+
+%lecture 5
+
+\begin{definition}
+	Let $p ; \tilde X \to X$ be a covering map and $f : Y \to X$ be a map. A \emph{lift}\index{lift} of $f$ along $p$ is a map $\tilde f : Y \to \tilde X$ such that $p \circ \tilde f = f$.
+	\[
+	\begin{tikzcd}
+		& \tilde X \arrow[d, "p"] \\
+		Y \arrow[ur, dotted, "\tilde f"] \arrow[r, "f"] & X
+	\end{tikzcd}
+	\]
+\end{definition}
+
+\begin{lemma}[Uniqueness of Lifts]
+	If $\tilde f_0$ and $\tilde f_1$ are lifts of $f : Y \to X$ along a covering map $p : \tilde X \to X$, then the set
+	\[
+		S = \{y \in Y \mid \tilde f_0(y) = \tilde f_1(y)\}
+	\]
+	is both an open and closed set. Hence if $Y$ is connected, then $S = \emptyset$ or $S = Y$.
+\end{lemma}
+
+\begin{proofbox}
+	We first show $S$ is open. Let $s \in S$, and let $U \ni f(s)$ be an open neighbourhood which is evenly-covered, meaning
+	\[
+	p^{-1}(U) = \bigsqcup_{\alpha \in I} V_\alpha.
+	\]
+	But $\tilde f_0(s)$ and $\tilde f_1(s)$ agree, so they exist in the same $V_\alpha$. Then if we set $N = \tilde f_0^{-1}(V_\alpha) \cap \tilde f_1^{-1}(V_\alpha)$, we have
+	\[
+	p|_{V_\alpha} \circ \tilde f_0|_N = f|_N = p|_{V_\alpha} \circ \tilde f_1|_N,
+	\]
+	but $p|_{V_\alpha}$ is a homeomorphism, so $\tilde f_0|_N = \tilde f_1|_N$, hence $s \in N \subset S$, and so $S$ is open.
+
+	Now we show that $S$ is closed. Let $y \in \bar S$, and $\tilde f_0(y) \neq \tilde f_1(y)$. Let $U \ni f(y)$ be an open neighbourhood that is evenly-covered. Then $\tilde f_0(y) \in V_\beta$ and $\tilde f_1(y) \in V_\gamma$, with $\beta \neq \gamma$.
+
+	But now $\tilde f_0^{-1}(V_\beta) \cap \tilde f_1^{-1}(V_\gamma)$ is an open neighbourhood containing $y \in \bar S$, hence it must intersect in $S$. But then $V_\beta$ and $V_\gamma$ must intersect, which is a contradiction.
+\end{proofbox}
+
+\begin{theorem}[Homotopy Lifting Lemma]
+	Let $p : \tilde X \to X$ be a covering space, $H : Y \times I \to X$ from $f_0$ to $f_1$ be a homotopy, and $\tilde f_0$ be a lift of $f_0$. Then there exists a unique homotopy $\tilde H : Y \times I \to \tilde X$, such that
+	\begin{enumerate}[\normalfont(i)]
+		\item $\tilde H(\cdot, 0) = \tilde f_0(\cdot)$.
+		\item $p \circ \tilde H = H$.
+	\end{enumerate}
+\end{theorem}
+
+\begin{proofbox}
+	Let $\{U_\alpha\}$ be an open cover of $X$ by sets which are evenly-covered. So
+	\[
+	p^{-1}(U_\alpha) = \bigsqcup_{\beta \in I_\alpha} V_\beta,
+	\]
+	and $p|_{V_\beta}$ is a homeomorphism from $V_\beta$ to $U_\alpha$. Now $\{H^{-1}(U_\alpha)\}$ is an open cover of $Y \times I$, and for each $y_0 \in Y$, it gives an open cover of $\{y_0\} \times I$.
+
+	By the Lebesgue number lemma, there is a $N = N(y_0)$ such that each path
+	\[
+		H|_{\{y_0\} \times [\frac{i}{N}, \frac{i+1}{N}]} : \{y_0\} \times \left[ \frac{i}{N}, \frac{i+1}{N}\right] \to X
+	\]
+	has image inside some $U_\alpha$. In fact, as $\{y_0\} \times I$ is compact, there is an open $W_{y_0} \ni y_0$ such that $H(W_{y_0} \times [\frac{i}{N}, \frac{i+1}{N}])$ lies in some $U_\alpha$.
+
+	We can construct a lift $\tilde H|_{W_{y_0} \times I}$ as follows:
+	\begin{enumerate}[(i)]
+		\item Note $H|_{W_{y_0} \times [0, \frac{1}{N}]} : W_{y_0} \times [0, \frac{1}{N}] \to U_\alpha \in X$, and hence $\tilde f_0 |_{W_{y_0}} : W_{y_0} \to \tilde X$ with image in some $V_\beta$ lying on $U_\alpha$. Define
+			\[
+				\tilde H|_{W_{y_0} \times [0, \frac{1}{N}]} : W_{y_0} \times \left[0, \frac{1}{N} \right] \overset{H|}{\to} U_\alpha \overset{p|_{V_\beta}^{-1}}{\to} V_\beta \subseteq \tilde X.
+			\]
+		\item We proceed in the same way, lifting $H|_{W_{y_0} \times [\frac{1}{N}, \frac{2}{N}]}$ starting at $\tilde H|_{W_{y_0} \times \{\frac{1}{N}\}}$, and continue.
+	\end{enumerate}
+	At the end of this process, we get a $\tilde H|_{W_{y_0} \times I}$ lifting $H|_{W_{y_0} \times I}$ and extending $\tilde f_0$ at time $0$.
+
+	We can do this for each $y_0 \in Y$, so it is enough to check that on $(W_{y_0} \times I) \cap (W_{y_1} \times I) = (W_{y_0} \times W_{y_1}) \times I$, the two lifts agree.
+
+	For a $y_2 \in W_{y_0} \cap W_{y_1}$, the two choices gives lifts of $H|_{\{y_0\} \times I}$ which agree with $\tilde f_0(y_2)$ at time $0$. By the uniqueness lemma, these lifts must agree on the whole of $\{y_2\} \times I$. So they agree.
+
+	Now uniqueness of the lifted homotopy is immediate from uniqueness of lifts.
+\end{proofbox}
+
+If $Y = \{\ast\}$, we get the following corollary.
+
+\begin{corollary}[Path Lifting]
+	If $p : \tilde X \to X$ is a covering map,  $\upg : I \to X$ a path from $x_0$ to $x_1$, and $\tilde x_0 \in \tilde X$ is such that $p(\tilde x_0) = x_0$, then there is a unique path $\tilde \upg : I \to \tilde X$ such that $\tilde \upg(0) = \tilde x_0$ and $p \circ \tilde \upg = \upg$.
+\end{corollary}
+
+\begin{corollary}
+	Let $p : \tilde X \to X$ be a covering map, $\upg, \upg' : I \to X$ be paths from $x_0$ to $x_1$, and $\tilde \upg, \tilde \upg' : I \to \tilde X$ be their lifts starting at $\tilde x_0 \in p^{-1}(x_0)$.
+
+	If $\upg \simeq \upg'$ as paths, then $\tilde\upg \simeq \tilde\upg'$ as paths, in particular $\tilde \upg(1) = \tilde \upg'(1)$.
+\end{corollary}
+
+\begin{proofbox}
+	Let $H : I \times I \to X$ be a homotopy from $\upg$ to $\upg'$ relative to the endpoints.
+
+	The homotopy lifting lemma gives a $\tilde H : I \times I \to \tilde X$. At $t = 0$, it must be $\tilde \upg$, as it is forced. The edges at $x_0$ is a lift of the constant function, hence must be $c_{\tilde x_0}$. Therefore the edge at $t = 1$ is a lift of $\upg'$ starting at $\tilde x_0$, so is $\tilde \upg'$. Finally the rightmost edge is a lift of the constant $c_{x_1}$, so must be $c_{\tilde x_1}$.
+
+	Hence this $\tilde H$ is a homotopy of paths, as required.
+\end{proofbox}
+
+\begin{corollary}
+	Let $p : \tilde X \to X$ be a covering map, and $X$ be path-connected. Then the sets $p^{-1}(x)$ are all in bijection with each other.
+\end{corollary}
+
+\begin{proofbox}
+	Let $\upg : I \to X$ be a path from $x_0$ to $x_1$. Define
+	\begin{align*}
+		\upg_\ast : p^{-1}(x_0) &\to p^{-1}(x_1) \\
+		y_0 &\mapsto \tilde \upg(1),
+	\end{align*}
+	where $\tilde \upg$ is the lift of $\upg$ starting at $y_0$. $(\upg^{-1})_\ast : p^{-1}(x_1) \to p^{-1}(x_0)$ is defined similarly.
+
+	Then $(\upg^{-1})_\ast \circ \upg_\ast (y_0)$ is the end point of the lift of $\upg \cdot \upg^{-1}$ which starts at $y_0$, which is the end point of $c_{y_0}$ as these are homotopic, which is itself $y_0$.
+\end{proofbox}
+
+%lecture 6
+
+\begin{lemma}
+	Let $p : \tilde X \to X$ be a covering map, $x_0 \in X$ be a base point, and $\tilde x_0 \in p^{-1}(x_0) \in \tilde X$. Then $p_\ast : \pi_1(\tilde X, \tilde x_0) \to \pi_1(X, x_0)$ is an injective homomorphism.
+\end{lemma}
+
+\begin{proofbox}
+	Let $\upg : I \to \tilde X$ be a loop based at $\tilde x_0$, and suppose that $p_\ast[\upg] = [c_{x_0}]$, so $p \circ \upg \simeq_H c_{x_0}$ as loops. Now lift $H$ to a homotopy $\tilde H$ starting at $\upg$: then $\tilde H$ is a homotopy of paths from $\upg$ to a lift of $c_{x_0}$, which must be $c_{\tilde x_0}$. Thus $[\upg] = [c_{\tilde x_0}] = e \in \pi_1(\tilde X, \tilde x_0)$.
+\end{proofbox}
+
+In the proof of the previous corollary, we constructed, for a path $\upg : I \to X$ from $x_0$ to $x_1$ a bijection $\upg_\ast : p^{-1}(x_0)\to p^{-1}(x_1)$. It only depended on the homotopy class of the path $\upg$.
+
+This defines a (right) action of $\pi_1(X, x_0)$ on $p^{-1}(x_0)$, via $y_0 \cdot [\upg] = \tilde \upg(1)$, for $\tilde \upg(1)$ the lift of $\upg$ starting at $y_0$.
+
+\begin{lemma}
+	Let $p : \tilde X \to X$ be a covering map, with $X$ path-connected, and $x_0 \in X$. Then:
+	\begin{enumerate}[\normalfont(i)]
+		\item $\pi_1(X, x_0)$ acts transitively on $p^{-1}(x_0) \iff \tilde X$ is path-connected.
+		\item The stabiliser of $y_0 \in p^{-1}(x_0)$ is $\Img(\pi_1(\tilde X , y_0) \overset{p_\ast}{\to} \pi_1(X, x_0)) \leq \pi_1(X, x_0)$.
+		\item If $\tilde X$ is path-connected, then there is a bijection
+			\[
+			\frac{\pi_1(X, x_0)}{p_\ast \pi_1(\tilde X, y_0)} \leftrightarrow p^{-1}(x_0),
+			\]
+			induced by acting on $y_0 \in p^{-1}(x_0)$.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proofbox}
+	Let $\tilde X$ be path-connected, and $y_0, z_0 \in p^{-1}(x_0)$. Let $\tilde \upg : I \to \tilde X$ be a path from $y_0$ to $z_0$, so $\upg = p \circ \tilde \upg : I \to X$ is a loop based at $x_0$.
+
+	Then the lift of $\upg$ starting at $y_0$ is $\tilde \upg$, which ends at $z_0$, so $y_0 \cdot [\upg] = z_0$. Hence the action is transitive.
+
+	Conversely, suppose that the action is transitive. Take $z_0 \in p^{-1}(x_0)$, and $y_0$ arbitrary. We show there is a path from $y_0$ to $z_0$. Choose a path from $p(y_0)$ to $p(z_0) = x_0$, then take a lift of it starting at $y_0$. It ends at $z_1 \in p^{-1}(x_0)$. Then as the action on $\pi_1(X, x_0)$ on $p^{-1}(x_0)$ is transitive, there exists a loop which starts at $z_1$ and ends at $z_0$.
+
+	Taking the concatenation of these paths gives a path from $y_0$ to $z_0$. Then for any other $y_1$, taking the concatenation of the path from $z_0$ to $y_1$ gives a path from $y_0$ to $_1$.
+
+	For (ii), suppose that $y_0 \cdot [\upg] = y_0$, i.e. the lift of $\upg$ starting at $y_0$ ends at $y_0$. Then $[\upg] = p_\ast[\tilde \upg]$, hence $\Stab_{\pi_1(X, x_0)}(p^{-1}(x_0)) \leq \Img(p_\ast)$. If $[\upg] = p_\ast[\upg']$, then $[\upg']$ is the lift of $\upg$ starting at $y_0$, but also it ends at $y_0$, so $y_0 \cdot[\upg] = y_0$.
+
+	Then (iii) is orbit-stabiliser.
+\end{proofbox}
+
+\begin{definition}
+	If $p : \tilde X \to X$ is a covering map, we say:
+	\begin{itemize}
+		\item It is $n$\emph{-sheeted}\index{$n$-sheeted} if $p^{-1}(x_0)$ has cardinality $n \in \mathbb{N} \cup \{\infty\}$.
+		\item It is a \emph{universal cover}\index{universal cover} if $\tilde X$ is simply-connected.
+	\end{itemize}
+\end{definition}
+
+\begin{corollary}
+	If $p : \tilde X \to X$ is a universal cover, then each $\tilde x_0 \in p^{-1}(x_0)$ determines a bijection
+	\begin{align*}
+		\ell : \pi_1(X, x_0) &\to p^{-1}(x_0) \\
+		[\upg] &\mapsto \tilde \upg(1),
+	\end{align*}
+	for $\tilde \upg$ the lift of $\upg$ starting at $\tilde x$.
+\end{corollary}
+
+This induces a group-law on $p^{-1}(x_0)$ via
+\[
+y_0 \ast z_0 = \ell(\ell^{-1}(y_0) \cdot \ell^{-1}(z_0)).
+\]
+Spelling this out, this is given by:
+\begin{itemize}
+	\item Choose a path $\tilde \upg : I \to \tilde X$ from $\tilde x_0$ to $z_0$.
+	\item Let $\upg$ be the lift of $p \circ \tilde \upg$ starting at $y_0$.
+	\item Then $y_0 \ast z_0 = \upg(1)$.
+\end{itemize}
+
+\subsection{Fundamental Group of \texorpdfstring{$S^1$}{S\^1}}
+\label{sub:fun_cir}
+
+\begin{theorem}
+	Let $u : I \to S^1$ be $u(s) = e^{2 \pi i s}$, which is based at $1 \in S^1 \subset \mathbb{C}$. Then there is an isomorphism $\pi_1(S^1, 1) \cong (\mathbb{Z}, +, 0)$ which sends $u$ to $1 \in \mathbb{Z}$.
+\end{theorem}
+
+\begin{proofbox}
+	We have $[ : \mathbb{R} \to S^1$ by $t \mapsto e^{2 \pi i t}$ is a covering map. Note $\mathbb{R}$ is contractible so it is simply-connected. Hence this is a universal cover, so
+	\[
+	\pi_1(S^1, 1) \leftrightarrow p^{-1}(1) = \mathbb{Z} \subset \mathbb{R}
+	\]
+	is a bijection. To compute $\ell^{-1}(m)$, we can take $\tilde u_m : I \to \mathbb{R}$ by $t \mapsto mt$, so $u_m = p \circ \tilde u_m$ is a loop in $S^1$. Take $\tilde x_0 = 0 \in \mathbb{Z}$. So $n \ast m$ is the end point of the lift of $u_m$ starting at $n$, which is $t \mapsto n + mt$. This ends at $n + m$, hence our group operation is addition.
+\end{proofbox}
+
+\begin{theorem}
+	The disc $D^2$ does not retract to its boundary $S^1$.
+\end{theorem}
+
+\begin{proofbox}
+	Suppose $r : D^2 \to S^1$ is a retraction, with $i : S^1 \injto D^2$ the inclusion. Then $r \circ i = \id_{S^1}$. Now,
+	\[
+	\begin{tikzcd}
+		\id : \pi_1(S^1, 1) \cong \mathbb{Z} \arrow[r, "i_\ast"] & \pi_1(D^2, 1) \cong \{0\} \arrow[r, "r_\ast"] & \pi_1(S^1, 1).
+	\end{tikzcd}
+	\]
+	This is not possible, so $r$ does not exist.
+\end{proofbox}
+
+\begin{corollary}[Brouwer Fixed Point Theorem]
+	Any map $f : D^2 \to D^2$ has a fixed point.
+\end{corollary}
+
+\begin{proofbox}
+	Suppose not. Define $r : D^2 \to S^1$, by intersecting the ray starting at $f(x)$ and going through $x$ with $S^1$. Then this fixes the boundary, and would be continuous, but this would give a retraction $X$.
+\end{proofbox}
+
+%lecture 7
+
+Let's look at another application of the fundamental group of a circle.
+
+\begin{corollary}[Fundamental Theorem of Algebra]
+	Any non-constant polynomial over $\mathbb{C}$ has a root in $\mathbb{C}$.
+\end{corollary}
+
+\begin{proofbox}
+	Let $p(z) = z^n + a_1 z^{n-1} + \cdots + z_n$, a non-constant polynomial. Choose $r > |a_1| + \cdots + |a_n| + 1$. On the circle  $|z| = r$, we have
+	\[
+	|z^n| = |z^{n-1}|r > |z^{n-1}|(|a_1| + \cdots + |a_n|) > |a_1 z^{n-1} + \cdots + a_n|,
+	\]
+	which means for any $t \in [0, 1]$, the polynomial $p_t(z) = z^n + t(a_1 z^{n-1} + \cdots + a_n)$ does not have a root in the circle $|z| = r$. Consider the homotopy of loops in $S^1 \subset \mathbb{C}$ 
+	\[
+	F(s, t) = \frac{p_t(r e^{2 \pi i s})/p_t(r)}{|p_t(r e^{2 \pi i s})/p_t(r)|}.
+	\]
+	Note that $F(0, t) = 1 = F(1, t)$, so this is indeed a loop homotopy.
+
+	At $t = 0$, this is the loop $s \mapsto e^{2 \pi i sn}$, which is $n \in \mathbb{Z} \sim \pi_1(S^1, 1)$.
+
+	At $t = 1$, it is the loop $s \overset{f_r}{\mapsto} [p(r e^{2 \pi i s})/p(r)]/|p(re^{2\pi is})/p(r)|$, which also represents $n \in \mathbb{Z}$.
+
+	Now suppose $p$ has no roots. Then $f_r$ is a continuous loops for all $r \in [0, \infty)$, and varying $r$ gives a homotopy from $f_r$ to $f_0$. But
+	\[
+	s \mapsto f_0(s) = \frac{p(0)/p(0)}{|p(0)/p(0)|} = 1,
+	\]
+	hence we must have $n = 0 \in \mathbb{Z}$, so $p$ was constant.
+\end{proofbox}
+
+\subsection{Universal Covers}
+\label{sub:uncover}
+
+Universal covers are really helpful in determining the fundamental group of an object. We now look to methodically construct universal covers.
+
+Our first observation is as follows: if $p : \tilde X \to X$ is a universal cover, with $x \in X$ and $U \ni x$ an evenly-covered neighbourhood, let $p^{-1}(U) = \bigsqcup V_\tau$. Let $\upg : I \to U$ be a loop based at $x_0$ this lifts to
+\[
+\begin{tikzcd}[column sep = small]
+	\tilde \upg : I \arrow[rr]\arrow[rd, "\upg"] & & V_\alpha \subseteq \tilde X \\
+						     & U \arrow[ur, "p|_{V_\alpha^{-1}}"'] &
+\end{tikzcd}
+\]
+This is homotopic to a constant loop in $\tilde X$, as $\tilde X$ is simply connected. Applying $p$, this shows $\upg \simeq c_{x_0}$ in $X$. Hence every $x \in X$ has a neighbourhood $U \ni x$ such that $\pi_1(U, x_1) \to \pi_1(X, x)$ is trivial.
+
+Note not every space has this property, for example the Hawaiian earring, obtained by gluing circles of shrinking radius at the same point as arbitrarily small neighbourhoods with non-trivial fundamental group.
+
+Our second observation is as follows: suppose $p : \tilde X \to X$ is a universal cover, and $x_0 = p(\tilde x_0)$ is a basepoint. Then there is a unique path $\alpha$ from $\tilde x_0$ to $y$, up to homotopy. Hence $y$ is the end point of the lift $p \circ \alpha$, starting at $\tilde x_0$.
+
+Therefore, there is a bijection
+\begin{align*}
+	\tilde x &\leftrightarrow \{\text{homotopy classes of paths in $X$ starting at $x_0$}\}, \\
+	y &\mapsto p \circ \alpha, \\
+	\tilde \upg(1) &\mapsfrom [\upg].
+\end{align*}
+
+So we aim to build a universal cover by creating a topology on the homotopy classes.
+
+\begin{theorem}
+	Let $X$ be path connected, locally path connected, and semi-locally simply connected. Then it has a universal cover.
+\end{theorem}
+
+\begin{proofbox}
+	This is non-examinable as it is super annoying.
+
+	As a set, let $\tilde X$ be the set of homotopy classes of paths in $X$ starting at $x_0$. Then define
+	\begin{align*}
+		p : \tilde X &\to X, \\
+		[\upg] &\mapsto \upg(1).
+	\end{align*}
+	We have a couple of aims.
+	\begin{enumerate}[(i)]
+		\item We want to make a topology on $\tilde X$.
+		\item We need to show $p$ is continuous.
+		\item Moreover, we need $p$ to be a covering map.
+		\item Finally we show $\tilde X$ is indeed simply-connected.
+	\end{enumerate}
+	Consider the sets
+	\begin{align*}
+		\mathcal{U} = \{ U \subseteq X \mid U &\text{ open, path-connected and}\\
+		&\pi_1(U, x) \to \pi_1(X, x) \text{ is trivial for all } x \in U\}.
+	\end{align*}
+	We will show this is a basis for the topology on $X$. Indeed, let $V \ni x$ be an open neighbourhood.
+	\begin{enumerate}[(i)]
+		\item Since $X$ is semi-locally simply-connected, $U' \ni X$ such that $\pi_1(U', x) \to \pi_1(X, x)$ is trivial.
+		\item As $X$ is locally path-connected, we can find $V \cap U' = U \ni x$ which is path-connected.
+		\item The map
+			\[
+			\begin{tikzcd}[column sep = small]
+				\pi_1(U, x) \arrow[rr] \arrow[rd] & & \pi_1(X, x) \\
+						       & \pi_1(U', x) \arrow[ur, "\mathrm{trivial}"']
+			\end{tikzcd}
+			\]
+			is trivial.
+		\item Let $y \in U$ be another point, and $u : I \to U$ be a path from $x \to y$. Then
+			\[
+			\begin{tikzcd}
+				\pi_1(U, y) \arrow[r] \arrow[d, "u_{\#}"] & \pi_1(X, y) \\
+				\pi_1(U, x) \arrow[r, "\mathrm{trivial}"] & \pi_1(X, x) \arrow[u, "u_{\#}"]
+			\end{tikzcd}
+			\]
+			shows that the top map is trivial.
+	\end{enumerate}
+	Hence we have a basis. For $[\alpha] \in \tilde X$ and a $U \in \mathcal{U}$ such that $\alpha(1) \in U$, define
+	\[
+		([\alpha], U) = (\alpha, U) = \{[\beta] \in \tilde X \mid [\beta] = [\alpha \cdot \alpha'] \text{ for some path } \alpha' \in U\}.
+	\]
+	We claim these sets form a basis for a topology on $\tilde X$. Indeed, let $[\beta] \in (\alpha_0, U_0) \cap (\alpha_1, U_1)$. Hence there are $\alpha_0'$, $\alpha_1'$ with $[\alpha_0 \cdot \alpha_0'] = [\beta] = [\alpha_1 \cdot \alpha_1']$.
+
+	Let $\beta(1) \in W \subseteq U_0 \cap U_1$ with $W \in \mathcal{U}$. We want to show that $(\beta, W) \subseteq (U_0, \alpha_0) \cap (U_1, \alpha_1)$. Indeed, if $[\upg] \in (\beta, W)$, then there is a path $\delta$ in $W$ with $[\upg] = [\beta \cdot \delta] = [\alpha_0 \cdot \alpha_1' \cdot \delta]$, and notice $\alpha_1' \cdot \delta \in U_0$, so $[\upg] \in (U_0, \alpha_0)$. Similarly, $[\upg] \in (U_1, \alpha_1)$.
+
+	%lecture 8
+
+	To see that $p$ is continuous, it is enough to check that $p^{-1}(U)$ is open for $U \in \mathcal{U}$. But indeed, if $[\alpha] \in p^{-1}(U)$, then $[\alpha] \in (\alpha, U) \subseteq p^{-1}(U)$, so $p^{-1}(U)$ is open.
+
+	To see that $p$ is a covering map, we first need to show that each
+	\[
+	p|_{(\alpha, U)} : (\alpha, U) \to U
+	\]
+	is a homeomorphism. As $U$ is path-connected, for any $y \in U$ there is a path $\upg$ in $U$ from $\alpha(1)$ to $y$, and $p([\alpha \cdot \upg]) = y$, so the map is surjective. Also, if $[\beta], [\beta'] \in (\alpha, U)$ map to the same thing under $p|_{(\alpha, U)}$, then $\beta$ and $\beta'$ end at the same point. Therefore there exists paths $\upg, \upg'$ in $U$ such that $[\beta] = [\alpha \cdot \upg]$ and $[\beta'] = [\alpha \cdot \upg']$. So then
+	\[
+		[\beta'] = [\alpha \cdot \upg \cdot \upg^{-1} \cdot \upg'] = [\alpha \cdot \upg] = [\beta],
+	\]
+	as $[\upg^{-1} \cdot \upg']$ is a loop in $U$, hence is homotopic to a constant loop in $X$. Hence $p|_{(\alpha, U)}$ is a bijection, and continuous. It is also open, as $p((\beta, V)) = V$, so $p|_{(\alpha, U)}$ is a homeomorphism.
+
+	Now we claim that $p^{-1}(U)$ can be partitioned into $(\alpha, U)$'s. We have seen that they cover, so it suffices to show that if two intersect, then they are equal. Let $[\upg] \in (\alpha, U) \cap (\beta, U)$, i.e. there are paths $\alpha', \beta' \in U$ such that $[\upg] = [\alpha \cdot \alpha'] = [\beta \cdot \beta']$. Let  $[\delta] \in (\alpha, U)$. Let $[\delta] \in (\alpha, U)$, then
+	\[
+		[\delta] = [\alpha \cdot \alpha''] = [\alpha \cdot \alpha' \cdot (\alpha')^{-1} \cdot \alpha''] = [\beta \cdot \beta' \cdot (\alpha')^{-1} \cdot \alpha''],
+	\]
+	hence $[\delta] \in (\beta, U)$. Thus $(\alpha, U) \subseteq (\beta, U)$, and the reverse inclusion obviously holds.
+
+	Finally, we need to show that $\tilde X$ is simply-connected. Note that if $\upg : I \to X$ is a path, then its lift $\tilde \upg : I \to \tilde X$ starting at $[c_{x_0}]$ ends at $[\upg]$, because
+	\[
+		s \mapsto [t \mapsto \upg(st)] : I \to \tilde X
+	\]
+	is the lift. So if a loop $\upg$ in $X$ lifts to a loop in $\tilde X$ based at $[c_{x_0}]$, then $[\upg] = [c_{x_0}]$, i.e. $p_\ast \pi_1(\tilde X, [c_{x_0}]) = \{e\} \in \pi_1(X, x_0)$. But $p_\ast$ is injective, so $\pi_1(\tilde X, [c_{x_0}]) = \{e\}$.
+\end{proofbox}
+
+\subsection{The Galois Correspondence}
+\label{sub:gal_cor}
+
+If $p : \tilde X \to X$ is a covering map, where $\tilde X$ is path connected, then for $x_0 \in X$ and $\tilde x_0 \in p^{-1}(x_0)$, then
+\[
+p_\ast : \pi_1(\tilde X, \tilde x_0) \to \pi_1(X, x_0)
+\]
+is injective, giving a subgroup of $\pi_1(X, x_0)$. If $\tilde x_0' \in p^{-1}(x_0)$ is another basepoint, let $\upg$ be a path in $\tilde X$ from $\tilde x_0$ to $\tilde x_0'$, then $p \circ \upg$ is a loop based at $x_0$, and we have
+\[
+	[p \circ \upg]^{-1} p_\ast \pi_1(\tilde X, \tilde x_0) [p \circ \upg] = p_\ast \pi_1(\tilde X, \tilde x_0') \leq \pi_1(X, x_0).
+\]
+So fixing a based space $(X, x_0)$, we get a map
+\[
+\{\text{based path-connected covering maps } p : (\tilde X, \tilde x_0) \to (X, x_0)\} \overset{p \mapsto \Img(p_\ast)}{\to}\{\text{subgroup of } \pi_1(X, x_0)\}.
+\]
+Moreover if we loosen our restriction on being based, we get a map
+\[
+	\{\text{path-connected covering maps } p : \tilde X \to X\} \to \{\text{conjugacy classes of subgroups of }\pi_1(X, x_0)\}.
+\]
+
+\begin{proposition}[Surjectivity]
+	Let $X$ be path-connected, locally path-connected, and semi-locally simply-connected. Then for any $H \in \pi_1(X, x_0)$, there is a $p : (\tilde X, \tilde x_0) \to (X, x_0)$ with $p_\ast \pi_1(\tilde X, \tilde x_0) = H$.
+\end{proposition}
+
+\begin{proofbox}
+	Let $\bar X \overset{q}{\to} X$ be the universal cover we have constructed. Define $\sim_H$ on $\bar X$ by
+	\[
+		[\upg] \sim_H [\upg'] \iff \upg(1) = \upg'(1) \text{ and } [\upg \cdot (\upg')^{-1}] \in H \leq \pi_1(X, x_0).
+	\]
+	First, note that $\sim_H$ is an equivalence relation:
+	\begin{enumerate}[(i)]
+		\item $[\upg] \sim_H [\upg]$.
+		\item If $[\upg] \sim_H [\upg']$, then $[\upg \cdot (\upg')^{-1}] \in H$, so $[\upg' \cdot (\upg)^{-1}] \in H$.
+		\item If $[\upg] \sim_H [\upg']$ and $[\upg'] \sim_H [\upg'']$ with $\upg(1) = \upg'(1) = \upg''(1)$, then
+			\[
+				[\upg \cdot (\upg'')^{-1}] = [\upg \cdot (\upg')^{-1} \cdot \upg' \cdot (\upg'')^{-1}] = [\upg \cdot (\upg')^{-1}] [\upg' \cdot (\upg'')^{-1}] \in H.
+			\]
+			So $\sim_H$ is an equivalence relation. 
+	\end{enumerate}
+	Define $\bar X_h = \bar X/ \sim_H$, the quotient space, and $p_H : \tilde X_H \to X$ be the induced map. If $[\upg] \in (\alpha, U)$, $[\upg'] \in (\beta, U)$ satisfies $[\upg] \sim_H [\upg']$, then $(\alpha, U)$ and $(\beta, U)$ are identified by $\sim_H$, as $[\upg \cdot q] \sim_H [\upg' \cdot q]$ for any path $q \in U$.
+
+	It remains to show that $(p_H)_\ast \pi_1(\bar X_h, [[c_{x_0}]]) = H \leq \pi_1(X, x_0)$. If $[\upg] \in H$, then the lift of $\upg$ to $\bar X$ starting at $[c_{x_0}]$ ends at $[\upg]$, so the lift to $\bar X_H$ ends at $[[\upg]] = [[c_{x_0}]]$, hence is a loop. So $H \leq (p_H)_\ast \pi_1(\bar X_H, [[c_{x_0}]])$.
+
+	On the other hand, if $[\upg] \in (p_H)_ast \pi_1(\bar X_h, [[c_{x_0}]])$, then the lift $\bar \upg$ of $\upg$ to $\bar X$ starting at $[c_{x_0}]$ ends at $[\upg]$, so $[\upg] \sim_H [c_{x_0}]$, as it becomes a loop in $\bar X_H$ by assumption. So $[\upg] \in H$.
+\end{proofbox}
+
+%lecture 9
+
+Now we just need to show injectivity.
+
+\begin{proposition}[Based Uniqueness]
+	Let $(X, x_0)$ satisfy the usual conditions for the existence of a universal cover.
+
+	If $p_1 : (\tilde X_1, \tilde x_1) \to (X, x_0)$ and $p_2 : (\tilde X_2, \tilde x_2) \to (X, x_0)$ are path-connected covering spaces, then there exists a based homeomorphism $\tilde X_1, \tilde x_1) \to (\tilde X_2, \tilde x_2)$ such that $p_2 \circ h = h_1$, if and only if \[
+	(p_1)_\ast \pi_1(\tilde X_1, \tilde x_1) = (p_2)_\ast \pi_1(\tilde X_2, \tilde x_2).
+\]
+\end{proposition}
+
+\begin{proofbox}
+	If $h$ exists, then $\Img((p_1)_\ast) = \Img((p_2)_\ast \circ h_\ast) = \Img((p_2)_\ast)$, as $h_\ast$ is an isomorphism.
+
+	On the other hand, suppose the images are both $H \leq \pi_1(X, x_0)$. We will show that $\tilde X_1$ and $\tilde X_2$ are both homeomorphic to $\bar X_H$.
+
+	Consider $r : \bar X \to \tilde X_1$, by $[\upg] \mapsto \tilde \upg(1)$, the end point of the lift $\tilde \upg$ of $\upg$ to $\tilde X_1$ starting at $\tilde x_1$.
+
+	\begin{align*}
+	r([\upg]) = r([\upg']) &\iff \tilde \upg\text{ and } \tilde \upg' \text{ both end at the same point of } \tilde X_1 \\
+			       &\iff [\upg' \cdot \upg^{-1}] \in (p_1)_\ast \pi_1(\tilde X_1, \tilde x_1) = H \\
+			       &\iff [\upg] \sim_H [\upg'].
+	\end{align*}
+	So $r$ descends to a map $q : (\bar X_H, [[c_{x_0}]])\to (\tilde X_1, \tilde x_1)$, a bijection. It is also an open map, as $\bar X_H$ and $\tilde X_1$ are both locally homeomorphic to $X$. So $q$ is a homeomorphism.
+\end{proofbox}
+
+\begin{corollary}[Unbased Uniqueness]
+	Suppose the usual hypothesis on $X$.
+
+	If $p_1 : \tilde X_1 \to X$ and $p_2 : \tilde X_2 \to X$ are path connected covering spaces, then there exists a homeomorphism $h : \tilde X_1 \to \tilde X_2$ such that $p_2 \circ h = p_1$ if and only if
+	\[
+		(p_1)_\ast \pi_1(\tilde X_1, \tilde x_1) \text{ and } (p_2)_\ast \pi_1(\tilde X_2, \tilde x_2) \text{ are conjugate in } \pi_1(X, x_0),
+	\]
+	for any $\tilde x_1 \in p_1^{-1}(x_0)$, $\tilde x_2 \in p_2^{-1}(x_0)$.
+\end{corollary}
+
+\begin{proofbox}
+	If $h$ exists, choose $\tilde x_1 \in p_1^{-1}(x_0)$ and $\tilde x_2 = h(\tilde x_1)$. Then the previous proposition applies, and the groups obtained are equal.
+
+	Conversely, suppose $[\upg] \in \pi_1(X, x_0)$ is such that
+	\[
+		[\upg]^{-1} (p_1)_\ast \pi_1(\tilde X_1, \tilde x_1) [\upg] = (p_2)_\ast \pi_1(\tilde X_2, \tilde x_2).
+	\]
+	Then lifting $\upg$ to $\tilde X_1$ starting at $\tilde x_1$, it ends at $\tilde x_1' \in p_1^{-1}(x_0)$. Then choosing $\tilde x_1'$ as our basepoint, the left hand side is exactly $(p_1)_\ast \pi_1(\tilde X_1, \tilde x_1')$, using the change of basepoint isomorphism. So our previous proposition gives a based homeomorphism $h : (\tilde X_1, \tilde x_1') \to (\tilde X_2, \tilde x_2)$, which is also an unbased homeomorphism.
+\end{proofbox}
+
+\newpage
+
+\section{Free Groups and Presentations}
+\label{sec:fg_pres}
+
+Let $S = \{s_\alpha\}_{\alpha \in I}$ be a set, called the \emph{alphabet}\index{alphabet}. Then $S^{-1} = \{s_\alpha^{-1}\}_{\alpha \in I}$. We suppose that $S \cap S^{-1} = \emptyset$.
+
+A \emph{word}\index{word} in the alphabet $S$ is a (possibly empty( finite sequence $(x_1, x_2, \ldots, x_n)$ of elements in $S \cup S^{-1}$. A word is called \emph{reduced}\index{reduced word} if it does not contain $(s_\alpha, s_\alpha^{-1})$ or $(s_\alpha^{-1}, s_\alpha)$ as a subword.
+
+An elementary reduction of the word $(x_1, x_2, \ldots, x_i, s_\alpha, s_\alpha^{-1}, x_{i+1}, \ldots, x_n)$ (or $s_\alpha^{-1}, s_\alpha$) is $(x_1, x_2, \ldots, x_i, x_{i+1}, \ldots, x_n)$.
+
+\begin{definition}
+	The \emph{free group}\index{free group} on the alphabet $S$, denoted $F(S)$, is the set of reduced (possibly empty) words in this alphabet.
+
+	The group operation is given by concatenation, and performing elementary reductions until the word is reduced (note this is not obviously a group, as we have a choice on how to do our reductions---we can alternatively define it as a subgroup of a permutation group).
+
+	We have that $()(x_1, \ldots, x_n) = (x_1, \ldots, x_n) = (x_1, \ldots, x_n)()$, and
+	\[
+		(x_n^{-1}, \ldots, x_1^{-1})(x_1, \ldots, x_n) = () = (x_1, \ldots, x_n)(x_n^{-1}, \ldots, x_1^{-1}).
+	\]
+	Moreover there is a function $\iota : S \to F(S)$, given by sending $s$ to $(s)$.
+\end{definition}
+
+\begin{lemma}[Universal Property of Free Groups]
+	For any group $H$, the function
+	\[
+		\{\text{homomorphisms } \varphi : F(S) \to H\} \overset{\circ \iota}{\to} \{\text{functions } \phi : S \to H\}
+	\]
+	is a bijection.
+\end{lemma}
+
+\begin{proofbox}
+	Given $\phi : S \to H$, we want $\varphi : F(S) \to H$ such that $\varphi((s)) = \phi(s)$. Let, on a not necessarily reduced word $(s_{\alpha_1}^{\eps_1}, \ldots, s_{\alpha_n}^{\eps_n})$,
+	\[
+	\varphi((s_{\alpha_1}^{\eps_1}, \ldots, s_{\alpha_n}^{\eps_n})) = \phi(s_{\alpha_1})^{\eps_1} \cdots \phi(s_{\alpha_n})^{\eps_n} \in H.
+	\]
+	If the word contained $(s_\alpha, s_\alpha^{-1})$, then the result contains $\phi(s_\alpha) \phi(s_\alpha)^{-1} = e \in H$. So $\varphi$ is well-defined. As the group operation on $F(S)$ is given by concatenation, we see that $\varphi$ is a homomorphism.
+\end{proofbox}
+
+\begin{definition}
+	Let $S$ be a set, and $R \subseteq F(S)$. Then
+	\[
+	\langle S \mid R \rangle = F(S) / \langle\langle R \rangle\rangle,
+	\]
+	with
+	\[
+		\langle\langle R \rangle\rangle = \{(r_1^{\eps_1})^{g_1} \cdots (r_n^{\eps_n})^{g_n} \mid r_i \in R, \eps_i \in \{\pm1\}, g \in F(S)\} \lhd F(S),
+	\]
+	where $h^g = g^{-1}hg$. Call this a presentation of the group $\langle S \mid R \rangle$. If $S$ and $R$ are finite, call it a \emph{finite presentation}\index{finite presentation}.
+\end{definition}
+
+\begin{lemma}[Universal Property of Group Presentations]
+	For any group $H$, the function
+	\begin{align*}
+		\{\text{group homomorphisms }\psi : &\langle S \mid R \rangle \to H\} \\
+		\to \{\text{functions } \phi : S \to H &\text{ such that } R \subseteq \Ker(\varphi : F(S) \to H)\}
+	\end{align*}
+	is a bijection, by
+	\[
+		\psi \mapsto (\phi : S \overset{\iota}{\to} F(S) \surjto \langle S \mid R \rangle \overset{\psi}{\to} H).
+	\]
+\end{lemma}
+
+%lecture 10
+
+\begin{proofbox}
+	Suppose $\psi$, $\psi'$ determine functions $\phi = \phi' : S \to H$. Then
+	\[
+		\begin{tikzcd}
+			F(S) \arrow[r, "\text{quot}"] & \langle S \mid R \rangle \arrow[r, bend left, "\psi"'] \arrow[r, bend right, "\psi'"'] & H
+		\end{tikzcd}	
+	\]
+	are equal by the universal property of free groups. As quotient is onto, $\psi = \psi'$.
+
+	Conversely, given $\phi: S \to H$ such that $\varphi(r) = e$ for all $r \in R$, consider
+	\[
+	\varphi : F(S) \to H.
+	\]
+	Now $R \subseteq \Ker \varphi$, so as $\Ker \varphi$ is normal, $\langle \langle R \rangle \rangle \leq \Ker \varphi$. Thus $\varphi$ descends to a homomorphism
+	\[
+	\psi : \langle S \mid R \rangle = \frac{F(S)}{\langle \langle R \rangle \rangle } \to H,
+	\]
+	as is required.
+\end{proofbox}
+
+\begin{exbox}
+	If $G$ is a group, the function $\id : G \to G$ gives a homomorphism $f : F(G) \to G$, which is onto. Let $R = \Ker(\phi)$. Then
+	\[
+	\langle G \mid R \rangle = \frac{F(G)}{\langle \langle R \rangle \rangle} \cong G.
+	\]
+	Essentially, this is saying that a group is what you get when you take the elements, related by their relations.
+\end{exbox}
+
+\begin{exbox}
+	Let $G = \langle a, b \mid a \rangle$ and $H = \langle t \mid \rangle$. Now consider $\phi : \{a, b\} \to H$ by $a \mapsto e$ and $b \mapsto t$. Then $\varphi(a) = e$, so we get a homomorphism
+	 \[
+	\psi : \langle a, b, \mid a \rangle \to \langle t \mid \rangle.
+	\]
+	Moreover, we can take $\phi : \{t\} \to G$ by $t \mapsto b$. Then $\psi' : \langle t \mid \rangle \to \langle a, b \mid a \rangle$. Since $\psi' \circ \psi([a]) = [e] = [a]$, and  $\psi \circ \psi([b]) = [b]$, as $[a]$ and $[b]$ generate we have $\psi' \circ \psi = \id$. Moreover, $\psi \circ \psi' = \id$, so indeed
+	\[
+	\langle a, b \mid a \rangle = \langle t \mid \rangle.
+	\]
+\end{exbox}
+
+\begin{exbox}
+	Let $G = \langle a, b \mid ab^{-3}, ba^{-2} \rangle$. Then $[a][b]^{-3} = e$, so $[a] = [b]^3$. Moreover $[b][a]^{-2} = e$, so $[b] = [a]^2$.
+
+	Hence we get $[a] = [a]^6$, or $e = [a]^5$. Moreover $[b] = [a]^2$, so these relation show that every element is equal to one of $e, [a], [a]^2, [a]^3$ or $[a]^4$. We will show that the group has exactly five elements.
+
+	Consider $\phi : \{a, b\} \to \mathbb{Z}/5$, such that $\phi(a) = 1$, $\phi(b) = 2$. Then $\varphi(ab^{-3}) = e - \varphi(ba^{-2})$, so we get a homomorphism $\psi : \langle a, b \mid ab^{-3}, ba^{-2} \rangle \to \mathbb{Z} / 5$, which is isomorphic.
+\end{exbox}
+
+\subsection{Free Products with Amalgamation}
+\label{sub:fp}
+
+Consider group homomorphisms
+\[
+\begin{tikzcd}
+	G_1 & H \arrow[l, "i_1"'] \arrow[r, "i_2"] & G_2,
+\end{tikzcd}
+\]
+and suppose $G_i = \langle S_i \mid R_i \rangle$ The \emph{free product}\index{free product} of $G_1$ and $G_2$ is
+\[
+G_1 \ast G_2 = \langle S_1 \sqcup S_2 \mid R_1 \sqcup R_2 \rangle.
+\]
+The functions
+\[
+S_i \to S_1 \sqcup S_2 \to F(S_1 \sqcup S_2) \to G_1 \ast G_2
+\]
+induce homomorphisms
+\[
+\begin{tikzcd}
+	G_1 \arrow[r, "j_1"] & G_1 \ast G_2 & \arrow[l, "j_2"'] G_2.
+\end{tikzcd}
+\]
+The \emph{free product with amalgamation}\index{free product with amalgamation} over $H$ is the quotient
+\[
+G_1 \ast_H G_2 = G_1 \ast G_2 / \langle \langle j_1 i_1(h) (j_2 i_2(h))^{-1} \mid h \in H \rangle \rangle
+\]
+Hence the square
+\[
+\begin{tikzcd}
+	H \arrow[r, "i_1"]\arrow[d, "i_2"] & G_1 \arrow[d, "j_1"] \\
+	G \arrow[r, "j_2"] & G_1 \ast_H G_2
+\end{tikzcd}
+\]
+commutes.
+
+\begin{lemma}[Universal Property of Free Products with Amalgamation]
+	For any group $K$, the following is a bijection:
+	\begin{align*}
+		\{\text{group homomorphisms } &\phi : G_1 \ast_H G_2 \to K\} \\
+		\to \{\text{group homomorphisms } \phi_1 &: G_1 \to K, \phi_2 : G_2 \to K \text{ such that } \phi_1 \circ i_1 = \phi_2 \circ i_2\}.
+	\end{align*}
+	This is by
+	\[
+		\phi \mapsto [G_i \overset{j_i}{\to} G_1 \ast_H G_2 \overset{\phi}{\to} H].
+	\]
+\end{lemma}
+
+In essence the following diagram commutes.
+
+\[
+\begin{tikzcd}
+	H \arrow[r, "i_1"]\arrow[d, "i_2"] & G_1 \arrow[d, "j_1"] \arrow[ddr, bend left, "\phi_1"] &\\
+	G \arrow[r, "j_2"] \arrow[drr, bend right, "\phi_2"] & G_1 \ast_H G_2 \arrow[dr, "\phi"] & \\
+			   & & K
+\end{tikzcd}
+\]
+
+\newpage
+
+\section{The Seifert-Van Kampen Theorem}
+\label{sec:svk_thm}
+
+Let $X$ be a space, $A, B \subseteq X$ be subspaces. Moreover let $x_0 \in A \cap B$. Then we get a commutative diagram
+\[
+\begin{tikzcd}
+	\pi_1(A \cap B, x_0) \arrow[r] \arrow[d] & \pi_1(A, x_0) \arrow[d] \\
+	\pi_1(B, x_0) \arrow[r] & \pi_1(X, x_0)
+\end{tikzcd}
+\]
+The universal property says that this gives a homomorphism
+\[
+\pi_1(A, x_0) \ast_{\pi_1(A \cap B, x_0)} \pi_1(B, x_0) \to \pi_1(X, x_0).
+\]
+
+\begin{theorem}[Seifert-Van Kampen]
+	Let $X$ be a space, $A, B \subseteq X$ be open subsets which cover $X$ and such that $A \cap B$ is path-connected.
+
+	Then for any $x_0 \in A \cap B$, the induced map
+	\[
+	\pi_1(A, x_0) \ast_{\pi_1(A \cap B, x_0)} \pi_1(B, x_0) \to \pi_1(X, x_0)
+	\]
+	is an isomorphism.
+\end{theorem}
+
+\begin{exbox}
+	Consider $S^n$ for $n \geq 2$. Let $A = S^n - \{(1, 0, \ldots, 0)\}$ and $B = S^n - \{(-1, 0, \ldots, 0)\}$. Then $A, B \cong \mathbb{R}^n$ by a projection, and these are contractible, so $A , B \simeq \{\ast\}$.
+
+	Moreover, $A \cap B \cong S^{n-1} \times (-1, 1) \simeq S^{n-1}$, which is path-connected for $n \geq 2$. So
+	\[
+		\pi_1(S^n, \ast) \cong \{e\} \ast_{\pi_1(S^{n-1}, \ast)} \{e\} = \{e\}.
+	\]
+	So $S^n$ is simply-connected.
+\end{exbox}
+
+\begin{exbox}
+	There exists a 2-sheeted covering map $p : S^n \to \mathbb{RP}^n$. For $n \geq 2$, $S^n$ is simply-connected, so this is a universal cover. So,
+	\[
+		\pi_1(\mathbb{RP}^n, \ast) \overset{\text{bij}}{\to} p^{-1}(\ast),
+	\]
+	which has two elements. So $\pi_1(\mathbb{RP}^n, \ast) \cong \mathbb{Z}/2$.
+\end{exbox}
+
+For the next example, we define, for $(X, x_0)$ and $(Y, y_0)$ based spaces,
+\[
+X \vee Y = (X \sqcup Y)/(x_0 \sim y_0).
+\]
+
+\begin{exbox}
+	Let $S^1 \in \mathbb{C}$ have basepoint $1 \in S^1 \subseteq \mathbb{C}$ Then consider $S^{1} \vee S^1$, which is covered by $(S^1 - \{-1\}) \vee S^1 = U$, and $S_1 \vee (S^1 - \{-1\}) = V$. Then $U, V \simeq S^1$, and $U \cap V \simeq \{\ast\}$.
+
+	So by Seifert-Van Kampen,
+	\[
+		\pi_1(S^1 \vee S^1) \simeq \langle a \mid \rangle \ast_{\{e\}} \langle b \mid \rangle = \langle a, b \mid \rangle.
+	\]
+\end{exbox}
+
+%lecture 11
+
+\begin{exbox}
+	The function $\{a, b\} \to \mathbb{Z}/3$ given by $a , b \mapsto 1$ determines a homomorphism
+	\[
+	\varphi : \langle a, b \mid \rangle = \pi_1(S^1 \vee S^1, x_0) \to \mathbb{Z}/3,
+	\]
+	which is surjective. So
+	\[
+	K = \Ker(\varphi) \leq \pi_1(S^1 \vee S^1, x_0)
+	\]
+	is a subgroup of index 3. This corresponds to a covering space. What is it? It is a $p : \tilde X \to X$ with
+	\[
+	p^{-1}(x_0) \cong \frac{\pi_1(S^1 \vee S^1, x_0)}{K} \cong \mathbb{Z}/3.
+	\]
+	Our thing looks like this:
+	\[
+	\begin{tikzcd}[column sep = small, row sep = huge]
+		& Ka \arrow[dr, bend left = 10, "a"] \arrow[dr, bend right = 10, "b"'] & \\
+		K \arrow[ur, bend left = 10, "a"] \arrow[ur, bend right = 10, "b"'] & & Ka^2 \arrow[ll, bend left = 10, "a"] \arrow[ll, bend right = 10, "b"']
+	\end{tikzcd}
+	\]
+	Now if we consider $a \mapsto 1$, $b \mapsto 0$, this gives $\varphi : \pi_1(S^1 \vee S^1, x_0) \to \mathbb{Z}/3$, with kernel $K$. We want the covering space corresponding to $K$.
+	\[
+	\begin{tikzcd}[column sep = small, row sep = huge]
+		& Ka \arrow[dr, bend left = 10, "a"] \arrow[loop, out = 110, in = 70, looseness = 5, "b"] & \\
+		K \arrow[ur, bend left = 10, "a"] \arrow[loop, out = 230, in = 190, looseness = 5, "b"] & & Ka^2 \arrow[ll, bend left = 10, "a"] \arrow[loop, out = 350, in = 310, looseness = 5, "b"]
+	\end{tikzcd}
+	\]
+	The universal cover of $S^1 \vee S^1$ is a tree thing.
+\end{exbox}
+
+We now defer to the proof of Seifert-Van Kampen.
+
+\begin{proofbox}
+	We can assume that $A, B$ are path-connected.
+
+	First, we show that $\phi$ is surjective. Let $\upg : I \to X$ be a loop. Then $\{\upg^{-1}(A), \upg^{-1}(B)\}$ is an open cover of $I$, so by the Lebesgue number lemma there is an $n \gg 0$ such that each $[i/n, (i+1)/n]$ is sent into $A$ or $B$ (or both).
+
+	By concatenating interval which lie entirely in $A$ or $B$, we can write $\upg = \upg_1 \cdot \upg_2 \cdot \ldots \cdot \upg_k$, with each $\upg_i$ having endpoints in $A \cap B$. This is done by concatenating adjacent paths which lie in both $A$ or $B$.
+
+	Now choose paths $u_i$ from $\upg_i(1)$ to $x_0$ in $A \cap B$. Then
+	\[
+	\upg \simeq (\upg_1 \cdot u_1) \cdot (u_1^{-1} \cdot \upg_2 \cdot u_2) \cdot \ldots \cdot (u_{n-1}^{-1} \cdot \upg_n).
+	\]
+	Now each of these is a loop based at $x_0$, lying in $A$ or in $B$. So $[\upg] \in \Img(\phi)$, as required.
+
+	Now we show that $\phi$ is injective. Note that $\pi_1(A, x_0) \ast_{\pi_1(A \cap B, x_0)} \pi_1(B, x_0)$ has the following description: it is generated by,
+	\begin{enumerate}[(i)]
+		\item for $\upg : I \to A$ a loop in $A$, $[\upg]_A$,
+		\item for $\upg : I \to B$ a loop in $B$, $[\upg]_B$,
+	\end{enumerate}
+	with relations:
+	\begin{enumerate}[(i)]
+		\item If $\upg \simeq \upg'$ in $A$, then $[\upg]_A = [\upg']_A$, and similarly for $B$.
+		\item If $\upg : I \to A \cap B$, then $[\upg]_A = [\upg]_B$.
+		\item $[\upg]_A [\upg']_A = [\upg \cdot \upg']_A$, and similarly for $B$.
+	\end{enumerate}
+	Suppose that
+	\[
+		\phi([\upg_1]_{A_{i1}} [\upg_2]_{A_{i_2}} \cdots [\upg_n]_{A_{i_n}}) = [c_{x_0}],
+	\]
+	so $\upg_1 \cdots \upg_n \simeq_H c_{x_0}$ in $X$. Take this $H : I \times I \to X$. We can subdivide $I \times I$ into squares of size $1/N$ with $n \mid N$ such that each square is sent into $A$ or $B$, or both.
+
+	Choose paths $u_{ij}$ from $H(i/N, j/N)$ to $x_0$ such that, if it is a vertex of a box labelled $A$, the path is in $A$, and if it is a vertex of a box labelled $B$, the path is in $B$.
+
+	Now there is an insane diagram to form a homotopy $G$, which has the property that it decomposes into rectangles with vertices sent to $x_0$, and each rectangle is in $A$ or in $B$. This shows that $[\upg_1]_{A_{i1}} [\upg_2]_{A_{i_2}} \cdots [\upg_n]_{A_{i_n}}$ can be transformed into the trivial word using the three kinds of relations described.
+\end{proofbox}
+
+\subsection{Attaching a Cell}
+\label{sub:+_cell}
+
+Let $f : (S^{n-1}, \ast) \to (X, x_0)$. Then let
+\[
+Y = X \cup_f D^n = \frac{X \sqcup D^n}{f(x) \sim x \in \partial D^n = S^{n-1}}.
+\]
+
+\begin{theorem}
+	If $n \geq 3$, then
+	\[
+		\mathrm{inc}_\ast (X, x_0) \to \pi_1(Y, [x_0])
+	\]
+	is an isomorphism. If $n = 2$, then
+	\[
+		\mathrm{inc}_\ast (X, x_0) \to \pi_1(Y, [x_0])
+	\]
+	is the quotient by the normal subgroup generated by $[f] \in \pi_1(X, x_0)$.
+\end{theorem}
+
+%lecture 12
+
+\begin{proofbox}
+	Let $U = \mathrm{int}(D^n)$, and $V = X \cup_f (D^n \setminus \{0\})$. Then these give an open cover of $Y$. Choose a path $u$ in $U, V$ from $y_0$ to some $y_1 \in \mathrm{int}(D^n) = U$. If $n \geq 3$, then we know that $U \simeq \ast$, and $U \cap V \simeq S^{n-1} \times (0, 1)$ is simply-connected.
+
+	By Seifert-Van Kampen, we have that
+	\[
+	\pi_1(V, y_1) = \pi_1(U, y_1) \ast_{\pi_1(U \cap V, y_1)} \pi_1(V, y_1) \cong \pi_1(Y, y_1)
+	\]
+	Now by a change of basepoint isomorphism, we get $\pi_1(Y, y_0) \cong \pi_1(V, y_0)$. But $V$ strongly derogation retracts to $X$, so this is $\pi_1(X, y_0)$.
+
+	If instead $n - 2$, then $U \simeq \ast$, and $U \cap V \simeq S^1 \times (0, 1)$, so Seifer-Van Kampen says
+	\[
+		\{e\} \ast_{\mathbb{Z}} \pi_1(V, y_1) \cong  \pi_1(Y, y_1) \ast_{\pi_1(U \cap V, y_1)} \pi_1(V, y_1) \cong \pi_1(Y, y_1),
+	\]
+	or looking at where $1$ goes,
+	\[
+		\frac{\pi_1(V, y_1)}{\langle \langle u^{-1}_\# [f] \rangle \rangle} \cong \pi_1(Y, y_1).
+	\]
+	Using a change of basepoint,
+	\[
+		\frac{\pi_1(V, y_0)}{\langle \langle [f] \rangle \rangle} \cong \pi_1(Y, y_0).
+	\]
+\end{proofbox}
+
+\begin{exbox}
+	Let's look at the torus $T$ (insert picture from geometry). This is the standard definition, however it has a cell structure with:
+	\begin{itemize}
+		\item 0-cell $x_0$.
+		\item 1-cells $a$, $b$.
+		\item A two-cell.
+	\end{itemize}
+	The 1-skeleton is $T^1 = S^1 \vee S^1$, so $\pi_1(T^1, x_0) = \langle a, b \mid \rangle$, and so
+	\[
+	\pi_1(T, x_0) = \langle a, b \mid aba^{-1}b^{-1}\rangle.
+	\]
+	Quite cool! We can check that this is isomorphic to $\mathbb{Z} \times \mathbb{Z}$, since this is saying that $ab = ba$, i.e. the group is abelian.
+\end{exbox}
+
+\begin{corollary}
+	For $G = \langle S \mid R \rangle$ with $S, R$ finite, there is a two-dimensional based cell-complex $(X, x_0)$ with
+	\[
+	\pi_1(X, x_0) = G.
+	\]
+\end{corollary}
+
+\begin{proofbox}
+	Let $Y$ be the wedge of $|S|$-many circles. Sending $s \in S$ to the $s$-th circle gives an isomorphism $\langle s \mid \rangle \cong \pi_1(Y, y_0)$.
+
+	Each word $r \in R$ is an element of $\langle S \mid \rangle$, so gives a loop $[ \upg_r ] \in \pi_1(Y, y_0)$. Attaching 2-cells to $Y$ along $\{\upg_r\}_{r \in R}$ gives $(X, x_0)$ with
+	\[
+	\pi_1(X, x_0) = \frac{\langle S \mid \rangle}{\langle\langle r \in R \rangle \rangle} = \langle S \mid R \rangle.
+	\]
+\end{proofbox}
+
+\subsection{Refining Seifert-Van Kampen}
+\label{ref_svk}
+
+\begin{definition}
+	A subset $A \subseteq X$ is called a \emph{neighbourhood deformation retract}\index{neighbourhood deformation retract} (NDR) if there is an open neighbourhood $A \subseteq U \subseteq X$, and $U$ strongly deformation retracts to $A$.
+\end{definition}
+
+\begin{theorem}[Seifert-Van Kampen]
+	Let $X$ be a space, $A, B \subseteq X$ closed subsets which cover $X$ and such that $A \cap B$ is path-connected, and is a NDR in both $A$ and $B$. Then
+	\[
+	\pi_1(A, x_0) \ast_{\pi_1(A \cap B, x_0)} \pi_1(B, x_0) \cong \pi_1(X, x_0).
+	\]
+\end{theorem}
+
+\begin{proofbox}
+	Let $A \cap B \subseteq U \subseteq A$, and $A \cap B \subseteq V \subseteq B$ for $U, V$ open, and strongly deformation retractable to $A \cap B$. Observe that $(A \cup V)^{c} = B \setminus V$, and $(B \cup U)^{c} = A \setminus U$ are closed. Hence $A \cup V$, $B \cup U$ give an open cover of $X$.
+
+	The deformations of $U$ and $V$ to $A \cap B$ glue to give a deformation of $(A \cup V) \cap (B \cup U) = U \cup V$ to $A \cap B$, $A \cup V$ to $A$ and $B \cup U$ to $B$.
+
+	We can now use Seifert-Van-Kampen on the open cover, and observe that
+	\[
+	\begin{tikzcd}
+		\pi_1(B) \arrow[d, "\sim"] & \pi_1(A \cap B) \arrow[l] \arrow[r] \arrow[d, "\sim"] & \pi_1(A) \arrow[d, "\sim"] \\
+		\pi_1(B \cup U) & \pi_1((A \cup V) \cap (B \cup U)) \arrow[l] \arrow[r] & \pi_1(A \cup V),
+	\end{tikzcd}
+	\]
+	so the amalgamated free products are the same, and hence we get what we want.
+\end{proofbox}
+
+\subsection{Surfaces}
+\label{sub:surf}
+
+\begin{exbox}
+	We are going to look at a torus with a ball cut out of it (the ball is actually a triangle).
+
+	Then since it has genus one and has boundary a triangle, it is in some way homeomorphic to a triangle with a little handle.
+
+	But the torus cut out strongly deformation retract to $S^1 \vee S^1$, so $\pi_1(X, x_0) = \langle a, b \mid \rangle$ with $[r] = aba^{-1}b^{-1}$.
+
+	Now consider a whole lot of bumpy pizzas glued together. We will do this $g$ many times to get $F_g$. Applying Seifert-Van Kampen (the closed version) $g$ times gives
+	\[
+	\pi_1(F_g, x_0) = \langle a_1, b_1, a_2, b_2, \ldots, a_g, b_g \mid\rangle.
+	\]
+	The boundary is $r_1 r_2 \cdots r_g$, so attached a two cell along it we get $\Sigma_g$, to get that the fundamental group is
+	\[
+	\pi_1(\Sigma_g, x_0) = \langle a_1, b_1, \ldots, a_g, b_g \mid a_1b_1a_1^{-1}b_1^{-1} a_2 b_2 a_2^{-1} b_2^{-1} \cdots a_g b_g a_g^{-1} b_g^{-1} \rangle.
+	\]
+	Nice!
+\end{exbox}
+
+\begin{exbox}
+	Recall we can find $\mathbb{RP}^2$ as a skeleton: it has one-skeleton $a$, and the two-cell is attached along $a \cdot a$, so
+	\[
+	\pi_1(\mathbb{RP}^2, \ast) \simeq \langle a \mid a^2\rangle = \mathbb{Z}/2.
+	\]
+	Now take $Y$, which will be $\mathbb{RP}^2$ with a disk cut out (again a triangle). This is homeomorphic to something with a triangle $r$ as a boundary and a non-orientable thing in the middle.
+
+	Now $Y \simeq S^1$, so $\pi_1(Y, y_0) = \langle a \mid \rangle$, and $[r] = a^2$. Glue $n$ of these together to form $E_n$. Then Seifert-Van Kampen says
+	\[
+	\pi_1(E_n, y_n) = \langle a_1, \ldots, a_n \mid \rangle.
+	\]
+	The boundary is then $r_1 r_2 \cdots r_n$, so attaching a 2-cell along it we get a closed surface
+	\[
+	\pi_1(S_n, y_0) = \langle a_1, a_2, \ldots, a_n \mid a_1^2 a_2^2 \cdots a_n^2 \rangle.
+	\]
+\end{exbox}
+
+%lecture 13
+
+\newpage
+
+\section{Homology}
+\label{sec:hom}
+
+\subsection{Simplicial Complexes}
+\label{sub:simp_comp}
+
+\begin{definition}
+	A finite set of points $a_0, a_1, \ldots, a_n \in \mathbb{R}^m$ is \emph{affinely independent}\index{affinely independent} if:
+	\begin{itemize}
+		\item $\sum_{i = 1}^n t_i a_i = 0$ and
+		\item $\sum_{i = 1}^n t_i = 0$
+	\end{itemize}
+	if and only if $(t_1, \ldots, t_n) = 0$.
+\end{definition}
+
+\begin{lemma}
+	$a_0, \ldots, a_n \in \mathbb{R}^m$ are affinely independent if and only if $a_1 - a_0, \ldots, a_n - a_0$ are linearly independent.
+\end{lemma}
+
+\begin{proofbox}
+	Let $a_0, \ldots, a_n$ be affinely independent. Suppose that
+	\[
+	\sum_{i = 0 }^n s_i(a_i - a_0) = 0.
+	\]
+	This means that
+	\[
+		\left( - \sum_{i = 1}^n s_i \right)a_0 + s_1 a_1 + \cdots + s_n a_n = 0,
+	\]
+	and note that the sum of coefficients is $0$, so we get $(s_1, \ldots, s_n) = 0$ by affine independence.
+
+	We can do a similar thing for the converse.
+\end{proofbox}
+
+In particular, since we have at most $n$ linearly independent points in $\mathbb{R}^n$, we can have at most $n + 1$ affinely independent points.
+
+\begin{definition}
+	If $a_0, \ldots, a_n \in \mathbb{R}^m$ are affinely independent (AI), then they define an $n$-\emph{simplex}\index{simplex}
+	\[
+		\sigma = \langle a_0, \ldots, a_n \rangle = \left\{ \sum_{i = 1}^n t_i a_i \mid \sum_{i = 0}^n t_i = 1, t_i \geq 0 \right\},
+	\]
+	given by the convex hull of the points $a_0, \ldots, a_n$. These $a_i$ are called the \emph{vertices}\index{vertex} of $\sigma$, and we say they span $\sigma$.
+
+	If $x \in \langle a_0, \ldots, a_n \rangle$, then $x$ can be written uniquely as
+	\[
+	x = \sum_{i = 0}^n t_i a_i,
+	\]
+	for real numbers $t_0, \ldots, t_n$. Call the $t_i$'s the \emph{barycentric coordinates}\index{barycentric coordinates} of $x$.
+
+	A \emph{face}\index{face} of a simplex $\sigma = \langle a_0, \ldots, a_n \rangle$ is a simplex $\tau$ spanned by a subset of $\{a_0, \ldots, a_n\}$. We write $\tau \leq \sigma$. Write $\tau < \sigma$ if $\tau$ is a proper face.
+
+	The \emph{boundary}\index{boundary} of a simplex $\sigma$, written $\partial \sigma$, is the union of all of its proper faces. The \emph{interior}\index{interior} of $\sigma$, $\mathring \sigma$ is $\sigma \setminus \partial \sigma$.
+\end{definition}
+
+\begin{lemma}
+	Let $\sigma$ be a $p$-simplex in $\mathbb{R}^m$ and $\tau$ be a $p$-simplex in $\mathbb{R}^n$. Then $\sigma$ and $\tau$ are homeomorphic.
+\end{lemma}
+
+\begin{proofbox}
+	Let $\sigma = \langle a_0, \ldots, a_p \rangle$ and $\tau = \langle b_0, \ldots, b_p \rangle$. Define $h : \sigma \to \tau$ by
+	\[
+	\sum_{i = 0}^p t_i a_i \mapsto \sum_{i = 0}^p t_i b_i.
+	\]
+	This is well-defined and a bijection, by uniqueness of barycentric coordinates. As the $a_i - a_0$ are linearly independent, $h$ extends to an affine map $\hat h : \mathbb{R}^m \to \mathbb{R}^n$, so $h$ is continuous. Similarly so is its inverse.
+\end{proofbox}
+
+\begin{definition}
+	A \emph{geometric} (or Euclidean) \emph{simplicial complex}\index{simplicial complex} in $\mathbb{R}^n$ is a finite set $K$ of simplices in $\mathbb{R}^n$ such that:
+	\begin{enumerate}[(i)]
+		\item If $\sigma \in K$ and $\tau \leq \sigma$, then $\tau \in K$.
+		\item If $\sigma, \tau \in K$, then either $\sigma \cap \tau = \emptyset$ or $\sigma \cap \tau$ is a face of both $\sigma$ and $\tau$.
+	\end{enumerate}
+\end{definition}
+
+I.e. a simplicial complex is what we get when we are allowed to glue a bunch of simplices along their faces.
+
+The \emph{dimension}\index{dimension} of a simplicial complex $K$ is the largest $p$ such that $K$ contains a $p$-simplex. The \emph{polyhedron}\index{polyhedron} of $K$ is the space
+\[
+|K| = \bigcap_{\sigma \in K}\sigma \subseteq \mathbb{R}^m.
+\]
+
+The $d$-\emph{skeleton}\index{$d$-skeleton} $K_{(d)}$ of $K$ is the sub-simplicial complex containing all simplices of $K$ of dimension at most $d$.
+
+Observe that as we asserted $K$ was finite, and simplices are compact, we get that $|K|$ is compact and Hausdorff.
+
+\begin{definition}
+	A \emph{triangulation}\index{triangulation} of a space $X$ is a geometric simplicial complex $K$ and a homeomorphism $h : |K| \to X$.
+\end{definition}
+
+\begin{exbox}
+	The \emph{standard} $n$-\emph{simplex} is $\Delta^n = \langle e_1, \ldots, e_{n+1}\rangle \subseteq \mathbb{R}^{n+1}$. It, along with its faces, defines a simplicial complex.
+
+	The \emph{simplicial} $n-1$-\emph{sphere} is the simplicial complex given by the proper faces of $\Delta^n$. Its polyhedron is $\partial \Delta^n$.
+
+In $\mathbb{R}^{n+1}$ consider the $2^{n+1}$ simplices given by $\langle \pm e_1, \pm e_2, \ldots, \pm e_{n+1} \rangle$. Let $K$ be given by these and all their faces. Define $h : |K| \subset \mathbb{R}^{n+1} \to S^n$ by $x \mapsto x/|x|$. This is continuous, and a bijection. As $|K|$ and $S^n$ are compact Hausdorff, this is a homeomorphism.
+\end{exbox}
+
+\begin{definition}
+	Write $V_K$ for the set of vertices of $K$. A \emph{simplicial map}\index{simplicial map} $f$ from $K$ to $L$ is a function $f : V_K \to V_L$ such that if $\sigma = \langle a_0, \ldots, a_n \rangle \in K$, then $\{f(a_0), \ldots, f(a_n)\}$ spans a simplex of $L$, called $f(\sigma)$. We write $f : K \to L$.
+\end{definition}
+
+We write $\{f(a_0), \ldots, f(a_n)\}$ instead of saying $f(a_0), \ldots, f(a_n)$ is a simplex to account for the possibility that $f(a_i)$ are not affinely independent, otherwise we could not map a larger dimensional simplex to a smaller one.
+
+\begin{exbox}
+	The map $f : \Delta^1 \to \Delta^2$ by $(1, 0) \mapsto (1, 0, 0)$ and $(0, 1) \mapsto (0, 1, 0)$ is a simplicial map.
+
+	Geometrically we are including an edge into the 2-simplex.
+
+	The map $g : \Delta^2 \to \Delta^1$ given by $(1, 0, 0) \mapsto (1, 0)$, $(0, 1, 0) \mapsto (1, 0)$ and $(0, 0, 1) \mapsto (0, 1)$ is a simplicial map.
+
+	Geometrically we are reducing a 2-simplex into an edge.
+\end{exbox}
+
+\begin{lemma}
+	A map $f : K \to L$ of simplicial complexes induces a continuous map $|f| : |K| \to |L|$, and $|f \circ g| = |f| \circ |g|$.
+\end{lemma}
+
+%lecture 14
+
+\begin{proofbox}
+	For $\sigma \in K$, where $\sigma = \langle a_0, a_1, \ldots, a_p\rangle$, define $f_\sigma : \sigma \to |L|$ by
+	\[
+	\sum_{i=  0}^p t_i a_i \mapsto \sum_{i = 0}^p t_i f(a_i),
+	\]
+	which is linear in the $t_i$, so is continuous. If $\tau \leq \sigma$, then $f_\tau = f_\sigma|_\tau$, so $f_\sigma|_{\sigma \cap \sigma'} = f_{\sigma \cap \sigma'} = f_{\sigma'}|_{\sigma \cap \sigma'}$ for any other $\sigma' \in K$.
+
+	Hence the maps $f_\sigma$ give rise to a continuous 
+	\[
+	|f| : |K| = \bigcup_{\sigma \in K} \sigma \to |L|,
+	\]
+	by the gluing lemma. The formula for $|f|$ shows that it behaves as claimed under composition.
+\end{proofbox}
+
+We can recover $f$ from $|f|$ and the distinct sets and the discrete sets $V_K \subseteq |K|$, $V_L \subseteq |L|$ i.e. a simplicial map is the same as a continuous map $|K| \to |L|$ which sends vertices to vertices, and is affine on each simplex.
+
+\begin{definition}
+	For a $x \in |K|$,
+	\begin{enumerate}[(i)]
+		\item The (open) \emph{star}\index{star} of $x$ is the union of the interiors of the simplicies which contain $x$:
+			\[
+			\mathrm{St}_K(x) = \bigcup_{\substack{\sigma \in K\\ x \in \sigma}} \mathring \sigma \subseteq \mathbb{R}^n.
+			\]
+			The complement of $\mathrm{St}_K(x)$ is the union of all simplices which do not contain $x$, a polyhedron, so it is closed. Thus $\mathrm{St}_K9x)$ is open.
+		\item The \emph{link}\index{link} of $(x)$, $\mathrm{Lk}_K(x)$, is the union of those simplices which do not contain $x$, but are faces of a simplex which does contain $x$.
+	\end{enumerate}
+\end{definition}
+
+We can draw the stars and links for points in 2-simplices:
+
+\subsection{Simplicial Approximation}
+\label{sub:simp_app}
+
+\begin{definition}
+	Let $f : |K| \to |L|$ be a continuous map. A \emph{simplicial approximation}\index{simplicial approximation} to $f$ is a function $g : V_K \to V_L$ such that
+	\[
+	f(\mathrm{St}_K(v)) \subseteq \mathrm{St}_L(g(v)),
+	\]
+	for all $v \in V_K$.
+\end{definition}
+
+\begin{lemma}
+	If $g$ is a simplicial approximation to a continuous map $f$, then $g$ is a simplicial map, and $f$ is homotopic to $|g|$. Furthermore, this homotopy may be taken relative to $\{x \in |K| \mid f(x) = |g|(x)\}$.
+\end{lemma}
+
+\begin{proofbox}
+	To show that $g$ defines a simplicial map, for $\sigma \in K$ we must show that the images of $g$ of the vertices of $\sigma$ span a simplex in $L$.
+
+	For $x \in \mathring \sigma$, then
+	\[
+	x \in \bigcap_{v \in V_\sigma} \mathrm{St}_K(v),
+	\]
+	so we have
+	\[
+	f(x) \in \bigcap_{v \in V_\sigma}f(\mathrm{St}_K(v)) \subseteq \bigcap_{v \in V_\sigma} \mathrm{St}_L(g(v)).
+	\]
+	If $\tau$ is the unique simplex of $L$ with $f(x) \in \mathring \tau$, then each $g(v)$ is a vertex of $\tau$. So $\{g(v)\}$ span a face of $\tau$, which is a simplex of $L$.
+
+	Now we want to show that $f \simeq |g|$. If $|L| \subseteq \mathbb{R}^m$, then let $H : |K| \times I \to |L|$ be given by
+	\[
+		(x, t) \mapsto t f(x) + (1 - t)|g|(x).
+	\]
+	This is continuous, and so we need to show that it lies in $|L|$. Let $x \in \mathring \sigma \subseteq |K|$, and suppose $f(x) \in \mathring \tau \subseteq |L|$. If $\sigma = \langle a_0, \ldots, a_p\rangle$, then by the above, each $g(a_i)$ is a vertex of $\tau$. Then
+	\[
+	|g|(x) = \sum_{i = 0}^p t_i g(a_i) \in \tau,
+	\]
+	as it is a convex linear combination of vertices of $\tau$. As $f(x) \in \tau$, each of $t f(x) + (1-t) |g|(x)$ lies in $\tau$ as well.
+\end{proofbox}
+
+\begin{definition}
+	The \emph{barycentre}\index{barycentre} of a simplex $\sigma = \langle a_0, a_1, \ldots, a_p \rangle$ is the point
+	\[
+	\hat \sigma = \frac{1}{p+1}(a_0 + a_1 + \cdots + a_p).
+	\]
+	The \emph{barycentric subdivision}\index{barycentric subdivision} of a simplicial complex $K$ is
+	\[
+		K' = \{ \langle \hat{\sigma_0}, \ldots, \hat{\sigma_p} \rangle \mid \sigma_i \in K \text{ and } \sigma_0 < \sigma_1 < \cdots < \sigma_p\}.
+	\]
+	With this definition, we define $K^{(r)} = (K^{(r-1)})'$.
+\end{definition}
+
+It is not obvious that this is a simplicial complex.
+
+\begin{proposition}
+	$K'$ is a simplicial complex, and $|K'| = |K|$.
+\end{proposition}
+
+\begin{proofbox}
+	There are many things to show in this proof. First we need, if $\sigma_0 < \sigma_1 < \cdots < \sigma_p$, then the $\hat{\sigma_i}$ are affinely independent. Indeed, suppose that
+	\[
+		\sum_{i = 0}^p t_i \hat{\sigma_i} = 0 \text{ and } \sum_{i = 0}^p t_i = 0.
+	\]
+	Let $j = \max\{i \mid t_j \neq 0\}$. Then
+	\[
+		\hat \sigma_j = - \sum_{i = 0}^{j-1} \frac{t_i}{t_j} \hat{\sigma_i} \in \sigma_{j-1},
+	\]
+	so $\hat{\sigma_j}$ lies in a proper face of $\sigma_j$, which is not possible. Thus all $t_i$ must be $0$.
+
+	Next we show that $K'$ is a simplicial complex, which again has many parts. Let $\langle \hat{\sigma_0}, \ldots, \hat{\sigma_p}\rangle \in K'$. A face is given by omitting some of $\hat{\sigma_j}$. But omitting some $\sigma_j$'s from $\sigma_0 < \sigma_1 < \cdots < \sigma_p$ still gives a strictly increasing chain of simplices of $K$.
+
+Now let $\sigma' = \langle \hat{\sigma_0}, \ldots, \hat{\sigma_p}\rangle$ and $\tau' = \langle \hat{\tau_0}, \ldots, \hat{\tau_q} \rangle$, and consider $\sigma' \cap \tau'$. This is inside $\sigma_p \cap \tau_q$, which is a simplex $\delta$ of $K$. So there are simplices
+\[
+	\sigma'' = \langle \hat{\sigma_0} \cap \delta, \ldots, \hat{\sigma_p} \cap \delta \rangle, \qquad \tau'' = \langle \hat{\tau_0} \cap \delta, \ldots, \hat{\tau_q} \cap \delta\rangle
+\]
+of $K$. Now $\sigma' \cap \tau'$ = $\sigma'' \cap \tau''$. This reduces us to the case that $\sigma''$ and $\tau''$ are contained in a simplex $\delta$ of $K$.
+
+If $\sigma''$ and $\tau''$ contain $\hat \delta$, let $\bar\sigma'', \bar\tau''$ be the faces of $\sigma'', \tau''$ opposite to $\hat{\delta}$. Then $\sigma'' \cap \tau''$ is spanned by $\hat \delta$, and $\bar\sigma'' \cap \bar\tau'' $. But $\bar\sigma'' \cap \bar\tau'' \subseteq \partial \delta$, which has smaller dimension than $\delta$, so we can suppose it is a simplex of $\partial \delta$ by induction on dimension.
+
+If neither $\sigma''$ nor $\tau''$ contain $\hat \sigma$, then again $\sigma'' \cap \tau'' \subseteq \partial \delta$, so we can finish by induction on dimension.
+%lecture 15
+
+Now we show that $|K'| = |K|$. Note that $\langle \hat \sigma_0, \ldots, \hat \sigma_p\rangle \leq \sigma_p \subseteq |K|$, so we have $|K'| \subseteq |K|$. Conversely, if $x \in \sigma = \langle a_0, \ldots, a_p\rangle \subseteq |K|$, then we can write it as
+\[
+x = \sum_{i = 0}^p t_i a_i.
+\]
+We can reorder the $a_i$ so that $t_0 \geq t_1 \geq \cdots \geq t_p$, so
+\begin{align*}
+	x &= (t_0 - t_1) a_0 + 2(t_1 - t_2) \left( \frac{a_0 + a_1}{2} \right) + 3 (t_2 - t_1) \left( \frac{a_1 + a_2 + a_3}{3} \right) + \cdots \\
+	  &= (t_0 - t_1) \widehat{\langle a_0\rangle} + 2 (t_1 - t-2) \widehat{\langle a_0, a_1 \rangle} + 3 (t_2 - t_3) \widehat{\langle a_0, a_1, a_2 \rangle} + \cdots \\
+	  &\in \langle \widehat{\langle a_0 \rangle}, \widehat{\langle a_0, a_1 \rangle}, \ldots, \widehat{ \langle a_0, \ldots, a_p \rangle} \rangle \subseteq |K'|.
+\end{align*}
+\end{proofbox}
+
+The vertices of $K$ are in bijection with the simplices of $K$. Choose a function $K \to V_K$ which assigns to $\sigma$ some vertex of $\sigma$. Then we can take $g : V_{K'} \cong K \to V_K$.
+
+If $\langle \hat \sigma_0, \ldots, \hat \sigma_p \rangle$ is a simplex of $K'$, then $\sigma_0 \leq \cdots \leq \sigma_p$, and $g(\hat \sigma_i)$ is some vertex of $\sigma_i$, so is a vertex of $\sigma_p$. Thus $\{g(\hat \sigma_i)\}$ spans a face of $\sigma$, so is a simplex of $K$. So $g$ is a simplicial map.
+
+Also, if $\hat \sigma \in \tau' = \langle \hat \tau_0, \ldots, \hat \tau_p \rangle \in K'$, then $\hat \sigma \in \tau_p$, so $\sigma$ is a face of $\tau_p$. Thus $v_\sigma \in \sigma \subseteq \tau_p$. So
+\[
+\mathring \tau' \subseteq \mathring \tau_p \subseteq \mathrm{St}_K(v_\sigma).
+\]
+Thus $\mathrm{St}_{K'}(\hat \sigma) \subseteq \mathrm{St}_K(v_\sigma) = \mathrm{St}_K(g(\hat \sigma))$, so $g$ is a simplicial approximation to $\id : |K'| \to |K|$, so $|g| \simeq \id$.
+
+\begin{definition}
+	The \emph{mesh}\index{mesh} of $K$ is
+	\[
+		\mu(K) = \max\{|v_0 - v_1| \mid \langle v_0, v_1 \rangle \in K\}.
+	\]
+\end{definition}
+
+\begin{lemma}
+	Suppose $K$ has dimension at most $n$. Then $\mu(K^{(r)}) \leq (\frac{n}{n+1})^r \mu(K)$, so $\mu(K^{(r)}) \to 0$ as $r \to \infty$.
+\end{lemma}
+
+\begin{proofbox}
+	It is enough to prove the case $r = 1$. Let $\langle \hat \tau, \hat \sigma \rangle \in K'$, so $\tau \leq \sigma$ in $K$. Then
+	\[
+		|\hat \tau - \hat \sigma| \leq \max\{ |v - \hat \sigma| \mid v \text{ a vertex of } \sigma\}.
+	\]
+	Let $\sigma = \langle v_0, \ldots, v_m \rangle$ with $m \leq n$, and reorder so that the maximum is attained at $v = v_0$. Then
+	\begin{align*}
+		|v_0 - \hat \sigma| &= \left| v_0 - \frac{1}{m+1} \sum_{i = 0}^m v_i \right| = \left| \frac{m+1}{m+1} v_0 - \frac{1}{m+1} \sum_{i = 0}^m v_i \right| \\
+				    &= \frac{1}{m+1} \left| \sum_{i = 0}^m v_0 - v_i \right| \leq \frac{1}{m+1} \sum_{i = 1}^m |v_0 - v_i| \leq \frac{m}{m+1} \mu(K) \\
+				    &\leq \frac{n}{n+1} \mu(K).
+	\end{align*}
+\end{proofbox}
+
+\begin{theorem}[Simplicial Approximation Theorem]
+	Let $f : |K| \to |L|$ be a continuous map. Then there is a $r \gg 0$ and a simplicial map $g : K^{(r)} \to L$ such that $g$ is a simplicial approximation to $f$.
+
+	If $f$ is simplicial on some $|N| \subset |K|$, we can take $g|_{V_N} = f|_{V_N}$.
+\end{theorem}
+
+\begin{proofbox}
+	The $\mathrm{St}_L(w)$, for $w \in V_L$, is an open cover of $|L|$, so $\{f^{-1} \mathrm{St}_K(w)\}$ is an open cover of $|K|$; let $\delta > 0$ be the Lebesgue number for this cover. Choose $r \gg 0$ such that $\mu(K^{(r)}) < \delta$. For each $v \in V_{K^{(r)}}$, we have
+	\[
+	\mathrm{St}_{K^{(r)}}(v) \subseteq B_{\mu(K^{(r)})}(v) \subseteq f^{-1} \mathrm{St}_L(w),
+\]
+	for some $w \in V_L$. Define $g : V_{K^{(r)}} \to V_L$ by $g(v) = w$. Then
+	\[
+	f(\mathrm{St}_{K^{(r)}}(v)) \subseteq \mathrm{St}_L(g(v)),
+	\]
+	so $g$ is a simplicial approximation to $f$. So $g$ is a simplicial map. The final step is by choosing $w$ carefully when $v \in V_N$.
+\end{proofbox}
+
+\begin{corollary}
+	If $n < m$, then any map $f : S^n \to S^m$ is homotopic to a constant map.
+\end{corollary}
+
+\begin{proofbox}
+	Spheres are polyhedra. Take $S^n = |K|$, and $S^m = |L|$, then $f$ is homotopic to $g$ for some $g : K^{(r)} \to L$. This cannot hit any $m$-simplex of $L$, as $K$ has dimension at most $n$. So $|g|$ must miss every point on the interior of some $m$-simplex it is not onto.
+
+	Thus, it factors through $(S^{m} - \{\ast\}) \simeq \ast$, so is homotopic to a constant map.
+\end{proofbox}
+
+%lecture 16
+
+\subsection{Simplicial Homology}
+\label{sub:simp_hom}
+
+\begin{definition}
+	Let $K$ be a simplicial complex, and $\mathcal{O}_n(K)$ be the free abelian group with basis
+	\[
+		\{[v_0, v_1, \ldots, v_n] \mid v_i \text{ vertices of $K$ which span a simplex}\}.
+	\]
+	The $v_i$ are considered to be ordered, and could span a simplex of $\dim< n$, i.e. we could have repeats.
+
+	Let $T_n(K) \leq \mathcal{O}_n(K)$ be the subgroup spanned by:
+	\begin{enumerate}[(i)]
+		\item $[v_0, \ldots, v_n]$ containing a repeat.
+		\item $[v_0, \ldots, v_n] - \sgn(\sigma) [v_{\sigma(0)}, \ldots, v_{\sigma(n)}]$ for a permutation $\sigma$ of $\{0, 1, \ldots, n\}$.
+	\end{enumerate}
+	Then we can define
+	\[
+	C_n(K) = \frac{\mathcal{O}_n(K)}{T_n(K)},
+	\]
+	the quotient group.
+\end{definition}
+
+\begin{lemma}
+	There is a non-canonical isomorphism $C_n(K) \cong \mathbb{Z}\{n\text{-simplices of } K\}$.
+\end{lemma}
+
+\begin{proofbox}
+	Choose a total order $\prec$ of $V_K$. Then each $n$-simplex of $K$ defines a canonical ordered simplex $[\sigma] \in \mathcal{O}_n(K)$ by ordering its vertices such that $a_0 \prec a_1 \prec \cdots \prec a_n$. This gives a map $\phi : Z\{n\text{-simplices of } K\} \to \mathcal{O}_n(K)$, by $\sigma \mapsto [\sigma]$, and hence factors through $C_n(K)$.
+
+	For each $[a_0, \ldots, a_n] \in \mathcal{O}_n(K)$, there is a unique permutation $\tau$ of $\{0, 1, \ldots, n\}$ such that $a_{\tau(0)} \prec \cdots \prec a_{\tau(n)}$, and let $\sgn[a_0, \ldots, a_n] = \sgn(\tau)$. Define $\rho : \mathcal{O}_n(K) \to \mathbb{Z}\{n\text{-simplices of } K\}$ by
+	\[
+		[a_0, \ldots, a_n] \mapsto
+		\begin{cases}
+			\sgn[a_0, \ldots, a_n] \langle a_0, \ldots, a_n \rangle & \text{no repeats}, \\
+			0 & \text{repeats}.
+		\end{cases}
+	\]
+	For this to descend to $C_n(K)$, we need $T_n(K)$ to be in the kernel. Clearly $[a_0, \ldots, a_n]$ with repeats are in the kernel, and 
+	\begin{align*}
+		\rho([v_0, \ldots, v_n] - \sgn(\sigma) [v_{\sigma(0)}, &\ldots, v_{\sigma(n)}]) = \sgn[v_0, \ldots, v_n] \langle v_0, \ldots, v_n \rangle \\
+											       &- \sgn(\sigma) \sgn[v_{\sigma(0)}, \ldots, v_{\sigma(n)} ] \langle v_{\sigma(0)}, \ldots, v_{\sigma(n)}\rangle \\
+											       &\qquad \qquad= 0.
+	\end{align*}
+	So we get $\rho' : C_n(K) \to \mathbb{Z}\{n\text{-simplices of } K\}$. Now $\rho' = \phi'(\sigma) = \sigma$. If $[a_0, \ldots, a_n]$ has no repeats, then
+	\begin{align*}
+		\phi' \circ \rho'([a_0, \ldots, a_n]) &= \phi'(\sgn[a_0, \ldots, a_n] \langle a_0, \ldots, a_n\rangle) \\
+						      &= \sgn[a_0, \ldots, a_n] \sgn[a_{\tau(0)}, \ldots, a_{\tau(1)}] \\
+						      &= [a_0, \ldots, a_n],
+	\end{align*}
+	modulo $T_n(K)$, so $\phi'$ and $\rho'$ are the same.
+\end{proofbox}
+
+Define a homomorphism
+\begin{align*}
+	d_n : \mathcal{O}_n(K) &\to \mathcal{O}_{n-1}(K) \\
+	[v_0, \ldots, v_n] &\mapsto \sum_{i = 0}^n (-1)^i [v_0, \ldots, \hat v_i, \ldots, v_n].
+\end{align*}
+
+\begin{lemma}
+	$d_n$ sends $T_n(K)$ to $T_{n-1}(K)$.
+\end{lemma}
+
+\begin{proofbox}
+	Note
+	\begin{align*}
+		d_n([v_0, \ldots, v_n] - \sgn(\sigma) &[v_{\sigma(0)}, \ldots, v_{\sigma(n)}]) \\
+		&= \sum_{i = 0}^n (-1)^{i}[v_0, \ldots, \hat v_i, \ldots, v_n] \\
+											      &- \sum_{i = 0}^n (-1)^i \sgn(\sigma) [v_{\sigma(0)}, \ldots, \hat v_{\sigma(i)}, \ldots, v_{\sigma(n)}].
+	\end{align*}
+	We need to show that this is trivial?? in $\mathcal{O}_{n-1}(K) / T_{n-1}(K)$. Suppose first $\sigma=  (j, j+1)$, so $\sgn(\sigma) = -1$. Then
+	\begin{align*}
+		\sum_{i = 0}^n(-1)^i &\sgn(\sigma) [v_{\sigma(0)}, \ldots, \hat v_{\sigma(i)}, \ldots, v_{\sigma(n)}] \\
+		&= \sum_{i = 0}^{n} (-1)^{j-1} [v_0, \ldots, \hat v_i, \ldots, v_{j+1}, v_j, v_{j+2}, \ldots, v_n] \\
+														     & \qquad + (-1)^{j+1}[v_0, \ldots, v_{j-1}, v_{j}, v_{j+1}, \ldots, v_n] \\
+														     &\qquad + (-1)^{j+1} [v_0, \ldots, v_{j-1}, v_{j+1}, v_{j+2}, v_j, \ldots, v_n] \\
+														     &+ \sum_{i = j+2}^n (-1)^{j+1} [v_0, \ldots, v_{j+1}, v_j, v_{j+2}, \ldots, \hat v_i, \ldots, v_n].
+	\end{align*}
+	In the first sum
+	\begin{align*}
+		[v_0, \ldots, \hat v_i, \ldots, v_{j-1}, v_{j+1}, v_j, \ldots, v_{n}] &= - [v_0, \ldots, \hat v_i, \ldots, v_n] \mod T_{n-1}(K).
+	\end{align*}
+	In the second sum, we get a similar thing. So the right hand side is equal to
+	\[
+		\sum_{i = 0}^n(-1)^i [v_0, \ldots, \hat v_i, \ldots, v_n] \mod T_{n-1}(K),
+	\]
+	as required. Since any $\sigma$ is a product of $(j, j+1)$, we get the same for any $\sigma$.
+
+	Now suppose $[v_0, \ldots, v_n]$ is such that $v_j = v_{j+1}$, with permutations. Hence writing out $d_{n}[v_0, \ldots, v_n]$, notice the summations are in $T_{n-1}(K)$ as they have a repeat, and the other two terms cancel.
+\end{proofbox}
+
+So $d_n$ induces a homomorphism
+\[
+d_n : C_n(K) \to C_{n-1}(K),
+\]
+given by the same function.
+
+\begin{lemma}
+	The composition $d_{n-1} \circ d_n : C_n (K) \to C_{n-2}(K)$ is zero.
+\end{lemma}
+
+\begin{proofbox}
+	At the level of $\mathcal{O}_n(K)$, compute
+	\begin{align*}
+		d_{n-1} \circ d_n [v_0, \ldots, v_n] &= d_{n-1} \left( \sum_{i = 0}^n (-1)^i [v_0, \ldots, \hat v_i, \ldots, v_n ] \right) \\
+						     &= \sum_{i = 0}^n (-1)^i \Biggl[ \sum_{k = 0}^{i-1}(-1)^k [v_0, \ldots, \hat v_k, \ldots, \hat v_i, \ldots, v_n] \\
+						     &+ \sum_{k = i}^{n-1} (-1)^k [v_0, \ldots, \hat v_i, \ldots, \hat v_{k+1}, \ldots, v_n] \Biggr].
+	\end{align*}
+	Then the coefficient of $[v_0, \ldots, \hat v_a, \ldots, \hat v_b, \ldots, v_n]$ is $(-1)^a (-1)^b + (-1)^a (-1)^{b+1} = 0$. As $[v_0, \ldots, v_n]$ generates, we get $d_{n-1} \circ d_n =0$.
+\end{proofbox}
+
+%lecture 17
+
+This means that
+\[
+\Img (d_n : C_n(K) \to C_{n-1}(K)) \subseteq \Ker (d_{n-1} : C_{n-1}(K) \to C_{n-2}(K)).
+\]
+
+\begin{definition}
+	The \emph{n'th simplicial homology group} of $K$ \index{simplicial homology group} is
+	\[
+	H_n(K) = \frac{\Ker(d_n : C_n(K) \to C_{n-1}(K))}{\Img(d_{n+1} : C_{n+1}(K) \to C_n(K))}.
+	\]
+\end{definition}
+
+\begin{exbox}
+	Let $K$ be the union of all the proper faces of the standard $2$-simplex $\Delta^2 \subseteq \mathbb{R}^3$, i.e.
+	\[
+		K = \{\langle e_1 \rangle , \langle e_2 \rangle , \langle e_3 \rangle, \langle e_1, e_2 \rangle, \langle e_2, e_3\rangle, \langle e_3, e_1\rangle\}.
+	\]
+	Order the vertices as $e_1 \prec e_2 \prec e_3$. Then
+	\begin{align*}
+		C_0(K) &= \mathbb{Z}\{[e_1], [e_2], [e_3]\}, \\
+		C_1(K) &= \mathbb{Z}\{[e_1, e_2], [e_2, e_3], [e_1, e_3]\},
+	\end{align*}
+	and $C_n(K) = 0$ for $n \geq 2$. Now note that $d_1 : C_1(K) \to C_0(K)$ is given by $d_1[e_i, e_j] = [e_j] - [e_i]$, so in matrix form it is
+	\[
+	\begin{pmatrix}
+		-1 & 0 & -1 \\
+		1 & -1 & 0 \\
+		0 & 1 & 1
+	\end{pmatrix}.
+	\]
+	Note that $\Img d_1 = \langle [e_i] - [e_j] \rangle_{\mathbb{Z}}$, so
+	\[
+		H_0(K) = \frac{\mathbb{Z}\{[e_1], [e_2], [e_3]\}}{\langle[e_i] - [e_j]\rangle} \cong \mathbb{Z}.
+	\]
+	We have that $\Ker d_1 = \mathbb{Z}\{[e_1, e_2] - [e_1, e_3] + [e_2, e_3]\} \cong \mathbb{Z}$, and $\Img d_2 = 0$, so again $H_1(K) \cong \mathbb{Z}$.
+\end{exbox}
+
+\begin{exbox}
+	Now let $L$ be the standard $2$-simplex $\Delta^2 \subseteq \mathbb{R}^3$, i.e.
+	\[
+		L = \{\langle e_1 \rangle , \langle e_2 \rangle , \langle e_3 \rangle, \langle e_1, e_2 \rangle, \langle e_2, e_3\rangle, \langle e_3, e_1\rangle, \langle e_1, e_2, e_3 \rangle\}.
+	\]
+	Then,
+	\begin{align*}
+		C_0(L) &= \mathbb{Z}\{[e_1], [e_2], [e_3]\}, \\
+		C_1(L) &= \mathbb{Z}\{[e_1, e_2], [e_2, e_3], [e_1, e_3]\},
+		C_2(L) &= \mathbb{Z}\{[e_1, e_2, e_3]\}.
+	\end{align*}
+	So,
+	\[
+	\begin{tikzcd}[column sep = small]
+		0 \arrow[r, "d_4"] & 0 \arrow[r, "d_3"] & C_2(K) \cong \mathbb{Z} \arrow[r, "d_2"] & C_1(K) \cong \mathbb{Z}^3 \arrow[r, "d_1"] & C_0(K) \cong \mathbb{Z}^3 \arrow[r] & 0.
+	\end{tikzcd}
+	\]
+	Now $d_2[e_1, e_2, e_3] = [e_1, e_2] - [e_1, e_3] + [e_1, e_2] \neq 0$, so $d_2$ is injective. Hence $H_2(L) = 0$. But also,
+	\begin{align*}
+		H_1(L) &= \frac{\Ker d_1}{\Img d_2} = 0, \\
+		H_0(L) &= \mathbb{Z}.
+	\end{align*}
+\end{exbox}
+
+\subsection{Some Homological Algebra}
+\label{sub:hom_alg}
+
+\begin{definition}
+	A \emph{chain complex}\index{chain complex} is a sequence $C_0, C_1, C_2, \ldots$ of abelian groups, and homomorphisms $d_n : C_n \to C_{n-1}$ such that
+	\[
+	d_{n-1} \circ d_n = 0,
+	\]
+	for all $n$. We write this data as $C_\bullet$, and call $d_n$ the \emph{differentials}\index{differential} of $C_\bullet$. Then define
+	\[
+	H_n(C_\bullet) = \frac{\Ker d_n}{\Img d_{n+1}}.
+	\]
+	Write $Z_n(C_\bullet) = \Ker d_n$, and $B_n(C_\bullet) = \Img d_{n+1}$. We can think of $Z_n$ as the $n$-cycles of $C_\bullet$, and $B_n$ as the $n$-boundaries of $C_\bullet$.
+
+	A \emph{chain map}\index{chain map} $f_\bullet : C_\bullet \to D_\bullet$ is a sequence of homomorphisms $f_n : C_n \to D_n$ such that
+	\[
+	\begin{tikzcd}
+		C_{n+1} \arrow[r, "f_{n+1}"] \arrow[d, "d_{n+1}"] & D_{n+1} \arrow[d, "d_{n+1}"] \\
+		C_n \arrow[r, "f_n"] & D_n
+	\end{tikzcd}
+	\]
+	commutes, i.e. $f_n \circ d_{n+1} = d_{n+1} \circ f_{n+1}$.
+\end{definition}
+
+A \emph{chain homotopy}\index{chain homotopy} between $f_\bullet, g_\bullet : C_\bullet \to D_\bullet$ is a sequence of homomorphisms $h_n : C_n \to D_{n+1}$ such that
+\[
+g_n - f_n = d_{n+1} \circ h_n + h_{n-1} \circ d_n.
+\]
+Just accept this.
+
+\begin{lemma}
+	A chain map $f_\bullet : C_n \to D_n$ induces a homomorphism
+	\[
+	f_\ast : H_n(C_\bullet) \to H_n(D_\bullet)
+	\]
+	by $[x] \mapsto [f_n(x)]$. Furthermore, if $g_\bullet$ is chain homotopic to $f_\bullet$, then $g_\ast = f_\ast$.
+\end{lemma}
+
+\begin{proofbox}
+	We need to show that $f_\ast$ is well-defined.
+	\begin{enumerate}[(i)]
+		\item Let $[x] \in H_n(C_\bullet)$, i.e. $x \in C_n$ and $d_n(x) =0$. Then
+			\[
+				d_n f_n (x) = f_{n-1} d_n(x) = 0,
+			\]
+			so $f_n (x) \in Z_n(D_\ast)$.
+		\item If $[x] = [y] \in H_n(C_\bullet)$, then $x - y \in B_n(C_\ast)$, so say $x  - y = d_{n+1}(z)$. Then
+			\[
+			f_n(x) - f_n(y) = f_n d_{n+1}(z) = d_{n+1}f_{n+1}(z) \in B_n(D_\bullet),
+			\]
+			so $[f_n(x)] = [f_n(y)]$, and so $f_\ast$ is well-defined, and so a homomorphism.
+	\end{enumerate}
+	Now let $g_\bullet$ be chain homotopic to $f_\bullet$, i.e.
+	\[
+	g_n - f_n = d_{n+1} \circ h_n + h_{n-1} \circ d_n.
+	\]
+	Let $x \in Z_n(C_\bullet)$, so
+	\[
+	g_n(x) - f_n(x) = d_{n+1} h_n(x) + h_{n-1}d_n(x) \in B_n(D_\bullet),
+	\]
+	so $[g_n(x)] = [f_n(x)]$.
+\end{proofbox}
+
+%lecture 18
+
+Just as we did for homotopies of maps between spaces, one can show:
+\begin{enumerate}[(i)]
+	\item Being chain homotopic defines an equivalence relation on the set of chain maps from $C_\bullet$ to $D_\bullet$. We write $f_\bullet \simeq g_\bullet$.
+	\item If $a_\bullet : A_\bullet \to C_\bullet$ is a chain map and $f_\bullet \simeq g_\bullet : C_\bullet \to D_\bullet$, then $f_\bullet \circ a_\bullet \simeq g_\bullet \circ a_\bullet$, and similarly with postcomposing.
+\end{enumerate}
+
+\begin{lemma}
+	If $f_\bullet : C_\bullet \to D_\bullet$ is a chain homotopy equivalence, then $f_\ast : H_n(C_\bullet) \to H_n(D_\bullet)$ is an isomorphism.
+\end{lemma}
+
+\begin{proofbox}
+	Using a homotopy inverse $g_\bullet$, we have
+	\begin{align*}
+		f_\ast \circ g_\ast &= (f_\bullet \circ g_\bullet)_\ast = (\id_{D_\bullet})_\ast = \id_{H_n(D_\bullet)},
+	\end{align*}
+	and similarly $g_\ast \circ f_\ast = \id_{H_n(C_\bullet)}$.
+\end{proofbox}
+
+Bonus exercise: let
+\[
+	\mathbb{Z}[n] = (\to 0 \overset{d_{n+1}} \to \mathbb{Z} \overset{d_n} \to 0 \overset{d_{n-1}} \to 0 \cdots).
+\]
+Then describe the set of chain maps $\{\mathbb{Z}[n] \to C_\bullet\}$, up to chain homotopy.
+
+\subsection{Elementary Calculations}
+\label{sub:el_cal}
+
+Return to the chain complexes $C_\bullet(K)$ associated to a simplicial complex $K$.
+
+\begin{lemma}
+	Let $f : K \to L$ be a simplicial map. Then the formula
+	\begin{align*}
+		f_n : C_n(K) &\to C_n(L) \\
+		[a_0, \ldots, a_n] &\mapsto [f(a_0), \ldots, f(a_n)]
+	\end{align*}
+	is a well-defined homomorphism, and defines a chain map $f_\bullet : C_\bullet(K) \to C_\bullet(L)$, and hence gives us $f_\ast : H_n(K) \to H_n(L)$.
+\end{lemma}
+
+\begin{proofbox}
+	To be well-defined, we need the given formula to send $T_n(K)$ to $T_n(L)$. It does. To be a chain map, we check
+	\begin{align*}
+		f_{n-1}d_n [a_0, \ldots, a_n] &= f_{n-1} \left( \sum_{i = 0}^n (-1)^i [a_0, \ldots, \hat a_i, \ldots, a_n] \right) \\
+					      &= \sum_{i = 0}^n (-1)^i [f(a_0), \ldots, \hat{f(a_i)}, \ldots, f(a_n)] \\
+					      &= d_n f_n[a_0, \ldots, a_n].
+	\end{align*}
+\end{proofbox}
+
+\begin{definition}
+	Say a simplicial complex $K$ is a \emph{cone}\index{cone} with a \emph{cone point}\index{cone point}  $v_0 \in V_K$, if every simplex of $K$ is a face of a simplex which has $v_0$ as a vertex.
+\end{definition}
+
+\begin{proposition}
+	If $K$ is a cone with cone point $v_0$, then the inclusion $i : \{v_0\} \injto K$ induces a chain homotopy equivalence $i_\bullet : C_\bullet(\{v_0\}) \to C_\bullet(K)$, and so
+	\[
+	H_n(K) \cong
+	\begin{cases}
+		\mathbb{Z}\{[v_0]\} & n = 0, \\
+		0 & \text{else}.
+	\end{cases}
+	\]
+\end{proposition}
+
+\begin{proofbox}
+	The only map $r : V_K \to \{v_0\}$ is the simplicial map $r : K \to \{v_0\}$, and $r \circ i = \id_{\{v_0\}}$. We show that $i \circ r \simeq \id_{C_\bullet(K)}$. Define $h_n : \mathcal{O}_n(K) \to \mathcal{O}_{n+1}(K)$ by
+	\[
+		[a_0, \ldots, a_n] \mapsto [v_0, a_0, \ldots, a_n].
+	\]
+	This is valid as every simplex is part of a face which contains $v_0$. Moreover, this map sends $T_n(K)$ into $T_{n+1}(K)$, so it descends to $h_n : C_n(K) \to C_{n+1}(K)$. For $n > 0$, then
+	\begin{align*}
+		(h_{n-1} \circ d_n + d_{n+1} \circ h_n)[a_0, \ldots, a_n] &= \Biggl( \sum_{i = 0}^n (-1)^i [v_0, a_0, \ldots, \hat a_i, \ldots, a_n] \Biggr) \\
+	+ \Biggl( [a_0, \ldots, & a_n] + \sum_{i = 0}^n (-1)^{i+1}[v_0, a_0, \ldots, \hat a_i, \ldots, a_n ]\Biggr) \\
+									  &= [a_0, \ldots, a_n] = (\id - i_n \circ r_n) [a_0, \ldots, a_n],
+	\end{align*}
+	as the last term is $[v_0, \ldots, v_0] = 0$ as $n > 0$. For $n = 0$,
+	\begin{align*}
+		(h_{-1} \circ d_0 + d_1 \circ h_0) [a_0] &= d_1 [v_0, a_0] = [a_0] - [v_0] \\
+							 &= (\id - i_0 \circ r_0) [a_0].
+	\end{align*}
+	So $h$ provides a chain homotopy from $\id_{C_\bullet(K)}$ to $i_\bullet \circ r_\bullet$.
+\end{proofbox}
+
+\begin{corollary}
+	The standard $n$-simplex $\Delta^n \subseteq \mathbb{R}^{n+1}$ and all its faces is a cone, with any vertex as a cone point. So
+	\[
+	H_i(K) \cong
+	\begin{cases}
+		\mathbb{Z} & i = 0, \\
+		0 & \text{else}.
+	\end{cases}
+	\]
+\end{corollary}
+
+\begin{corollary}
+	Let $K$ be the union of all the proper faces of $\Delta^n \subseteq \mathbb{R}^n$. Then for $n \geq 2$, we have
+	\[
+		H_i(K) =
+		\begin{cases}
+			\mathbb{Z} & i = 0, \\
+			\mathbb{Z} & i = n-1, \\
+			0 & \text{else}.
+		\end{cases}
+	\]
+\end{corollary}
+
+\begin{proofbox}
+	Note that $K$ is the $(n-1)$-skeleton of $L$, so $i : K \injto L$ gives us an isomorphism $C_i(K) \to C_i(L)$ for $i \leq n-1$. These chain complexes are
+	\[
+	\begin{tikzcd}
+		C_0(L) & C_1(L) \arrow[l, "d_0^L"] & \cdots \arrow[l, "d_1^L"] & C_{n-1}(L) \arrow[l, "d_{n-1}^L"] & C_n(L) \arrow[l, "d_n^L"] & 0 \arrow[l] \\
+		C_0(K) \arrow[u, equal] & C_1(K) \arrow[l, "d_0^L"] \arrow[u, equal] & \cdots \arrow[l, "d_1^K"] & C_{n-1}(K) \arrow[l, "d_{n-1}^K"] \arrow[u, equal] & 0 \arrow[l] \arrow[u] & 0 \arrow[l]
+	\end{tikzcd}
+	\]
+	For $i \leq n-2$, $H_i(K) = H_i(K)$. For $i > n-1$, $H_i(K) = 0$ as there are no $i$-simplices. Hence
+	\[
+	H_{n-1}(K) = \frac{\Ker(d_{n-1}^K)}{\Img(d_n^K)} = \Ker(d_{n-1}^K) = \Ker(d_{n-1}^L).
+	\]
+	As $H_{n-1}(L) = 0$, $\Ker(d_{n-1}^L)/\Img(d_{n}^L) = 0$, so they are equal. As $H_n(L) = 0$, we see that $d_n^L : \mathbb{Z} = C_n(L) \to C_{n-1}(L)$ is injective, so $H_{n-1}(K) = \Ker(d_{n-1}^L) = \Img(d_n^L) \cong \mathbb{Z}$, as it is generated by $d_n^L [e_0, \ldots, e_n]$.
+\end{proofbox}
+%lecture 19
+
+\begin{lemma}
+	There is an isomorphism $H_0(K) \cong \mathbb{Z}\{\pi_0(|K|)\}$.
+\end{lemma}
+
+
+\begin{proofbox}
+	Note we have a homomorphism $\phi : C_0(K) \to \mathbb{Z}\{\pi_0|K|\}$ by $[v] \mapsto$ the path component of $v \in |K|$.
+
+	This is onto, as any path-component of $|K|$ contains a vertex.
+
+	If $[v, w]$ is an ordered $1$-simplex, then $d_1[v, w] = [w] - [v]$. But $[v]$ and $[w]$ live in the same path-component, as the $1$-simplex $\langle v, w \rangle$ goes between them. So $\Img(d_1) \subseteq \Ker \phi$, hence we get an induced $\phi : H_0(K) \to \mathbb{Z}\{\pi_0|K|\}$.
+
+	If $\phi([v]) = \phi([w])$, then choose a path $\gamma : I \to |K|$ from $v$ to $w$. By simplicial approximation, $I = \Delta^1$ can be subdivided so that there is is $g : (\Delta^1)^{(r)} \to K$, with $|g| \simeq \gamma$, i.e. there are $1$-simplices $[v, v_1], [v_1, v_2], \ldots, [v_n, w]$. Then
+	\[
+		[w] - [v] = d_1([v, v_1] + [v_1, v_2] + \cdots + [v_n, w]),
+	\]
+	hence $[v] - [w] \in H_0(K)$.
+\end{proofbox}
+
+\subsection{Mayer-Vietoris Theorem}
+\label{sub:mvt}
+
+\begin{definition}
+	Say that a pair of homomorphisms
+	\[
+	\begin{tikzcd}
+		A \arrow[r, "f"] & B \arrow[r, "g"] & C
+	\end{tikzcd}
+	\]
+	is \emph{exact}\index{exact} if $\Img f = \Ker g$. More generally, a collection of homomorphisms
+	 \[
+	\begin{tikzcd}
+		\cdot \arrow[r] & A_i \arrow[r] & A_{i+1} \arrow[r] & A_{i+2} \arrow[r] & A_{i+3} \arrow[r] & \cdots
+	\end{tikzcd}
+	\]
+	is \emph{exact}if it is exact at each $A_j$, where $A_j$ has a homomorphism in and out.
+
+	A \emph{short exact sequence}\index{short exact sequence} is an exact sequence
+	\[
+	\begin{tikzcd}
+		0 \arrow[r] & A \arrow[r, "f"] & B \arrow[r, "g"] & C \arrow[r] & 0,
+	\end{tikzcd}
+	\]
+	so $f$ is injective, $\Img f = \Ker g$ and $g$ is surjective. The chain maps $i_\bullet : A_\bullet \to B_\bullet$ and  $j_\bullet : B_\bullet \to C_\bullet$ form a \emph{short exact sequence} of chain complexes if each
+	\[
+	\begin{tikzcd}
+		0 \arrow[r] & A_n \arrow[r, "i_n"] & B_n \arrow[r, "j_n"] & C_n \arrow[r] & 0
+	\end{tikzcd}
+	\]
+	is a short exact sequence.
+\end{definition}
+
+\begin{theorem}[Zig-zag Lemma]
+	If
+	\[
+	\begin{tikzcd}
+		0 \arrow[r] & A_\bullet \arrow[r, "i_\bullet"] & B_\bullet \arrow[r, "j_\bullet"] & C_\bullet \arrow[r] & 0
+	\end{tikzcd}
+	\]
+	is a short exact sequence of chain complexes, then there are natural homomorphisms $\partial_\ast : H_n(C_\bullet) \to H_{n-1}(A_\bullet)$ such that
+	\begin{equation*}
+	\begin{tikzcd}
+		& \vdots \arrow[dl] & \\
+		 H_n(A_\bullet) \arrow[r, "i_\ast"'] & H_n(B_\bullet) \arrow[r, "j_\ast"] & H_n(C_\bullet) \arrow[dll, "\partial_\ast"] \\
+						    H_{n-1}(A_\bullet) \arrow[r, "i_\ast"'] & H_{n-1}(B_\bullet) \arrow[r, "j_\ast"] & H_{n-1}(C_\bullet) \arrow[dl] \\
+						    & \vdots &
+	\end{tikzcd}
+	\end{equation*}
+	is an exact sequence.
+\end{theorem}
+
+\begin{proofbox}
+	We begin by constructing $\partial_\ast$, using the snake lemma. Look at this diagram:
+	\begin{equation*}
+	\begin{tikzcd}
+		0 \arrow[r] & A_n \arrow[r, "i_n"] \arrow[d, "d_n"] & B_n \arrow[r, "j_n"] \arrow[d, "d_n"] & C_n \arrow[d, "d_n"] \arrow[r] & 0 \\
+		0 \arrow[r] & A_{n-1} \arrow[r, "i_{n-1}"] & B_{n-1} \arrow[r, "j_{n-1}"] & C_{n-1} \arrow[r] & 0 \\
+	\end{tikzcd}
+	\end{equation*}
+	Pretty cool right. We are now going to chase this diagram. Let $[x] \in H_n(C_\bullet)$. Then $d_n x = 0$. By exactness of the top row, we can choose $y \mapsto x$.
+
+	Applying $d_n y$ gives us an element of $B_{n-1}$. But by commutativity, $j_{n-1}(d_n y) = 0$. But by exactness, this means there is $z \in A_{n-1}$ that maps to $d_{n} y$.
+
+	What can we say about $z$? Well $i_{n-2} d_{n-1}(z) = d_{n-1} i_{n-1}(z) = d_{n-1} d_n (y) = 0$. But as $i_{n-1}$ is injective, this shows $d_{n-1}(z) = 0$. Hence $z$ is a cycle, and so we can let $\partial_\ast[x] = [z]$.
+
+	Now we check $\partial_\ast$ is well-defined. Suppose $[x] = [x'] \in H_n(C_\bullet)$. Then $x - x' = d_{n+1}(a)$ for some $a \in C_{n+1}$. The same process for $x'$ gives a $y' \in B_n$, and as $j_{n+1}$ is surjective, we can write $a = j_{n+1}(b)$. Then
+	\[
+	j_n(y - y') = x- x' = j_n d_{n+1}(b),
+	\]
+	so by exactness at $B_n$,
+	\[
+	y - y' = d_{n+1}(b) + i_n(c),
+	\]
+	for some $c \in A_n$. Now $z'$ is such that $i_{n-1}(z') = d_n(y')$. Then
+	\begin{align*}
+		i_{n-1}(z - z') &= d_n(y - y') = d_n(d_{n+1}(b) + i_n(c)) \\
+				&= d_n i_n(c) = i_{n-1} d_n(c).
+	\end{align*}
+	The injectivity of $i_{n-1}$ shows that $z - z' \in d_n(c)$, so $[z] = [z'] \in H_{n-1}(A_\bullet)$.
+
+	Now we show that $\partial_\ast$ is a homomorphism. Given $[x_1], [x_2] \in H_n(C_\bullet)$ with components $y_1, y_2, z_1, z_2$, we choose $y_1 + y_2$ to be the lift of $x_1 + x+2$. This gives $z_1 + z_2$ as the result, so
+	\[
+		\partial_\ast[x_1 + x_2] = [z_1 + z_2] = [z_1] + [z_2].
+	\]
+	This shows $\partial_\ast$ exists. Now we show the sequence we defined is exact. First we show it at $H_n(C_\bullet)$. Let $[x] \in \Img(j_\ast)$, so there exists $y \in B_n$ such that $j_n(y) = x$ and $y$ is a cycle.
+
+	We can use this $y$ to calculate $\partial_\ast[x]$. As $y$ is a cycle, $d_n(y) = 0$, so $z$ is $0$, hence $\partial_\ast[x] = 0$.
+
+	Suppose now that $\partial_\ast[x] = 0$. We calculate this by choosing $y \in B_n$ and taking the corresponding $z$. Then $z = d_n(t)$, as $[z] = 0$. Thus $j_n(y - i_n(t)) = x$, and
+	\begin{align*}
+		d_n(y - i_n(t)) = d_n y - d_n i_n(t) = i_n(z - z) = 0.
+	\end{align*}
+	So $j_\ast[y - i_n(t)] = [x]$, so $[x] \in \Img(j_\ast)$.
+
+	We also need exactness at $H_n(B_\bullet)$. As $j_n \circ i_n = 0$, we have $\Img(i_\ast) \subseteq \Ker(j_\ast)$. Now suppose $j_\ast[y] = 0$. Then $j_n(y) = d_{n+1}(a)$ for some $a \in C_{n+1}$. Let $b \in B_{n+1}$ be such that $j_{n+1}(b) = a$. Then
+	\begin{align*}
+		j_n(y - d_{n+1}(b)) = d_{n+1}(a) - j_n d_{n+1}(b) = d_{n+1}(a) - d_{n+1} j_{n+1}(b) = 0,
+	\end{align*}
+	hence $y - d_{n+1}(b) = i_n(t)$. Since $d_n(y - d_{n+1}(b)) = 0$, we get
+	\[
+		[y] = [y - d_{n+1}(b)] = [i_n(t)] = i_\ast[t],
+	\]
+	as required. Finally we want exactness at $H_n(A_\bullet)$. Let $[z] = \partial_\ast[x]$. Then $i_n(z) = d_{n+1}(g),$ so $i_\ast[z] = 0$. Conversely let $[z]$ be such that $i_\ast[z] = 0$. Then $i_n(z) = d_{n+1}(g)$ for some $g$, so $[z] = \partial_\ast[j_{n+1}(y)]$.
+\end{proofbox}
+
+
+\newpage
+
+\printindex
+
+\end{document}

@@ -1,0 +1,1195 @@
+\documentclass[12pt]{article}
+
+\usepackage{ishn}
+
+\makeindex[intoc]
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1em}
+		\Huge
+		\textbf{II Quantum Information \& Computing}
+
+		\vspace{1em}
+		\large
+		Ishan Nath, Lent 2024
+
+		\vspace{1.5em}
+
+		\Large
+
+		Based on Lectures by Prof. Nilanjana Datta
+
+		\vspace{1em}
+
+		\large
+		\today
+	\end{center}
+	
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\tableofcontents
+
+\newpage
+
+\section{Preliminaries}
+\label{sec:pre}
+
+\subsection{Dirac Notation}
+\label{sub:dir}
+
+Let $\mathcal{H}$ be a finite-dimensional Hilbert space. We denote by $\ket \psi$ an element of $\mathcal{H}$, and $\bra \psi$ is the corresponding element of $\mathcal{H}^{\ast}$.
+
+The inner product of $\ket \psi, \ket \phi \in \mathcal{H}$ is
+\[
+	\braket{\psi|\phi} \in \mathbb{C}.
+\]
+
+For the case $\mathcal{H} = \mathbb{C}^2$, we let $\ket 0, \ket 1$ be an orthonormal basis.
+
+The outer product $\ket \psi \bra \phi$ is an element of $\mathcal{H}^{\ast}$.
+
+If $\mathcal{H} = \mathbb{C}^n$ with orthonormal basis $\{\ket i\}$, then $\braket{i|j} = \delta_{ij}$ and
+\[
+\sum_{i} \ket i \bra i = \id.
+\]
+
+If $\mathcal{H}$ is a space with basis $\{\ket{e_i}\}$ for $i = 1, \ldots, n$ and $\mathcal{K}$ is a space with basis $\{\ket{f_j}\}$ for $j = 1, \ldots, m$, then $\mathcal{H} \otimes \mathcal{K}$ is a Hilbert space with basis $\ket{e_i} \ket{f_j}$.
+
+A vector $\ket \psi$ is said to be a product vector if $\ket \psi = \ket u \otimes \ket v$. Otherwise, it is an entangled vector.
+
+We focus on tensor products of $\mathcal{H} = \mathbb{C}^2$ with itself. Then $\mathcal{H}^{\otimes k}$ has basis 
+\[
+	\{\ket{i_1} \otimes \cdots \otimes \ket{i_n}\} = \{ \ket{i_1 \ldots i_n}\}.
+\]
+So the basis vectors are labelled by bit strings of length $k$.
+
+%lecture 2
+
+%\subsection{Postulates}
+%\label{sub:post}
+%
+%Here are the pos
+
+%lecture 3
+
+Note that we have the following simple fact:
+\[
+	\braket{v|w} = \Tr \ket w \bra v.
+\]
+This can be seen by writing $\ket v, \ket w$ on orthonormal basis $\{\ket{e_i}\}$. Hence we see that
+\[
+	\braket{\psi|P|\psi} = \Tr P\ket \psi \bra \psi.
+\]
+
+\subsection{Tensor Products of Operators}
+\label{sub:ten_ops}
+
+Let $\mathcal{H} = \mathbb{C}^n$ and $K = \mathbb{C}^n$. If $A \in M_n(\mathbb{C})$ and $B \in M_n(\mathbb{C})$, then $A \otimes B$ acts on $\mathcal{H} \times \mathcal{K}$, hence is an element of $M_{mn}(\mathbb{C})$.
+
+We can check the following:
+\begin{itemize}
+	\item $A \otimes I \neq I \otimes A$.
+	\item $A \otimes B = (A \otimes I)(I \otimes B)$.
+	\item Moreover, if we define
+		\[
+			\ket{\phi^+} = \frac{1}{\sqrt 2} (\ket{00} + \ket{11}),
+		\]
+		then
+		\[
+			(A \otimes I)\ket{\phi^{+}} = (I \otimes A^{T}) \ket{\phi^{+}}.
+		\]
+\end{itemize}
+
+The third postulate of quantum mechanics is that time evolution of a closed quantum system is determined by a unitary and deterministic
+\[
+	\ket{\psi(t_2)} = U(t_1, t_2) \ket{\psi(t_1)}.
+\]
+
+The fourth postulate says that measurement is determined by a Hermitian operator. This means that measurement is not probabilistic, and the state of the system is disturbed.
+
+\subsection{Projective (von Neumann) Measurements}
+\label{sub:proj_m}
+
+Take $\mathcal{H} = \mathbb{C}^n$ and orthonormal basis $\mathcal{B} = \{\ket{e_i}\}$. Suppose that the initial state is $\ket \psi = \sum a_i \ket{e_i}$. Then the measurement in the basis $\mathcal{B}$ has outcomes $j \in \{1, 2, \ldots, n\}$, with
+\[
+	\Pr(j) = |a_j|^2 = \braket{\psi|P_j|\psi}.
+\]
+Here, if the post measurement state is $\ket{e_j}$, then this corresponds to the projection operator $P_j = \ket{e_j} \bra{e_j}$. Then
+\[
+	\ket{\psi_{\mathrm{after}}} = \frac{P_j \ket \psi}{\sqrt{\Pr(j)}} = e^{i \omega} \ket{e_j}.
+\]
+These projection measurements are complete: note $\sum P_j = I$, and $P_j P_k = \delta_{jk} P_j$.
+
+We can also have incomplete projective measurements. If
+\[
+\mathcal{H} = \bigoplus_{i = 1}^d \mathcal{E}_i,
+\]
+with $\dim \mathcal{E}_i = d_i$ and $\sum d_i = n$, let $\mathcal{E}_j$ have onb $\{\ket{e_k^{(j)}}\}$. Then the projection operator onto $\mathcal{E}_j$ is
+\[
+	\Pi_j = \sum_{k = 1}^{d_j} \ket{e_k^{(j)}}\bra{e_k^{(j)}}.
+\]
+This is the measurement relative to the orthogonal decomposition. The outcomes will be the labels of the subspaces, $j \in \{1, 2, \ldots, d\}$. Then
+\[
+	\Pr(j) = \braket{\psi|\Pi_j|\psi},
+\]
+and if the outcome is $j$, then
+\[
+	\ket{\psi_{\mathrm{after}}} = \frac{\Pi_j \ket \psi}{\sqrt{\Pr(j)}}.
+\]
+We can refine an incomplete measurement to a complete measurement. Take the same setup as before, then construct an orthonormal basis of $\mathcal{H}$ which is consistent with $\mathcal{E}_i$.
+
+\begin{exbox}[Parity Measurement]
+	Take $b_1b_2\in \{0, 1\}^2$. Then $b_1 + b_2$ is the parity of $b_1b_2$.
+
+	Take $\mathcal{H} = (\mathbb{C}^2)^{\otimes 2}$, with onb $\{\ket{00}, \ket{01}, \ket{10}, \ket{11}\}$. We can decompose
+	\[
+	\mathcal{H} = \mathcal{E}_0 \oplus \mathcal{E}_1,
+	\]
+	where
+	\[
+	\mathcal{E}_1 = \spn\{\ket{00}, \ket{11}\}, \qquad \mathcal{E}_1 = \spn{\ket{01}, \ket{10}\}}.
+	\]
+	The outcome is $j \in \{0, 1\}$. If we define
+	\[
+		\Pi_0 = \ket{00}\bra{00} + \ket{11}\bra{11}, \qquad \Pi_1 = \ket{01}\bra{01} + \ket{10}\bra{10},
+	\]
+	then
+	\[
+		\Pr(j) = \braket{\psi|\Pi_j|\psi}.
+	\]
+	We can extend to a complete measurement. Let
+	\[
+		P_{ij} = \ket{ij}\bra{ij},
+	\]
+	for $i, j \in \{0, 1\}$. Then once again
+	\[
+		\Pr(ij) = \braket{\psi|\Pi_{ij}|\psi}.
+	\]
+\end{exbox}
+
+In quantum mechanics, we have a quantum observable $A$, a Hermitian operator. Then the outcome is an eigenvalue of $A$, say $\{a_k\}$. Let $\Pi_k$ be the projection onto the eigenspace $\mathcal{E}_k$ of $a_k$. Then
+\[
+	\mathcal{E}_k = \spn\{\ket{\phi_i^{(k)}}, i = 1, \ldots, d_k\}.
+\]
+Here $d_k$ is the degeneracy. The spectral projection of $A$ is
+\[
+A = \sum_{k = 1}^r a_k \Pi_k.
+\]
+
+%lecture 4
+
+Let's look at taking a refinement of an incomplete measurement. Take $\mathcal{E}_i$ orthonormal spaces, and $\{\ket{e_k^{(i)}}\}$ an onb for $\mathcal{E}_i$. Then the complete measurement is
+\[
+	P_k^{(i)} = \ket{e_k^{(i)}} \bra{e_k^{(i)}}.
+\]
+The outcomes are $(i, k)$, with
+\[
+	\Pr(i, k) = \braket{\psi|P_k^{(i)}|\psi}.
+\]
+For the incomplete measurement,
+\[
+\Pr(i) = \sum_{k = 1}^{d_i} \Pr(i, k).
+\]
+
+
+\subsection{Extended Born Rule}
+\label{sub:ex_born}
+
+Consider measuring part of a composite system. Say $S_1$ has $\mathcal{H} \cong \mathbb{C}^m$, and $S_2$ has $\mathcal{K} \cong \mathbb{C}^n$. Then if we want to measure $S_1$ only, let $\{\ket{e_i}\}$ be an onb of $\mathcal{H}$. Then,
+\[
+\mathcal{H} = \bigoplus_{i = 1}^m \mathcal{E}_i,
+\]
+with
+\[
+	\mathcal{E}_i = \spn\{ \ket{e_i} \otimes \ket{\phi} \quad \forall \ket \phi \in \mathcal{K}\}.
+\]
+If $\{\ket {f_j}\}$ is an onb of $\mathcal{K}$, then $\mathcal{H} \otimes \mathcal{K}$ has onb $\{\ket{e_i} \ket{f_j}\}$. Suppose we have initial state
+\[
+	\ket \psi = \sum_{i, j} a_{ij} \ket{e_i} \ket{f_j}.
+\]
+Then the outcomes of this measurement is $k \in \{1, 2, \ldots, m\}$, with projection operator $\Pi_k = P_k \otimes I$. Then
+\[
+	\Pr(k) = \braket{\psi | P_k \otimes I | \psi}.
+\]
+Note we can easily find that
+\[
+\Pr(k) = \sum_j |a_{kj}|^2.
+\]
+If the outcome is $k$, then the wavefunction collapses as
+\[
+	\ket \psi \mapsto \ket{\psi_{\mathrm{after}}} = \frac{(P_k \otimes I)\ket \psi}{\sqrt{\Pr(k)}}.
+\]
+
+\subsection{Fixed Choice of Basis}
+\label{sub:fix_bas}
+
+Take $\mathcal{H} \cong \mathbb{C}^n$, $\mathcal{B} = \{\ket{e_i}\}$, and $\mathcal{B}' = \{\ket{e_i'}\}$. Then the complete projective measurement relative to $\mathcal{B}'$ can be obtained by taking a measurement relative to $\mathcal{B}$: it is the action of some unitary operator.
+
+Hence there exists a unitary operator $U$ such that
+\[
+	\ket{e_j'} = U \ket{e_j}.
+\]
+Suppose that
+\[
+	\ket \psi = \sum a_j \ket {e_j'}.
+\]
+How can we get the probability of outcomes and $\ket{\psi_{\mathrm{after}}}$ for a measurement in $\mathcal{B}'$ by doing a measurement in $\mathcal{B}$?
+
+First, we act on $\ket \psi$ by $U^{\dagger}$. Then we can do a measurement in $\mathcal{B} = \{\ket{\psi_j}\}$. The outcomes will be $j \in \{1, 2, \ldots, m\}$, with $\Pr(j) = |a_j|^2$, and $\ket{\psi_{\mathrm{after}}} = \ket{e_j}$. Finally, we can act on $\ket{\phi_{\mathrm{after}}}$ by $U$, to get
+\[
+	\ket{\phi'_{\mathrm{after}}} = U\ket{e_j} = \ket{e_j'}.
+\]
+
+\begin{exbox}
+	Take $\mathcal{H} = (\mathbb{C}^2)^{\otimes n}$. Then we can look at measuring the first $k$ qubits.
+
+	For $n = 3$, $k = 1$, we have a complete projective measurement relative to $\mathcal{B}$ on the first qubit. This has outcomes $0$ and $1$. If we have
+	\[
+		\ket \psi \frac{i}{2} \ket{000} + \frac{1}{2} \ket{001} - \frac{1}{2} \ket{101} + \frac{3}{10} \ket{110} - \frac{2i}{5} \ket{111},
+	\]
+	then we have
+	\[
+		\Pr(1) = \braket{\psi | P_1 \otimes I| \psi} = \frac{1}{2}.
+	\]
+	Then we have
+	\[
+	\ket{\psi_{\mathrm{after}}} = (P_1 \otimes I) \ket \psi / \sqrt{\Pr(1)} = \ket 1 \ket \alpha.
+	\]
+\end{exbox}
+
+Note that two states $\ket \psi, \ket \phi$ are distinguishable if there exists a measurement which gives two distinct outcomes when done on $\ket \psi$ and $\ket \phi$. Then only perpendicular states are reliably distinguishable, where reliably meanly with probability 1.
+
+Now suppose $\ket \psi \in \mathcal{H}$, and $\ket \phi = e^{i \theta} \ket \psi$. Then these correspond to the same physical states, as there is no measurement that can distinguish between them. Indeed, if
+\[
+	\ket \psi = \sum a_j \ket{e_j},
+\]
+then
+\[
+	\ket \phi = \sum e^{i \theta} a_j \ket {e_j},
+\]
+with $|e^{i \theta} a_j| = |a_j|$. Moreover, if $\ket{\psi'} = U \ket \psi$, then
+\[
+	\ket{\phi'} = U \ket{\phi} = e^{i\theta} U \ket{\psi} = e^{-\theta} \ket{\psi'}.
+\]
+
+%lecture 5
+
+\subsection{States as Information}
+\label{sub:stat_info}
+
+Information is encoded in the states of a quantum system, e.g. $\ket \psi \in \mathcal{H}$. In classical information, this is a special case where information is encoded in an orthonormal state.
+
+We have a list of general operations allowed on a quantum system $A$ with Hilbert space $\mathcal{H}_A$.
+\begin{itemize}
+	\item Add an \emph{ancilla}\index{ancilla}, which is an auxiliary system $B$ with space $\mathcal{H}_B$, in a fixed state $\ket{\phi_0}_B$. Then we now have system $AB$ in state $\ket \psi_A \otimes \ket{\phi_0}_B$.
+	\item We can let a unitary operator $U$ act on $AB$, or $A$.
+	\item We can take measurements on $AB$, or $A$.
+\end{itemize}
+
+Now we have the important no-cloning theorem. This says that quantum states cannot be copied and cloned. In the classical scenario, this is easily possible. However, let us consider the quantum scenario, with system $A, B, M$ and Hilbert space $\mathcal{H}_A \otimes \mathcal{H}_B \otimes \mathcal{H}_M$.
+
+Suppose we have some information to be copied, which is $\ket \psi = \ket \psi_A$. Then $B$ and $M$ are in fixed states $\ket{\phi_0}_B$ and $\ket{M_0}_M$. Initially, our state is
+\[
+	\ket \psi_A \otimes \ket{\phi_0}_B \otimes \ket{M_0}_M.
+\]
+We will show that states cannot be copied via a unitary operation. Suppose there exists $U$ such that
+\[
+	U \ket \psi_A \ket{\phi_0}_B \ket{M_0}_M = \ket \psi_A \ket \psi_B \ket{M_\psi}_M.
+\]
+We might require that cloning works either for all $\ket \psi \in \mathcal{H}_A$, or for restricted subset of states in $A$.
+
+\begin{theorem}
+	Let $\mathcal{S}$ be any set of states of $A$ that contains at least one pair of non-orthogonal states. Then there is no unitary cloning device that clones every state in $\mathcal{S}$.
+\end{theorem}
+
+\begin{proofbox}
+	Assume cloning is possible for $\ket \xi, \ket \eta$ which are non-orthogonal distinct states. Then
+	\begin{align*}
+		U \ket \xi_A \ket{\phi_0}_B \ket{M_0}_M &= \ket \xi_A \ket \xi_B \ket{M_\xi}_M, \\
+		U \ket \eta_A \ket{\phi_0}_B \ket{M_0}_M &= \ket \eta_A \ket \eta_B \ket{M_\eta}_M.
+	\end{align*}
+	Taking the inner products, the left hand side becomes $\braket{\xi | \eta}$. But the right hand side is $\braket{\xi|\eta}\braket{\xi|\eta} \braket{M_\xi|M_\eta}$.
+
+	Therefore, we get that
+	\[
+		1 = \braket{\xi|\eta} \braket{M_\xi|M_\eta},
+	\]
+	since $\braket{\xi|\eta} \neq 0$. Taking the modulus,
+	\[
+		|\braket{M_\xi|M_\eta}| > 1,
+	\]
+	but this is at most 1 by Cauchy-Schwarz.
+\end{proofbox}
+
+So there is no unitary cloning device that can perfectly copy non-orthogonal states.
+
+Assuming quantum cloning is possible, superluminal communication is possible. Indeed, suppose Alice and Bob share
+\[
+	\ket{\phi^+} = \frac{1}{\sqrt 2}[\ket{00} + \ket{11}],
+\]
+where each has one qubit. Then Alice considers the two bases
+\[
+	\mathcal{B}_0 = \{\ket 0, \ket 1\}, \qquad \mathcal{B}_1 = \{\ket +, \ket - \},
+\]
+where $\ket \pm = \frac{1}{\sqrt 2}(\ket 0 \pm \ket 1)$. If Alice wants to send the message yes, she measures $A$ in basis $\mathcal{B}_0$. This outputs $0$ and $1$ with probability $1/2$ each, and the final state is either $\ket 0_A \ket 0_B$ or $\ket 1_A \ket 1_B$, respectively. We can check that
+\[
+	\ket{\phi^+} = \frac{1}{\sqrt 2}[\ket{++} + \ket{--}].
+\]
+Hence, Alice gets $+$ and $-$ with probability $1/2$, and the final state is either $\ket{++}$ or $\ket{--}$. Interestingly, $\mathcal{B}_0$ and $\mathcal{B}_1$ are mutually unbiased states, so measuring any state of $\mathcal{B}_1$ relative to $\mathcal{B}_1$, or vice versa, gives the same probability.
+
+Hence if the message is yes, then Bob's qubit collapse to $\ket 0$ or $\ket 1$, otherwise it collapses to $\ket +$ or $\ket -$. We claim that these yes/no preparations of $B$ cannot be detected b Bob by any local action on $B$.
+
+Indeed, for any measurement that Bob does, corresponding to a projection $\Pi_i$, the outcomes $i$ will be the same for the yes/no preparations, and also for the case in which no measurement was done by Alice.
+
+%lecture 6
+
+Indeed, suppose Bob does a measurement with outcome $i$ and projection operator $\Pi_i$. Then the probability Bob gets $i$ given Alice sent yes is
+\begin{align*}
+	\Prob(i | \text{yes}) &= \frac{1}{2} \braket{0|\Pi_i|0} + \frac{1}{2} \braket{1|\Pi_i|1}  = \frac{1}{2} [\Tr\Pi_i(\ket 0 \bra 0 + \ket 1 \bra 1)] \\
+			      &= \frac{1}{2} \Tr(\Pi_i).
+\end{align*}
+Similarly, the probability given Alice sent no is also $\Tr \Pi_i/2$. And as well, if no measurement was done,
+\[
+	\Prob(i) = \braket{\phi^{+} | I_A \otimes \Pi_i | \phi^+} = \frac{1}{2} \Tr \Pi_i.
+\]
+But if quantum cloning was possible, Bob could make $N \gg 1$ copies of $B$, at some time. If Alice sent yes, then Bob has $N$ $\ket 0$ or $N$ $\ket 1$, and if Alice sent no, then Bob has $N$ $\ket +$ or $N$ $\ket -$.
+
+Now Bob does a measurement in $\mathcal{B}_0$ If Alice said yes, then he receives a string of $N$ ones or $N$ zeroes. Otherwise, she gets a uniform random bit string of length $N$. Then the probability of distinguishing the outcome is $2/2^N$.
+
+This is a specific example of the \emph{no-signalling principle}\index{no-signalling principle}. We assume that we have a state $\ket \phi_{AB} \in \mathcal{H}_A \otimes \mathcal{H}_B$, where Alice knows $A$ and Bob knows $B$.
+
+Then this principle says that no local action on $A$ by Alice can change the outcome probability distribution of any measurement on $B$ by Bob.
+
+\begin{proofbox}
+	If Bob does a measurement in basis $\mathcal{B} = \{ \ket b\}$ of $\mathcal{H}_B$, then Bob's outcomes are in $\{1, 2, \ldots, d_B\}$. Let $\{\ket a\}$ for $a \in \{1, \ldots, d_A\}$ be an onb of $\mathcal{H}_A$. Then suppose
+	\[
+	\ket \phi = \sum_{ab} c_{ab} \ket a \ket b.
+	\]
+	We then get that the probability of measuring $b$ is
+	\[
+		\Prob(b) = \braket{\phi|I_A \otimes P_B | \phi} = \sum_{a = 1}^{d_A} |c_{ab}|^2.
+	\]
+	After this, the outcome is
+	\[
+		\ket{\psi_{\mathrm{after}}} = \frac{1}{\sqrt{\Prob(b)}}(I_A \otimes P_B) \ket \phi.
+	\]
+	Now assume that Alice does a measurement on $A$ in basis $\{\ket a\}$, then Bob does a measurement in $\{\ket b\}$. Then
+	\[
+		\Prob(a) = \braket{\phi|P_a \otimes I_B|\phi} = \sum_{b = 1}^{d_B}|c_{ab}|^2.
+	\]
+	If the outcome is $a$, then
+	\[
+		\ket{\phi''} = \frac{1}{\sqrt{\Prob(a)}} (P_a \otimes I) \ket \phi.
+	\]
+	Now after Bob measures, we start with initial state $\ket{\phi''}_{AB}$, then
+	\begin{align*}
+		\Prob(b|a) &= \braket{\phi''|I_A \otimes P_B|\phi''} = \frac{1}{\Prob(a)} \braket{\phi|(P_a \otimes I_B)(I_A \otimes P_b)(P_a \otimes I_B)|\phi} \\
+			   &= \frac{1}{\Prob(a)} \braket{\phi|P_a \otimes P_b|\phi}.
+	\end{align*}
+	Hence we see that
+	\[
+		\Prob(a, b) = \Prob(b|a) \Prob(a) = \braket{\phi|P_a \otimes P_b|\phi} = |c_{ab}|^2.
+	\]
+	Hence we see that
+	\[
+	\Prob(b) = \sum_a p(a, b) = \sum_{a = 1}^{d_A} |c_{ab}|^2.
+	\]
+\end{proofbox}
+
+\subsection{Distinguishing Non-Orthogonal States}
+\label{sub:dist_stat}
+
+Suppose we are given $\ket \psi \in \mathcal{H}$. We are told that either $\ket \psi = \ket{\alpha_0}$ or $\ket{\alpha_1}$, with probability $1/2$. We are told that $\braket{\alpha_0|\alpha_1} \neq 0$, so the states are not perpendicular. Say that $|\braket{\alpha_0|\alpha_1}| = \cos \theta$.
+
+We are interested in trying to best identify the state of $\ket \psi$. One strategy is to just guess, with probability $1/2$. But we can do better by doing measurements on $\ket \psi$. Suppose we have projection operators $\Pi_0, \Pi_1$, with $\Pi_0 + \Pi_1 = I$. Then the average success probability will be
+\[
+	p_{\mathrm{success}} = \frac{1}{2} \Prob(\text{outcome is } 0 | \ket \psi = \ket{\alpha_0}) + \frac{1}{2} \Prob(\text{outcome is } 1 | \ket \psi = \ket{\alpha_1}).
+\]
+Then the probabilities are, respectively,
+\[
+	\braket{\alpha_0|\Pi_0|\alpha_0} \qquad \text{and} \qquad \braket{\alpha_1|\Pi_1|\alpha_1}.
+\]
+Hence we can calculate
+\[
+	p_{\mathrm{success}} = \frac{1}{2} \Tr[\Pi_0(\ket{\alpha_0} \bra{\alpha_0} - \ket{\alpha_1} \bra{\alpha_1})] + \frac{1}{2}.
+\]
+The optimal choice of measurement maximizes $p_{\mathrm{success}}$. Note that
+\[
+p_{\mathrm{success}}(\Pi_0) = \frac{1}{2} + \frac{1}{2} \Tr(\Pi_0 \Delta),
+\]
+where
+\[
+	\Delta = \ket{\alpha_0}\bra{\alpha_0} - \ket{\alpha_1}\bra{\alpha_1}.
+\]
+$\Delta$ is a Hermitian operator, satisfying that for all $\ket \beta \in \mathcal{H}$ perpendicular to $\ket{\alpha_0}$ and $\ket{\alpha_1}$, that $\Delta \ket \beta = 0$. Hence
+\[
+	\ker \Delta \supseteq \spn\{\ket \beta \in \mathcal{H} \mid \braket{\alpha_i|\beta} = 0, i = 0, 1\}.
+\]
+Thus $\Delta$ acts non-trivially only on a two-dimensional subspace, $\mathcal{V} = \spn\{\ket{\alpha_0}, \ket{\alpha_1}\}$. So $\Delta$ has at most two non-zero eigenvalues, and since $\Tr \Delta = 0$, we get it has two eigenvalues $\pm \delta$, with eigenvectors $\ket{\pm p}$.
+
+%lecture 7
+
+Hence we know that
+\[
+\Delta = \delta P_{\delta} - \delta P_{-\delta}.
+\]
+Therefore, in the basis $\{\ket{\pm p}\}$, we have
+\[
+\Delta =
+\begin{pmatrix}
+	\delta & 0 \\ 0 & -\delta
+\end{pmatrix}.
+\]
+Now we want to find the optimal success portfolio. We begin by finding $\delta$ in terms of $\ket{\alpha_0}$ and $\ket{\alpha_1}$. Let $\ket{\alpha_0^\perp} \in \mathcal{V}$ such that $\ket{\alpha_0}, \ket{\alpha_0^\perp}$ is an orthonormal basis of $\mathcal{V}$. Now say that
+\[
+	\ket{\alpha_1} = c_0 \ket{\alpha_0} + c_1 \ket{\alpha_0^{\perp}}.
+\]
+As our state is normalised, $|c_0|^2 + |c_1|^2 = 1$. Then in this orthonormal basis,
+\[
+\Delta =
+\begin{pmatrix}
+	1 & 0 \\ 0 & 1
+\end{pmatrix}
+-
+\begin{pmatrix}
+	|c_0|^2 & c_0 c_1^{\ast} \\ c_0^{\ast} c_1 & |c_1|^2 \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+	|c_1|^2 & -c_0c_1^{\ast} \\ c_0^{\ast} c_1 & -|c_1|^2
+\end{pmatrix}.
+\]
+We can find the eigenvalues of this as $\pm \delta = \pm |c_1| = \pm \sin \theta$, the angle between the vectors. Then,
+\begin{align*}
+	p_{\mathrm{success}}(\Pi_0) &= \frac{1}{2} + \frac{1}{2} \Tr [ \Pi_0(\delta \ket p \bra p - \delta \ket{-p} \bra{-p})] \\
+				    &= \frac{1}{2} + \frac{1}{2} \sin \theta [\braket{p|\Pi_0|p} - \braket{-p|\Pi_0|-p}].
+\end{align*}
+We choose $\Pi_0$ such that it projects onto a subspace containing $\ket p$. Then we have
+\[
+p_{\mathrm{success}}^{\ast} = \frac{1}{2} + \frac{1}{2} \sin \theta.
+\]
+This is the \emph{Holevo-Holstrom theorem}: given any one of two equally likely states $\ket{\alpha_0}$ and $\ket{\alpha_1}$, with $|\braket{\alpha_0|\alpha_1}| = \cos \theta \neq 0$, then the probability of successfully identifying the state by any measurement satisfies
+\[
+	p_{\mathrm{success}}^{\ast} \leq \frac{1}{2} + \frac{\sin \theta}{2},
+\]
+and as we have shown, this bound is tight.
+
+We can generalise this to unambiguous state discrimination, where we have three outcomes in our measurement: 1 if the state is $\ket{\alpha_0}$, 0 if the state is $\ket{\alpha_1}$, and a third fail state if the process has failed.
+
+\subsection{Basic Unitary Operators}
+\label{sub:bas_unit}
+
+Here we will look at some unitary operators, corresponding to quantum gates. First, we look at one-qubit gates.
+
+The first is the \emph{Hadamard gate}\index{Hadamard gate}
+\[
+H = \frac{1}{2}
+\begin{pmatrix}
+	1 & 1 \\ 1 & -1
+\end{pmatrix}.
+\]
+This satisfies $H \ket 0 = \ket +$, $H \ket 1 = \ket -$, and it is indeed a unitary matrix. We can show that
+\[
+	\ket{\phi^+} = \frac{1}{\sqrt 2} [\ket{00} + \ket{11}] = \frac{1}{\sqrt 2}[\ket{++} + \ket{--}],
+\]
+by using the fact that
+\[
+	(A \otimes B) = (I \times B) (A \times I), \qquad (A \times I)\ket{\phi^+} = (I \times A^{T})\ket{\phi^+}.
+\]
+We also have a reflection matrix
+\[
+H = \mathrm{Ref}(\theta)=
+\begin{pmatrix}
+	\cos 2 \theta & \sin 2 \theta \\ \sin 2 \theta & -\cos 2 \theta
+\end{pmatrix}.
+\]
+This corresponds to reflection in the real Euclidean space.
+
+Some other one-qubit gates are
+\[
+X =
+\begin{pmatrix}
+	0 & 1 \\ 1 & 0
+\end{pmatrix}
+= \sigma_x, \qquad Z =
+\begin{pmatrix}
+	1 & 0 \\ 0 & -1
+\end{pmatrix}
+=\sigma_z, \qquad Y = ZX = -XZ =
+\begin{pmatrix}
+	0 & 1 \\ -1 & 0
+\end{pmatrix}.
+\]
+Here $X$ is the quantum not gate, so $X \ket k = \ket{k \oplus 1}$, and $Z \ket k = (-1)^k \ket k$.
+
+We can generalise $Z$ to a phase gate
+\[
+P_\theta =
+\begin{pmatrix}
+	1 & 0 \\ 0 & e^{i\theta}
+\end{pmatrix}.
+\]
+
+Let's move on to two qubit gates. The first is a controlled-$X$ gate, which is
+\[
+CX=
+\begin{pmatrix}
+	(I) & (0) \\ (0) & (X)
+\end{pmatrix}.
+\]
+This gives $CX \ket i \ket j = \ket i \ket{j \oplus i}$. We can generalise to make different qubits the control and the target, e.g.
+\[
+CX_{12} \ket 0 \ket 1 = \ket 0 \ket 1, \qquad CX_{21} \ket 0 \ket 1 = \ket 1 \ket 1.
+\]
+Similarly, we have the controlled $Z$ gate,
+\[
+CZ=
+\begin{pmatrix}
+	(I) & (0) \\ (0) & (Z)
+\end{pmatrix}.
+\]
+We can check that $CZ_{12}$ has the same action as $CZ_{21}$. More importantly, we can find that
+\[
+CX_{21} = (H \otimes H) (CX_{12})(H \otimes H).
+\]
+
+\newpage
+
+\section{Entanglement}
+\label{sec:ent}
+
+Suppose A and B have two qubits, so $\mathcal{H} = \mathbb{C}^2 \otimes \mathbb{C}^2$. We consider a basis for $\mathcal{H}$ as
+\begin{align*}
+	\ket{\phi^{\pm}} &= \frac{1}{\sqrt 2}[\ket{00} \pm \ket{11}],\\
+	\ket{\psi^{\pm}} &= \frac{1}{\sqrt 2}[\ket{01} \pm \ket{10}].
+\end{align*}
+Then $\{\ket{\phi^+}, \ket{\phi^-}, \ket{\psi^+}, \ket{\psi^{-}}\}$ is known as the \emph{Bell basis}\index{Bell basis}.
+
+Bell states are maximally entangled states. We know the state of AB exactly, but we have no information about the states of A or B individually.
+
+%lecture 8
+
+The bell states satisfy the following:
+\begin{align*}
+	\ket{\phi^+} &= (I \otimes I) \ket{\phi^+} \\
+	\ket{\phi^{-}} &= (Z \otimes I) \ket{\phi^+} = (I \otimes Z) \ket{\phi^+} \\
+	\ket{\psi^+} &= (I \otimes X) \ket{\phi^+} \\
+	\ket{\psi^-} &= (Y \otimes Z) \ket{\phi^+},
+\end{align*}
+where we recall that $Y = ZX$. We can also check that
+\[
+	\ket{\phi^+} = CX(H \otimes I) \ket{00}.
+\]
+The Bell states can be characterized by two classical bits:
+\begin{itemize}
+	\item The parity bit.
+	\item The phase bit.
+\end{itemize}
+This information can be recovered by doing a measurement on the two qubits in the Bell basis $\mathcal{B}$. Such a measurement is called a \emph{Bell measurement}\index{Bell measurement}.
+
+Note that this measurement needs to be done on both qubits, i.e. they need to be in the same location.
+
+The projection operators are $P_{ij}$ with outcomes $ij$, where, for example
+\[
+	P_{00} = \ket{\phi^+}\bra{\phi^+}.
+\]
+
+\subsection{Applications of Entanglement}
+\label{sub:app_ent}
+
+First we look at superdense coding.
+
+Suppose Alice wants to send a classical message to Bob, using a qubit channel. Alice has a message of bit size 2, and she wishes to send a single qubit to represent her message.
+
+This is possible, provided Alice and Bob share a Bell state $\ket{\phi^+}_{AB}$. They use a protocol called superdense coding, which involves Alice interacting with her qubit, then sending her qubit to Bob, and Bob then has both qubits.
+\begin{itemize}
+	\item If Alice wishes to send $00$. Alice does nothing, so the interaction is $I \otimes I$, and Bob receives $\ket{\phi^+}$.
+	\item If she wishes to send $01$, Alice interacts with $Z$, and Bob receives $\ket{\phi^-}$.
+	\item If she wishes to send $10$, Alice interacts with $X$, and Bob receives $\ket{\psi^+}$.
+	\item If she wishes to send $11$, Alice interacts with $Y$, and Bob receives $\ket{\psi^-}$.
+\end{itemize}
+
+The Bob does a Bell measurement, and is able to decode Alice's message.
+
+Now let's look at teleportation. Again Alice and Bob share a Bell state $\ket{\phi^+}_{AB}$. Alice has another qubit $C$ in some state $\ket \psi$, and she want to send $\ket \psi$ to Bob.
+
+However, she has no means to physically send $C$ to Bob. There is no qubit channel, hence only classical communication is possible.
+
+Amazingly, she can indeed send this information, through a protocol known as \emph{quantum teleportation}\index{quantum teleportation}. The state transfer is unaffected by any process in the intervening space. Note that the qubit $C$ is not physically transferable.
+
+The overview of the protocol is as follows. First Alice does a local operation on $C$, $A$. Then Alice communicates classically to Bob, after which Bob does a local operation on his qubit.
+
+First, say that
+\[
+	\ket{\psi}_C = a \ket 0 + b \ket 1,
+\]
+with $|a|^2 + |b|^2 = 1$. Hence the initial state of the overall space is $\ket\psi_C \otimes \ket{\phi^+}_{AB}$, which we can see is
+\[
+	\ket \psi = \frac{1}{\sqrt 2}[a \ket{000} + a \ket{011} + b\ket{100} + b \ket{111}].
+\]
+Then she sends $CA$ through a $CX$ gate, with $C$ the control and $A$ the target. This sends $\ket \psi \to \ket{\phi_1}$, where
+\[
+	\ket{\phi_1} = \frac{1}{\sqrt 2} [a \ket{000} + a \ket{111} + b\ket{110} + b \ket{101}].
+\]
+Then she sends $C$ through a Hadamard gate, to get
+\[
+	\ket{\phi_2} = \frac{1}{\sqrt 2} [a \ket{+00} + a \ket{+11} + b \ket{-10} + b \ket{-01}].
+\]
+We can check that this is equal to
+\begin{align*}
+	\ket{\phi_2} &= \frac{1}{2} [\ket{00}_{CA}(a \ket 0_B + b \ket 1_B) + \ket{01}_{CA}(a \ket 1_B + b \ket 0_B) + \cdots ] \\
+		     &= \frac{1}{2} [ \ket{00}_{CA} \ket{\psi}_B + \ket{01}_{CA} X \ket{\psi}_B + \ket{10}_{CA} Z \ket \psi_B + \ket{11}_{CA}(-Y \ket \psi_B)].
+\end{align*}
+Afterwards Alice does a measurement on the standard basis, on $CA$. By the extended born rule, depending on the outcome (each with probability $1/4$), the post-measurement state of $CAB$ is a product state. If Alice's outcome is $ij$, then the post-measurement state of $B$ is $X^j Z^i \ket \psi$.
+
+Then Alice classically communicates her measurement to Bob. In order for Bob to get the qubit $\ket \psi$, he transforms by $Z^i X^j$, so his state is
+\[
+Z^i X^j(X^j Z^i) \ket \psi = \ket \psi_B.
+\]
+
+We can draw a diagram of this. It looks cool I guess?
+
+One takeaway of this is that $H \cdot CX$ corresponds to the rotation of Bell states to computational basis states.
+
+%lecture 9
+
+\newpage
+
+\section{Quantum Cryptography}
+\label{sec:q_crypto}
+
+How do we communicate securely? Many people have tried to develop schemes to communicate securely, e.g. Caesar ciphers, involving a permutation of the alphabet. Obviously this is not secure.
+
+In fact, the only provably secure means of communication is via a one-time pad, which required a secret key.
+
+In a public key cryptosystem, there are a paired public and private key. Say Alice and Bob want to communicate. Alice encrypts her message using a public key, and Bob receives and decodes the message using a private key.
+
+The benefit of this system is that no shared private key is needed, however this is also not provably secure. Security relies on the assumptions of computational hardness, i.e. that there exists tasks that are computable in principle but not computable in practice, i.e. there are no polynomial time algorithms for the task.
+
+One such example is prime factorisation. Suppose $p, q \in \mathbb{N}$ are of $n = 100$ binary digits. Then multiplying $p$ and $q$ is possible in $\mathcal{O}(n^2)$ times, however given $N \in \mathbb{N}$ we cannot find the factors of $N$ in any polynomial time algorithm. The fastest algorithm known is of order $\mathcal{O}(2^{n^{1/2}})$.
+
+The advantage of this is that no shared key is required. But it can be readily broken by a quantum computer, for example Shor's factoring algorithm.
+
+The drawback of encoding information in a quantum state is:
+\begin{itemize}
+	\item Received information cannot be reliable identified.
+	\item Any attempt to read the message results in the information being destroyed.
+\end{itemize}
+This is advantageous for quantum cryptography.
+
+Let's look at classical secure communication. Here Alice and Bob are communicating over a channel with an eavesdropper, Eve. Eve is able to intercept the message and read it, then send it to Bob.
+
+The aim is for Alice to send Bob a secure message, such that Eve learns nothing, while Eve wants to learn as much as possible.
+
+We assume that the classical channel is authenticated, and Eve cannot block or modify the message.
+
+For a one time pad, Alice and Bob share a private key $K$, a binary string not known to Eve. $K$ is shared before the message, and is also independent of the message $M$ that Alice wants to send to Bob. We assume $|K| = |M|$, and so $K, M \in \{0, 1\}^m$.
+
+The process is simple. First Alice computes $C = M \oplus K$, which she then sends to Bob. Bob is then able to compute $C \oplus K = M \oplus K \oplus K = M$.
+
+Here Eve can only learn $|M|$, the length of the message. She cannot learn any more, as the distribution of any $K$ will be $1/2^m$, given that $K$ is chosen uniformly at random.
+
+Hence the one time pad is secure, but of course it is only a one-time thing, as if Alice sends $C_1 = M_1 \oplus K$ and $C_2 = M_2 \oplus K$, then Eve can learn $C_1 \oplus C_2 = M_1 \oplus M_2$.
+
+The drawback of a one-time pad is that it is very inefficient. Alice and Bob must generate $K$ before every communication attempt, which may be impossible if they need to send signals very regularly.
+
+\subsection{Quantum Key Decryption}
+\label{sub:qkd}
+
+This is where we can use QIC, namely QKD. It allows Alice and Bob to generate a private key, then use this for secure communication via a one-time pad (note QKD does not encrypt the message, only provides the key).
+
+We will look at the BB84 protocol for QKD. Here Alice and Bob communicate with both a classical channel and a qubit channel. Eve now has access to both channels.
+
+We claim that Eve cannot gain any information about the key without being detected by Alice and Bob. Indeed, this is the measurement postulate. Eve's actions can be detected by discussion over the classical channel.
+
+To communicate, first Alice generates two $m$-bit strings $\mathbf{x}$ and $\mathbf{y}$, uniformly at random, and prepares and $m$-qubit state $\ket{\psi_{\mathbf{x}\mathbf{y}}} = \ket{\psi_{x_1 y_1}} \otimes \cdots \otimes \ket{\psi_{x_m y_m}}$, where
+\[
+	\ket{\psi_{00}} = \ket 0, \quad \ket{\psi_{10}} = \ket 1, \quad\ket{\psi_{01}} = \ket +, \quad\ket{\psi_{11}} = \ket -.
+\]
+So Alice is using two bases, $\mathcal{B}_0 = \{\ket 0, \ket 1\}$ and $\mathcal{B}_1 = \{\ket +, \ket -\}$. If $y_i = 0$, then $\ket{\psi_{x_iy_i}} \in \mathcal{B}_0$, else it is in $\mathcal{B}_1$.
+
+Now $\mathcal{B}_0$ and $\mathcal{B}_1$ are mutually unbiased bases, meaning measuring any state of one basis in the other gives equally likely outcomes.
+
+%lecture 10
+
+Then Alice sends these $m$ qubits to $B$, one-by-one, through the qubit channel, and Bob gets $m$ qubits. These might not be in the state $\ket{\psi_{\mathbf{x}\mathbf{y}}}$ due to tampering by Eve or noise in the qubit channel.
+
+Suppose Bob did receive $\ket{\psi_{\mathbf{x}\mathbf{y}}}$. Then Bob generates $\mathbf{y}' = y_1' \ldots y_m' \in \{0, 1\}^m$ uniformly at random. If $y_i' = 0$, then he does a measurement on the $i$'th qubit in basis $\mathcal{B}_0$. Otherwise, he acts on $\ket{\psi_{x_i y_i}}$ by $H$, and then measures it in $\mathcal{B}_0$.
+
+The outcomes of these measurements are $\mathbf{x}' = x_1' \ldots x_m'$. Now note that if $y_i' = y_i$, then $x_i' = x_i$ almost surely. This is because Alice and Bob encoded and decoded in the same basis.
+
+After this, Alice and Bob publicly compare $\mathbf{y}$ and $\mathbf{y}'$, and discard all $x_i$'s and $x_i'$'s for which $y_i' \neq y_i$. These give shorter strings $\mathbf{\tilde x}$ and $\mathbf{\tilde x}'$, which give a shared private key. Note if $y_i' \neq y_i$, then $x_i'$ and $x_i$ are totally uncorrelated.
+
+If we include the possibility of observation and noise, then we need two more steps. First, Alice and Bob perform information reconciliation (IR). They are given strings $\mathbf{\tilde x}$ and $\mathbf{\tilde x}'$, which may not be equal. Therefore they wish to find the bit error rate (proportion of non-equal bits). They do this by comparing a random sample of their bit values.
+
+The remaining unrevealed bits form shorter strings $\mathbf{\bar x}$, $\mathbf{\bar x}'$. Then they want to correct these errors. This can be done with high probability via IR, at the cost of sacrificing some more bits. This gets strings $x^\ast$ and ${x^\ast}'$.
+
+Now we need a further step, in order to ensure Eve has no information about the two bit strings. This is privacy amplification (PA). From the estimated bit error rate, Alice and Bob can estimate the maximum amount of information that Eve can have about $x^\ast$ and ${x^\ast}'$. Then we replace these two strings with shorter strings on which Eve has (essentially) no information.
+
+The bit error rate is dependent on Eve's information. So Alice and Bob will assume that all error arose from Eve's actions.
+
+Eve can intercept the message in two ways:
+\begin{enumerate}[(i)]
+	\item Intercept and resend attack.
+	\item General coherent attack. This involves taking a collection of qubits, putting them through a system, and resending.
+\end{enumerate}
+
+We will assume that the chat is noiseless.
+
+%lecture 11
+
+We will only look at the intercept and resend attack, when Eve measures in the Breidbart basis:
+\[
+	\ket {\alpha_0} = \cos \frac{\pi}{8} \ket 0 + \sin \frac{\pi}{8} \ket 1, \qquad \ket {\alpha_1} = \sin \frac{\pi}{8} \ket 0 - \cos \frac{\pi}{8} \ket 1.
+\]
+Then Eve's measurement outcomes and post measurement states are $(0, \ket{\alpha_0})$ and $(1, \ket{\alpha_1})$. The bit error rate in $\tilde x$ and ${\tilde x}'$ arising from Eve's attack can be calculated as follows. Note that
+\begin{align*}
+	\Prob(x' = 1 \mid A \text{ sent } \ket 0) &= \Prob(x' = 1 \mid \ket{\alpha_0}) \Prob(\ket{\alpha_0}\mid \ket 0) \\
+						  & \qquad \qquad + \Prob(x' = 1 \mid \ket{\alpha_1}) \Prob(\ket{\alpha_1} \mid \ket 0) \\
+						  &= |\!\braket{1|\alpha_0}\!|^2|\!\braket{\alpha_0|0}\!|^2 + |\!\braket{1|\alpha_1}\!|^2|\!\braket{0|\alpha_1}\!|^2 \\
+						  &= \frac{1}{4}.
+\end{align*}
+This is true for any signal that Alice sent. Hence the bit error rate is $25$\%. Alice and Bob can estimate the bit error rate by taking a random sample in $\tilde x$ and ${\tilde x}'$. This gives shorter strings $\bar x$ and ${\bar x}'$. This can be corrected with information reconciliation, which gives $x^\ast$ and ${x^\ast}'$. Then we can perform privacy amplification to get $x_\ast$, $x_\ast'$ on which Eve knows almost nothing.
+
+Let's look at an example of information reconciliation. Suppose $\bar x = \mathbf{a} = a_1 \cdots a_7$, and ${\bar x}' = \mathbf{b} = b_1 \cdots b_7$, and they are confidence the bit error rate is $1/7$. They publicly agree to use the check matrix
+\[
+H =
+\begin{bmatrix}
+	1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+	1 & 1 & 0 & 1 & 0 & 1 & 0 \\
+	0 & 1 & 1 & 1 & 0 & 0 & 1
+\end{bmatrix}.
+\]
+This is the Hamming code $[7, 4]$. Alice computes $\mathbf{s}^A = H \mathbf{a}^T$, and Bob computes $\mathbf{s}^B = H \mathbf{b}^T$. Alice tells Bob what $\mathbf{s}^A$ is, publicly, and Bob computes
+\[
+\mathbf{s} = \mathbf{s}^B - \mathbf{s}^A = H(\mathbf{a}^T - \mathbf{b}^T) = H \mathbf{e}^T.
+\]
+Now $\mathbf{e}^T$ has at most one 1 in it, assuming our bit error rate is correct. From classical cryptography, this Hamming code can correct at most one error. Hence there exists a unique bit string $\mathbf{v} \in \{0, 1\}^7$ with $\omega(\mathbf{v}) \leq 1$, where $\omega$ is the weight, such that $H \mathbf{v}^T = \mathbf{s}$. Therefore $\mathbf{e} = \mathbf{v}$.
+
+So since Bob knows $H$ and $\mathbf{s}$, Bob can find $\mathbf{e}$, and so can convert $\mathbf{b}$ to $\mathbf{b} + \mathbf{e} = \mathbf{a}$.
+
+Now let's look at an example of privacy amplification. Here we take 3 bit example, in which Eve knows at most one bit.
+
+Then Alice and bob compute
+\[
+	\mathbf{c} = (a_1 \oplus a_3, a_2 \oplus a_3) \in \{0, 1\}^2.
+\]
+We claim that Eve knows nothing about $\mathbf{c}$. This is just a case bash, over all possible bit strings $\mathbf{a}$ and their result $\mathbf{c}$. Note Alice and Bob publicly agree on how to form $\mathbf{c}$.
+
+\newpage
+
+\section{Classical Computation and Computational Complexity}
+\sectionmark{Computation and Complexity}
+\label{sec:cc}
+
+We first define what we mean by a \emph{computational task}\index{computational task}. Here, our input is a bit string, and the input size is the length of the bit string.
+
+For example, the question `is 10111 prime?', is not a computational task. Instead, `given an $n$-bit string $A$, determine whether A is prime', is a computational task.
+
+The output is a bit string. If it is a single bit output, then it is called a \emph{decision problem}\index{decision problem}.
+
+We denote $B = B_1 = \{0, 1\}$, $B_n = \{0, 1\}^n$, and $B^\ast = \bigcup_n B_n$.
+
+\begin{definition}
+	A \emph{language}\index{language} is a subset $L \subset B^\ast$.
+
+	A decision problem corresponds to recognizing the language for which the answer is $1$.
+\end{definition}
+
+\begin{exbox}[Primality Testing]
+	This is the decision problem of recognizing the language $L \subset B^\ast$, which comprises of all bit strings that represent prime numbers in binary.
+
+	A more general computational task has output size greater than one. For example, $\mathrm{FACTOR}(\mathbf{x})$ is a problem that takes an input $\mathbf{x} \in B_n$, and output either $\mathbf{u}$, a factor of $\mathbf{x}$, or $1$ if $\mathbf{x}$ is prime.
+\end{exbox}
+
+The circuit model of classical computation is as follows. We are given an input $x = b_1 \cdots b_n$, extended (padded) with $0$'s to form
+\[
+b_1 b_2 \cdots b_n 0 0 \cdots 0.
+\]
+These extra bits serve as extra workspace.
+
+A \emph{computational step} is an application of a designated boolean function $f : B_m \to B_n$ on some designated bits. This updates the input string. Moreover these elementary steps should be fixed operations, and should not become more complicated as $n$ increases.
+
+%lecture 12
+
+It can be shown that we can restrict the boolean gates to AND, OR and NOT, and that these operations are universal, i.e. any boolean function of any dimension can be constructed by applying these functions sequentially. The output is the value of some subset of bits.
+
+For each input size $n$, we have a \emph{circuit}\index{circuit} $C_n$, which is a prescribed sequence of steps ($C_n$ is a function only of $n$). We also have a \emph{circuit family}\index{circuit family} $(C_1, C_2, \ldots)$.
+
+We also want to extend our model to incorporate probabilistic choices. In the circuit model, we can do this by extending $b_1\cdots b_n 0 \cdots 0$ to $b_1 \cdots b_n r_1 \cdots r_k 0 \cdots 0$, where $r_1, \ldots, r_k$ are $0$ and $1$ uniformly at random. The output is now a sample from a probability distribution.
+
+In computational complexity theory (CCP) a fundamental problem is determining the worst-case run time complexity of an algorithm. In the circuit model this is just the size of circuit $C_n$, say $T(n)$. Often we are interested if $T(n) = \mathcal{O}(n^k)$ for some $k$, i.e. $T$ is bounded by a polynomial. In this case we write $T(n) = \mathcal{O}(\mathrm{poly}(n))$. If $T(n)$ is not polynomially bounded, the computation is regarded as intractable. We have the following terminology:
+
+\begin{itemize}
+	\item \textbf{P}: polynomial time. The class of all languages for which the problem has a classical algorithm which runs in polynomial time, and gives the correct answer w.p. 1.
+	\item \textbf{BPP}: bounded error probabilistic poly time. The class of languages whose problem has a randomised poly algorithm with correct answer at least $2/3$ for every input.
+\end{itemize}
+
+\begin{exbox}
+	The problem $\mathrm{FACTOR}(N, M)$ is as follows: given an integer $N$ of $n$ digits and $M < N$, decide if $N$ has non-trivial factor less than $M$. The fastest known classical algorithm runs in time $\exp( \mathcal{O}(n^{1/3} (\log n)^{2/3}) )$.
+
+	This is not known to be in \textbf{BPP}.
+\end{exbox}
+In fact $2/3$ for \textbf{BPP} is not required, as we may take our algorithm for $2/3$ and repeat it many times and take the most likely outcome.
+
+Replacing the resource of time with space gives class \textbf{PSPACE}. In fact we can see $\mathbf{P} \subseteq \mathbf{BPP} \subseteq \mathbf{PSPACE}$, as poly many operations can act on only poly many bits. It is not known if these inclusions are strict!
+
+\subsection{Query Complexity and Promise Problems}
+\label{sub:qc_pp}
+
+In computation, there is another scenario that is often considered. In this scenario, we are given as an input a \emph{black box}\index{black box} or \emph{oracle} that computes some function $f : B_m \to B_n$. We can query the black box by giving it inputs, and this is the only way to gain information about the box.
+
+At the start, it is unknown what $f$ is, but there is some \emph{promise}\index{promise problem}, which is some restriction $f$ must satisfy. We want to find some property about $f$, by querying the box the least number of times. The \emph{query complexity}\index{query complexity} is the number of times the oracle is used, but we may also be interested in the total time complexity.
+
+\begin{exbox}[Black Box Problems]
+	Here are some examples of black box problems.
+	\begin{enumerate}
+		\item The ``balanced vs constant'' problem: we have $f : B_n \to B$, which is promised to be either constant, or balanced in the sense that $f(x) = 0$ for exactly half of the inputs.
+
+			We then want to determine whether $f$ is balanced, either correct with certainty or with some large probability.
+		\item Boolean satisfiability: we have $f : B_n \to B$ with no restriction, and we want to determine whether there is $x$ with $f(x) = 1$.
+		\item Search; we have $f : B_n \to B$ with exactly on $x$ satisfying $f(x) = 1$, and we wish to find this $x$.
+		\item Periodicity: we have $f : \mathbb{Z}_n \to \mathbb{Z}_n$, where $f$ is periodic with some period $r$. We are asked to find $r$.
+	\end{enumerate}
+\end{exbox}
+
+\subsection{Circuit Quantum Computation}
+\label{sub:cqc}
+
+The circuit model for classical computation can be generalized to the quantum world easily. Our starting string is replaced with a sequence of qubits in the basis state $\ket{b_1} \cdots \ket{b_n} \ket 0 \cdots \ket 0$. A set is the application of a quantum gate, which is a prescribed unitary operation to a choice of qubits. Note we do not need randomize qubits, as a random choice can be generated by a measurement on $H \ket 0$.
+
+Again for each input size $n$ we have quantum circuit $C_n$. A quantum algorithm is then defined by a (uniform) family of quantum circuits $(C_1, C_2, \ldots)$. Circuits often have nice drawings.
+
+We saw in classical computation there is a universal set consisting of $\{\text{NOT, AND, OR}\}$. In fact we may delete OR from this set. We can show there is no set of 2-bit reversible gates that are universal, but universal 3-bit reversible gates exist, e.g. the Fredkin gate
+\[
+F(0b_2b_3) = 0b_2b_3, \qquad F(1b_2b_3) = 1b_3b_2.
+\]
+The Toffoli gate is another example:
+\[
+\mathrm{Toff}(0b_2b_3) = 0b_2b_3, \qquad \mathrm{Toff}(1b_2b_3) = 1 CX(b_2b_3).
+\]
+
+In the quantum case all gates are reversible as they are unitary, but the situation is more complicated, as gates are parametrised by continuous parameters. Hence no finite set can generate them all exactly by finite circuits. However there are \emph{approximately universal}\index{approximately universal} gates which generate any unitary gate with arbitrary accuracy $\eps > 0$ (with respect to the operator norm). If we have $\eps = 0$ the set is \emph{exactly universal}\index{exactly universal}.
+
+For approximately universal sets, the size of the circuit $C$ that acts as $W$ will generally be exponential in the number of qubits $n$. Moreover, for fixed $U$, the size of $C$ can be taken to be bounded by $\mathrm{poly}(\log(1/\eps))$: this is Solovay-Kitaev.
+
+\begin{exbox}
+	Some examples of approximately universal sets:
+	\begin{itemize}
+		\item $\{CX, \text{ all 1-qubit gates}\}$.
+		\item $\{CX, H, T\}$, where $T = \mathrm{diag}(1, e^{i\pi/4})$.
+		\item $\{\text{Toffoli 3-qubit gate}, H\}$.
+	\end{itemize}
+	The latter is universal for all gates with real entries. The first example is exactly universal.
+\end{exbox}
+
+Now we define the complexity class \textbf{BQP}, standing for bounded error quantum poly time. This is the direct generalisation of \textbf{BPP}, and is the class of langauges in which there is a poly time quantum algorithm whose output answer is correct with probability at least $2/3$.
+
+We can show $\mathbf{BPP} \subseteq \mathbf{BQP}$, as any poly sized classical circuit can be converted to a reversible quantum circuit. The natural question is are these classes equal? This is unsolved, although it is believed they are unequal. We know that $\mathrm{FACTOR}(M, N)$ is in \textbf{BQP}, but not if it is in \textbf{BPP}. More generally we are interested in tasks that show resource benefit for a quantum solution vs. a classical one.
+
+We will now show how to get a reversible version of any function. Given $f : B_m \to B_n$, we can express it in reversible form $\tilde f : B_{m+n} \to B_{m+n}$ as follows: we introduce $\oplus$, bitwise addition. Now define
+\[
+\tilde f(b, c) = (b, c \oplus f(b)).
+\]
+Then $\tilde f$ is easily computable and given $\tilde f$ we can recover $f$ by choosing $\tilde f(b, 0\cdots0) = (b, f(b))$. Moreover $\tilde f$ is reversible, since it is self-inverse. Hence when quantifying problems, we use $\tilde f$ for any oracle problem involving $f$. Specifically the \emph{quantum oracle}\index{quantum oracle} for $f : B_m \to B_n$ is the quantum gate
+\[
+	U_f \ket x \ket y = \ket x \ket{y \oplus f(x)}.
+\]
+Now this $U_f$ is unitary, as any $g : B_k \to B_k$ reversible is a permutation on the $k$-bit strings, so the linear map is a permutation matrix. Hence $U_f$ is unitary.
+
+Since $U_f$ is a quantum operation, it can act on superimposed inputs. Indeed if we input an equal superposition of all $2^m$ possible $m$-bit strings, we get
+\[
+	U_f : \frac{1}{2^{m/2}} \sum_x \ket x \ket 0 \to \ket{\psi_f} = \frac{1}{2^{m/2}} \sum_x \ket x \ket{f(x)}.
+\]
+Such a computation is called computation by \emph{quantum parallelism}\index{quantum parallelism}. By quantum processing we are able to obtain global information about the nature of the function $f$. Note we can get a uniform superposition over all $x$ values by doing
+\[
+H \otimes \cdots \otimes H \ket 0 \cdots \ket 0 = \frac{1}{2^{m/2}} \sum_{x \in B_n} \ket x.
+\]
+An important feature is that we have created a superposition of exponentially many terms, with only a linear number of elementary operations by applying $H$ $m$ times.
+
+%lecture 13
+
+\subsection{Deutsch-Jozsa Algorithm}
+\label{sub:dja}
+
+The first such example of an exponential benefit of quantum computation is a quantum algorithm for the balanced vs constant black-box promise problem.
+
+Recall here, we are given a Boolean function $f : B_n \to B$, which is either constant or `balanced', i.e. it is $0$ for exactly half of the $2^n$ inputs.
+
+A little thought shows that classically $2^{n}/2 + 1$ queries (i.e. exponentially many) are necessary and sufficient in the worst case. Sufficiency is clear. For necessity, suppose we have a deterministic algorithm which works on $K \leq 2^{n-1}$ queries.
+
+An adversary can force the algorithm to fail as follows: when applied, he has not chosen his function $f$, but continues to answer $0$. At the end, his function is fixed on $K$ inputs, and he may fix the other $2^n - K$ to either be constant or balanced, and contradict the algorithms conclusion.
+
+Similarly a probabilistic classical algorithm must also have at least $2^{n-1} + 1$ queries.
+
+However, in the quantum scenario, just one query suffices. The black box is
+\[
+	U_f : \ket x \ket y = \ket x \ket{y + \oplus f(x)},
+\]
+where $\ket x$ comprises $n$ qubits and the output $\ket y$ is one qubit. To apply the algorithm, first suppose all qubits are in the standard state $\ket 0$. We construct an equal superposition of all $n$-bit strings (in $n$ steps), and set the output register to $\ket -$, by applying $X$ and then $H$ to $\ket 0$. Thus we have
+\[
+	\left( \frac{1}{\sqrt{2^n}} \sum_{x \in B_n} \ket x \right) \ket -.
+\]
+Next we run $U_f$ on this state. On a single state, we get (without $\sqrt 2$ term):
+\begin{align*}
+	U_f : \ket x(\ket 0 - \ket 1) &\to \ket x(\ket{f(x)} - \ket{f(x) \oplus 1}) \\
+				      &= (-1)^{f(x)} \ket x (\ket 0 - \ket 1).
+\end{align*}
+I.e. we flip if $f(x) = 1$, otherwise stay the same. This is sometimes called a \emph{phase kickback}\index{phase kickback}. On the full superposition, we get
+\begin{align*}
+	\left( \frac{1}{\sqrt{2^n}} \sum_{x \in B_n} \ket x \right) \ket - \mapsto \left( \frac{1}{\sqrt{2^n}} \sum_{x \in B_n}(-1)^{f(x)} \ket x \right) \ket -.
+\end{align*}
+This just gives us the $n$-qubit state
+\[
+	\ket f = \frac{1}{\sqrt{2^n}} \sum_{x \in B_n} (-1)^{f(x)} \ket x.
+\]
+\begin{itemize}
+	\item If $f$ is constant, then
+		\[
+			\ket f = \pm \frac{1}{\sqrt{2^n}} \sum_{x \in B_n} \ket x.
+		\]
+		Applying $H_n = H \otimes \cdots \otimes H$, we get $\pm \ket{0\cdots 0}$, as $H$ is self-inverse.
+	\item If $f$ is balanced, then $\ket f$ will be orthogonal to $\ket{\phi_n}$, which is the sum of all states. But since $H_n$ is unitary, $H_n \ket f$ will be orthogonal to $H_n \ket{\phi_n} = \ket{0 \cdots 0}$. So $H_n \ket f$ will have the form $\sum_x a_x \ket x$, with the all-zero term absent.
+\end{itemize}
+From the above discussion, we can construct $\ket f$, apply $H_n$ and measure the $n$ qubits in the computational basis. If the result is $0 \cdots 0$, then $f$ was constant, and if the result is a non-zero string, then $f$ was certainly balanced.
+
+Hence we have solved the problem with one query to $f$, and $(3n + 2)$ operators: $(n +1)$ $H$'s, one $X$ to make our input, $n$ $H$'s to perform $H_n$ on $\ket f$ and $n$ single qubit measurements to get the output string.
+
+Now we consider the bounded error case. Suppose we tolerate some error. Then the above quantum algorithm still works, but there is a classical randomised algorithm that solves the problem with only a constant number of queries, depending on $\epsilon$ as $\mathcal{O}(1/ \log \epsilon)$ for any $n$, and for any fixed $\epsilon > 0$.
+
+Thus we lose the exponential gap between classical and quantum queries. The classical algorithm is picking $K$ values independently at random. If they are the same, say $f$ is constant, otherwise say $f$ is balanced. The second output is always correct, but the first may be erroneous, if $f$ is balanced and we with probability $1/2$ pick the same output as the first, which happens with $1/2^{K=1}$ probability.
+
+Hence the error is bounded by $1/2^{K-1} < \epsilon$, i.e. $K > \log 1/\epsilon$ is sufficient.
+
+Does the above algorithm mean quantum superiority? Probably not.
+\begin{itemize}
+	\item The first thing to consider is that if we allow any level of error, we lose the exponential separation. But realistically, exactly-zero error is unrealistic, and we should accept some level of error (e.g. computers are not perfect and do not have infinite precision). This can be addressed: there are black box problems with exponential separation between the classical and quantum algorithms even with error (e.g. Simon's quantum algorithm).
+	\item The second is that the Deutsch-Jozsa problem is a black-box problem. To convert it to a standard task, we want a class of functions that the balanced/constant decision is hard classically. But no such class is known.
+\end{itemize}
+
+Are there any standard tasks for which we can prove the existence of an exponential speed-up for quantum versus classical computation? No such proofs are known, but the difficulty is in the classical theory, i.e. we know exponential classical algorithms, but we cannot prove there are better ones.
+
+\subsection{Simon's Algorithm}
+\label{sub:simonas}
+
+Consider the following problem:
+
+We are given a black box boolean function $f : B_n \to B_n$, which is either one-to-one, or two-to-one of the following form: there is an $n$-bix string $\xi \neq 00\cdots 0$ such that
+\[
+f(x) = f(y) \iff y = x \oplus \xi.
+\]
+Then we wish to determine which type of function $f$ is.
+
+Furthermore, we can ask for a determination of $\xi$ if $f$ is of the second type.
+
+Simon's quantum algorithm solves this problem with only $\mathcal{O}(n)$ queries to $f$, but on the other hand we can argue that the problem is classically hard, requiring an exponential number of queries for bounded error computation.
+
+Intuitively, if $f$ is two-to-one, we need to query $f$ an exponential number of times to have a reasonable probability of noticing that $f$ is not one-to-one. Indeed, we obtain no information unless we are lucky to choose two queries $x$ and $y$ with $f(x) = f(y)$, i.e. $x \oplus y = \xi$. Suppose we choose $2^{n/4}$ queries. Then the number of pairs of queries is less than $(2^{n/4})^2$, and for each pair the probability that $x \oplus y = \xi$ is $2^{-n}$, so the probability of seeing $\xi$ is less than $2^{-n} 2^{n/2} = 2^{-n/2}$.
+
+This argument can be made more rigorous, but we omit the technicalities.
+
+%lecture 14
+
+\newpage
+
+\section{Quantum Fourier Transform}
+\label{sec:qft}
+
+The \emph{quantum Fourier transform}\index{quantum Fourier transform} can be viewed as a generalisation of the Hadamard operation to higher dimensions, and we are especially interested in $N = 2^n$, i.e $n$-qubit space. This is the same as the discrete Fourier transform: a unitary matrix.
+
+Let $\mathcal{H}_N$ denote a state space with o.n.b. $\{\ket 0, \ldots, \ket{N-1}\}$, labelled by $\mathbb{Z}_N$. The quantum Fourier transform modulo $N$, denote $\mathrm{QFT}_N$ is a the unitary transform on $\mathcal{H}_N$ defined by
+\[
+\mathrm{QFT}_N : \ket x \mapsto \frac{1}{\sqrt N} \sum_{y = 0}^{N - 1} \exp \left( 2 \pi i \frac{xy}{N} \right) \ket y.
+\]
+As a matrix, the $jk$'th entry is
+\[
+	[\mathrm{QFT}]_{jk} = \frac{1}{\sqrt N} \exp \left( 2 \pi i \frac{jk}{N} \right).
+\]
+We $0$-label the rows and columns. If $\omega = e^{2 \pi i/N}$ is the primitive $N$'th root of unity, all matrix elements are normalised power of $\omega$, such that:
+\begin{itemize}
+	\item The initial row and column contains $1$'s.
+	\item Each row and column is a geometric sequence; the $k$'th row/column is a sequence of powers of $\omega^k$.
+\end{itemize}
+The fact $\mathrm{QFT}$ is unitary is basic algebra. Recall
+\[
+1 + \omega^K + \cdots + \omega^{(N-1)K} =
+\begin{cases}
+	N & N \mid K, \\
+	0 & N \nmid K.
+\end{cases}
+\]
+
+\subsection{Periodicity Determination}
+\label{sub:pd}
+
+A fundamental application of the Fourier transform is the determination of periodicity. Some important mathematical problems can be reduced to such a problem.
+
+Suppose we are give a function $f : \mathbb{Z}_N \to Y$, which is promised periodic with period $r$, under the assumption $f$ is one-to-one in each period. We want a method of determining $r$ with some constant level of probability, independent of increasing the size of $N$.
+
+It can be shown $\mathcal{O}(N^{1/2})$ queries to $f$ are necessary and sufficient to achieve this in classical computation. In some cases further information may be available, but periodicity determination still hard. However in the quantum scenario we see that $r$ can be determined with probability $1 - \epsilon$ with only $\mathcal{O}(\log \log N)$ queries, and $\mathrm{poly}(\log N)$ processing steps.
+
+First, we construct a uniform superposition $\frac{1}{\sqrt N} \sum_{x = 0}^{N-1} \ket x$, and using on query obtain the state
+\[
+	\ket f = \frac{1}{\sqrt N} \sum_{x = 0}^{N-1} \ket x \ket{f(x)}.
+\]
+Since $f$ is periodic, $r$ divides $N$ exactly, so let $A = N/r$, the number of periods. If we measure the second register, we see $y = f(x_0)$, where $x_0$ is the least $x$ having $f(x) = y$. Then the first register will be projected into an equal superposition of $x = x_0, x_0 + r, \ldots, x_0 + (A-1)r$, so
+\[
+	\ket{\mathrm{per}} = \frac{1}{\sqrt A} \sum_{j = 0}^{A-1} \ket{x_0 + jr}.
+\]
+Here $0 \leq x_0 \leq r-1$ is chosen uniformly at random. Measuring the register of $\ket{\mathrm{per}}$ gives a random element $j_0$, i.e. a random number altogether. However $\ket{\mathrm{per}}$ seems to contain information about $r$. The resolution is to use the Fourier transform to pick up periodicities. Applying $\mathrm{QFT}$, we get
+\[
+	\mathrm{QFT} \ket{\mathrm{per}} = \frac{1}{\sqrt{NA}} \sum_{j = 0}^{A-1} \left( \sum_{y = 0}^{N-1} \omega^{(x_0 + jr)y} \ket y \right) = \frac{1}{\sqrt NA} \sum_{y = 0}^{N-1} \omega^{x_0 y} \left[ \sum_{j = 0}^{A-1} \omega^{jry} \right] \ket y.
+\]
+The bit in the bracket is a geometric series with powers of $\alpha = e^{2 \pi i r y/N} = (e^{2 \pi i/ A})^y$, which is non-zero whenever $A \mid y$. Hence
+\[
+	\mathrm{QFT}\ket{\mathrm{per}} = \sqrt{\frac{A}{N}} \sum_{k = 0}^{r-1} \omega^{x_0(kN/r)} \ket{kN/r}.
+\]
+The random shift has been eliminated, and only occurs in a pure phase. If we measure the label, we obtain a value $c = k_0 N/r$, so
+\[
+\frac{k_0}{r} = \frac{c}{N}.
+\]
+If $k_0$ was coprime to $r$, we can cancel $c/N$ down and read off $r$ as the denominator. If they are not coprime, we get a small denominator $r'$, so we chan check $r$ works by evaluating $f(0)$ and $f(r)$. If $k_0$ is chosen at random what is the probability of coprimality? We use the following:
+
+\begin{theorem}
+	The number of integers less than $r$, coprime to $r$ grows as $\mathcal{O}(r/ \log \log r)$. If $k_0 < r$ is chosen at random, the probability $k_0$ is coprime to $r$ is
+	\[
+	\mathcal{O}(1 / \log \log r).
+	\]
+\end{theorem}
+
+Repeating this $\mathcal{O}(\log \log r) < \mathcal{O}(\log \log N)$ times, we obtain a coprime $k_0$ with constant level of probability. We used the following fact:
+\begin{lemma}
+	If a single trial has success probability $p$ and we repeat it $M$ itmes independently, for any constant $0 < 1 - \epsilon < 1$,
+	\[
+		\mathbb{P}(\text{one success in $M$ trials}) > 1 - \epsilon \qquad \text{if } M = \frac{- \log \epsilon}{p}.
+	\]
+\end{lemma}
+
+\begin{proofbox}
+	We have probability of one succes in $M$ runs is $1 - (1 - p)^M$, so $1 - (1 - p)^M = 1 - \epsilon$ if
+	\[
+	M = \frac{- \log \epsilon}{- \log(1 - p)}.
+	\]
+	Hence any $M$ above this works. Now we want a simple estimate of this. Using the fact $p < - \log(1 - p)$, we get
+	\[
+	M = \frac{- \log \epsilon}{- \log(1 - p)} < \frac{- \log \epsilon}{p}.
+	\]
+	So $M = \mathcal{O}(1/p)$ repetitions suffice.
+\end{proofbox}
+
+In each round we query $f$ three times, so $\mathcal{O}(\log \log N)$ in total. We also use the large gate $\mathrm{QFT}_N$, which we can implement in $\mathcal{O}((\log N)^2)$ steps. Everything else is arithmetic on $\mathcal{O}(N)$ integers, which are $\mathrm{poly}(\log N)$. This gives the bound.
+
+The quantum algorithm for periodicity determination will be the basis of Shor's algorith,, and may be generalised to an arbitrary group $G$ as the hidden subgroup problem.
+
+\subsection{Implementation}
+\label{sub:qft_imp}
+
+Non-examinable. For $N$ not a power of $2$, we do not have an efficient implementation, but approximate by $\mathrm{QFT}$ mod $2^k$, where $2^k$ is near enough.
+
+The implementation is really just FFT in the quantum scenario. We begin by showing
+\[
+	\mathrm{QFT}\ket x = \frac{1}{\sqrt{2^n}} \sum_y \exp \left( 2 \pi i \frac{xy}{2^n} \right) \ket y
+\]
+is a product of $n$ one-qubit state. Write $0 \leq x, y < 2^{n-1}$ in binary. Discarding whole numbers,
+\[
+\frac{xy}{2^n} \equiv y_{n-1}(.x_0) + y_{n-2}(.x_1x_0) + \cdots + y_0(.x_{n-1}x_{n-2}\ldots x_0),
+\]
+where factors in parentheses are binary expansions. Hence
+\begin{align*}
+\sum_y \exp \left( 2 \pi i \frac{xy}{2^n} \right) \ket y &= \sum_y \exp \left( 2 \pi i \frac{xy}{2^n} \right) \ket{y_{n-1}} \cdots \ket{y_0} \\
+							 &= (\ket 0 + 2^{\pi i(.x_0)} \ket 1)(\ket 0 + e^{2 \pi i(.x_1x_0)} \ket 1 ) \cdots (\ket 0 + e^{2 \pi i(.x_{n-1} \ldots x_0)} \ket 1).
+\end{align*}
+This factorisation is the key: it should map each basis $\ket{x_{n-1}} \cdots \ket{x_0}$ into the corresponding product state. Note the Hadamard operation is
+\[
+H \ket x = \frac{1}{\sqrt 2} (\ket 0 + e^{2 \pi i(.x)} \ket 1).
+\]
+In the $i$'th stage, in the $y_{i-1}$ register we do $H \ket{x_{n - i}}$, followed by phase shifts of $e^{2 \pi i0.0\ldots 01}$ controlled by $x_j$ for $j < n-i$. Accumulating these in the $x_{n-i}$ line, as we do not need it after this stage. Then by swap operations we reverse the order of the qubits.
+%lecture 14
+
+\newpage
+
+\section{Search Problems}
+\label{sec:sp}
+
+Searching is a fundamentally important task. Many problems can be put in this framework; factoring $N$ is a search of integers less than $N$ which can divide $N$.
+
+\subsection{Unstructured Search}
+\label{sub:us}
+
+Suppose we are given a database with $N$ items, and want to locate a particular item. We assume it is entirely unstructured, but we can check whether a given item is the one we seek. Our algorithm should locate the item with constant probability independent of $N$.
+
+For classical computation, $\mathcal{O}(N)$ is necessary and sufficient. Not finding the item gives no further information. For quantum, $\mathcal{O}(\sqrt N)$ are sufficient (and in fact necessary), so we get quadratic speedup. This is not exponential, but still significant.
+
+If the database is structured, i.e. ordered we can classically locate $k$ with only $\mathcal{O}(\log N)$ queries, with a binary search.
+
+We will discuss Grover's quantum searching algorithm, which achieves $\mathcal{O}(\sqrt N)$ searching time in the unstructured search. In the structured search, quantum is still only $\mathcal{O}(\log N)$, but with $k \log N$ queries for some $k < 1$.
+
+Recall the projection operator
+\[
+\Pi_{\ket \alpha} = \ket \alpha \bra \alpha,
+\]
+and the \emph{reflection in the orthogonal subspace}\index{reflection operator} is
+\[
+I_{\ket \alpha} = I - 2 \ket \alpha \bra \alpha.
+\]
+For any unitary operator $U$, we can check
+\[
+U \Pi_{\ket \alpha} U^{\dagger} = \Pi_{U(\ket \alpha)}, \qquad U I_{\ket \alpha} U^{\dagger} = I_{U \ket \alpha}.
+\]
+\begin{exbox}
+	Let $\ket{\alpha^{\perp}}$ be orthogonal to $\ket \alpha$, then if $\ket v = x \ket \alpha + y \ket{\alpha^{\perp}}$,
+	\[
+		\Pi_{\ket \alpha} \ket v = x \ket \alpha, \qquad I_{\ket \alpha}\ket v = - x \ket \alpha + y \ket{\alpha^{\perp}},
+	\]
+	so $I_{\ket \alpha}$ is reflection in the line defined by $\ket{\alpha^{\perp}}$.
+\end{exbox}
+
+We provide a geometric overview for Grover's rather than the algebraic approach he originally intended. It will be convenient to take $N = 2^n$, and replace the database by black-box $f : B_n \to B$, with $f(x) = 0$ for all strings except one, $x_0$, which we must determine.
+
+Recall the unitary operator $U_f$. Instead of using this, we will use the related operation
+\[
+I_{x_0} \ket x =
+\begin{cases}
+	\ket x & x \neq x_0, \\
+	- \ket {x_0} & x = x_0.
+\end{cases}
+\]
+So $I_{x_0}$ inverts the amplitude of the $\ket{x_0}$ component, i.e. the reflection operator defined above. A black box which performs $I_{x_0}$ may be constructed by setting the output register to $\frac{1}{\sqrt 2}(\ket 0 - \ket 1)$.
+
+We work in $\mathcal{B}_n$, and let $H_n = \bigotimes_n H$. Grover's algorithm operators as follows: Having no information about $x_0$, we begin with
+\[
+	\ket{\psi_0} = H_n \ket{0 \cdots 0} = \frac{1}{\sqrt{2^n}} \sum_{x \in \mathcal{B}_n} \ket x.
+\]
+Consider the \emph{Grover iteration operator}\index{Grover iteration operator} $Q$, defined by
+\[
+Q = - H_n I_0 H_n I_{x_0}.
+\]
+$Q$ has a simple geometric operation:
+\begin{itemize}
+	\item In the plane $\mathcal{P}(x_0)$ spanned by $\ket{x_0}$ and $\ket{\psi_0}$, $Q$ is rotation through angle $2 \alpha$ where $\sin \alpha = N^{-1/2}$.
+	\item In the orthogonal subspace to $\mathcal{P}(x_0)$, $Q = -I$, i.e. a reflection.
+\end{itemize}
+
+Thus by applying $Q$ to $\ket{\psi_0}$, we may rotate it around near to $\ket{x_0}$, and determine it with high probability. For large $N$, $\ket{x_0}$ and $\ket{\psi_0}$ are almost orthogonal, so $2\alpha \approx 2N^{-1/2}$. Hence about $\frac{\pi}{4} N^{1/2}$ iterations will be needed. Each application requires one use of $I_{x_0}$, so $\mathcal{O}(\sqrt N)$ are required.
+
+More precisely, $\braket{x_0|\psi_0} = N^{-1/2}$, so we will need around
+\[
+\frac{\arccos \frac{1}{\sqrt N}}{2 \arcsin \frac{1}{\sqrt N}}.
+\]
+
+\begin{exbox}
+	A simple example is the case $N = 4$, so $\sin \alpha = \frac{1}{2}$, and $Q$ is a rotation through $\pi/3$.
+
+	The initial state is $\ket{\psi_0} = \frac{1}{2}(\ket{00} + \ket{01} + \ket{10} + \ket{11})$, and the angle between $\ket{x_0}$ and $\ket{\psi_0}$ if $\pi/3$ for any $x_0$, hence after one application of $Q$, we learn the position of any single marked item with certainty.
+\end{exbox}
+
+\newpage
+
+\printindex
+
+\end{document}

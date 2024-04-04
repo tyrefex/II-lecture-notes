@@ -1,0 +1,2412 @@
+\documentclass[12pt]{article}
+
+\usepackage{ishn}
+
+\makeindex[intoc]
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1em}
+		\Huge
+		\textbf{II General Relativity}
+
+		\vspace{1em}
+		\large
+		Ishan Nath, Lent 2024
+
+		\vspace{1.5em}
+
+		\Large
+
+		Based on Lectures by Prof. Jonathan Evans
+
+		\vspace{1em}
+
+		\large
+		\today
+	\end{center}
+	
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+\label{sec:intro}
+
+General relativity is a geometrical theory of gravity that solves the problem of how to reconcile Newtonian gravity and special relativity. In doing so, it revolutionizes our understanding of space, time and dynamics, expanding the concept of spacetime from special relativity to a curved manifold.
+
+There is a beautiful fit between physics and mathematics through concepts of metrics, geodesics and curvature. Our treatment of geometry will be as elementary and self-contained as possible. Celebrated predictions of general relativity include black holes, gravitational waves, and theory is front and centre in research from astrophysics to string theory.
+
+\subsection{Gravity and Relativity}
+\label{sub:grav_rel}
+
+Newton's law of gravitation gives the force on mass $m_1$ at $\mathbf{x}_1$ due to a mass $m_2$ at $\mathbf{x}_2$ as
+\[
+\mathbf{F}_{12} = - G m_1 m_2 \frac{(\mathbf{x}_1 - \mathbf{x}_2)}{|\mathbf{x}_1 - \mathbf{x}_2|^2},
+\]
+where $G \approx \qty{6.67e-4}{\metre\cubed\per\kilogram\per\second\squared}$. Note that we could distinguish between the active and passive gravitational mass by writing $m_1^{(P)}m_2^{(A)}$ above, but then $\mathbf{F}_{12} = - \mathbf{F}_{21}$ by Newton's third law, so
+\[
+\frac{m_1^{(P)}}{m_1^{(A)}} = \frac{m_2^{(P)}}{m_2^{(A)}} = 1.
+\]
+Hence there is a single gravitational mass.
+
+Now consider the force on a mass $m$ at $\mathbf{x}$ due to matter distribution with density $\rho(\mathbf{x})$. This may be written as
+\[
+\mathbf{F} = m \mathbf{g}(\mathbf{x}),
+\]
+where $\mathbf{g}(\mathbf{x})$ is the \emph{gravitational field}:
+\[
+\mathbf{g}(\mathbf{x}) = - \nabla \Phi,
+\]
+and the \emph{gravitational potential} $\Phi(\mathbf{x})$ satisfies
+\[
+\nabla^2 \Phi = 4 \pi G \rho.
+\]
+By Newton's second law,
+\[
+\mathbf{F} = m^{(I)} \mathbf{\ddot x} = m \mathbf{g}(\mathbf{x}),
+\]
+where $m^{(I)}$ is the \emph{inertial mass}. Remarkably, $m^{(I)} = m$. This has been tested experimentally to $\mathcal{O}(10^{-12})$. There is no explanation for this in the Newtonian framework.
+
+Indeed, Newtonian gravity and dynamics are successful, but only apply to $v \ll c$. Recall that in Newtonian dynamics and special relativity there is a preferred class of reference frames, which are inertial frames. In Newtonian dynamics we assume absolute time, which is the same in all inertial frames, but in special relativity we insist the speed of light is the same in all inertial frames, which leads to Lorentz transformations.
+
+Hence there is no notion of simultaneity for events that are spatially separated. Note that the positions in Newton's laws are assumed to be at the same absolute time, and hence are not consistent with special relativity.
+
+When might modifications be important? Consider a circular orbit of radius $r$ about mass $M$. Then
+\[
+\Phi = - \frac{GM}{r} \implies \frac{v^2}{r} = \frac{GM}{r^2},
+\]
+hence $v^2/c^2 = |\Phi|/c^2$. For $v/c \ll 1$, Newtonian gravity is adequate for $|\Phi|/c^2 \ll 1$.
+
+\subsection{Gravitational Fields and Accelerating Frames}
+\label{sub:grav_accel}
+
+Einstein's happiest thought was that ``the gravitational field has only a relative existence, because an observer falling freely while under gravity detects no field''. This man did not love his wife and kids.
+
+We discuss this using Newtonian gravity and non-relativistic dynamics. Consider coordinates $\mathbf{x}, t$, in a choice of frame $S$. The motion of a body in $S$ with gravitational field $\mathbf{g}(\mathbf{x}, t)$ is given by
+\[
+\mathbf{\ddot x} = \mathbf{g}(\mathbf{x}, t).
+\]
+Defining the new coordinates $\mathbf{\tilde x}, t$ for a new frame $\tilde S$ by $\mathbf{\tilde x} = \mathbf{x} - \mathbf{b}(t)$, then
+\[
+	\mathbf{\ddot{\tilde x}} = \mathbf{\ddot x} - \mathbf{\ddot b}(t),
+\]
+hence $\mathbf{\ddot{\tilde x}} = \mathbf{\tilde g}$, where $\mathbf{\tilde g} = \mathbf{g} - \mathbf{\ddot b}$.
+
+Now consider $\mathbf{g}$ uniform, which is independent of $\mathbf{x}$.
+\begin{itemize}
+	\item If $\mathbf{g} = 0$, then we can produce $\mathbf{\ddot g} = - \mathbf{\ddot b} \neq 0$. Conversely,
+	\item If $\mathbf{g} \neq 0$, we can choose $\mathbf{b}$ to make $\mathbf{\tilde g} = \mathbf{0}$, by $\mathbf{\ddot b} = \mathbf{g}$. Call $\tilde S$ of this kind a \emph{freely falling frame}\index{freely falling frame}.
+\end{itemize}
+
+%lecture 2
+
+The simple version of Einstein's equivalence principle is the following:
+\begin{center}
+	In an isolated laboratory, there is no experiment that can distinguish between the lab accelerating and a uniform gravitational field.
+
+	Moreover, the results of experiments in a free falling frame are the same as the results in an inertial frame.
+\end{center}
+
+This gives us the following two consequences.
+
+\begin{exbox}
+Consider the path of light. The lab frame $S$ will be the surface of earth; here $\mathbf{g} = -g\mathbf{\hat z}$.
+
+Now consider the FFF, where $\mathbf{b} = -\frac{1}{2} g t^2 \mathbf{\hat z}$. Then $\mathbf{\tilde g} = 0$.
+
+In the horizontal distance $d = ct$, a light ray falls a vertical distance
+\[
+h = \frac{1}{2} g t^2 = \frac{1}{2} g \frac{d^2}{c^2}.
+\]
+For $\qty{1}{\kilo\metre}$, this is about $\qty{5e-11}{\metre}$.
+
+For a non-uniform field, we need to modify this appropriately.
+\end{exbox}
+
+\begin{exbox}
+Now lets look at red and blue shift. Consider Alice (A) and Bob (B), separated by height $h$ on the surface of the Earth. A sends a light signal at $t_A$, and B receives it at time $t_B$.
+
+In the lab frame, $z = h$ for A and $z = 0$ for B. Whereas in the FFF, $\tilde z = h + \frac{1}{2} gt^2$ for A, and $\tilde z = \frac{1}{2}gt^2$ for B. Working in $\tilde S$,
+\[
+h + \frac{1}{2}gt_A^2 - \frac{1}{2}gt_B^2 = c(t_B - t_A).
+\]
+Suppose the signals are sent and received repeatedly at small intervals $\Delta t_A$ and $\Delta t_B$. Replacing $t_A \to t_A + \Delta t_A$ and $t_B \to t_B + \Delta t_B$ in the above, we can expand to first order in $\Delta t_A$ and $\Delta t_B$ and subtract to get
+\[
+g t_A \Delta t_A - g t_B \Delta t_B = c(\Delta t_B - \Delta t_A).
+\]
+This implies that
+\[
+\frac{\Delta t_B}{\Delta t_A} = \frac{1 + g t_A/c}{1 + g t_B/c} \approx 1 - \frac{g}{c} (t_B - t_A) = 1 - \frac{gh}{c^2}.
+\]
+Here we are working with non-relativistic motion, so $gt_A, gt_B \ll c$. Hence,
+\[
+\frac{\Delta t_B}{\Delta t_A} = 1 - \frac{1}{c^2}(\Phi_A - \Phi_B).
+\]
+Regarding these intervals as ticks of clocks, we find that clocks run at different rates depending on the gravitational potential. For the frequencies $\nu_A = 1/\Delta t_A, \nu_B = 1/\Delta t_B$,
+\[
+\frac{\nu_B}{\nu_A} = 1 + \frac{1}{c^2}(\Phi_A - \Phi_B).
+\]
+For $\Phi_A > \Phi_B$, we have $\nu_B > \nu_A$, which gives blue shift. Interchanging positions, if $\Phi_A < \Phi_B$, then $\nu_B < \nu_A$, which gives red shift.
+
+Experimental tests from $h \approx \qty{22.5}{\metre}$ needed to measure an effect of size $gh/c^2 \approx 10^{-15}$, which gave evidential confirmation to within  1\%.
+\end{exbox}
+
+\subsection{Non-Uniform Fields}
+\label{sub:non_un_f}
+
+In a non-uniform field, the best we can do is make $\mathbf{\tilde g} = 0$ at a particular point, so we have a local FFF\index{local free falling frame}. We shall see that the effects of gravitational fields on nearby trajectories.
+
+To investigate further in $S$, consider $\ddot x_i = g_i(\mathbf{x}, t)$, with coordinates $x_i$, and write $\partial_i = \partial/\partial x^i$. Then comparing to nearby trajectories,
+\begin{align*}
+	\frac{\diff^2}{\diff t^2}(x_i + h_i) &= g_i(\mathbf{x} + \mathbf{h}, t) \\
+					     &= g_i(\mathbf{x}, t) + h_j \partial_j g_i(\mathbf{x}, t) + \mathcal{O}(h^2).
+\end{align*}
+Hence we have
+\[
+\ddot h_i + E_{ij} h_j = 0,
+\]
+where
+\[
+E_{ij} = - \partial_j g_i = \partial_j \partial_i \Phi = E_{ji},
+\]
+the \emph{tidal tensor}\index{tidal tensor}. In $\tilde S$, $\tilde g_i = g_i - \ddot b_i(t)$, so $\tilde E_{ij} = E_{ij}$ is unchanged.
+
+\subsection{Special Relativity}
+\label{sub:spec_rel}
+
+We will emphasise the geometry of spacetime. In Minkowski space, we have the following coordinates in an inertial frame: $x^\mu$, or $(x^0, x^1, x^2, x^3) = (ct, \mathbf{x})$. The inner product or the flat metric is
+\[
+\eta_{\mu \nu} = \mathrm{diag}(-1, 1, 1, 1)
+\]
+with \emph{line element}\index{line element}
+\[
+\diff s^2 = \eta_{\mu \nu} \diff x^\mu \diff x^\nu = -(\diff x^0)^2 + (\diff x^1)^2 + (\diff x^2)^2 + (\diff x^3)^2 = - c^2 \diff t^2 + \diff \mathbf{x} \diff \mathbf{x}.
+\]
+For spacetime indices $\mu, \nu, \alpha, \beta$, etc., the position up or down is important, and the summation convention applies for one index up and one down.
+
+%lecture 3
+
+Points or \emph{events}\index{event} in spacetime have different coordinates in different inertial frames. Up to translations in space and time, the coordinates are related by
+\[
+	\tilde x^\mu = \Lambda\indices{^\mu_\nu} x^\nu,
+\]
+for $\Lambda$ a constant matrix satisfying
+\[
+	\eta_{\mu \nu} \Lambda\indices{^\mu_\alpha} \Lambda\indices{^\nu_\beta} = \eta_{\alpha\beta},
+\]
+to ensure that
+\[
+\diff s^2 = \eta_{\mu \nu} \diff x^\mu \diff x^\nu = \eta_{\alpha\beta} \diff \tilde x^\alpha \diff \tilde x^\beta.
+\]
+Note that $\Lambda^T \eta \Lambda = \eta$ as matrices. Hence we could have
+\[
+\Lambda =
+\begin{pmatrix}
+	\cosh \theta & - \sinh \theta & 0 & 0 \\
+	- \sinh \theta & \cosh \theta & 0 & 0 \\
+	0 & 0 & 1 & 0 \\
+	0 & 0 & 0 & 1
+\end{pmatrix},
+\]
+a Lorentz transformation or boost in the $x^1$ direction with $v/c = \tanh \theta$. We could also have
+\[
+\Lambda =
+\begin{pmatrix}
+	1 & 0 & 0 & 0 \\
+	0 & & & \\
+	0 & & R & \\
+	0 & & &
+\end{pmatrix},
+\]
+where $R$ is a $3 \times 3$ rotation matrix acting on $x^1, x^2, x^3$. The set of all such $\Lambda$ forms the \emph{Lorentz group}\index{Lorentz group}.
+
+It is also convenient to introduce the inverse metric $\eta^{\mu \nu} = \mathrm{diag}(-1, 1, 1, 1)$, and note that
+\[
+	\eta\indices{^\alpha^\beta} \eta\indices{_\beta_\mu} = \delta\indices{^\alpha_\mu}.
+\]
+This metric gives an invariant separation between nearby points or events, $x^\mu$ and $x^\mu + \delta x^\mu$:
+\[
+\delta s^2 = \eta_{\mu \nu} \delta x^\mu \delta x^\nu = - c^2 (\delta t)^2 + \delta \mathbf{x} \cdot \delta \mathbf{x}.
+\]
+There are three cases:
+\begin{itemize}
+	\item $\delta s^2 > 0$: separation is \emph{spacelike}\index{spacelike}, and $\delta s$ is physical, the \emph{proper distance}\index{proper distance}.
+	\item $\delta s^2 = 0$: separation is \emph{lightlike}\index{lightlike} or \emph{null}.
+	\item $\delta s^2 < 0$: separation is \emph{timelike}\index{timelike}, and $\delta s^2 = -c^2 (\delta \tau)^2$, with $\delta \tau$ the \emph{proper time}.
+\end{itemize}
+We apply this to small intervals along a parametrized curve $x^\mu(\lambda)$, for $a \leq \lambda \leq b$ as follows: consider the \emph{tangent} vector
+\[
+T^\mu = \frac{\diff x^\mu}{\diff \lambda}.
+\]
+Note that $\delta x^\mu = T^\mu \delta \lambda$. Then we have similar cases:
+\begin{itemize}
+	\item If $\eta_{\mu \nu} T^\mu T^\nu > 0$, the curve is \emph{spacelike}, and
+		\[
+		s_{\mathrm{curve}} = \int_a^b \left( \eta_{\mu \nu} \frac{\diff x^\mu}{\diff \lambda} \frac{\diff x^\nu}{\diff \lambda} \right)^{1/2} \diff \lambda
+		\]
+		is the proper distance.
+	\item If $\eta_{\mu\nu}T^\mu T^\nu = 0$, the curve is \emph{lightlike} or \emph{null}.
+	\item If $\eta_{\mu\nu}T^\mu T^\nu<0$, the curve is \emph{timelike}, and
+		\[
+		c \tau_{\mathrm{time}} = \int_a^b \left( - \eta_{\mu \nu} \frac{\diff x^\mu}{\diff \lambda} \frac{\diff x^\nu}{\diff \lambda} \right)^{1/2} \diff \lambda.
+		\]
+\end{itemize}
+The expressions above are invariant under $\tilde x^\mu = \Lambda\indices{^\mu_\nu} x^\nu$, since
+\[
+	\tilde T^\mu = \Lambda\indices{^\mu_\nu} T^\nu,
+\]
+by the transformation definition of a $4$-vector. But it is also independent of parametrization $\lambda \to \hat \lambda(\lambda)$, as
+\[
+	\hat T^\mu = \frac{\diff x^\mu}{\diff \hat \lambda} = \frac{\diff \lambda}{\diff \hat \lambda} \frac{\diff x^\mu}{\diff \lambda} = \frac{\diff \lambda}{\diff \hat \lambda} T^\mu \text{ and } \diff \hat \lambda = \frac{\diff \hat \lambda}{\diff \lambda} \diff \lambda.
+\]
+Looking at the motion of massive particles,
+\begin{itemize}[(i)]
+	\item The trajectory of a massive particle is a timelike curve, called the \emph{world line}\index{world line}.
+	\item The proper time along the trajectory is the physical time measured by a clock moving with the particle---this is the \emph{clock postulate}.
+	\item In the absence of force in an inertial frame, a particle moves in a straight line with constant speed.
+\end{itemize}
+
+Note that we can parametrise the world line by $t$, where $x^0 = ct$, and $x^\mu \to (ct, \mathbf{x})$. Then $\lambda = t$, so
+\[
+T^\mu = V^\mu = (c, \mathbf{v}),
+\]
+where $\mathbf{v} = \diff \mathbf{x}/\diff t$. Or, we can parametrise by $\tau$, and $\lambda = t$ means
+\[
+T^\mu = U^\mu = \frac{\diff x^\mu}{\diff \tau} = \left( \frac{\diff t}{\diff \tau} \right) V^\mu.
+\]
+By the definition of $\tau$, we have
+\[
+\eta_{\mu \nu} U^\mu U^\nu = -c^2.
+\]
+Looking at property (iii) above, we can recast this as a variational problem:
+\begin{center}
+	The world line of a free, massive particle between time-like separated points extremises the proper time between them.
+\end{center}
+Let
+\[
+	S = c \tau_{\mathrm{time}} = \int_a^b \underbrace{\left( - \eta_{\mu \nu} \dot x^\mu \dot x^\nu \right)^{1/2}}_{\mathcal{L}} \diff \lambda,
+\]
+where $x^\mu(\lambda)$ is any time-like path, with $x^\mu(a)$ and $x^\mu(b)$ fixed, and $\dot x^\mu = \diff x^\mu / \diff \lambda$. The world line with specified end points is given by the condition $\delta S = 0$ to first order, for any small change $x^\mu(\lambda) + \delta x^\mu(\lambda)$, with $\delta x^\mu(a) = \delta x^\mu(b) = 0$.
+
+We can justify this using the Euler-Lagrange equations. We have
+\[
+\frac{\diff}{\diff \lambda} \left( \frac{\partial \mathcal{L}}{ \partial \dot x^\alpha} \right) = \frac{\partial \mathcal{L}}{\partial x^\alpha} = 0,
+\]
+and this is easy to solve as
+\[
+	\frac{\partial \mathcal{L}}{\partial \dot x^\alpha} = \frac{1}{2\mathcal{L}} \left( - 2 \eta_{\mu \nu} \delta\indices{_\alpha^\mu} \dot x^\nu \right) = - \frac{1}{\mathcal{L}} \eta_{\alpha \nu} \dot x^\nu.
+\]
+Hence after multiplying by $\eta^{\alpha \beta}$, we get that
+\[
+\frac{\diff}{\diff \lambda} \left( \frac{1}{\mathcal{L}}\dot x^\mu \right) = 0.
+\]
+But we know that $\mathcal{L} = c \diff \tau/\diff \lambda$. Using this, we have
+\[
+\frac{\diff^2}{\diff \tau^2} x^\mu = 0.
+\]
+As required, the solution is
+\[
+x^\mu(\tau) = U^\mu \tau + x^\mu(0),
+\]
+where $U^\mu$ is a constant 4-velocity with $\eta_{\mu \nu}U^\mu U^\nu = -c^2$. An exactly similar treatment can be given for spacelike curves extremising proper distance being straight lines, as usual for Euclidean geometry. But the proper time is actually maximized.
+
+%lecture 4
+
+\begin{exbox}
+	Consider the world lines for Alice and Bob, each parametrised by their proper time:
+	\begin{align*}
+		x_A^\mu &= U_A^\mu \tau_A, & x_B^\mu &= U_B^\mu \tau_B
+	\end{align*}
+	where these coincide at $\tau_A = \tau_B = 0$. We compare events which are separated by $y^\mu = N^\mu v \tau_B$, where $v$ is the relative speed of the two. Hence it $v \tau_B$ is the distance that $A$ has travelled as measured by $B$, and $\eta_{\mu \nu} N^\mu U_B^{\nu} = 0$, so the events are at the same time according to $B$. Then
+	\begin{align*}
+		x_B^\mu + y^\mu &= x_A^\mu \\
+		\implies (U_B^\mu \tau_B + N^\mu v \tau_B)^2 &= (U_A^\mu \tau_A)^2 \\
+		\implies -c^2 \tau_B^2 + v^2 \tau_B^2 &= -c^2 \tau_A^2 \\
+		\implies \tau_A &= \left(1 - \frac{v^2}{c^2} \right)^{1/2} \tau_B.
+	\end{align*}
+\end{exbox}
+
+Now let us look at the motion of massless trajectories.
+\begin{enumerate}[(i)]
+	\item The trajectory of massless particles is \emph{lightlike} or \emph{null}.
+	\item We cannot use proper time to parametrise such a path.
+	\item A free particle in an inertial frame moves in a straight line with speed $c$.
+\end{enumerate}
+We can recast (iii) as a new variational principle that also applies to massive particles. We have that the world line of a free massless or massive particle between fixed end points extremises
+\[
+S = \int_a^b L \diff \lambda = \int_a^b - \eta_{\mu \nu} \dot x^\mu \dot x^\nu \diff \lambda,
+\]
+for $x^\mu(a), x^\mu(b)$ fixed. Here $L = \mathcal{L}^2$ as defined earlier. The Euler-Lagrange equation for $\delta S = 0$ with fixed endpoints becomes
+\[
+\frac{\diff}{\diff \lambda} \left( \frac{\partial L}{\partial \dot x^\alpha} \right) = \frac{\partial L}{\partial x^\alpha} = 0.
+\]
+Now we have
+\[
+	\frac{\partial L}{\partial \dot x^\alpha} = - 2 \eta_{\alpha \nu} \dot x^\nu \implies \frac{\diff^2 x^\mu}{\diff \lambda^2} = 0.
+\]
+The new variational principle gives us solutions with convenient affine parametrisations.
+
+Note that this new principle is no longer invariant under reparametrisations of the world line, however this turns out to be helpful in giving us a convenient parametrisation.
+
+Previously, we chose a parameter $\tau$ in the massive case; here we have that
+\[
+\lambda = A \tau + B
+\]
+for constants $A, B$.
+
+\newpage
+
+\section{Metrics and Geodesics}
+\label{sec:met_geo}
+
+\subsection{Manifolds and Metrics}
+\label{sub:man_met}
+
+From considerations such as:
+\begin{itemize}
+	\item the universality of free fall; the equivalence between accelerating frames and gravitational frames;
+	\item the bending of light and gravitational red shift predicted by the equivalence of the free falling frame and the inertial frame;
+\end{itemize}
+we are led to the idea that gravitational force can be described in purely geometrical terms, as motion on a curved spacetime manifold.
+
+A \emph{manifold}\index{manifold} can be described locally by a set of coordinates $\{x^\mu\}$, and the number of these coordinates is the \emph{dimension}\index{dimension} of the manifold.
+
+For example Euclidean space $\mathbb{R}^3$ has dimension 3, and Minkowski space has dimension 4. These are nice as these are vector spaces, however in general a manifold is not a vector space and $x^\mu$ is not necessarily the component of a position vector.
+
+For example, a sphere can be given by coordinates $x^1 = \theta$, $x^2 = \phi$, the usual polar angles. Also, we may need to restrict the range of coordinates, for example in the sphere we need to take $0 < \theta < \pi$ and $0 < \phi < 2 \pi$. For a full description of the sphere, we need an additional set of coordinates.
+
+Generally, w have different coordinate \emph{patches} or \emph{charts} on a manifold $M$\index{chart}\index{patch}. On the overlap of two charts, $\{x^\mu\}$ and $\{\tilde x^\mu\}$ are smooth, invertible functions of one another.
+
+A \emph{metric}\index{metric} on a manifold is a \emph{symmetric tensor}
+\[
+g_{\mu \nu}(x) = g_{\nu \mu}(x)
+\]
+in the coordinates $\{x^\mu\}$, and it defines a line element
+\[
+\diff s^2 = g_{\mu \nu}(x) \diff x^\mu \diff x^\nu.
+\]
+This gives a notion of the invariant separation $(\delta s^2)$ between nearby points. We specify that at each point $g_{\mu \nu}(x)$ is a non-singular matrix, with a particular signature consisting of signs of eigenvalues, which are the same at all points. For example, the signature $(+, +, \ldots, +)$ is the Euclidean signature, corresponding to a Riemannian metric, and $(-, +, \ldots, +)$ is a Lorentzian signature, corresponding to a pseudo-Riemannian metric.
+
+%lecture 5
+
+Since $g_{\mu \nu}$ is symmetric and non-singular, we can denote the inverse by $g^{\mu \nu} = g^{\nu \mu}$ with
+\[
+	g^{\mu \alpha} g_{\alpha \nu} = \delta\indices{^\mu_\nu}.
+\]
+
+\begin{exbox}
+	\begin{enumerate}
+		\item $\mathbb{R}^n$ with the standard coordinates $\{x^i\}$. Then
+			\[
+			g_{ij} =
+			\begin{pmatrix}
+				 1 & 0 & \cdots & 0 \\
+				 0 & 1 & \cdots & 0 \\
+				 \vdots & \vdots & \ddots & \vdots \\
+				 0 & 0 & \cdots & 1
+			\end{pmatrix}
+			= g^{ij}.
+			\]
+		\item Minkowski space with coordinates $\{x^\mu\}$. Then $g_{\mu \nu} = \eta_{\mu \nu}$ with
+			\[
+			\eta_{\mu \nu} =
+			\begin{pmatrix}
+				 -1 & 0 & \cdots & 0 \\
+				 0 & 1 & \cdots & 0 \\
+				 \vdots & \vdots & \ddots & \vdots \\
+				 0 & 0 & \cdots & 1
+			\end{pmatrix}
+			= \eta^{\mu \nu}.
+			\]
+		\item The two dimensional sphere, with coordinates $x^1 = \theta$, $x^2 = \phi$. Then $\diff s^2 = \diff \theta^2 + \sin^2 \theta \diff \phi^2$, with
+			\[
+			g_{\mu \nu}=
+			\begin{pmatrix}
+				1 & 0\\ 0 & \sin^2\theta
+			\end{pmatrix}, \qquad
+			g^{\mu \nu} =
+			\begin{pmatrix}
+				1&0\\0&1/\sin^2\theta
+			\end{pmatrix}.
+			\]
+			This is well-behaved for $0 < \theta < \pi$. Note that we need different coordinate systems for a complete description of the manifold, say $\{x^\mu\}$ and $\{\tilde x^\mu\}$, with respect to which
+			\[
+			\diff s^2 = g_{\mu \nu} \diff x^\mu \diff x^\nu = \tilde g_{\mu \nu} \diff \tilde x^\mu \diff \tilde x^\nu.
+			\]
+	\end{enumerate}
+\end{exbox}
+
+\subsection{Curves, World lines and Geodesics}
+\label{sub:cur_wor_geo}
+
+We follow the same route as in the Minkowski space discussion, in \S\ref{sub:spec_rel}. For a curve $x^\mu(\lambda)$, we define the tangent vector as
+\[
+T^\mu = \frac{\diff x^\mu}{\diff \lambda} = \dot x^\mu.
+\]
+Then depending on the sign of $g_{\mu \nu} T^\mu T^\nu$, we say the curve is either spacelike (if it is greater than 0), lightlike or null (if it is 0), or timelike (if it is less than 0).
+
+Note that these are related to $\delta s^2$ for nearby points $x^\mu$ and $x^\mu + \delta x^\mu$ with $\delta x^\mu = T^\mu \delta \lambda$ for a small change in parameter.
+
+We define a \emph{geodesic}\index{geodesic} to be a curve $x^\mu(\lambda)$ with $a \leq \lambda \leq b$, which extremises
+\[
+S = \int_a^b L \diff \lambda = \int_a^b - g_{\mu \nu}(x) \dot x^\mu \dot x^\nu \diff \lambda = \int_a^b -g_{\mu \nu} T^\mu T^\nu \diff \lambda,
+\]
+subject to $x^\mu(a), x^\mu(b)$ fixed. This gives extremal curves with a particular affine parametrisation. It follows that $\diff L/\diff \lambda = 0$ on such a curve.
+
+For $L < 0$, a geodesic extremises
+\[
+s = \int_a^b (g_{\mu \nu} \dot x^\mu \dot x^\nu)^{1/2} \diff \lambda,
+\]
+the proper distance between the endpoints. For $L > 0$, the geodesic extremises
+\[
+c \tau = \int_a^b (- g_{\mu \nu}\dot x^\mu \dot x^\nu)^{1/2} \diff \lambda,
+\]
+$c$ times the proper time between the endpoints.
+
+The key principles of general relativity is as follows:
+\begin{enumerate}
+	\item Spacetime is a curved manifold with metric $g_{\mu \nu}$, and signature $(-, +, +, +)$.
+	\item The trajectory, or world line, of a massive particle is a time like curve, and the proper time along the curve is the physical time measured by a clock moving with the particle (the clock postulate).
+	\item The world line of a free massive test particle is a timelike geodesic; it extremises the proper time between endpoints.
+	\item The world line of a free massless particle is a lightlike or null geodesic.
+\end{enumerate}
+
+A ``test'' particle means it has no significant effect on the spacetime geometry.
+
+Hence to find these geodesics, we seek curves $x^\mu(\lambda)$ which extremise
+\[
+\int_a^b L(x^\mu , \dot x^\mu) \diff \lambda,
+\]
+with $x^\mu(a)$ and $x^\mu(b)$ fixed, and where $L = -g_{\alpha\beta}\dot x^\alpha \dot x^\beta$. The Euler-Lagrange equations say
+\[
+\frac{\diff}{\diff \lambda} \left( \frac{\partial L}{\partial \dot x^\mu} \right) - \frac{\partial L}{\partial x^\mu} = 0,
+\]
+but we can calculate
+\begin{align*}
+	\frac{\partial L}{\partial \dot x^\mu} &= - 2 g_{\mu \beta} \dot x^\beta \\
+	\implies \frac{\diff}{\diff \lambda} \left( \frac{\partial L}{\partial \dot x^\mu} \right) &= \frac{\diff}{\diff \lambda} (-2 g_{\mu \beta} \dot x^\beta) = -(2 g_{\mu \beta} \ddot x^\beta + 2 \partial_\gamma g_{\mu \beta} \dot x^\gamma \dot x^\beta),
+\end{align*}
+and also
+\[
+\frac{\partial L}{\partial x^\mu} = - \partial_\mu g_{\alpha \beta} \dot x^\alpha \dot x^\beta.
+\]
+Therefore the Euler-Lagrange equations become
+\[
+2 g_{\mu \beta} \ddot x^\beta + (\partial_\beta g_{\mu\gamma} + \partial_\gamma g_{\mu \beta} - \partial_\mu g_{\beta \gamma})\dot x^\beta \dot x^\gamma = 0.
+\]
+After multiplying by $g^{\alpha \mu}$, we get
+\[
+	\ddot x^\alpha + \Gamma\indices{^\alpha_\beta_\gamma} \dot x^\beta \dot x^\gamma = 0,
+\]
+where
+\[
+	\Gamma\indices{^\alpha_\beta_\gamma} = \frac{1}{2} g^{\alpha \mu} (\partial_\beta g_{\mu \gamma} + \partial_\gamma g_{\mu \beta} - \partial_{\mu} g_{\beta \gamma})
+\]
+is the \emph{Levi-Civita connection}\index{Levi-Civita connection}. It is also written as
+\[
+	\chssk{\alpha}{\beta\, \gamma},
+\]
+the \emph{Christoffel symbol}\index{Christoffel symbol}.
+
+\begin{exbox}
+	Consider a 2D manifold with coordinates $x^1 = r$, $x^2 = \phi$. Then
+	\[
+	\diff s^2 = \diff r^2 + r^2 \diff \phi^2.
+	\]
+	Moreover we have
+	\[
+	g_{ij} =
+	\begin{pmatrix}
+		1 & 0 \\ 0 & r^2
+	\end{pmatrix}
+	, \qquad g^{ij} =
+	\begin{pmatrix}
+		1 & 0 \\ 0 & 1/r^2
+	\end{pmatrix}.
+	\]
+	Then we have that
+	\[
+	L = \left( \frac{\diff r}{\diff \lambda} \right)^2 + r^2 \left( \frac{\diff \phi}{\diff \lambda} \right)^2.
+	\]
+	The Euler-Lagrange equations give
+	\begin{align*}
+		\frac{\diff}{\diff \lambda} \left( 2 \frac{\diff r}{\diff \lambda} \right) - 2r \left( \frac{\diff \phi}{\diff \lambda} \right)^2 &= 0 & &\implies & \ddot r - r \dot \phi^2 &= 0 \\
+		\frac{\diff}{\diff \lambda} \left(2r^2 \frac{\diff \phi}{\diff \lambda} \right) &= 0 & &\implies & \ddot \phi + \frac{2}{r} \dot r \dot \phi &= 0,
+	\end{align*}
+	as $\Gamma\indices{^1_2_2} = -r$, and $\Gamma\indices{^2_1_2} = \Gamma\indices{^2_2_1} = 1/r$ are the non-zero connection components.
+\end{exbox}
+
+%lecture 6
+
+Returning to the general discussion, $L = -g_{\alpha \beta}\dot x^\alpha \dot x^\beta$ has no explicit $\lambda$ dependence, and hence
+\[
+\dot x^\mu \frac{\partial L}{\partial \dot x^\mu} - L = (-2 g_{\mu \beta} \dot x^\beta)\dot x^\mu - L = L
+\]
+is constant along geodesics with $\diff L/\diff \lambda = 0$ (this is a first integral of the Euler-Lagrange equations). So:
+\begin{itemize}
+	\item If $L > 0$, then $L = c^2(\diff \tau/\diff \lambda)^2$ defines $\tau$.
+	\item If $L = 0$, we have a null geodesic.
+	\item If $L < 0$, then $-L = (\diff s/\diff \lambda)^2$ defines the proper distance $s$.
+\end{itemize}
+
+We will take a brief interlude to look at the Euler-Lagrange equations. We seek to extremise
+\[
+S = \int_a^b L(q^r, \dot q^r, \lambda),
+\]
+where $q^r(\lambda)$ for $r = 1, \ldots, n$ is defined for $a \leq \lambda \leq b$. Consider $\delta S = 0$ with $q^r(a) = q^r(b)$ fixed. Working to the first order,
+\[
+\delta L = \frac{\partial L}{\partial q^r} \delta q^r + \frac{\partial L}{\partial \dot q^r} \delta \dot q^r,
+\]
+then
+\[
+\delta S = \int_a^b \left[ \frac{\partial L}{\partial q^r} - \frac{\diff}{\diff \lambda} \left( \frac{\partial L}{\partial \dot q^r} \right) \right] \delta q^r \diff \lambda.
+\]
+Hence $\delta S = 0$ for any variation $\delta q^r$ as above, if and only if
+\[
+\frac{\partial L}{\partial q^r} - \frac{\diff}{\diff \lambda} \left( \frac{\partial L}{\partial q^r} \right) = 0.
+\]
+Furthermore, we have constants of the motion or \emph{first integrals}:
+\begin{itemize}
+	\item If $L$ is independent of $q^r$ for a specific $r$, then $\partial L/\partial \dot q^r$ is constant. Then we have a symmetry by just shifting $q^r$.
+	\item If $L$ has no explicit dependence on $\lambda$, then
+		\[
+		\dot q^r \frac{\partial L}{\partial \dot q^r} - L
+		\]
+		is constant. We can check:
+		\begin{align*}
+			\frac{\diff}{\diff \lambda} \left( \dot q^r \frac{\partial L}{\partial \dot q^r} \right) &= \ddot q^r \frac{\partial L}{\partial \dot q^r} + \dot q^r \frac{\diff}{\diff \lambda} \left( \frac{\partial L}{\partial \dot q^r}\right), \\
+			\frac{\diff}{\diff \lambda} L &= \dot q^r \frac{\partial L}{\partial q^r} + \ddot q^r \frac{\partial L}{\partial \dot q^r} + \underbrace{\frac{\partial L}{\partial \lambda}}_{=0}.
+		\end{align*}
+	Then by the Euler-Lagrange equations, the remaining terms are equal.
+\end{itemize}
+
+\begin{exbox}
+	\begin{enumerate}
+		\item Return to the example above with $-L = \dot r^2 + r^2 \dot \phi^2$. The first integrals are $r^2 \dot \phi = \ell$ is constant, and
+			\[
+			\dot r^2 + r^2 \dot \phi^2 = \dot r^2 + \frac{\ell^2}{r^2} := 1
+			\]
+			is constant, by choosing $\lambda = s$. Therefore
+			\[
+			\frac{r}{(r^2 - \ell^2)^{1/2}} \frac{\diff r}{\diff s} = \pm 1.
+			\] Hence we get
+			\[
+				(r^2 - \ell^2)^{1/2} = \pm s \implies r = (\ell^2 + s^2)^{1/2}.
+			\]
+			Then we can solve
+			\[
+			\dot \phi = \frac{\ell }{r^2} = \frac{\ell }{\ell^2 + ^2} \implies \phi - \phi_0 = \tan^{-1} \frac{s}{\ell }.
+			\]
+			This corresponds to the Euclidean metric, if we let $\tilde x^1 = r \cos \theta$, $\tilde x^2 = r \sin \theta$. Then indeed $\diff s^2 = (\diff \tilde x^1)^2 + (\diff \tilde x^2)^2$.
+		\item For another example, take $x^1 = \theta$, $x^2 = \phi$. Then
+			\[
+			\diff s^2 = \diff \theta^2 + \sin^2 \theta \diff \phi^2
+			\]
+			gives the metric on the 2-sphere. The first integrals for the geodesic problem is
+			\[
+			- L = \left( \frac{\diff \theta}{\diff \lambda}\right)^2 + \sin^2 \theta \left( \frac{\diff \phi}{\diff \lambda}\right)^2 = 1,
+			\]
+			by choosing $\lambda = s$. Then another first integral gives
+			\[
+			\sin^2 \theta \left( \frac{\diff \phi}{\diff \lambda} \right) = \frac{1}{\ell }.
+			\]
+			Substituting this, we get
+			\[
+			\dot \theta^2 + \frac{1}{\ell^2 \sin^2\theta} = 1.
+			\]
+			Instead of solving for $\theta$ and $\phi$, we will try to visualise a solution. To find the shape by relating $\theta$ and $\phi$ directly, from the above we have
+			\[
+				(\csc^2 \theta) \frac{\diff \theta}{\diff \phi} = (\ell^2 - \csc^2 \theta)^{1/2}.
+			\]
+			Set $u = \cot \theta$ to solve, and we can find
+			\[
+			u = \cot \theta = \alpha \cos(\phi - \phi_0),
+			\]
+			where $\alpha^2 = \ell^2 - 1$.
+	\end{enumerate}
+\end{exbox}
+
+\subsection{Static Spacetimes}
+\label{sub:stat_spac}
+
+A \emph{stationary spacetime}\index{stationary spacetime} is one which admits coordinates $x^0 = ct$, $x^i$ such that
+\[
+\frac{\partial}{\partial t}g_{\mu \nu} = 0.
+\]
+A \emph{static spacetime}\index{static spacetime} is a stationary spacetime in which $g_{0i} = g_{i0} = 0$. Thus, we have
+\[
+\diff s^2 = g_{00}c^2\diff t^2 + g_{ij} \diff x^i \diff x^j = g_{\mu \nu} \diff x^\mu \diff x^\nu.
+\]
+We will look at a couple of concepts in static spacetimes. First, we will look at gravitational redshift.
+
+Consider observers A and B at fixed positions $\mathbf{x}_A$, $\mathbf{x}_B$ in static spacetime. Suppose A sends an electromagnetic signal to B at intervals $\Delta t$ in coordinate $t$.
+
+The coordinate separation of signals for B is also $\Delta t$, by the symmetry of the metric. Given one null geodesic, a translation in $t$ produces another. But the proper time difference is $\Delta \tau_A$ for A, and $\Delta \tau_B$ for B, given by
+\[
+	(\Delta \tau_A)^2 = -g_{00}(\mathbf{x}_A)(\Delta t)^2, \qquad (\Delta \tau_B)^2 = -g_{00}(\mathbf{x}_B) (\Delta t)^2,
+\]
+which means that
+\[
+\frac{\Delta \tau_B}{\Delta \tau_A} = \left( -\frac{g_{00}(\mathbf{x}_B)}{-g_{00}(\mathbf{x}_A)} \right)^{1/2}.
+\]
+This is exact so far. Compare this to the discussion in \S\ref{sub:grav_accel} for the gravitational potential $\Phi(\mathbf{x})$, which is weak in the sense that $\Phi/c^2 \ll 1$. We can see that
+\[
+-g_{00}(\mathbf{x}) = 1 + \frac{2 \Phi(\mathbf{x})}{c^2} \implies \frac{\Delta \tau_B}{\Delta \tau_A} \approx 1 + \frac{1}{c^2} (\Phi(\mathbf{x}_B) - \Phi(\mathbf{x}_A)).
+\]
+
+%lecture 7
+
+Consider timelike geodesics to describe the motion of a massive particle, and choose our parameter to be $\tau$, the proper time.
+
+A static metric (one that does not depend on time) means we have a first integral
+\[
+g_{00}c^2 \frac{\diff t}{\diff \tau} = -E,
+\]
+a constant. Moreover, we have a general first integral
+\[
+c^2 = -g_{00} c^2 \left( \frac{\diff t}{\diff \tau} \right)^2 - g_{ij} \frac{\diff x^i}{\diff \tau} \frac{\diff x^j}{\diff \tau}.
+\]
+From this, we learn
+\[
+\left( \frac{\diff \tau}{\diff t} \right)^2 = -g_{00} - \frac{1}{c^2} g_{ij} v^i v^j,
+\]
+where $v^i = \diff x^i/\diff t$. Note for Minkowski space $g_{\mu \nu} = \eta_{\mu \nu}$, we have $g_{00} = \eta_{00} = -1$, and $g_{ij} = \eta_{ij} = \delta_{ij}$, giving
+\[
+\left( \frac{\diff \tau}{\diff t}\right)^2 = 1 - \frac{|v|^2}{c^2},
+\]
+which is the familiar $1/\gamma(v)^2$ from special relativity. Now consider a nearly flat space, corresponding to weak gravity, with
+\[
+\gamma_{\mu \nu} = \eta_{\mu \nu} + h_{\mu \nu},
+\]
+where $h_{\mu \nu}$ is small. Also treat $v^i = \diff x^i/\diff t$ as small compared to $c$, for non-relativistic motion. Substituting in first integrals,
+\[
+\left( \frac{\diff \tau}{\diff t}\right)^2 = (1 - h_{00}) - \frac{1}{c^2} (\delta_{ij} + h_{ij}) v^i v^j \approx 1 - h_{00} - \frac{1}{c^2} |v|^2.
+\]
+Then we find
+\begin{align*}
+	(-1 + h_{00})c^2 \frac{\diff t}{\diff \tau} &= -E \\
+	\implies c^2(-1 + h_{00})(1 - h_{00} - |v|^2/c^2)^{-1/2} &= E \\
+	\implies c^2 \left(1 - \frac{1}{2} h_{00} + \frac{1}{2} \frac{|v|^2}{c^2} \right) &= E.
+\end{align*}
+But from the discussion of red shift, we expect $h_{00} = -2 \Phi/c^2$ for gravitational potential $\Phi$, so
+\[
+c^2 + \Phi + \frac{1}{2}|v|^2 = E,
+\]
+which is the conserved energy per unit rest mass.
+
+For the geodesic equation for space coordinates, consider
+\[
+	\frac{\Diff2 x^i}{\diff \tau^2} = - \Gamma\indices{^i_\alpha_\beta} \frac{\diff x^\alpha}{\diff \tau} \frac{\diff x^\beta}{\diff \tau}.
+\]
+For $g_{\mu \nu} = \eta_{\mu \nu}$, we have $\Gamma\indices{^\mu_\alpha_\beta} = 0$. For $g_{\mu \nu} = \eta_{\mu \nu} + h_{\mu \nu}$, $\Gamma$ will be small, and with the approximation $\diff t/\diff \tau \approx 1$ to leading order, we get
+\[
+	\frac{\diff^2 x^i}{\diff t^2} = -\Gamma\indices{^i_\alpha_\beta} \frac{\diff x^\alpha}{\diff t} \frac{\diff x^\beta}{\diff t} = - \Gamma\indices{^i_0_0} c^2.
+\]
+Now we can calculate
+\begin{align*}
+	\Gamma\indices{^i_0_0} &= \frac{1}{2} g^{i\alpha}(\partial_0 g_{0\alpha} + \partial_0 g_{\alpha 0} - \partial_\alpha g_{00})  \\
+	&= \frac{1}{2} g^{ij} (- \partial_j g_{00}) \\
+	&= \frac{1}{2}(\delta^{ij} + h^{ij})(-\partial_{j} h_{00}) \\
+	&= - \frac{1}{2} \delta^{ij} \delta_j h_{00} = \delta^{ij} \partial_{j} \Phi/c^2 \\
+	\implies \frac{\diff v^i}{\diff t} &= -\delta^{ij} \partial_j \Phi,
+\end{align*}
+which is Newton's second law for a gravitational potential $\Phi$.
+
+\subsection{Changing Coordinates and the Equivalence Principles}
+\label{sub:chang_coord}
+
+Consider the line element
+\[
+\diff s^2 = g_{\mu \nu} \diff x^\mu \diff x^\nu = \tilde g_{\alpha\beta} \diff \tilde x^\alpha \diff \tilde x^\beta.
+\]
+This is invariant, meaning it is independent of the coordinates $\{x^\mu\}$ or $\{\tilde x^\alpha\}$. Under a change of coordinates,
+\[
+\diff \tilde x^\alpha = \frac{\partial \tilde x^\alpha}{\partial x^\mu} \diff x^\mu, \qquad \diff x^\mu = \frac{\partial x^\mu}{\diff \tilde x^\alpha} \diff \tilde x^\alpha.
+\]
+In such partial derivatives, we keep the other coordinates in the same set constant. An invertible transformation requires
+\[
+\det \left( \frac{\diff \tilde x^\alpha}{\diff x^\mu} \right) \neq 0,
+\]
+and by the chain rule,
+\begin{align*}
+	\frac{\partial \tilde x^\alpha}{\partial x^\mu} \frac{\partial x^\mu}{\partial \tilde x^\beta} &= \delta\indices{^\alpha_\beta}, \\
+	\frac{\partial x^\mu}{\partial \tilde x^\alpha} \frac{\partial \tilde x^\alpha}{\partial x^\nu} &= \delta\indices{^\mu_\nu}.
+\end{align*}
+In the line element above, we have
+\[
+\diff s^2 = g_{\mu \nu} \frac{\partial x^\mu}{\diff \tilde x^\alpha} \frac{\partial x^\nu}{\diff \tilde x^\beta} \diff \tilde x^\alpha \diff \tilde x^\beta,
+\]
+and then by comparison
+\[
+\tilde g_{\alpha \beta} = \frac{\partial x^\mu}{\partial \tilde x^\alpha} \frac{\partial x^\nu}{\partial \tilde x^\beta} g_{\mu \nu}.
+\]
+This is a transformation rules for metric components, and is an example of a tensor.
+
+To what extent can we simplify the metric by such a transformation? First, we fix a point $O$ in spacetime, and arrange $x^\mu = 0$, $\tilde x^\alpha = 0$. Then we want
+\[
+	x^\mu = M\indices{^\mu_\alpha} \tilde x^\alpha.
+\]
+With this choice, we have
+\[
+	\frac{\partial x^\mu}{\partial \tilde x^\alpha} = M\indices{^\mu_\alpha},
+\]
+and
+\[
+	\tilde g_{\alpha\beta} = (M^{T})\indices{_\alpha^\mu} g_{\mu\nu}(M)\indices{^\nu_\beta}.
+\]
+Under this transformation, we can get
+\[
+\tilde g_{\mu \nu} = \eta_{\mu \nu},
+\]
+%lecture 8
+at $O$. This form at $O$ is now preserved by linear change of coordinates $\tilde x^\mu = \Lambda\indices{^\mu_\nu} x^\nu$, with $\eta_{\mu \nu} \Lambda\indices{^\mu_\alpha} \Lambda\indices{^\nu_\beta} = \eta_{\alpha\beta}$, as noted earlier.
+
+Consider the behaviour of the metric as we move away from the point $O$. Say that
+\[
+g_{\mu \nu} = \eta_{\mu \nu} + C_{\mu \nu \rho} x^\rho + \cdots,
+\]
+where we Taylor expand to the first order, and our coefficients satisfy $C_{\mu \nu \rho} = C_{\nu\mu\rho}$. Similarly, for a change of coordinates,
+\[
+	\tilde x^\mu = x^\mu + \frac{1}{2} A\indices{^\mu_\nu_\rho} x^\nu x^\rho + \cdots,
+\]
+with coefficients $A\indices{^\mu_\nu_\rho} = A\indices{^\mu_\rho_\nu}$. Or, we can rearrange to get
+\[
+	x^\mu = \tilde x^\mu - \frac{1}{2} A \indices{^\mu_\nu_\rho} \tilde x^\nu \tilde x^\rho + \cdots,
+\]
+to second order. To find $\tilde g_{\alpha\beta}$, we need
+\[
+	\frac{\partial x^\mu}{\partial \tilde x^\alpha} = \delta\indices{^\mu_\alpha} - A\indices{^\mu_\alpha_\rho} \tilde x^\rho + \cdots,
+\]
+and then we find
+\begin{align*}
+	\tilde g_{\alpha\beta} &= (\eta_{\mu\nu} + C_{\mu\nu\rho}x^\rho + \cdots)(\delta\indices{^\mu_\alpha} - A\indices{^\mu_\alpha_\sigma} \tilde x^\sigma + \cdots)(\delta\indices{^\nu_\beta} - A\indices{^\nu_\beta_\delta}\tilde x^\delta + \cdots) \\
+			       &= \eta_{\alpha\beta} + C_{\alpha\beta\rho}x^\rho - A_{\beta\alpha\sigma}\tilde x^\sigma - A_{\alpha\beta\delta} \tilde x^\delta + \cdots \\
+			       &= \eta_{\alpha\beta} + \tilde C_{\alpha\beta\rho} \tilde x^\rho + \cdots,
+\end{align*}
+where $A_{\alpha\beta\delta} = \eta_{\alpha\mu} A\indices{^\mu_\beta_\delta}$, and where $\tilde C_{\alpha\beta\rho} = C_{\alpha\beta\rho} - A_{\alpha\beta\rho} - A_{\beta\alpha\rho}$, and $\tilde x^\alpha = x^\alpha$ to leading order.
+
+Can we choose $A\indices{^\mu_\nu_\rho}$ to make $\tilde C_{\alpha\beta\rho} = 0$? We need
+\begin{align*}
+	C_{\alpha\nu\delta} - A_{\alpha\beta\delta} - A_{\beta\alpha\delta} &= 0 \\
+	\implies C_{\beta\delta\alpha} - A_{\beta\delta\alpha} - A_{\delta\beta\alpha} &= 0 \\
+	\implies C_{\delta\alpha\beta} - A_{\delta\alpha\beta} - A_{\alpha\delta\beta} &= 0.
+\end{align*}
+Adding the first and last equation, and subtracting the middle, gives
+\[
+A_{\alpha\beta\delta} = \frac{1}{2}(C_{\alpha\beta\delta} + C_{\alpha\delta\beta} - C_{\beta\delta\alpha}),
+\]
+giving $\tilde C_{\alpha\beta\delta} = 0$. In conclusion, it is always possible to choose coordinates $\{x^\mu\}$ to ensure that at a give point $O$ in spacetime,
+\[
+	g_{\mu\nu} = \eta_{\mu\nu}, \qquad \partial_\rho g_{\mu \nu} = 0 \implies \Gamma\indices{^\rho_\mu_\nu} = 0,
+\]
+at $O$. This defines a \emph{local inertial frame}\index{local inertial frame} or a \emph{freely falling frame}\index{freely falling frame}.
+
+Note if we take the same approach at the next order, we look to remove the term $C'_{\mu\nu\rho\sigma} x^\rho x^\sigma$ by using the freedom ${A'}\indices{^\mu_\nu_\rho_\sigma} x^\nu x^\rho x^\sigma$. However, this is not possible, as there is not enough freedom, and this obstacle is related to the Riemann curvature.
+
+We can now consider the equivalence principle more carefully:
+\begin{center}
+	Einstein Equivalence Principle: In a local inertial frame, the results of all non-gravitational experiments will be indistinguishable from results of experiments performed in an inertial frame in Minkowski space.
+\end{center}
+A weaker version is the following:
+\begin{center}
+	Weak equivalence principle: The trajectory of a freely falling test body depends only on its initial position and its velocity, and is independent of its composition.
+\end{center}
+This is relating the equivalence of gravitational and inertial mass.
+
+\newpage
+
+\section{Schwarzchild Metric}
+\label{sec:sch_met}
+
+We say that for a static metric of the form
+\[
+\diff s^2 = - \left(1 + \frac{2 \Phi}{c^2} \right)c^2 \diff t^2 + (\delta_{ij} + h_{ij}) \diff x^i \diff x^j,
+\]
+with $\phi/c^2$ and $h_{ij} \ll 1$, that geodesic motion reproduces Newtonian dynamics in potential $\Phi$, for $v^i = \diff x^i / \diff t \ll c$. As a special case, in Newtonian gravity, $\Phi = - GM/r$, the potential for a mass $M$ at $r = 0$.
+
+We can generalise to general relativity by taking the Schwarzchild metric\index{Schwarzchild metric} with line element
+\[
+\diff s^2 = - \left(1 - \frac{2 GM}{c^2 r} \right) c^2 \diff t^2 + \left(1 - \frac{2 GM}{c^2 r} \right)^{-1} \diff r^2 + r^2(\diff \theta^2 + \sin^2 \theta \diff \phi^2).
+\]
+This is the exact solution of the vacuum Einstein equations in general relativity for $r > 0$.
+
+$\Phi$ is exact in Newtonian gravity, and is determined uniquely by symmetry. We have a similar statement in general relativity for the metric above---we will see this later as Birkhoff's theorem.
+
+%lecture 9
+
+The metric has the following properties:
+\begin{enumerate}
+	\item It is static: it has time translation symmetry.
+	\item It has spherical symmetry: at constant $r, t$ we have a $2$-sphere described by the usual polar angles $\theta, \phi$.
+	\item For $r \gg 2GM/c^2$, we recover the previous case of weak gravity with $\Phi = -GM/r$, so we can identify $M$ with mass.
+	\item There are singularities in the metric components when $r = r_s = 2GM/c^2$ and $r = 0$. Analysis in this chapter will be confined to $r > r_s$. For the sun, $r_s \approx \qty{3}{\kilo\metre}$, and for the Earth, $r_s \approx \qty{9}{\milli\metre}$.
+\end{enumerate}
+
+\subsection{Timelike and Null Geodesics}
+\label{sub:tim_null_schw}
+
+Now in units in which $c = G = 1$, we have $r_s = 2M$, and the line element becomes
+ \[
+\diff s^2 = - \left(1 - \frac{2M}{r} \right) \diff t^2 + \left(1 - \frac{2M}{r} \right)^{-1} \diff r^2 + r^2 (\diff \theta^2 + \sin^2 \theta \diff \phi^2).
+\]
+Consider the geodesic equations for both massive and massless particles with affine parameter $\lambda$, and set $\lambda = \tau$, in the massive case. The $t$-equation gives
+\[
+\left(1 - \frac{2M}{r} \right) \frac{\diff t}{\diff \lambda} = E,
+\]
+a constant. The $\phi$-equation is
+\[
+r^2 \sin^2 \theta \frac{\diff \phi}{\diff \lambda} = h,
+\]
+a constant. The $\theta$-equation is
+\[
+\frac{\diff}{\diff \lambda} \left( r^2 \frac{\diff \theta}{\diff \lambda} \right) - r^2 \sin \theta \cos \theta \left( \frac{\diff \phi}{\diff \lambda} \right)^2 = 0.
+\]
+Instead of the $r$-equation, consider the remaining first integral
+\[
+\left(1 - \frac{2M}{r} \right) \left(\frac{\diff t}{\diff \lambda} \right)^2 - \left(1 - \frac{2M}{r} \right)^{-1} \left(\frac{\diff r}{\diff \lambda} \right)^2 - r^2 \left( \frac{\diff \theta}{\diff \lambda} \right)^2 - r^2 \sin^2 \theta \left( \frac{\diff \phi}{\diff \lambda} \right)^2 = \kappa,
+\]
+where $\kappa = 1$ for massive particles, and $0$ for massless particles.
+
+We call $E, h$ the energy and angular momentum, and we can identify as such as, for very large $r$, we have $g_{\mu \nu} \sim \eta_{\mu \nu}$.
+
+Note the $\theta$ equation is satisfied by $\theta = \pi/2$ a constant, and this follows if $\theta = \pi/2$ initially and $\diff \theta/\diff \lambda = 0$ at $\lambda = 0$. Then this means $\theta = \pi/2$ for all $\lambda$, and the initial conditions can be satisfied by rotating our coordinates in the 2-sphere.
+
+Substituting for $\diff t/\diff \lambda$ and $\diff \phi / \diff \lambda$, we find
+\[
+\frac{1}{2} \dot r^2 + V_{\mathrm{eff}}(r) = \frac{1}{2}(E^2 - \kappa),
+\]
+where
+\[
+V_{\mathrm{eff}}(r) = - \kappa \frac{M}{r} + \frac{h^2}{2r^2} - \frac{Mh^2}{r^3},
+\]
+and our constants are
+\[
+E = \left(1 - \frac{2M}{r} \right) \dot t, \qquad h = r^2 \dot \phi.
+\]
+Mechanically, the position $r$ of our particle of unit mass is moving in the potential $V_{\mathrm{eff}}(r)$, and the equation above relays the conservation of energy. We can use this to deduce the existence and properties of solutions.
+
+To find the shape of the orbit or the trajectory, set $u(\phi) = 1/r$, then
+\[
+- \frac{1}{r^2} \dot r = \frac{\diff u}{\diff \phi} \dot \phi \implies \dot r = - h \frac{\diff u}{\diff \phi}.
+\]
+Then the conservation of energy equation becomes
+\begin{align*}
+	\frac{1}{2} \left( \frac{\diff u}{\diff \phi} \right)^2 + \frac{1}{h^2} V_{\mathrm{eff}}\left( \frac{1}{u} \right) &= \text{const} \\
+	\implies \frac{\diff^2 u}{\diff \phi^2} + u &= \frac{M}{h^2} \kappa + 3 M u^2.
+\end{align*}
+
+\subsection{Massive Particles: Circular and Near-Circular Orbits}
+\label{sub:mas_circ_near}
+
+We start off with Newtonian gravitation. In the standard treatment, we have gravitational potential $\Phi = -M/r$. Then motion lies in the plane with coordinates $r, \phi$, with
+\[
+	\frac{1}{2} \dot r^2 + V_{\mathrm{eff}}(r) = \text{const}, \qquad h = r^2 \dot \phi,
+\]
+and effective potential
+\[
+V_{\mathrm{eff}}(r) = - \frac{M}{r} + \frac{h^2}{2r^2}.
+\]
+Circular orbits exist for $V_{\mathrm{eff}}'(r) = 0$, i.e.
+\[
+r = \frac{h^2}{M} = \ell,
+\]
+our length scale, and they are stable since $V_{\mathrm{eff}}''(\ell) > 0$. The shape of more general orbits satisfy
+\[
+\frac{\diff^2 u}{\diff \phi^2} + u = \frac{M}{h^2},
+\]
+which has general solution
+\[
+u = \frac{1}{r} = \frac{1}{\ell }(1 + e \cos(\phi - \phi_0)),
+\]
+a conic with eccentricity $e$. This is bounded if orbits are ellipses, which is when $e < 1$.
+
+Now we extend this discussion to general relativity. Set $\kappa = 1$ in the equations obtained in \S\ref{sub:tim_null_schw}. We get
+\[
+V_{\mathrm{eff}}(r) = - \frac{M}{r} + \frac{h^2}{2r^2} - \frac{Mh^2}{r^3},
+\]
+which is the Newtonian potential with a general relativity correction. We can draw it out; unlike the Newtonian potential it does not approach $\infty$ as $r \to 0$, instead it approaches $-\infty$. Depending on the value of $h/M$, the potential looks different (look at lecture for a picture). Finding the extrema,
+\[
+V_{\mathrm{eff}}(r) = \frac{M}{r^2} - \frac{h^2}{r^3} + \frac{3Mh^2}{r^4} = 0 \implies r = r_{\pm} = \frac{h^2}{2M} \left( 1 \pm \left(1 - \frac{12M^2}{h^2} \right)^{1/2} \right),
+\]
+and we need $h > 2 \sqrt 3 M$ for solutions to exist. Then also
+\[
+h^2 = \frac{Mr^2}{r - 3M},
+\]
+so solutions only exist for $r > 3M$. Also,
+\[
+V_{\mathrm{eff}}(r) = \frac{M(r - 6M)}{r^3(r - 3M)}.
+\]
+Hence we conclude that stable circular orbits exist for $r > 6M$, and unstable orbits exist for $3M < r < 6M$.
+
+%lecture 10
+
+For a massive particle $(\kappa = 1)$, the shape of our orbit is given by
+\[
+u'' + u = \frac{M}{h^2} + 3Mu^2.
+\]
+This extra correction term is small when $M u \ll 1$, i.e. when $r \gg r_s = 2M$. Hence we look for approximate near circular solutions in GR of the form
+ \[
+u = \frac{1}{\ell }(1 + v(\phi)),
+\]
+where $\lambda = h^2/M$ and $v$ is small. Substituting into the equation above, we get
+\[
+\frac{1}{\ell }(v'' + v) = \frac{3M}{\ell^2}(1 + v)^2 \approx \frac{3M}{\ell }(1 + 2v),
+\]
+working to first order in $v$. Hence
+\[
+v'' + \omega^2 v = \frac{3M}{\ell },
+\]
+with $\omega^2 = 1 - 6M/\ell $. Working with $M/\ell = (h/\ell)^2 \ll 1$, we get $\omega \approx 1 - 3M/\ell $. Hence the solution is
+\[
+v = \frac{3M}{\ell }\frac{1}{\omega^2} + e \cos \omega (\phi - \phi_0),
+\]
+but the first term is of order $3M/\ell $ to the order of intent. Hence
+\[
+u = \frac{1}{\ell }\left( \left( 1 + \frac{3M}{\ell }\right) + e \cos \omega(\phi - \phi_0) \right),
+\]
+with $e$ small, consistent with our assumption about $v$. A small change to the constant term is expected from earlier discussion of circular orbits: note
+\[
+r_+ \approx \frac{h^2}{M} \left( 1 - \frac{3M^2}{h^2} \right) = \ell \left( 1 - \frac{3M}{\ell } \right),
+\]
+agreeing with the term above. The main point is the factor of $\omega$ in the above cosine term. The solution is almost an ellipse, but we need to increase $\phi$ by $2\pi/\omega \approx 2 \pi + 6 \pi M/L$ to return to the same value of $u = 1/r$. This means our approximate ellipse precesses, advancing by $\Delta \phi= 6\pi M/L \ll 1$ per revolution.
+
+The largest effect is given for smaller orbits, i.e. for Mercury. Then $\Delta \phi \approx \qty{5e-7}{}$ (radians per orbit). Very accurate measurements confirm this prediction of general relativity.
+
+\subsection{Massless Particles and Deflection of Light}
+\label{sub:mles_part}
+
+We will start by referring to our equations of motion. With $\kappa = 0$, we find
+\[
+V_{\mathrm{eff}}(r) = \frac{h^2}{2r^2} - \frac{Mh^2}{r^3}, \qquad V'_{\mathrm{eff}}(r) = - \frac{h^2}{r^3} + \frac{3Mh^2}{r^4},
+\]
+which equals $0$ when $r = 3M$. This is unstable (see sketch in lectures).
+
+Now we will consider the shape of the orbit in the more familiar region $r \gg M$. Plugging in $\kappa = 0$ into our $u$-equation, we find
+\[
+u'' + u = 3Mu^2,
+\]
+where $M u \ll 1$. To $0$'th order in the small term on the right hand side, we have solution
+\[
+u = \frac{1}{b} \sin \phi,
+\]
+which gives a straight line, with one integration fixed to ensure symmetry under $\phi \to \pi - \phi$, and $u \to 0$ as $\phi \to 0, \pi$. The other constant $b$ gives the closest approach or \emph{impact parameter}\index{impact parameter}.
+
+Take $b \gg M$. Looking for solution to the first order,
+\[
+u = \frac{1}{b}(\sin \phi + v(\phi)),
+\]
+with $v$ small and of order $M/b$, we find that
+\[
+v'' + v = \frac{3M}{b}(\sin \phi + v)^2 = \frac{3M}{b} \sin^2 \phi = \frac{3M}{b} \frac{1}{2}(1 - \cos 2 \phi).
+\]
+The particular solution with the symmetry as above is
+\[
+v = \left( \frac{3M}{2b} + \frac{M}{2b} \cos \phi \right).
+\]
+The solution to the homogeneous problems produces a correction of order $M/b$ to the impact parameter; we neglect this. The result is
+\[
+u = \frac{1}{b} \left( \sin \phi + \left( \frac{3M}{2b} + \frac{M}{2b} \cos \phi \right) \right).
+\]
+We look for solutions to $\phi = -\delta$ small, at which $r \to \infty$ as $u \to 0$, and we find
+\[
+\sin(- \delta) + \frac{3M}{2b} + \frac{M}{2b} \cos(-\delta) = 0,
+\]
+hence
+\[
+\delta = \frac{3M}{2b} + \frac{M}{2b} = \frac{2M}{b}.
+\]
+Similarly, by symmetry $r \to \infty$ as $u \to 0$, for $\phi = \pi + \delta$. Hence the total deflection is
+\[
+2 \delta = \frac{4M}{b}.
+\]
+We can measure this for a light ray passing close to the sun, and the prediction is $\ang{;;1.77}$.
+
+Another prediction that can be experimentally tested is the (Shapiro) time delay. This is relative to the predictions of special relativity when light (or EM radiation) passes close to a gravitational source described by the Schwarzchild metric.
+
+%lecture 11
+
+\newpage
+
+\section{Tensors, Connections and Curvature}
+\label{sec:tcc}
+
+In this chapter we will work on a general manifold, but our primary interest will still be spacetime.
+
+\subsection{Vectors and Tensors}
+\label{sub:vt}
+
+Vectors and tensors are defined to be objects with components in any coordinate system, related by specific transformation rules under a change of coordinates. In the definitions to follow, we refer to coordinate systems $\{x^\mu\}$ and $\{\tilde x^\alpha\}$.
+
+A \emph{vector}\index{vector} is an object with components $V^\mu$ and $\tilde V^\alpha$ such that
+\[
+\tilde V^\alpha = \frac{\partial \tilde x^\alpha}{\partial x^\mu} V^\mu,
+\]
+the vector transformation rule. A \emph{covector}\index{covector} is an object with components $U_\mu$ and $\tilde U_\alpha$ such that
+\[
+\tilde U_\alpha = \frac{\partial x^\mu}{\partial \tilde x^\alpha} U_\mu,
+\]
+the covector transformation rule. These definitions apply at each point on a manifold. A (co)vector-valued function is called \emph{(co)vector field}\index{covector field}\index{vector field} Vectors and covectors are also called contravariant and covariant vectors, respectively.
+
+Note that vectors and covectors can be paired (indiced contracted) to produce a scalar:
+\[
+	V^\mu U_\mu = \tilde V^\alpha \tilde U_\alpha,
+\]
+which is invariant, by the transformation rules. Indeed the right hand side is
+\[
+	\frac{\partial \tilde x^\theta}{\partial x^\mu} \frac{\partial x^\nu}{\partial \tilde x^\mu} V^\mu U_\nu = \delta\indices{_\mu^\nu} V^\mu U_\nu = V^\mu U_\mu.
+\]
+
+\begin{exbox}
+	For a parametrized curve given by $x^\mu(\lambda)$ or $\tilde x^\alpha(\lambda)$, the tangent vectors has components
+	\[
+		T^\mu = \frac{\diff x^\mu}{\diff \lambda} \text{ or } \tilde T^\alpha = \frac{\diff \tilde x^\alpha}{\diff \lambda}.
+	\]
+	These satisfy the vector transformation rule, by the chain rule:
+	\[
+	\frac{\diff \tilde x^\alpha}{\diff f\lambda} = \frac{\partial \tilde x^\alpha}{\partial x^\mu} \frac{\diff x^\mu}{\diff \lambda}.
+	\]
+	Given a vector field $V^\mu$, we can construct \emph{integral curves}\index{integral curves} $x^\mu(\lambda)$ by solving
+	\[
+	\frac{\diff x^\mu}{\diff \lambda} = V^\mu(x(\lambda)).
+	\]
+	These have tangent vectors $V^\mu$ at each point.
+
+	For a function given by $f(x^\mu)$ or $f(\tilde x^\alpha)$ we have, analogous to $\nabla f$, the quantities
+	\[
+		U_\mu = \frac{\partial f}{\partial x^\mu} \text{ and } \tilde U_\alpha = \frac{\partial f}{\partial \tilde x^\alpha}.
+	\]
+	These are components of a covector: we can check the transformation rule
+	\[
+	\frac{\partial f}{\partial \tilde x^\alpha} = \frac{\partial x^\mu}{\partial \tilde x^\alpha} \frac{\partial f}{\partial x^\mu}.
+	\]
+
+	Now consider how $f$ changes along a curve $x^\mu(\lambda)$:
+	\[
+	\frac{\diff}{\diff \lambda} f(x^\mu(\lambda)) = \frac{\partial f}{\partial x^\mu} \frac{\diff x^\mu}{\diff \lambda},
+	\]
+	which is an invariant pairing of a vector and a covector.
+\end{exbox}
+
+Generalising the previous definitions, a \emph{tensor}\index{tensor} of type $(p, q)$ or $\left( \frac{p}{q} \right)$ has components
+\[
+	T\indices{^{\mu_1\cdots\mu_p}_{\nu_1\cdots\nu_q}} \text{ or } \tilde T\indices{^{\alpha_1\cdots\alpha_p}_{\beta_1\cdots\beta_q}}
+\]
+are related by
+\[
+	\tilde T\indices{^{\alpha_1\cdots\alpha_p}_{\beta_1\cdots\beta_q}} = \frac{\partial \tilde x^{\alpha_1}}{\partial x^{\mu_1}} \cdots \frac{\partial \tilde x^{\alpha_p}}{\partial x^{\mu_p}} \frac{\partial x^{\nu_1}}{\partial \tilde x^{\beta_1}} \cdots \frac{\partial x^{\nu_q}}{\partial \tilde x^{\beta_q}} T\indices{^{\mu_1\cdots\mu_p}_{\nu_1\cdots\nu_q}}.
+\]
+Note that a scalar is a $(0, 0)$ tensor, a vector is a $(1, 0)$ tensors and a covector is $(0, 1)$ tensor.
+
+\begin{exbox}
+	For a line element $\diff s^2 = g_{\mu \nu} \diff x^\mu \diff x^\nu = \tilde g_{\alpha\beta} \diff \tilde x^\alpha \diff \tilde x^\beta$, we saw in a previous chapter that the metric $g_{\mu\nu}$ is a $(0, 2)$ tensor, and $g^{\mu\nu}$ is a $(2, 0)$ tensor.
+\end{exbox}
+
+The metric provides additional structure, which allow sus to change between vectors and covectors by raising or lowering indices. For example, given $V^\mu$, we define $V_\mu = g_{\mu \nu } V^\nu$, and similarly given $U_\mu$, we define $U^\mu = g^{\mu \nu}U_\nu$. Then
+\[
+V^\mu U_\mu = g_{\mu \nu} V^\mu U^\nu = g^{\mu \nu} V_\mu U_\nu = V_\mu U^\mu.
+\]
+Similarly for a tensor of type $(p, q)$, we can lower an index to get a tensor of type $(p-1, q+1)$ or raise an index to get a tensor of type $(p+1, q-1)$. For example
+\[
+	g_{\alpha \mu_2} T\indices{^{\mu_1\mu_2\mu_3}_{\nu_1\nu_2}} = T\indices{^{\mu_1}_{\alpha}^{\mu_3}_{\nu_1\nu_2}}.
+\]
+
+Operations involving tensors can be defined as operations on components, provided those are consistent with tensor transformation rules. For example, we have:
+\begin{enumerate}[(i)]
+	\item Addition of tensors of type $(p, q)$:
+		\[
+			(T + S)\indices{^{\alpha_1\cdots\alpha_p}_{\beta_1\cdots\beta_q}} = T\indices{^{\alpha_1\cdots\alpha_p}_{\beta_1\cdots\beta_q}} + S\indices{^{\alpha_1\cdots\alpha_p}_{\beta_1\cdots\beta_q}}.
+		\]
+	\item Scalar multiplication:
+		\[
+			(\lambda T)\indices{^{\alpha_1\cdots\alpha_p}_{\beta_1\cdots\beta_q}} = \lambda T\indices{^{\alpha_1\cdots\alpha_p}_{\beta_1\cdots\beta_q}}.
+		\]
+	\item Tensor products: For $T$ of type $(p, q)$ and $S$ of type $(m, n)$, define
+		\[
+			(T \otimes S)\indices{^{\alpha_1\cdots\alpha_p\mu_1\cdots\mu_m}_{\beta_1\cdots\beta_q\nu_1\cdots\nu_n}} = T\indices{^{\alpha_1\cdots\alpha_p}_{\beta_1\cdots\beta_q}}S\indices{^{\mu_1\cdots\mu_n}_{\nu_1\cdots\nu_n}},
+		\]
+		a tensor of type $(p+m, q+n)$. For example $(U \otimes V)\indices{_\alpha^\beta} = U_\alpha V^\beta$ is a tensor of type $(1, 1)$.
+	\item Contraction: Given a tensor of type $(p, q)$, where $p, q \geq 1$, we can \emph{contract}\index{contraction} an upper and lower index to produce a tensor of type $(p-1, q-1)$, for example
+		\[
+			T\indices{^{\alpha\mu_2\cdots\mu_p}_{\alpha\nu_2\cdots\nu_q}}.
+		\]
+%lecture 12
+	\item Symmetrisation and Antisymmetrisation: These are operations defined for any pair of like indices. For example if $T_{\alpha\beta} = \pm T_{\beta\alpha}$, we say $T$ is \emph{symmetric}\index{symmetric} (resp. \emph{antisymmetric}\index{antisymmetric}) in andices $\alpha, \beta$, or $T\indices{_\mu^{\alpha\beta}} = \pm T\indices{_\mu^{\beta\alpha}}$, similarly.
+
+		We denote the symmetrised part as
+		\[
+		T_{(\alpha\beta)} = \frac{1}{2}(T_{\alpha\beta} + T_{\beta\alpha}),
+		\]
+		and the antisymmetrised part as
+		\[
+			T_{[\alpha\beta]} = \frac{1}{2}(T_{\alpha\beta} - T_{\beta\alpha}).
+		\]
+		Now we have that if $T$ is symmetric in $\alpha, \beta$ if and only if $T_{\alpha\beta} = T_{(\alpha\beta)}$ if and only if $T_{[\alpha\beta]} = 0$. For example $g_{\alpha\beta} = g_{(\alpha\beta)}$ by definition. This is useful in manipulating tensors, for example
+		\[
+		T^{(\alpha\beta)}S_{\alpha\beta} = T^{\alpha\beta} S_{(\alpha\beta)},
+		\]
+		and also
+		\[
+			T^{(\alpha\beta)}S_{[\alpha\beta]} = 0.
+		\]
+		This is consistent with the tensor transformation rule: if $T^{\mu\nu} = T^{(\mu\nu)}$, then
+		\begin{align*}
+			\frac{\partial \tilde x^\alpha}{\partial x^\mu} \frac{\partial \tilde x^\beta}{\partial x^\nu} T^{(\mu\nu)} &= \frac{\partial \tilde x^\alpha}{\partial x^{(\mu}} \frac{\partial \tilde x^\beta}{\partial x^{\nu)}} T^{\mu\nu} \\
+																    &= \frac{\partial \tilde x^{(\alpha}}{\partial x^\mu} \frac{\partial \tilde x^{\beta)}}{\partial x^\nu} T^{\mu\nu} = \tilde T^{(\alpha\beta)}.
+		\end{align*}
+		We can extend this to any number of indices of the same type, symmetric or antisymmetric, if this property holds for any index pair in the specified set. We can also extend bracket notation, for example
+		\[
+		T_{(\alpha\beta\gamma)} = \frac{1}{3!}(T_{\alpha\beta\gamma} + T_{\beta\gamma\alpha} + T_{\gamma\alpha\beta} + T_{\beta\alpha\gamma}  + T_{\gamma\beta\alpha} + T_{\alpha\gamma\beta}).
+		\]
+\end{enumerate}
+
+\subsection{Connections and Covariant Derivatives}
+\label{sub:con_cov_d}
+
+Given a scalar $f$, we found that $\partial_\mu f$ is a covector field. But, given a vector $V^\mu$, we find that $\partial_\mu V^\nu$ is not a tensor, since
+\begin{align*}
+	\tilde \partial_\alpha \tilde V^\beta &= \left( \frac{\partial x^\mu}{\partial \tilde x^\alpha} \partial_\mu\right) \left( \frac{\partial \tilde x^\beta}{\partial x^\nu} V^\nu \right) \\
+					      &= \frac{\partial x^\mu}{\partial \tilde x^\alpha} \frac{\partial \tilde x^\beta}{\partial x^\nu} (\partial_\mu V^\nu) + \frac{\partial x^\mu}{\partial \tilde x^\alpha} \frac{\partial^2 \tilde x^\beta}{\partial x^\mu \partial x^\nu} V^\nu.
+\end{align*}
+
+To simplify, consider a vector field $V^\mu$ changing along a curve $x^\mu(\lambda)$, with tangent vector $T^\mu = \diff x^\mu/\diff \lambda$. Then
+\[
+\frac{\diff}{\diff \lambda} (V^\mu(x)) = \frac{\diff x^\alpha}{\diff \lambda} \frac{\partial V^\mu}{\partial x^\alpha} = T^\alpha \partial_\alpha V^\mu.
+\]
+This is not a vector. But recall the geodesic equation, in the form
+\[
+	\frac{\diff T^\mu}{\diff \lambda} + \Gamma\indices{^\mu_{\alpha\nu}} T^\alpha T^\nu = 0,
+\]
+where $\Gamma\indices{^\mu_{\alpha\nu}}$ is the Levi-Civita connection. This must have a good behaviour under a change of coordinates, since we derived it from a coordinate independent variational principle.
+
+To check explicitly that the geodesic equation has tensorial nature, we can use the form for $\Gamma$ and deduce that
+\[
+	\tilde \Gamma\indices{^\alpha_{\beta\gamma}} = \frac{\partial \tilde x^\alpha}{\partial x^\mu} \frac{\partial x^\nu}{\partial \tilde x^\beta} \frac{\partial x^\rho}{\partial \tilde x^\gamma} \Gamma\indices{^\mu_{\nu\rho}} + \frac{\partial \tilde x^\alpha}{\partial x^\mu} \frac{\partial^2 x^\mu}{\partial \tilde x^\beta \partial \tilde x^\gamma}.
+\]
+Hence this is not a tensor. But this ensures that
+\[
+	\frac{D}{D \lambda} V^\mu = \frac{\diff V^\mu}{\diff \lambda} + \Gamma\indices{^\mu_{\alpha\nu}} T^\alpha V^\nu = T^\alpha \left( \frac{\partial V^\mu}{\partial x^\alpha} + \Gamma\indices{^\mu_{\alpha\nu}} V^\nu\right),
+\]
+the covariant derivative along the curve is a vector. Now the geodesic equation becomes
+\[
+\frac{DT^\mu}{D\lambda} = 0.
+\]
+Furthermore we can check that
+\[
+	\nabla_\alpha V^\mu = \partial_\alpha V^\mu + \Gamma\indices{_\alpha^\mu_\nu} V^\nu,
+\]
+the \emph{covariant derivative}\index{covariant derivative} of a vector field is a $(1, 1)$ tensor. We can also define covariant derivatives on general tensors, as follows:
+\begin{itemize}
+	\item On a scalar field $\nabla_\alpha f = \partial_\alpha f$.
+	\item On a covector field $\nabla_\alpha U_\nu = \partial_\alpha U_\nu - \Gamma\indices{^\beta_{\alpha\nu}}U_\beta$. This ensures the Leibniz property holds:
+		\[
+			\nabla_\alpha (V^\mu U_\mu) = (\nabla_\alpha V^\mu) U_\mu + V^\mu (\nabla_\alpha U_\mu).
+		\]
+		We can check: the right hand side is
+		\[
+			(\partial_\alpha V^\mu)(U_\mu) + \Gamma\indices{^\mu_{\alpha\beta}} V^\beta U_\mu + V^\mu (\partial_\alpha U_\mu) - \Gamma\indices{^\rho_{\alpha\mu}} V^\mu U_\rho = \partial_\alpha(V^\mu U_\mu) = \nabla_\alpha (V^\mu U_\mu).
+		\]
+	\item On a general tensor field, define the covariant derivative by treating each up index as a vector and each down index as a covector, for example
+		\[
+			\nabla_\alpha (W \indices{^\mu_\nu}) = \partial_\alpha W\indices{^\mu_\nu} + \Gamma\indices{^\mu_{\alpha\beta}} W\indices{^\beta_\nu} - \Gamma\indices{^\gamma_{\alpha\nu}} W\indices{^\mu_\gamma},
+		\]
+		or
+		\[
+			\nabla_\alpha(S_{\mu\nu}) = \partial_\alpha S_{\mu\nu} - \Gamma\indices{^\beta_{\alpha\mu}}S_{\beta\nu} - \Gamma\indices{^\rho_{\alpha\nu}} S_{\mu\rho}.
+		\]
+\end{itemize}
+
+The definitions of the covariant derivative above will produce tensors, for any connection $\Gamma$ with the transformation property given. To what extend is the choice of connection unique? First note, on a scalar field
+\begin{align*}
+	\nabla_\alpha \nabla_\beta f - \nabla_\beta \nabla_\alpha f &= \nabla_\alpha(\partial_\beta f) - \nabla_\beta(\partial_\alpha F) \\
+								&= \partial_\alpha \partial_\beta f - \Gamma\indices{^{\gamma}_{\alpha\beta}} \partial_\gamma f - \partial_\beta \partial_\alpha f - \Gamma\indices{^{\gamma}_{\beta\alpha}} \partial_\gamma f \\
+								&= 0,
+\end{align*}
+if and only if $\Gamma\indices{^{\gamma}_{\alpha\beta}} = \Gamma\indices{^{\gamma}_{\beta\alpha}}$. Such a connection is called \emph{torsion free}\index{torsion free}.
+
+We have the following fact: for a manifold with metric $g_{\mu\nu}$ there is a unique torsion free connection for which the metric is covariantly constant:
+\[
+\nabla_\alpha g_{\mu\nu} = 0,
+\]
+or expanding this out,
+\[
+	\frac{D}{D \lambda} V^\mu = \frac{\diff V^\mu}{\diff \lambda} + \Gamma\indices{^\mu_{\alpha\nu}} T^\alpha V^\nu = T^\alpha \left( \frac{\partial V^\mu}{\partial x^\alpha} + \Gamma\indices{^\mu_{\alpha\nu}} V^\nu \right).
+\]
+%lecture 13
+\begin{proofbox}
+	We have
+	\begin{align*}
+		& \partial_\alpha g_{\mu\nu} - \Gamma\indices{^\rho_{\alpha\mu}}g_{\rho\nu} - \Gamma\indices{^\rho_{\alpha\nu}} g_{\mu\rho} = 0\\
+		\iff & \partial_\mu g_{\nu\alpha} - \Gamma\indices{^\rho_{\mu\nu}}g_{\rho\alpha} - \Gamma\indices{^\rho_{\mu\alpha}}g_{\nu\rho} = 0 \\
+	\iff & \partial_\nu g_{\alpha\mu} - \Gamma\indices{^\rho_{\nu\alpha}} g_{\rho\mu} - \Gamma\indices{^\rho_{\nu\mu}}g_{\alpha\rho} = 0.
+	\end{align*}
+	Subtracting the first line and adding the other two, we see that terms cancel, giving
+	\begin{align*}
+		& \partial_\mu g_{\nu\alpha} + \partial_\nu g_{\mu\alpha} - \partial_\alpha g_{\mu\nu} - 2 \Gamma \indices{^\rho_{\mu\nu}}g_{\rho\alpha} = 0 \\
+		\implies & \Gamma\indices{^\rho_{\mu\nu}} = \frac{1}{2} g^{\rho\alpha} (\partial_\mu g_{\nu\alpha} + \partial_\nu g_{\mu\alpha} - \partial_\alpha g_{\mu\nu}).
+	\end{align*}
+\end{proofbox}
+Note this is what we deduced from our work on geodesics. This metric compatibility ensures that the covariant differentiation commutes with raising and lowering indices, e.g.
+\[
+\nabla_\alpha (V_\mu) = \nabla_\alpha (g_{\mu\nu} V^\nu) = \nabla_\alpha (g_{\mu\nu}) V^\nu + g_{\mu\nu} \nabla_\alpha V^\nu = g_{\mu\nu} \nabla_\alpha V^\nu.
+\]
+Similarly
+\[
+	\nabla_\alpha (g_{\mu\nu} U^\mu V^\nu) = g_{\mu\nu} (\nabla_\alpha U^\mu V^\nu + U^\mu \nabla_\alpha V^\nu).
+\]
+Note the left hand side is $\partial_\alpha (g_{\mu\nu} U^\mu V^\nu)$, but the right hand side may be easier to compute.
+
+In general, the covariant derivative of a tensor $T$ of type $(p, q)$ is given by
+\begin{align*}
+	\nabla_\alpha T\indices{^{\mu_1\cdots\mu_p}_{\nu_1\cdots\nu_q}} &= \partial_\alpha T\indices{^{\mu_1 \cdots \mu_p}_{\nu_1 \cdots \nu_q}} \\
+									& \quad + \Gamma\indices{^{\mu_1}_{\alpha\beta}} T\indices{^{\beta\mu_2\cdots\mu_p}_{\nu_1\cdots\nu_q}} + \cdots + \Gamma\indices{^{\mu_p}_{\alpha\beta}} T\indices{^{\mu_1\cdots\mu_{p-1}\beta}_{\nu_1\cdots\nu_q}} \\
+									& \quad - \Gamma\indices{^\gamma_{\alpha\nu_1}} T\indices{^{\mu_1\cdots\mu_p}_{\gamma\nu_2\cdots\nu_q}} - \cdots - \Gamma\indices{^\gamma_{\alpha\nu_q}} T\indices{^{\mu_1\cdots\mu_p}_{\nu_1\cdots\nu_{q-1}\gamma}}.
+\end{align*}
+From the connection transformation rule for $T$, $\nabla T$ is a tensor of type $(p, q+1)$. It has the following properties:
+\begin{enumerate}[(i)]
+	\item $\nabla(\alpha T + \beta S) = \alpha \nabla T + \beta \nabla S$, for any constants $\alpha, \beta$ and tensors $T, S$ both of type $(p, q)$.
+	\item $\nabla_\mu f = \partial_\mu f$ for any scalar field $f$.
+	\item $\nabla(T \otimes S) = (\nabla T) \otimes S + T \otimes (\nabla S)$, the Leibniz rule.
+	\item $\nabla$ commutes with the operation of contracting indices.
+	\item $\nabla_\alpha g_{\mu\nu} = 0$ and the connection being torsion-free means $\Gamma$ is determined, and $\nabla$ commutes with the operations of raising and lowering indices.
+\end{enumerate}
+
+Previously we found that
+\begin{align*}
+	\tilde \partial_\alpha \tilde V^\beta &= \left( \frac{\partial x^\mu}{\partial \tilde x^\alpha} \partial_\mu\right) \left( \frac{\partial \tilde x^\beta}{\partial x^\nu} V^\nu \right) \\
+					      &= \frac{\partial x^\mu}{\partial \tilde x^\alpha} \frac{\partial \tilde x^\beta}{\partial x^\nu} (\partial_\mu V^\nu) + \frac{\partial x^\mu}{\partial \tilde x^\alpha} \frac{\partial^2 \tilde x^\beta}{\partial x^\mu \partial x^\nu} V^\nu,
+\end{align*}
+and we claimed that the unwanted term could be removed by an additional non-tensorial term which transforms as a connection:
+\[
+	\tilde \Gamma\indices{^\beta_{\alpha\gamma}} \tilde V^\gamma = \frac{\partial \tilde x^\beta}{\partial x^\nu} \left( \frac{\partial x^\mu}{\partial \tilde x^\alpha} \frac{\partial x^\rho}{\partial \tilde x^\gamma} \Gamma\indices{^\nu_{\mu\rho}} + \frac{\partial^2 x^\nu}{\partial \tilde x^\alpha \partial \tilde x^\gamma} \right) \frac{\partial \tilde x^\gamma}{\partial x^\sigma} V^\sigma.
+\]
+The first term contributes
+\[
+	\frac{\partial \tilde x^\beta}{\partial x^\nu} \frac{\partial x^\mu}{\partial \tilde x^\alpha} \delta\indices{^\rho_\sigma} \Gamma\indices{^\nu_{\mu\rho}}V^\sigma.
+\]
+In the second terms, we have
+\begin{align*}
+	\frac{\partial \tilde x^\beta}{\partial x^\nu} \frac{\partial^2 x^\nu}{\partial \tilde x^\alpha \partial \tilde x^\gamma} \frac{\partial \tilde x^\gamma}{\partial x^\sigma} &= \frac{\partial \tilde x^\beta}{\partial x^\nu} \frac{\partial \tilde x^\gamma}{\partial x^\sigma} \frac{\partial}{\partial \tilde x^\gamma} \left( \frac{\partial x^\nu}{\partial \tilde x^\alpha} \right) \\
+																						     &= \frac{\partial \tilde x^\beta}{\partial x^\nu} \frac{\partial}{\partial x^\sigma} \left( \frac{\partial x^\nu}{\partial \tilde x^\alpha} \right) \\
+																						     &= - \frac{\partial}{\partial x^\sigma} \left( \frac{\partial \tilde x^\beta}{\partial x^\nu} \right) \frac{\partial x^\nu}{\partial \tilde x^\alpha}.
+\end{align*}
+Restoring $V$, we get
+\[
+- \frac{\partial^2 \tilde x^\beta}{\partial x^\sigma \partial x^\nu} \frac{\partial x^\nu}{\partial \tilde x^\alpha} V^\sigma.
+\]
+This does indeed cancel the previous unwanted term.
+
+\subsection{Parallel Transport}
+\label{sub:par_tr}
+
+A tensor $S$ of type $(p, q)$ is \emph{parallelly transported}\index{parallel transport} along a curve $x^\mu(\lambda)$ with tangent vector $T^\mu = \dot x^\mu$ if
+\[
+\frac{DS}{D\lambda} = T^\alpha \nabla_\alpha S = 0.
+\]
+We sometimes write this as $\nabla_T S = 0$. Note that
+\[
+T^\alpha \partial_\alpha(S) = \frac{\diff x^\alpha}{\diff \lambda} \partial_\alpha (S) = \frac{\diff}{\diff \lambda} (S(x(\lambda)),
+\]
+using only derivatives along the curve in this definition. For a scalar field,
+\[
+\frac{D}{D \lambda} (f) = \frac{\diff f}{\diff \lambda},
+\]
+and for any vector $S^\mu$,
+\[
+	\frac{D}{D \lambda} S^\alpha = \frac{\diff S^\alpha}{\diff \lambda} + \Gamma\indices{^\alpha_{\beta\gamma}} T^\beta T^\gamma = T^\beta \nabla_\beta S^\alpha.
+\]
+If the curve is a geodesic which is affinely parametrised, then
+\[
+\frac{D}{D \lambda} T^\alpha = T^\beta \nabla_\beta T^\alpha = 0.
+\]
+If we parallelly transport vectors $U^\alpha$, $V^\alpha$ along any curve, then
+\[
+	\frac{D}{D \lambda}(g_{\alpha\beta} U^\alpha V^\beta) = g_{\alpha\beta} \frac{DU^\alpha}{D\lambda} V^\beta + g_{\alpha\beta} U^\alpha \frac{DV^\beta}{D\lambda} = 0,
+\]
+as the curves are parallelly transported. Hence the inner product is preserved, and lengths and angles are unchanged.
+%lecture 14
+
+Vectors and covectors obey
+\[
+\tilde V^\alpha \tilde U_\alpha = V^\mu U_\mu.
+\]
+Conversely, if the above holds for any vector $V^\mu$, then $U_\mu$ must be a covector:
+\[
+	V^\mu \frac{\partial \tilde x^\alpha}{\partial x^\mu} \tilde U_\alpha = V^\mu U_\mu \implies \tilde U_\alpha = \frac{\partial x^\mu}{\partial \tilde x^\alpha} U_\mu.
+\]
+This is an example of the \emph{quotient rule}\index{quotient rule}. Some other examples are, e.g. if
+\[
+	R\indices{^\alpha_{\beta\mu\nu}} V^\nu
+\]
+is a $(1, 2)$ tensor for any $V^\nu$, then $R\indices{^\alpha_{\beta\mu\nu}}$ is a $(1, 3)$ tensor. Or, if
+\[
+	T\indices{^{\alpha\beta\mu\nu}_{\gamma\delta\rho}} S\indices{^{\rho}_{\mu\nu}}
+\]
+is a $(2, 2)$ tensor for any $(1, 2)$ tensor $S\indices{^\rho_{\mu\nu}}$, then $T\indices{^{\alpha\beta\mu\nu}_{\gamma\delta\rho}}$ is a $(4, 3)$ tensor. Moreover, it is sufficient that this holds for $S\indices{^\rho_{\mu\nu}} = V^\rho U_\mu W_\nu$ for any vector $V$ and covectors $U, W$.
+
+\begin{exbox}
+	We can use this to deduce that
+	\[
+	\nabla_\alpha S_{\beta \cdots \gamma}
+	\]
+	does indeed transform as a tensor, as
+	\begin{align*}
+		(\nabla_\alpha S_{\beta \cdots \gamma}) V^\beta \cdots W^\gamma &= \nabla_\alpha(S_{\beta \cdots \gamma}V^\beta \cdots W^\gamma ) - S_{\beta \cdots \gamma} \nabla V^\beta \cdots W^\gamma \\
+										& \quad - \cdots - S_{\beta \cdots \gamma} V^\beta \cdots \nabla_\alpha W^\gamma.
+	\end{align*}
+	Hence the above expression is a covector for any vectors $V, \ldots, W$, and the result follows.
+\end{exbox}
+
+As we have seen, around any point $p$ on a manifold, we can choose a local inertial frame or local inertial coordinates, with
+\[
+	g_{\mu\nu} = \eta_{\mu\nu} \text{ and } \partial_\alpha g_{\mu\nu} = 0 \implies \Gamma\indices{^\alpha_{\mu\nu}} = 0 \text{ at } p.
+\]
+Coordinates with this second property are called \emph{normal coordinates}\index{normal coordinates}. In normal coordinates around $p$,
+\[
+	\nabla_\alpha T\indices{^{\mu_1\cdots \mu_p}_{\nu_1\cdots \nu_q}} = \partial_\alpha T \indices{^{\mu_1 \cdots \mu_p}_{\nu_1 \cdots \nu_q}} \text{ at } p.
+\]
+This is sometimes written as $\uparrow =$ to denote normal coordinates. This is very useful, but higher derivatives are in general not $0$. Generally, in any coordinate system it is convenient to denote $\partial_\alpha$ by subscript $,\alpha$, and $\nabla_\alpha$ by subscript $; \alpha$, e.g.
+\[
+	V\indices{^\beta_{;\alpha}} = V\indices{^\beta_{,\alpha}} + \Gamma\indices{^\beta_{\alpha\gamma}} V^\gamma.
+\]
+
+\subsection{Curvature and the Riemann Tensor}
+\label{sub:cur_rt}
+
+I claim if $V^\mu$ is any vector field, then
+\[
+	(\nabla_\alpha \nabla_\beta - \nabla_\beta \nabla_\alpha) V^\mu = R\indices{^\mu_{\nu\alpha\beta}} V^\nu, \tag{$\ast$}
+\]
+and $R\indices{^\mu_{\nu\alpha\beta}}$ is a tensor of type $(1, 3)$, the \emph{Riemann tensor}\index{Riemann tensor}. To show the right hand side has the desired form, consider
+\begin{align*}
+	\nabla_\alpha(\nabla_\beta V^\mu) -\nabla_\beta(\nabla_\alpha V^\mu) &= \partial_\alpha (\nabla_\beta V^\mu) - \Gamma\indices{^\sigma_{\alpha\beta}}(\nabla_\sigma V^\mu) - \Gamma\indices{^\mu_{\alpha\nu}}(\nabla_\beta V^\nu) \\
+									     & \quad- \partial_\beta(\nabla_\alpha V^\mu) + \Gamma\indices{^\sigma_{\beta\alpha}}(\nabla_\sigma V^\mu) - \Gamma\indices{^\mu_{\beta\nu}}(\nabla_\beta V^\nu) \\
+									     &= \partial_\alpha(\partial_\beta V^\mu + \Gamma\indices{^\mu_{\beta\nu}}V^\nu) + \Gamma\indices{^\mu_{\alpha\sigma}}(\partial_\beta V^\sigma + \Gamma\indices{^\sigma_{\beta\nu}} V^\nu) \\
+									     & \quad- \partial_\beta (\partial_\alpha V^\mu + \Gamma\indices{^\mu_{\alpha\nu}}V^\nu) - \Gamma\indices{^\mu_{\beta\sigma}}(\partial_\alpha V^\sigma + \Gamma\indices{^\sigma_{\alpha\nu}}V^\nu) \\
+									     &= \partial_\alpha \Gamma\indices{^\mu_{\beta\nu}}V^\nu + (\Gamma\indices{^\mu_{\alpha\sigma}}\Gamma\indices{^\sigma_{\beta\nu}})V^\nu \\
+									     & \qquad \qquad - \partial_\beta \Gamma\indices{^\mu_{\alpha\nu}}V^\nu - (\Gamma\indices{^\mu_{\beta\sigma}}\Gamma\indices{^\sigma_{\alpha\nu}}) V^\nu.
+\end{align*}
+Hence our claim holds with
+\[
+	R\indices{^\mu_{\nu\alpha\beta}} = \partial_\alpha \Gamma\indices{^\mu_{\beta\nu}} - \partial_\beta \Gamma\indices{^\mu_{\alpha\nu}} + \Gamma\indices{^\mu_{\alpha\sigma}} \Gamma\indices{^\sigma_{\beta\nu}} - \Gamma\indices{^\mu_{\beta\sigma}} \Gamma\indices{^\sigma_{\alpha\nu}}.
+\]
+Schematically, $R = \partial \Gamma + \Gamma^2$. Now from the quotient rule, $R$ is a tensor. The equation $(\ast)$ is known as the \emph{Ricci identity}\index{Ricci identity}, and the equivalent statement for covectors is
+\[
+	(\nabla_\alpha \nabla_\beta - \nabla_\beta \nabla_\alpha) U_\mu = - R\indices{^\sigma_{\mu\alpha\beta}} U_\sigma.
+\]
+
+\begin{exbox}
+	Take metric
+	\[
+	\diff s^2 = \diff \theta^2 + \sin^2 \theta \diff \phi^2,
+	\]
+	with $\Gamma\indices{^\phi_{\theta\phi}} = \Gamma\indices{^\phi_{\phi\theta}} = \cot \theta$ and $\Gamma\indices{^\theta_{\phi\phi}} = - \sin \theta \cos \theta$ the only non-zero connections. Consider the derivatives of $V$ with $V^\theta = 0$, $V^\phi = 1$. We have
+	\begin{align*}
+		\nabla_\theta V^\theta &= \partial_\theta V^\theta + \Gamma\indices{^\theta_{\theta\alpha}} V^\alpha = \Gamma\indices{^\theta_{\theta\phi}} V^\phi = 0, \\
+		\nabla_\phi V^\theta &= \Gamma\indices{^\theta_{\phi\phi}} V^\phi = - \sin\theta \cos\theta, \\
+		\nabla_\theta V^\phi &= \Gamma\indices{^\phi_{\theta\phi}} V^\phi = \cot \theta, \\
+		\nabla_\phi V^\phi &= 0.
+	\end{align*}
+	Now consider the second derivatives:
+	\begin{align*}
+		\nabla_\theta \nabla_\phi V^\theta &= \frac{\partial}{\partial \theta} (- \sin \theta \cos \theta) 0 \Gamma\indices{^\alpha_{\theta\phi}} \nabla_\alpha V^\theta + \Gamma\indices{^\theta_{\theta \alpha}} \nabla_\phi V^\alpha \\
+						   &= \frac{\partial}{\partial \theta} (- \sin \theta \cos \theta) - \Gamma\indices{^\phi_{\theta\phi}} (- \sin \theta \cos \theta) \\
+						   &= \sin^2 \theta.
+	\end{align*}
+	We also find $\nabla_\phi \nabla_\theta V^\theta = 0$. Hence we find $(\nabla_\theta \nabla_\phi - \nabla_\phi \nabla_\theta) V^\theta = \sin^2 \theta = R\indices{^\theta_{\alpha\theta\phi}}V^\alpha$, hence $R\indices{^\theta_{\phi\theta\phi}} = \sin^2 \theta$.
+\end{exbox}
+%lecture 15
+
+From the symmetries of the Riemann tensor, there is only one independent contraction, and we define
+\[
+R_{\alpha\beta} = R\indices{^\mu_{\alpha\mu\beta}} = R_{\beta\alpha},
+\]
+the \emph{Ricci tensor}\index{Ricci tensor}, and also
+\[
+	R = g^{\alpha\beta} R_{\alpha\beta} = R\indices{_\alpha^\alpha},
+\]
+the \emph{Ricci scalar}\index{Ricci scalar}. For the sphere considered above, $R_{\alpha\beta} = g_{\alpha\beta}$.
+
+We have a lot of symmetries of the Riemann tensor:
+\begin{enumerate}[(i)]
+	\item $R\indices{^\mu_{\nu\alpha\beta}} = - R\indices{^\mu_{\nu\beta\alpha}}$.
+	\item $R\indices{^\mu_{[\nu\alpha\beta]}} = 0$, or given (i),
+		\[
+			R\indices{^\mu_{\nu\alpha\beta}} + R\indices{^\mu_{\alpha\beta\nu}} + R\indices{^\mu_{\beta\nu\alpha}} = 0.
+		\]
+	\item $R_{\mu\nu\alpha\beta} = - R_{\nu\mu\alpha\beta}$.
+	\item $R_{\mu\nu\alpha\beta} = R_{\alpha\beta\mu\nu}$.
+	\item The above implies that $R_{\alpha\beta} = R_{\beta\alpha}$.
+\end{enumerate}
+
+We can prove (ii) as follows: using normal coordinates at some given point, we have
+\begin{align*}
+	R\indices{^\mu_{\nu\alpha\beta}} &= \partial_\alpha \Gamma\indices{^\mu_{\beta\nu}} - \partial_\beta \Gamma\indices{^\mu_{\alpha\nu}}, \\
+	R\indices{^\mu_{\alpha\beta\nu}} &= \partial_\beta \Gamma\indices{^\mu_{\nu\alpha}} - \partial_\nu \Gamma\indices{^\mu_{\beta\alpha}}, \\
+	R\indices{^\mu_{\beta\nu\alpha}} &= \partial_\nu \Gamma\indices{^\mu_{\alpha\beta}} - \partial_\alpha \Gamma\indices{^\mu_{\nu\beta}}.
+\end{align*}
+The $\Gamma\Gamma$ terms are $0$ at the point. Adding the terms results in them cancelling, as $\Gamma$ is torsion free.
+
+Since identity (ii) is a tensor statement, it being valid in a special coordinate system means it is valid in any coordinate system.
+
+To establish (iii) and (iv), we use an expression for $R_{\mu\nu\alpha\beta}$ in normal coordinates, as follows. First,
+\[
+g_{\mu\sigma} \Gamma\indices{^{\sigma}_{\alpha\nu}}= \frac{1}{2}(g_{\mu\alpha,\nu} + g_{\mu\nu,\alpha} - g_{\alpha\nu,\mu}).
+\]
+Then in normal coordinates,
+\[
+g_{\mu\nu}\partial_\beta \Gamma\indices{^{\sigma}_{\alpha\nu}} = \frac{1}{2} (g_{\mu\sigma,\nu\beta} + g_{\mu\nu,\alpha\beta} - g_{\alpha\nu,\mu\beta}).
+\]
+From this, and the same expression with $\alpha$ and $\beta$ swapped, we get
+\[
+R_{\mu\nu\alpha\beta} = \frac{1}{2}(g_{\alpha\nu,\mu\beta} - g_{\alpha\mu,\nu\beta} - g_{\beta\nu,\mu\alpha} + g_{\beta\mu,\nu\alpha}).
+\]
+Properties (iii) and (iv) can then be deduced. Given these symmetries, the number of independent components of the tensor is $20$ in 4 dimensions, or $\frac{1}{12} n^2(n^2 -1)$ in $n$ dimensions.
+
+Consider a curve $x^\mu(\lambda)$ starting at $x^\mu(0) = 0$. Then a vector $V^\mu(x(\lambda))$ is parallelly transported along the curve if
+\[
+\frac{\diff}{\diff \lambda} V^\mu = - \Gamma\indices{^{\mu}_{\alpha\nu}} \dot x^\alpha V^\nu.
+\]
+This follows from rewriting $T^\alpha \nabla_\alpha V^\mu$. We can rewrite this as
+\[
+V^\mu(\lambda) = V^\mu(0) - \int_0^\lambda \Gamma\indices{^{\mu}_{\alpha\nu}}V^\nu \dot x^\alpha(\tau) \diff \tau,
+\]
+to allow iterative approximations when the curve is small. So $V^\mu(\lambda) = V^\mu(0)$ to the 0'th order. Substituting in,
+\begin{align*}
+	(\Delta V^\mu)_1 = V^\mu(\lambda) - V^\mu(0) &= - \Gamma\indices{^{\mu}_{\alpha\nu}}(0) V^\nu(0) \int_0^\lambda \dot x^\alpha (\tau) \diff \tau \\
+						     &= - \Gamma \indices{^{\mu}_{\alpha\nu}}(0) V^\nu(0) x^\alpha(\lambda).
+\end{align*}
+Now we can substitute back in, but we also need to expand the connection,
+\[
+\Gamma\indices{^{\mu}_{\alpha\nu}} = \Gamma\indices{^{\mu}_{\alpha\nu}}(0) + \Gamma\indices{^{\mu}_{\alpha \nu,\beta}}(0) x^\beta + \cdots
+\]
+to give the second order change
+\[
+	(\Delta V^\mu)_2 = (- \Gamma\indices{^{\mu}_{\alpha\nu,\beta}} + \Gamma\indices{^{\mu}_{\alpha\sigma}}\Gamma\indices{^{\sigma}_{\beta\nu}})(0) V^\nu(0) \int_0^\kappa \dot x^\alpha x^\beta \diff \tau.
+\]
+But if we consider a \emph{closed} curve, then $(\Delta V^\mu)_1$ will be $0$. In the expression for $(\Delta V^\mu)_2$, we have
+\begin{align*}
+	\int_0^\lambda \dot x^\alpha x^\beta \diff \tau &= \frac{1}{2} \int_0^\lambda (\dot x^\alpha x^\beta - \dot x^\beta x^\alpha) \\
+							&= - \omega^{\alpha\beta} = \omega^{\beta\alpha},
+\end{align*}
+since $\int \diff (x^\alpha x^\beta) = 0$ for a closed curve. Using this antisymmetry,
+\[
+\delta V^\mu = - \frac{1}{2} R\indices{^{\mu}_{\nu\alpha\beta}}(0) \omega^{\alpha\beta} V^\nu(0),
+\]
+i.e. the curvature gives the change in a vector as we parallelly transport around a closed curve.
+
+\begin{exbox}
+	Fix vectors $T^\alpha$ and $S^\alpha$ at $x^\mu = 0$, and define a curve by
+	\[
+	x^\mu : 0 \Rightarrow t T^\alpha \Rightarrow t T^\alpha + s S^\alpha \Rightarrow s S^\alpha \Rightarrow 0,
+	\]
+	then we find that
+	\[
+	- \int \diff x^\alpha x^\beta = \omega^{\alpha\beta} = st (T^\alpha S^\beta - T^\beta S^\alpha).
+	\]
+	Hence $V^\mu = - R\indices{^{\mu}_{\nu\alpha\beta}}(0) V^\nu(0) T^\alpha S^\beta st$.
+\end{exbox}
+
+The Riemann tensor satisfies
+\[
+\nabla_\gamma R\indices{^{\mu}_{\nu\alpha\beta}} + \nabla_\alpha R\indices{^{\mu}_{\nu\beta\gamma}} + \nabla_\beta R\indices{^{\mu}_{\nu\gamma\alpha}} = 0,
+\]
+or, alternatively,
+\[
+	R\indices{^{\mu}_{\nu[\alpha\beta;\gamma]}} = 0.
+\]
+We can prove this using normal coordinates:
+\begin{align*}
+	R\indices{^{\mu}_{\nu\alpha\beta;\gamma}} &= \Gamma\indices{^{\mu}_{\nu\beta,\alpha\gamma}} - \Gamma\indices{^{\mu}_{\nu\alpha,\beta\gamma}}, \\
+	R\indices{^{\mu}_{\nu\beta\gamma;\alpha}} &= \Gamma\indices{^{\mu}_{\nu\gamma,\beta\alpha}} - \Gamma\indices{^{\mu}_{\nu\beta,\gamma\alpha}}, \\
+	R\indices{^{\mu}_{\nu\gamma\alpha;\beta}} &= \Gamma\indices{^{\mu}_{\nu\alpha,\gamma\beta}} - \Gamma\indices{^{\mu}_{\nu\gamma,\alpha\beta}}.
+\end{align*}
+The terms cancel in pairs when the expressions are added. This is known as the Bianchi identity.
+
+%lecture 16
+
+The contracted Bianchi identity is
+\[
+\nabla^\rho R_{\alpha \rho} - \frac{1}{2} \nabla_\alpha R = 0.
+\]
+To check this, contract on $\mu, \gamma$ in the Bianchi identity above to get
+\[
+\nabla_\gamma R\indices{^{\gamma}_{\nu\alpha\beta}} - \nabla_\alpha R_{\nu\beta} + \nabla_\beta R_{\nu\alpha} = 0.
+\]
+Contracting again on $\nu, \beta$, we get
+\[
+\nabla_\gamma R\indices{^{\gamma}_{\alpha}} - \nabla_\alpha R + \nabla_\beta R\indices{^{\beta}_{\alpha}} = 0.
+\]
+The result then follows.
+
+In flat (Minkowski) space, geodesics are straight lines, and they stay parallel if they are initially parallel. In curved space, the separation of geodesics can change as we move along them, determined by the curvature.
+
+We first rewrite the Ricci identity as
+\[
+	(\nabla_T \nabla_S - \nabla_S \nabla_T) V^\mu = R\indices{^{\mu}_{\nu\alpha\beta}} T^\alpha S^\beta V^\nu + \nabla_{[T, S]} V^\mu,
+\]
+where $T^\alpha, S^\alpha, V^\alpha$ are any vector fields, $\nabla_T = T^\alpha \nabla_\alpha$, $\nabla_S = S^\alpha \nabla-\alpha$, and
+\[
+	[T, S]^\beta = \nabla_T S^\beta - \nabla_S T^\beta = T^\alpha \nabla_\alpha S^\beta - S^\alpha \nabla_\alpha T^\beta = T^\alpha \partial_\alpha S^\beta - S^\alpha \partial_\alpha T^\beta,
+\]
+the \emph{commutator}\index{commutator}. To check this new form of the Ricci identity, consider
+\begin{align*}
+	\nabla_T \nabla_S = \nabla_S \nabla_T &= (T^\alpha \nabla_\alpha S^\beta)\nabla_\beta + T^\alpha S^\beta \nabla_\alpha \nabla_\beta - (T \leftrightarrow S),
+\end{align*}
+and the result follows. Now specialize to a family of geodesics $x^\mu(\tau, \sigma)$, which give a geodesic for each fixed $\sigma$, with tangent vector $T^\mu = \partial x^\mu / \partial \tau$ where $\tau$ is an affine parameter, and $\partial x^\mu /\partial \sigma = S^\mu$ being the separation vector between geodesics.
+
+From the geodesic equation $\nabla _T T^\alpha = 0$. Applying the Ricci identity as written above, with $V^\mu = T^\mu$, note
+\[
+	[T, S]^\beta = T^\alpha \partial_\alpha S^\beta - S^\alpha \partial_\alpha T^\beta = \frac{\partial S^\beta}{\partial \tau} - \frac{\partial T^\beta}{\partial \sigma} = 0.
+\]
+Hence we get
+\[
+\nabla_T \nabla_S T^\mu - \nabla_S \nabla_T T^\mu = R\indices{^{\mu}_{\nu\alpha\beta}} T^\alpha S^\beta T^\nu.
+\]
+But also $\nabla_S T^\mu = \nabla_T S^\mu$, since $[T, S]^\alpha = 0$, we get
+\[
+\nabla_T^2 S^\mu + E\indices{^{\mu}_{\beta}} S^\beta = 0,
+\]
+the equation of geodesic deviation, where 
+\[
+E\indices{^{\mu}_{\beta}} = - R\indices{^{\mu}_{\nu\alpha\beta}}T^\nu T^\alpha.
+\]
+For closely separated geodesics with parameters $\sigma$ and $\sigma + \delta \sigma$,
+\[
+x^\mu(\tau, \sigma + \delta \sigma) = x^\mu(\tau, \sigma) + h^\mu(\tau)
+\]
+to first order in $\delta \sigma$, with $h^\mu = \delta \sigma S^\mu$. Thus to leading order, $\nabla^2 h^\mu + E\indices{^{\mu}_{\beta}} h^\beta = 0$.
+
+\newpage
+
+\section{The Einstein Equation}
+\label{sec:ee}
+
+\subsection{Overview}
+\label{sub:ov}
+
+Compare Newtonian gravity and general relativity:
+\begin{itemize}
+	\item The basic field is a potential $\phi(x_i)$ versus a metric $g_{\alpha\beta}(x)$.
+	\item The equation of motion is Newton's second law
+		\[
+		\frac{\diff^2 x}{\diff t^2} = g_i(x) = - \frac{\partial \phi}{\partial x_i},
+		\]
+		versus the geodesic equation
+		\[
+		\frac{\diff^2 x^\alpha}{\diff \tau^2} = - \Gamma\indices{^{\alpha}_{\beta\gamma}} \frac{\diff x^\beta}{\diff \tau} \frac{\diff x^\gamma}{\diff \tau}.
+		\]
+	\item Nearby trajectories are $x_i$ and $x_i + h_i$ where
+		\[
+		\frac{\diff^2 h_i}{\diff t^2} + E_{ij} h_j = 0,
+		\]
+		where $E_{ij} = - \partial_j g_i$ is the tidal tensor, versus the geodesic deviation equation
+		\[
+		\nabla_T^2 h^\alpha E\indices{^{\alpha}_{\beta}} h^\beta = 0,
+		\]
+		where $E\indices{^{\alpha}_{\beta}} = R\indices{^{\alpha}_{\mu\beta\nu}} T^\mu T^\nu$.
+	\item The field equation is
+		\[
+		\nabla^2 \phi = E_{ii} = 4 \pi G \rho(x)
+		\]
+		is the mass density in Newtonian gravity, but we have not yet covered the corresponding field equation in general relativity.
+\end{itemize}
+
+In Newtonian gravity, the source for $\phi$ is mass density $\rho(x)$. In special relativity, mass is equivalent to energy, and energy and momentum are conserved, expressed as
+\[
+\partial_\alpha T^{\alpha\beta} = 0,
+\]
+where $T^{\alpha\beta} = T^{\beta\alpha}$ is the \emph{energy-momentum tensor}\index{energy-momentum tensor}. Hence extending this thinking, we expect that in general relativity, $T^{\alpha\beta}$ is the source for $g_{\alpha\beta}$, but now obeying
+\[
+\nabla_\alpha T^{\alpha\beta} = 0.
+\]
+We need to relate this to a symmetric tensor given in terms of curvature, with the correct properties. For example $R_{\alpha\beta}$ can be tried, but $\nabla_\alpha R^{\alpha\beta} \neq 0$ in general. However, from the contracted Bianchi identity we see that
+\[
+G_{\alpha\beta} = R_{\alpha\beta} - \frac{1}{2} R g_{\alpha\beta}
+\]
+obeys $\nabla^\alpha G_{\alpha\beta}$ identically. This motivates the \emph{Einstein equation}\index{Einstein equation}
+\[
+G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2} Rg_{\mu\nu} = \kappa T_{\mu\nu},
+\]
+where $\kappa = 8\pi G/c^4$ is constant, by comparison with Newtonian gravity. $G_{\mu\nu}$ is the \emph{Einstein tensor}\index{Einstein tensor}. Note if $T_{\mu\nu} = 0$, then the Einstein equation implies
+\[
+g^{\mu\nu} R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu} g^{\mu\nu} = R - 2R = -R = 0.
+\]
+This gives the Einstein equation in a vacuum:
+\[
+R_{\mu\nu} = 0.
+\]
+%lecture 17
+
+There is an additional term not involving $R$, that could be added to the left hand side of the Einstein equation:
+\[
+G_{\mu\nu} + \Lambda g_{\mu\nu}
+\]
+for a constant $\Lambda$, the \emph{cosmological constant}\index{cosmological constant}. This is still consistent with our requirements since
+\[
+\nabla^\mu (G_{\mu\nu} + \Lambda g_{\mu\nu}) = 0.
+\]
+The Einstein equation with the cosmological consistent is
+\[
+G_{\mu\nu} + \Lambda g_{\mu\nu} = \kappa T_{\mu\nu}.
+\]
+Observations suggest that $\Lambda$ is non-zero and positive, but very small. Indeed, $|\Lambda|^{-1/2} \sim 10^9$ light years. In addition, quantum mechanical effects suggest that $\Lambda$ could be much larger (by a factor of $10^{120}$). The smallness of $\Lambda$ is called the cosmological constant problem.
+
+In any case, we can safely set $\Lambda = 0$ except when dealing with cosmological problems. We can also take the cosmological term to the right hand side and view it as a contribution to $T_{\mu\nu}$, and it is then called \emph{vacuum energy}\index{vacuum energy} or \emph{dark energy}\index{dark energy}.
+
+Are there any other terms that we can add? No, according to Lovelock.
+
+\begin{theorem}[Lovelock's Theorem]
+	Let $H_{\alpha\beta}$ be a symmetric tensor such that:
+	\begin{enumerate}[\normalfont(i)]
+		\item $H$ is constructed from $g_{\mu\nu}$, $g_{\mu\nu,\sigma}$ and $g_{\mu\nu,\rho\sigma}$, and
+		\item $\nabla^\alpha H_{\alpha\beta} = 0$.
+	\end{enumerate}
+	Then
+	\[
+	H_{\alpha\beta} = a G_{\alpha\beta} + b g_{\alpha\beta},
+	\]
+	for some constants $a, b$.
+\end{theorem}
+
+This holds in dimension $n = 4$ as stated, and in dimension $n > 4$, it holds if $H$ is linear in second derivatives. This is non-examinable.
+
+\begin{remark}
+	The Einstein equation is a non-linear second order PDE in the metric, so is challenging to solve. We cannot superpose solutions, and note that $g_{\mu\nu}$ may also appear in $T_{\mu\nu}$.
+\end{remark}
+
+\subsection{Spherically Symmetric Vacuum Solutions}
+\label{sub:ssvs}
+
+We will derive, in outline, the metric studied in chapter $3$, as a solution of $R_{\mu\nu} = 0$. Moreover, we have:
+
+\begin{theorem}[Birkhoff's Theorem]
+	The most general spherically symmetric solution of the vacuum Einstein equation is
+	\[
+	\diff s^2 = - \left( 1 - \frac{2M}{r} \right) \diff t^2 + \left( 1 - \frac{2M}{r} \right)^{-1} \diff r^2 + r^2 \diff \Omega^2,
+	\]
+	where $\diff \Omega^2 = \diff \theta^2 + \sin^2 \theta \diff \phi^2$.
+
+	Any such solution is asymptotically flat. The spherical symmetry acts on surface of constant $r, t$, and is parametrised by $\theta, \phi$.
+\end{theorem}
+
+\begin{proofbox}
+	(Outline, non-examinable). Using coordinates $t, r, \theta, \phi$, the general Lorentzian metric with spherical symmetry is given by
+	\[
+	\diff s^2 = - A \diff t^2 + 2B \diff r \diff t + C \diff r^2 + R \diff \Omega^2,
+	\]
+	where $A, B, C, R$ are all functions of $r, t$. The spherical symmetry is maintained under changes in coordinates $r \to \tilde r(r, t)$, $t \to \tilde t(r, t)$.
+
+	Choose $\tilde r = R(r, t)$ as our new radial coordinate, and then $\tilde t = t + f(r, t)$ be the new time coordinate to cancel the cross term. In these coordinates, after dropping tildes, we get
+	\[
+	\diff s^2 = - e^\nu \diff t^2 + e^\lambda \diff r^2 + r^2 \diff \Omega^2,
+	\]
+	for $\nu(r, t)$ and $\lambda(r, t)$. Now computing the Ricci and Einstein tensor, we find
+	\begin{align*}
+		G_{tt} &= 0 & &\implies & -1 + e^\lambda + r \lambda' &= 0, \tag 1\\
+		G_{rr}&= 0 & &\implies & 1 + - e^\lambda + r \nu' &= 0, \tag 2\\
+		G_{tr} &= 0 & &\implies & \dot \lambda &= 0. \tag 3
+	\end{align*}
+	$G_{\phi\phi} = \sin^2 \theta G_{\theta\theta}$ is more complicated, but we can check that this is satisfied if the other equations holds. All other components of $G_{\mu\nu}$ vanish. From (3), we get $\lambda(r)$ is independent of $t$, and from (1) and (2), $(\lambda + \nu)' = 0$ implies that $\nu = - \lambda(r) + h(t)$ for some $h(t)$.
+
+	Eliminating $h(t)$ by a further redefinition $e^{1/2 h(t)}\diff t = \diff \tilde t$, in our new coordinates
+	\[
+	\diff s^2 = - e^{-\lambda} \diff t^2 + e^\lambda \diff r^2 + r^2 \diff \Omega^2,
+	\]
+	where $\lambda(r)$ obeys
+	\[
+	e^{-\lambda}(1 - r \lambda') = \frac{\diff}{\diff r} (r e^{-\lambda}) = 1.
+	\]
+	This has solution
+	\[
+	e^{-\lambda(r)} = 1 + \frac{k}{r},
+	\]
+	for a constant $k = -2M$.
+\end{proofbox}
+
+\subsection{Matter Energy Sources}
+\label{sub:mess}
+
+We first discuss some examples.
+
+\begin{exbox}[Electromagnetism]
+	In special relativity, $\mathbf{E}$ and $\mathbf{B}$ fields are combined in a tensor
+	\[
+	F_{\alpha\beta} = \partial_\alpha A_\beta - \partial_\beta A_\alpha = - F_{\beta\alpha},
+	\]
+	where $A_\alpha$ is a covector containing the scalar and vector potentials $\phi$ and $\mathbf{A}$. We are working here in Minkowski space $g_{\alpha\beta} = \eta_{\alpha\beta}$. This implies
+	\[
+		\partial_{[\gamma} F_{\alpha\beta]} = 0.
+	\]
+	In addition, to complete Maxwell's equations we have
+	\[
+	\partial_\alpha F^{\alpha\beta} = 0.
+	\]
+	The energy momentum tensor is
+	\[
+		T_{\alpha\beta} = (\text{const}) \hat T_{\alpha\beta},
+	\]
+	with
+	\[
+	\hat T_{\alpha\beta} = F_{\alpha\beta} F\indices{_{\beta}^\gamma} - \frac{1}{4} F^{\gamma\mu} F_{\gamma\mu} \eta_{\alpha\beta},
+	\]
+	and we can check conservation:
+	\[
+	\partial^\alpha \hat T_{\alpha\beta} = 0.
+	\]
+%lecture 18
+	Consequences of this conservation: we have $\partial_\alpha T^{\alpha\beta} = 0$. Setting $\beta = 0$, this gives
+	\[
+	\frac{\partial}{\partial t} T^{00} + \frac{\partial}{\partial x^i} T^{i0} = 0.
+	\]
+	This is the standard form of the conservation law, and implies
+	\[
+	\frac{\diff}{\diff t} \int_V T^{00}\Diff3 \mathbf{x} = - \int_{\partial B} T^{i0}n^i \diff S.
+	\]
+	The left hand side can be interpreted as the (change in) energy density, and the right side is the energy flux. Thus, if the right hand side is $0$, then the total energy is constant.
+
+	Similarly, taking $\beta = j > 0$,
+	\[
+	\frac{\diff}{\diff t} \int_V T^{-j} \Diff3 \mathbf{x} = - \int_{\partial V} T^{ij} n^i \diff S.
+	\]
+	This is the momentum density, and the 3d stress tensor on the left and right hand side, respectively.
+\end{exbox}
+
+If we generalise this to curved space, we get
+\begin{align*}
+	F_{\alpha\beta} &= \nabla_\alpha A_\beta - \nabla_\beta A_\alpha = (\partial_\alpha A_\beta - \Gamma\indices{^{\mu}_{\alpha\beta}} A_\mu) - (\partial_\beta A_\alpha - \Gamma\indices{^{\mu}_{\beta\alpha}} A_\mu) \\
+			&= \partial_\alpha A_\beta - \partial_\beta A_\alpha.
+\end{align*}
+Hence we still have
+\[
+	\nabla_{[\gamma} F_{\alpha\beta]} = 0,
+\]
+identically. The remaining Maxwell equations in curved space are
+\[
+\nabla_\alpha F^{\alpha\beta} = 0,
+\]
+and we get
+\[
+	\hat T_{\alpha\beta} = F_{\alpha\beta} F\indices{_\beta^\gamma} - \frac{1}{4} F^{\gamma\mu} F_{\gamma\mu} g_{\alpha\beta},
+\]
+and we can check that
+\[
+\nabla_\alpha \hat T^{\alpha\beta} = 0.
+\]
+
+\begin{exbox}[Perfect Fluids]
+	A fluid is defined by a velocity field $v^\alpha$ describing the motion of particles in the continuum limit. For $g_{\mu\nu} = \eta_{\mu\nu}$, in the rest frame at some given point,
+	\[
+	u^\alpha = (1, 0, 0, 0),
+	\]
+	where $c = 1$. Define $n$ to be the number density in this (rest) frame. This is a scalar field. The number density/flux $4$-vector is
+	\[
+	N^\alpha = nu^\alpha = (n, 0, 0, 0)
+	\]
+	in the rest frame. The conservation of particle number can be expressed as
+	\[
+	\partial_\alpha N^\alpha = 0.
+	\]
+	If $m$ is the rest mass of each particle, then $\rho = mn$ is the energy density in the rest frame.
+
+	A \emph{perfect fluid}\index{perfect fluid} is characterized by two scalar function: $\rho$, the energy density, and $p$, the pressure. In terms of these, the energy momentum in the rest frame is
+	\[
+	T^{\alpha\beta} = \mathrm{diag}(\rho, p, p, p) = (\rho + p)u^\alpha u^\beta + p \eta^{\alpha\beta}
+	\]
+	in the rest frame, but now this tensor equation is true in any frame.
+
+	Hence conservation of energy momentum in Minkowski space can be written as
+	\[
+	\partial_\alpha T^{\alpha\beta} = 0.
+	\]
+	Generalising to curved space, we get
+	\[
+	T^{\alpha\beta} = (\rho + p)u^{\alpha} u^\beta + p g^{\alpha\beta}.
+	\]
+	Now the conservation statement is
+	\[
+	\nabla_\alpha T^{\alpha\beta} = 0.
+	\]
+	In addition, we can conservation of particle number
+	\[
+	\nabla_\alpha N^\alpha = 0.
+	\]
+\end{exbox}
+
+Some important examples of this:
+\begin{enumerate}[(i)]
+	\item \emph{Dust}\index{dust} is when $p = 0$. This gives non-interacting particles.
+	\item \emph{EM radiation} can be modelled by $p = \frac{1}{3} \rho$.
+	\item \emph{Vacuum energy} or \emph{dark energy} gives $\rho = -p = \Lambda/8\pi G$.
+\end{enumerate}
+In general, we have the \emph{equation of state}\index{equation of state}
+\[
+p = - w\rho,
+\]
+for some constant $w$.
+
+\begin{remark}
+	\begin{enumerate}[(i)]
+		\item[]
+		\item Conservation of energy momentum in the Minkowski space arises from the invariance of the metric under translations in space and time. Additional symmetries, such as rotations and Lorentz transformations imply $T^{\alpha\beta}$ is symmetric.
+		\item In generalising $\eta_{\mu\nu}$ to $g_{\mu\nu}$, and $\partial_\alpha$ to $\nabla_\alpha$, the covariance principle is applied, which is based on the equivalence principle. There is some Occam's razor applied here: we are finding the laws of nature by generalising the simple equations we find.
+		\item Are there conservation laws in curved space? Consider $\partial_\alpha J^\alpha = 0$. Then if we split $J^\alpha = (J^0, J^i)$ and $\partial_\alpha = (\partial_0, \partial_{i})$, then
+			\[
+			\partial_0 J^0 + \partial_i J^i = 0 \implies \frac{\diff}{\diff t} \int_V J^0 \diff V = - \int_{\partial V} J^i n^i \diff S.
+			\]
+			In curved space, if $\nabla_\alpha J^\alpha = 0$, this is $\partial_\alpha J^\alpha = \Gamma\indices{^{\alpha}_{\alpha\beta}} J^\beta = 0$, which can be written as
+			\[
+				\partial_\alpha J^\alpha + \left( \frac{1}{\sqrt{-g}} \partial_\beta \sqrt{-g} \right) J^\beta = 0,
+			\]
+			where $g = \det(g_{\alpha\beta})$, and hence 
+			\[
+				\nabla_\alpha J^\alpha = 0 \iff \partial_\alpha (\sqrt{-g} J^\alpha) = 0,
+			\]
+			then we can proceed as before.
+
+			But the equation $\nabla_\alpha T^{\alpha\beta} = 0$ is more complicated, and we need some additional symmetry to get a conservation law is the strictest sense. Suppose $\xi_\alpha$ is a \emph{Killing vector}\index{Killing vector}, i.e.
+			\[
+			\nabla_\alpha \xi_\beta + \nabla_\beta \xi_\alpha = 0,
+			\]
+			then $J^\alpha = T^{\alpha\beta} \xi_\beta$ satisfies
+			\[
+			\nabla_\alpha J^\alpha = \nabla_\alpha (T^{\alpha\beta} \xi_\beta) = (\nabla_\alpha T^{\alpha\beta}) \xi_\beta + T^{\alpha\beta} \nabla_{(\alpha} \xi_{\beta)} = 0.
+			\]
+	\end{enumerate}
+\end{remark}
+%lecture 19
+
+\subsection{FLRW Spacetimes}
+\label{sub:flrw}
+
+For cosmological models, we want to incorporate a number of features:
+\begin{enumerate}[(i)]
+	\item Homogeneity: the universe should ``look the same'' for an observer on suitably large distance scales, i.e. $10^{9}$ light years. Mathematically, we want \emph{spatial homogeneity}; the action of some symmetries which relates all points on spacelike $3$D surfaces.
+	\item Isotropy: the universe has no special directions. This is evidenced from CMBR. This is independent of homogeneity, but there is a relationship: an observer sees the universe as isotropic when the world line is orthogonal to spacelike surfaces. These together are called the \emph{cosmological principle}.
+	\item The universe is expanding.
+\end{enumerate}
+Taking these, we arrive at a form for the metric:
+\[
+\diff s^2 = - \diff t^2 + a(t)^2 \diff \Sigma^2,
+\]
+where $\diff \Sigma^2 = h_{ij}(x) \diff x^i \diff x^j$ being the metric on the $3$D surface. The form of $h_{ij}$ can be determined using e.g. an ansatz to build in spherical symmetry, then further constraints. For example homogeneity gives us the Ricci scalar constant for the 3D geometry. The result is
+\[
+\diff \Sigma_k^2 = \frac{\diff r^2}{1 - kr^2} + r^2(\diff \theta^2 + \sin^2\theta \diff \phi^2)
+\]
+with constant $k = 1, 0, -1$, by rescaling $r$. $a(t)$ is called the \emph{scale factor}\index{scale factor}. These are Freidmann-Lemaitre-Robertson-Walker (FLRW) metrics/spacetimes/universes, and are expected to provide a good approximation to our universe on large distance scales.
+
+The three choices $k = 1, 0, -1$ are referred to as \emph{closed}, \emph{flat} and \emph{open} universes, and provide different descriptions of the 3D geometry.
+\begin{itemize}
+	\item For $k = 1$, $r = \sin \chi$, and
+		\[
+		\diff \Sigma_{k+1}^2 = \diff \chi^2 + \sin^2 \chi(\diff \theta^2 + \sin^2 \theta \diff \phi^2).
+		\]
+		This is a 3-dimensional sphere, and coordinates generalise to usual polar angles.
+	\item For $k = 0$, $\diff \Sigma_0^2$ is the flat metric.
+	\item If $k = -1$, $r = \sinh \chi$ and
+		\[
+		\diff \Sigma_{-1}^2 = \diff \chi^2 + \sinh^2 \chi (\diff \theta^2 + \sin^2 \theta \diff \phi^2),
+		\]
+		which is 3-dimensional hyperbolic space.
+\end{itemize}
+
+We can compute the geodesic equations and connection components for the general FLRW metric, and we find that these are satisfied if $x^i$ is constant, and $\tau = t$. These are the trajectories of \emph{comoving observers}\index{comoving observers} (or e.g. galaxies as particles in the underlying continuum description).
+
+Giving two comoving galaxies, the distance between them is
+\[
+d(t) = a(t) R,
+\]
+where $R$ is the distance calculated using the $t$-independent metric $h_{ij}$. Then the relative velocity is
+\[
+v(t) = \dot d(t) = \dot a(t) R = \frac{\dot a}{a} d(t),
+\]
+i.e. $v(t) = H d(t)$, where $H = \dot a/ a$. This is \emph{Hubble's law}, and show $v \propto d$ at a given time $t$. Then $h_)$, the value of $H(t)$ now, is called the Hubble constant.
+
+Let's look at dynamics in the FLRW model. The Einstein tensor is
+\[
+G_{tt} = \frac{3}{a^2}(\dot a^2 + k), \qquad G_{ij} = - (2 \ddot a a + a^2 + k) h_{ij},
+\]
+where $G = c = 1$. Then Einstein's equations are
+\begin{align*}
+	G_{tt} &= 8 \pi T_{tt} = \pi \rho(t), \\
+	G_{ij} &= 8 \pi T_{ij} = 8 \pi p(t) a(t)^2 h_{ij},
+\end{align*}
+for some functions $\rho(t)$ and $p(t)$ defining a perfect co-moving fluid. The first equation gives
+\[
+\left( \frac{\dot a}{a} \right)^2= \frac{8 \pi \rho}{3} - \frac{k}{a^2},
+\]
+the \emph{Friedmann equation}\index{Friedmann equation}. The other equation gives
+\[
+\frac{\ddot a}{a} = - \frac{4 \pi}{3} (\rho + 3p).
+\]
+In addition to this, conservation of $T_{\mu\nu}$ gives
+\[
+\dot \rho + 3 \frac{\dot a}{a} (\rho + p) = 0,
+\]
+or, equivalently,
+\[
+\frac{\diff}{\diff t}(a^3 \rho) = - p \frac{\diff}{\diff t}(a^3).
+\]
+In fact the Friedmann equation and the above imply the other relation. In general, we have different (essentially non-interacting) components contributing to the source of the Einstein equation, each with conserved $T_{\mu\nu}$, and each with some equation of state
+\[
+p = w \pi.
+\]
+By using this in the third equation, we get
+\[
+\rho(t) = \rho_0 \left( \frac{a_0}{a(t)} \right)^{3(1+w)}.
+\]
+This shows us that energy density dilutes at different rates as the universe expands:
+\begin{itemize}
+	\item $\rho(t) \propto a(t)^{-3}$ for $w = 0$ gives dust.
+	\item $\rho(0 \propto a(t)^{-4}$ for $w = 1/3$ gives radiation.
+	\item $\rho(t) = \text{const}$ for $w = -1$ gives the vacuum energy.
+\end{itemize}
+
+For a single component, we get Friedmann equation
+\[
+\left( \frac{\dot a}{a} \right)^2 = \frac{8 \pi}{3} \rho_0 \left( \frac{a_0}{a} \right)^{3(1+w)} - \frac{k}{a^2}.
+\]
+Now we can integrate this to find $a(t)$. It is convenient to use the \emph{conformed time}\index{conformed time} coordinate
+%lecture 20
+
+\[
+\eta = \int_0^t \frac{\diff t'}{a(t')} \implies \diff \eta = \frac{\diff t}{a(t)}.
+\]
+Then in the FLRW metric,
+\[
+	\diff s^2 = a(\eta)^2 (- \diff \eta^2 + \diff \Sigma_k^2).
+\]
+The Friedmann equation for a single matter/energy component is
+\[
+	\left( \frac{\diff a}{\diff \eta} \right)^2 + k a^2 = C^2 a^{1 - 3w},
+\]
+where we define
+\[
+C^2 = \frac{8 \pi \rho_0}{3} a_0^{3(1 + w)}.
+\]
+\begin{itemize}
+	\item For $w = 1/3$, i.e. radiation, the solution to the above equation is
+		\[
+		a(\eta) =
+		\begin{cases}
+			C \sin \eta & k = 1, \\
+			C \eta & k = 0, \\
+			C \sinh \eta & k = -1.
+		\end{cases}
+		\]
+		For each solution, there is a point in the past at which $a = 0$, and we have chosen our constant of integration to shift $\eta$ so that $a = 0$ at $\eta = 0$. Recall also that $\rho \propto a^{-4} \to \infty$ as $a \to 0$, which implies a singularity or \emph{big bang} at this point. Here Jevans draws the solutions.
+
+		For $k = 0$ or $-1$, the universe continues to expand indefinitely, whereas for $k = 1$, the universe starts to contract and we have a \emph{big crunch}.
+	\item For $w = 0$, i.e. matter (or dust), the solutions are
+		\[
+		a(\eta) =
+		\begin{cases}
+			C^2/2 (1 - \cos \eta) & k = 1, \\
+			C^2/4 \eta^2 & k = 0, \\
+			C^2(\cosh \eta - 1) & k = -1.
+		\end{cases}
+		\]
+		Here $a = 0$ at $\eta = 0$ (the big bang). We have $\rho \propto a^{-3}$ for $w = 0$. Now Jevans draws the new solutions. We have similar behaviour to $w = 1/3$, with indefinite expansion for $k = 0$ or $-1$, and a big crunch for $k = 1$.
+	\item For $w = -1$, i.e. vacuum energy or dark energy, we have $\rho = -p = \Lambda/8\pi$, and we can solve in terms of $t$:
+		\[
+		\left( \frac{\dot a}{a} \right)^2 + \frac{k}{a^2} = \frac{\Lambda}{3}.
+		\]
+		This has solutions
+		\begin{align*}
+			a(t) &= \left( \frac{\Lambda}{3} \right)^{-1/2} \sinh \left( \left( \frac{\Lambda}{3} \right)^{1/2} t \right) & k &= -1, \\
+			a(t) &\propto \exp\left( \pm \left( \frac{\Lambda}{3} \right)^{1/2} t \right) & k &= 0, \\
+			a(t) &= \left( \frac{\Lambda}{3} \right)^{-1/2} \cosh \left( \left( \frac{\Lambda}{3} \right)^{1/2} t \right) & k &= 1.
+		\end{align*}
+		In fact, these represent different ``slicings'' of a maximally symmetric solution called \emph{de Sitter spacetime}.
+\end{itemize}
+
+Consider a combination of matter (dust) with density $\rho_m$ and vacuum energy so that
+\[
+\rho = \rho_m + \frac{\Lambda}{8 \pi}, \qquad p = - \frac{\Lambda}{8 \pi}.
+\]
+Then from the previous equations, we find there is a solution with $\dot a = \ddot a = 0$. However, closer inspection reveals that this solution is unstable.
+
+\subsection{Current View of the Universe}
+\label{sub:cvu}
+
+The radial null geodesics in the FLRW metric are given by
+\[
+	\diff s^2 = - \diff t^2 + \frac{a^2}{1 - k r^2} \diff r^2 = 0 \implies \frac{\diff t}{a(t)} = \pm \frac{\diff r}{\sqrt{1 - k r^2}}.
+\]
+An observer at $r = 0$ sees pulses at $t_0$ and $t_0 + \Delta t_0$, emitted from a galaxy at $r = R$ at $t_e$ and $t_e + \Delta t_e$. Hence
+\[
+	\int_{t_e}^{t_0} \frac{\diff t}{a(t)} = - \int_R^0 \frac{\diff r}{\sqrt{1 - kr^2}} = \int_{t_e + \Delta t_e}^{t_0 + \Delta t_0} \frac{\diff t}{a(t)}.
+\]
+Here the observer and the galaxy are comoving in the FLRW metric. If $\Delta t_e$ and $\Delta t_0$ are small compared to the scale on which $a(t)$ changes, then
+\[
+\frac{\Delta t_0}{a(t_0)} - \frac{\Delta t_e}{a(t_e)} = 0.
+\]
+Rewriting in terms of the frequency $\nu$ or the wavelngth $\lambda$, we have
+\[
+\frac{\Delta \tau_0}{\Delta \tau_e} = \frac{\Delta t_o}{\Delta t_e} = \frac{\nu_e}{\nu_o} = \frac{\lambda_0}{\lambda_e} = \frac{a(t_0)}{a(t_e)} < 1
+\]
+for an expanding universe, which gives red shift. For nearby galaxies, we can write
+\[
+a(t_e) = a(t_0) + (t_e - t_0) \dot a (t_0) + \cdots,
+\]
+then
+\[
+\frac{\Delta \tau_0}{\Delta \tau_e} = 1 + (t_0 - t_e) H(t_0) + \cdots,
+\]
+where $H = \dot a / a$ is the Hubble constant.
+
+At present, the energy density of the universe consists of:
+\begin{itemize}
+	\item 75\% dark energy.
+	\item 25\% matter.
+	\item Negligible radiation.
+\end{itemize}
+Of the matter, 4\% is identifiable as stars, gas, etc. The remainder is \emph{dark matter}, whose nature is unknown.
+%lecture 21
+
+The Hawking/Penrose singularity theorems imply that, for matter or energy content satisfying reasonable conditions, there is an initial singularity---a big bang.
+
+\newpage
+
+\section{The Linearised Einstein Equation}
+\label{sec:lee}
+
+\subsection{Reduction to the Wave Equation}
+\label{sub:red_we}
+
+Consider the metric
+\[
+g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu},
+\]
+where we have $|h_{\mu\nu}| \ll 1$. To first order,
+\[
+g^{\mu\nu} = \eta^{\mu\nu} - h^{\mu\nu},
+\]
+where
+\[
+h^{\mu\nu} = \eta^{\mu\alpha} \eta^{\nu\beta} h_{\alpha\beta}.
+\]
+From now on, we will raise and lower indices using $\eta_{\mu\nu}$, so $h_{\mu\nu}$ etc. are tensor fields on Minkowski space. However, we also have freedom to change coordinates
+\[
+x^\alpha \to \tilde x^\alpha = x^\alpha - \xi^\alpha(x).
+\]
+For small $\xi^\alpha$, this produces a change
+\[
+h_{\mu\nu} \to \tilde h_{\mu\nu} = h_{\mu\nu} + \partial_\mu \xi_\nu + \partial_\nu \xi_\mu.
+\]
+To get the Einstein equation for this metric, we need (all to first order in $h_{\mu\nu}$):
+\begin{align*}
+	\Gamma\indices{^{\mu}_{\alpha\beta}} &= \frac{1}{2} \eta^{\mu\gamma} (h_{\alpha\gamma, \beta} + h_{\gamma\beta,\alpha} - h_{\alpha\beta,\gamma}), \\
+	R_{\mu\nu\alpha\beta} &= \frac{1}{2} \left( h_{\mu\beta, \nu\alpha} - h_{\mu\alpha, \nu\beta} + h_{\nu\alpha,\mu\beta} - h_{\nu\beta,\mu\alpha}\right), \\
+	R_{\nu\beta} &= \eta^{\mu\alpha} R_{\mu\nu\alpha\beta} \\
+		     &= \frac{1}{2} \left( - \partial_\mu \partial^\mu h_{\nu\beta} + \partial_\mu \partial_\beta h\indices{_\nu^\mu} + \partial_\mu \partial_\nu h\indices{_{\beta}^\mu} - \partial_\beta \partial_\nu h\indices{_{\mu}^\mu} \right), \\
+	R &= \eta^{\nu\beta} R_{\nu\beta} = - \partial_\mu \partial^\mu h + \partial_\mu \partial_\nu h^{\mu\nu}, \\
+	h &= h\indices{_{\alpha}^\alpha} = \eta^{\alpha\beta} h_{\alpha\beta}, \\
+	G_{\alpha\beta} &= \frac{1}{2}( - \partial_\mu \partial^\mu h_{\alpha\beta} - \partial_\alpha \partial_\beta h + \partial_\mu \partial_\alpha h\indices{_{\beta}^\mu} \\
+			& \qquad + \partial_\mu \partial_\beta h\indices{_{\alpha}^\mu} - \eta_{\alpha\beta} \partial_\mu \partial_\nu h^{\mu\nu} + \eta_{\alpha\beta} \partial_\mu \partial^\mu h).
+\end{align*}
+The Einstein equation says
+\[
+G_{\alpha\beta} = 8 \pi T_{\alpha\beta}.
+\]
+This looks complicated. However, we can simplify this in steps:
+\begin{itemize}
+	\item Setting $\bar h_{\mu\nu} = h_{\mu\nu} - \frac{1}{2} h \eta_{\mu\nu}$, then $h_{\mu\nu} = \bar h_{\mu\nu} - \frac{1}{2} \bar h \eta_{\mu\nu}$, where $\bar h = \bar h\indices{_{\alpha}^\alpha} = -h$.
+	\item Use our freedom to change coordinates as given above:
+		\[
+		\bar h_{\mu\nu} \to \bar h_{\mu\nu} + \partial_\mu \xi_\nu + \partial_\nu \xi_\mu - \eta_{\mu\nu} \partial_\alpha \xi^\alpha.
+		\]
+\end{itemize}
+Using the first, we find
+\begin{align*}
+	G_{\alpha\beta} &= \frac{1}{2} ( - \partial_\mu \partial^\mu \hbar h_{\alpha\beta} - \eta_{\alpha\beta} \partial_\mu \partial_\nu \bar h^{\mu\nu} \\
+			& \qquad + \partial_\alpha \partial_\mu \bar h \indices{_{\beta}^\mu} + \partial_\beta \partial_\mu \bar h\indices{_{\alpha}^\mu}).
+\end{align*}
+The first term involves the wave operator,
+\[
+	\partial_\mu \partial^\mu = - \frac{\partial^2}{\partial t^2} + \nabla^2,
+\]
+and the other three terms involve
+\[
+\partial_\mu \bar h\indices{_{\alpha}^\mu}.
+\]
+Under a change of coordinates as in the second,
+\[
+\partial_\mu \bar h\indices{_{\alpha}^\mu} \to \partial_\mu \bar h\indices{_{\alpha}^\mu} + \partial_\mu \partial^\mu \xi_\alpha.
+\]
+Choosing $\xi_\alpha$ to make this zero can be done by using the wave equation with a given source:
+\[
+\partial_\mu \bar h\indices{_{\alpha}^\mu} = 0.
+\]
+This is called the Lorentz, De Dander, or harmonic gauge, and a symmetry (choice of $\xi$) that we use to achieve this is called a \emph{gauge transformation}\index{gauge transformation}.
+
+With this choice, the Einstein equation is
+\[
+	\partial_\mu \partial^\mu \bar h_{\alpha\beta} = - 16 \pi T_{\alpha\beta},
+\]
+the \emph{linearised Einsten equation}\index{linearised Einstein equation}.
+
+Newtonian gravity is defined by a potential $\Phi$ satisfying
+\[
+\nabla^2 \Phi = 4 \pi \rho,
+\]
+and we assume that $\Phi \sim v^2 \ll 1$. Rather than reintroduce $c$, we use a parameter $\epsilon \sim \Phi \sim v^2$. Then
+\begin{align*}
+	T_{00} &= \rho + \mathcal{O}(\epsilon^2), \\
+	T_{0i} &\sim T_{00} v_i \sim \mathcal{O}(\epsilon^{3/4}), \\
+	T_{ij} &\sim T_{00} v_i v_j \sim \mathcal{O}(\epsilon^2).
+\end{align*}
+For the linearised Einstein equation, we have $\bar h_{00}$, $\bar h_{0i}$ and $\bar h_{ij}$ appearing at these orders. In Newtonian gravity, time dependence arises from a moving sources, so
+\[
+\frac{\partial}{\partial t} \sim v \frac{\partial}{\partial x^i} = \mathcal{O}(\epsilon^{1/2}) \frac{\partial}{\partial x^i}.
+\]
+From this, we have
+\[
+\nabla^2 \bar h_{00} = -16 \pi T_{00} = -16 \pi \rho.
+\]
+By comparison with Poisson's equations
+\begin{align*}
+	\bar h_{00} &= - 4 \Phi \\
+	\implies \bar h &= \eta^{\mu\nu} \bar h_{\mu\nu} = 4 \Phi + \mathcal{O}(\epsilon) \\
+	\implies h_{00} &= \bar h_{00} + \frac{1}{2} \eta_{00} \bar h \\
+			&= - 2 \Phi,
+\end{align*}
+to relevant order. Furthermore,
+\begin{align*}
+	h_{0i} &= \bar h_{0i} \sim \mathcal{O}(\epsilon^{3/2}), \\
+	h_{ij} &= \bar h_{ij} - \frac{1}{2} \delta_{ij} \bar h \\
+	       &= - 2 \Phi \delta_{ij} + \mathcal{O}(\epsilon^2).
+\end{align*}
+Finally, we have the \emph{weak field metric}\index{weak field metric}
+\[
+\diff s^2 = - (1 + 2 \Phi)\diff t^2 + (1 - 2 \Phi)\diff x^i \diff x^j,
+\]
+where $\nabla^2 \Phi = 4 \pi \rho$.
+
+The solution for a point mass $M$ at $r = 0$ if $\Phi = -M/r$, for $G = 1$, where $\nabla^2 \Phi = 0$ for $r \neq 0$, giving the weak field metric
+\[
+\diff s^2 = - \left(1 - \frac{2M}{r} \right)\diff t^2 + \left(1 + \frac{2M}{r} \right)\left( \diff r^2 + r^2 \diff \Omega^2 \right).
+\]
+This is not quite the Schwarzschild metric. However, setting
+\begin{align*}
+	R^2 &= \left(1 + \frac{2M}{r} \right)r^2 \\
+	\implies R &= r \left(1 + \frac{2M}{r} \right)^{1/2} = r \left(1 + \frac{M}{r} + \mathcal{O}\left( \frac{M}{r} \right)^2 \right) \\
+	\implies \diff R &= \diff r \left(1 + \mathcal{O}\left( \frac{M}{r} \right)^2 \right) \\
+	\frac{M}{R} &= \frac{M}{r} + \mathcal{O} \left( \frac{M}{R}\right)^2.
+\end{align*}
+Hence to first order, $M/R \sim M/r$, and we have
+\[
+\diff s^2 = - \left( 1 - \frac{2M}{R} \right) \diff t^2 + \left(1 - \frac{2M}{R} \right)^{-1} \diff R^2 + R^2 \diff \Omega^2.
+\]
+\subsection{Gravitational Waves}
+\label{sub:grav_w}
+
+In the vacuum, the linearised Einsten equation
+\[
+	\partial_\mu \partial^\mu \bar h_{\alpha\beta} = 0
+\]
+admits plane wave solutions. Using complex notation,
+\[
+\bar h_{\alpha\beta} = \Re \left( H_{\alpha\beta} e^{i k_\rho x^\rho} \right),
+\]
+for some real wave vector $k^\mu$ and some complex matrix $H_{\alpha\beta} = H_{\beta\alpha}$ describing the polarisation. We suppress the real part in subsequent equations. Substituting into wave equations, we have the solution provided:
+\[
+k_\mu k^\mu = 0,
+\]
+i.e. $k^\mu$ is a null vector, and the gauge relation becomes
+\[
+k^\mu H_{\alpha\mu} = 0.
+\]
+\begin{exbox}
+	If $k^\mu = k(1, 0, 0, 1)$, then $k_\mu = k(-1, 0, 0, 1)$, which is null. Then
+	\[
+	\exp i k_\mu x^\mu = \exp(-ik (t - x^3))
+	\]
+	describes a wave propagating in $x^3$ direction with speed $c = 1$. The gauge condition implies
+	\[
+	H_{\alpha0} + H_{\alpha3} = 0.
+	\]
+\end{exbox}
+
+In general, the remaining gauge freedom says
+\[
+\bar h_{\alpha\beta} \to \bar h_{\alpha\beta} + \partial_\alpha \xi_\beta + \partial_\beta \xi_\alpha - \eta_{\alpha\beta} \partial_\gamma \xi^\gamma,
+\]
+and under this,
+\[
+	\partial^\mu \bar h_{\alpha\mu} \to \partial^\mu \bar h_{\alpha\mu} + \partial_\alpha (\partial^\mu \xi_\mu) + \partial^\mu \partial_\mu \xi - \partial_\alpha (\partial_\gamma \xi^\gamma).
+\]
+The gauge condition is respected, provided
+\[
+\partial^\mu \partial_\mu \xi_\alpha = 0.
+\]
+For a plane wave solution, take
+\[
+\xi_\alpha= -i X_\alpha e^{k_\rho x^\rho},
+\]
+for constant $X_\alpha$. Then
+\[
+\partial_\alpha \xi_\beta + \partial_\beta \xi_\alpha - \eta_{\alpha\beta} \partial_\gamma \xi^\gamma = (k_\alpha X_\beta + k_\beta X_\alpha - \eta_{\alpha\beta} k_\gamma X^\gamma) e^{i(k_\rho x^\rho)}.
+\]
+The effect on the solution is
+\[
+H_{\alpha\beta} \to H_{\alpha\beta} + (k_\alpha X_\beta + k_\beta X_\alpha - \eta_{\alpha\beta} k_\gamma X^\gamma).
+\]
+Returning to our example, with $k^\mu = (1, 0, 0, 1)$ and $k_\mu = (-1, 0, 0, 1)$, choose $X_\alpha = (A, 0, 0, B)$, so $k^\gamma X_\gamma = A + B$. This has no effect on $H_{01}$ or $H_{02}$, but
+\[
+H_{00} \to H_{00} + k_0 X_0 + k_0 X_0 - \eta_{00}(A + B) = H_{00}-  A + B,
+\]
+\[
+H_{03} \to H_{03} + k_{0} X_3 + k_3 X_0 - \eta_{03} (A + B) = h_{03} - B + A,
+\]
+and we see $H_{03} + H_{00} \to H_{03} + H_{00}$ as required. Similarly, if we take $X_\alpha = (0, C, 0, 0)$, then $H_{01} \to H_{01} - C$, and similarly for $H_{02}$ by considering $X_\alpha = (0, 0, C, 0)$. With the transformations above, we can make $H_{0\alpha} = H_{\alpha0} = 0$ for all $\alpha$. But furthermore, with the original choice $X_\alpha = (A, 0, 0, B)$, we have
+\[
+H_{ij} \to H_{ij} - \delta_{ij} (A + B)
+\]
+for $i, j$ = $1, 2$. Choosing $A + B$ appropriately, we can make $H_{11} = - H_{22}$. With these choices, the gauge choice is called \emph{transvere, traceless} (TT)\index{transverse}\index{traceless}. Then
+\[
+H_{\mu\nu} =
+\begin{pmatrix}
+	0 & 0 & 0 & 0 \\
+	0 & H_+ & H_\times & 0 \\
+	0 & H_\times & -H_+ & 0 \\
+	0 & 0 & 0 & 0
+\end{pmatrix}.
+\]
+Hence gravitational waves are transverse, and have two independent polarisation states. In addition, with this choice $h_{\mu\nu} = \bar h_{\mu\nu}$.
+
+Gravitational waves as above propagate in the $z$-direction. What is the effect on masses initially at rest in the $xy$-plane? Note
+\[
+\diff s^2 = - \diff t^2 + (1 + h_+) \diff x^2 + (1 - h_+) \diff y^2 + 2 h_\times \diff x \diff y + \diff z^2,
+\]
+with $h_+, h_\times$ corresponding to the $H_+, H_\times$ components above. In the $xy$ plane, $H_+ \neq 0$ and $H_\times = 0$. So it squeezes as time passes.
+
+\begin{exbox}
+	Given particles at $(\pm \delta, 0, 0)$, the proper separations squares is $4(1 + h_+) \delta^2$, and for particles at $(0, \pm \delta, 0)$, the proper separation squared is $4 (1 - h_+) \delta^2$.
+
+	Similarly, if $H_+ = 0$ and $H_\times \neq 0$, then we get squeezing in diagonal directions.
+\end{exbox}
+
+Non-examinable. The quadrupole formula is as follows. Consider a source of diameter $d$, separated to an observer by a vacuum of distance $r \gg d$. The observer then detects the time variation is $\bar h_{\alpha\beta}$, which depends on $\ddot I_{ij}(t, r)$, where
+\[
+I_{ij}(t) = \int_{\mathrm{source}} x^i x^j \rho(\mathbf{x}, t) \Diff3 \mathbf{x}.
+\]
+The energy flux across a spherical surface at $r$ is
+\[
+\langle P \rangle_t = \frac{1}{5} \langle \dddot Q_{ij} \dddot Q_{ij} \rangle_{t-r},
+\]
+where
+\[
+	Q_{ij} = I_{ij} - \delta_{ij} I_{kk}
+\]
+is the traceless \emph{energy quadrupole tensor}\index{energy quadrupole tensor}. This has been verified experimentally by Hulse-Taylor. For a binary pulsar, the reduction in energy is consistent with the formula above for radiation by gravitational waves.
+
+Back to examinable. We look at pp-waves, where pp means plane-fronted waves with parallel propagation. These are simple exact solutions of the Einstein equations which can be compared to results above. Then in coordinates $u = t - z$, $v = t + z$,
+\[
+\diff s^2 = H(u, x, y) \diff u^2 - 2 \diff u \diff v + \diff x^2 + \diff y^2.
+\]
+The Einstein equation (for a vacuum) imply $R_{uu} = 0$, i.e. $(\partial_x^2 + \partial_y^2) H = 0$.
+
+\begin{exbox}
+	Take $H = He^{i k_\alpha x^\alpha}$, with $k_\alpha = k(-1, 0, 0, 1)$. Then $k_\alpha x^\alpha = -k u = k(t - z)$.
+
+	In this case we can choose $H_0$ constant, to give a solution.
+\end{exbox}
+
+\newpage
+
+\section{Black Holes}
+\label{sec:bh}
+
+Recall the metric in Schwarzschild coordinates is
+\[
+\diff s^2 = - \left(1 - \frac{2M}{r} \right) \diff t^2 + \left(1 - \frac{2M}{r} \right)^{-1} \diff r^2 + r^2 \diff \Omega^2.
+\]
+This appears to have singularities at $r = 2M$ and $r = 0$. The scalar
+\[
+	R^{\alpha\beta\gamma\delta} R_{\alpha\beta\gamma\delta} = \frac{48 M^2}{r^6} \to \infty
+\]
+as $r \to 0$, but is well-behaved at $r = 2M$. This suggests that problems here may be due to a bad choice of coordinates.
+
+\subsection{Radial Geodesics}
+\label{sub:rg}
+
+To investigate the metric, consider geodesics with $\theta$ and $\phi$ constant. The geodesic equations give
+\begin{align*}
+	\left(1 - \frac{2M}{r} \right)\dot t &= E, \\
+	\left(1 - \frac{2M}{r} \right) \dot t^2 - \left(1 - \frac{2M}{r} \right)^{-1} \dot r^2 &= \kappa =
+	\begin{cases}
+		1 & \text{timelike}, \\
+		0 & \text{null}.
+	\end{cases}
+\end{align*}
+
+For a timelike geodesic, choose $E = 1$ for simplicity, i.e. $\dot r \to 0$ as $r \to \infty$. Then
+\begin{align*}
+	\dot r^{1/2} \dot r &= - \sqrt{2M} \\
+	\implies \frac{2}{3}(r_1^{3/2} - r_0^{3/2}) &= - \sqrt{2M} (\tau_1- \tau_0),
+\end{align*}
+by integrating. Hence for some starting point $r_0 = r(\tau_0)$ and end point $r_1 = r(\tau_1)$, we reach $r_1 = 2M$ infinite proper time, and can continue to $r < 2M$. But in terms of coordinate time $t$,
+\begin{align*}
+	r^{1/2} \frac{\diff r}{\diff t} &= - \sqrt{2M} \left(1 - \frac{2M}{r} \right) \\
+	\implies - \sqrt{2M}(t_1 - t_0) &= \int_{r_0}^{r_1} \frac{r^{3/2}}{r - 2M} \diff r \to \infty,
+\end{align*}
+as it is logarithmically divergent as $r_1 \downarrow 2M$. This is the proper time for a distant stationary observer at fixed, large $r$.
+
+For null geodesics, we find
+\[
+\left(1 - \frac{2M}{r} \right) \dot t^2 = E^2 = \dot r^2,
+\]
+with an affine parameter. Choosing the scale of the affine parameter to set $E = 1$, then $\pm r$ is the affine parameter. Geodesics satisfy
+\[
+\diff t = \pm \left(1 - \frac{2M}{r} \right)^{-1} \diff r = \pm \diff r_\ast,
+\]
+where
+\[
+r_\ast = r + 2M \log \left| \frac{r}{2M} - 1 \right|,
+\]
+hence solutions are
+\[
+	t = (\text{const}) \pm r_\ast,
+\]
+where the sign depends on whether we have outgoing or ingoing motion.
+
+\subsection{Eddington-Finkelstein Coordinates}
+\label{sub:efc}
+
+From the above, define
+\[
+u = t - r_\ast, \qquad v = t + r_\ast,
+\]
+which are constant on outgoing/ingoing geodesics, respectively. Substituting into the Schwarzschild metric, for $t$ in terms of $v, r$, we find
+\[
+\diff s^2 = - \left(1 - \frac{2M}{r} \right) \diff v^2 + 2 \diff v\diff r + r^2 \diff \Omega^2,
+\]
+which is the metric in the \emph{ingoing Eddington-Finkelstein coordinates}\index{Eddington-Finkelstein coordinates}. This is well-behaved at $r = 2M$ and indeed for $r > 0$. Moreover, for $0 < r < 2M$, the definitions above allow us to go back to the Schwarzschild coordinates from EF coordinates. To plot geodesics, we introduce
+\[
+t_\ast = t + 2M \log \left| \frac{r}{2M} - 1 \right|,
+\]
+so that $v = t + r_\ast = t_\ast + r$. Then ingoing null geodeiscs are straight lines, if we plot $t_\ast$ against $r$. (Insert plot). The ougoing null geodesics are given by $t = u + r_\ast$, but
+\[
+\frac{\diff t_\ast}{\diff r} = \frac{r/2M - 1}{r/2M + 1}
+\begin{cases}
+	> 0 & r > 2M, \\
+	< 0 & r < 2M.
+\end{cases}
+\]
+For $r < 2M$, all null geodesics are actually ingoing, and they reach the singularity at $r = 0$ after a finite change in affine parameter.
+
+We can then show that there is no time-like or null curve within $r < 2M$ that can escape to $r > 2M$. This is a \emph{black hole}\index{black hole}, with \emph{horizon}\index{horizon} at $r = 2M$.
+%lecture 24
+
+\newpage
+
+\printindex
+
+\end{document}

@@ -1,0 +1,2071 @@
+\documentclass[12pt]{article}
+
+\usepackage{ishn}
+
+\makeindex[intoc]
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1em}
+		\Huge
+		\textbf{II Statistical Physics}
+
+		\vspace{1em}
+		\large
+		Ishan Nath, Lent 2024
+
+		\vspace{1.5em}
+
+		\Large
+
+		Based on Lectures by Prof. Christopher Thomas
+
+		\vspace{1em}
+
+		\large
+		\today
+	\end{center}
+	
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+\label{sec:intro}
+
+The aim of this course is to look at macroscopic variables in certain physical systems.
+
+For example, in a gas, we have:
+\begin{itemize}
+	\item Energy $E$.
+	\item Pressure $p$.
+	\item Temperature $T$.
+	\item Entropy $S$.
+\end{itemize}
+
+For a magnetic system (which can be thought of as spins on a lattice) we have:
+\begin{itemize}
+	\item Energy $E$.
+	\item Magnetization $M$.
+	\item External field $B$.
+	\item Temperature $T$.
+	\item Entropy $S$.
+\end{itemize}
+
+These macroscopic variables are often continuous functions of the others.
+
+\newpage
+
+\section{Fundamentals of Statistical Mechanics}
+\label{sec:fundamentals}
+
+\subsection{Microcanonical Ensemble}
+\label{sub:micro_ens}
+
+Consider the microcanonical ensemble, which is an isolated system with fixed energy $E$. The Schr\"odinger equation is
+ \[
+H \ket \psi = E \ket \psi.
+\]
+For this course, we're interested in systems with many $(N \sim 10^{23})$ particles. The wavefunction is called the \emph{microstate}\index{microstate}; it tells us what all the particles are doing.
+
+But macroscopic systems don't sit in a single state $\ket \psi$. Small perturbations will lead to transitions to other states with the same energy. There are typically many such states. This calls for statistical methods.
+
+For statistical physics, we will make the following fundamental assumption:
+\begin{center}
+For an isolated system in equilibrium,\\all accessible microstates are equally likely.
+\end{center}
+
+Let's now dig deeper into what this means.
+\begin{itemize}
+	\item \emph{Equilibrium}\index{equilibrium} means that the system is left alone for a long time, after which it settles down and macroscopic quantities are time independent.
+	\item \emph{Accessible}\index{accessible microstate} means states which can be reached by small perturbations (for fixed $E$).
+\end{itemize}
+
+Let $\Omega(E)$ be the number of states with energy $E$. Given this fundamental assumption, the probability to be in a given microstate $\ket n$ with energy $E$ is $\Omega(E)^{-1}$. Typically, $\Omega$ is very large ($\Omega \sim e^{N}$).
+
+Define \emph{entropy}\index{entropy} as
+\[
+S(E) = k_B \log \Omega(E).
+\]
+Here $k_B$ is \emph{Boltzmann's constant}\index{Boltzmann constant} with
+\[
+	k_B \approx \qty{1.381e-23}{\joule\per\kelvin}.
+\]
+From this definition, entropy is additive. For two separate systems with energy $E_1, E_2$, note
+\begin{align*}
+	\Omega(E_1, E_2) &= \Omega_1(E_1)\Omega_2(E_2) \\
+	\implies S(E_1, E_2) &= S_1(E_1) + S_2(E_2).
+\end{align*}
+Also, $S \propto N$. It is an \emph{extensive quantity}\index{extensive quantity}, as are the volume $V$, energy $E$, magnetization $M$. Other quantities like temperature $T$, pressure $p$ and external field $B$ are \emph{intensive quantities}\index{intensive quantity} - they do not depend on $N$.
+
+\subsection{The Second Law of Thermodynamics}
+\label{sub:2nd_law}
+
+Take two non-interacting isolated systems with energies $E_1$ and $E_2$. Bring them together so they can exchange energy. The total energy $E_{\mathrm{total}} = E_1 + E_2$ is fixed.
+
+The number of states in total is
+\[
+\Omega(E_{\mathrm{total}}) = \sum_{E_i} \Omega_1(E_i) \Omega_2(E_{\mathrm{total}}-E_i),
+\]
+where the sum is over the possible energies of system $1$. However we can write this as
+\[
+	\sum_{E_i} \exp \biggl[ \frac{S_1(E_i)}{k_B} + \frac{S_2(E_{\mathrm{total}} - E_i)}{k_B} \biggr].
+\]
+Since $S \sim N \sim 10^{23}$, the sum is totally dominated by the maximum value of the exponent at $E_i = E_\ast$. Heuristically, we are more likely to find our system at $E_i = E_\ast$. Then differentiating,
+\[
+\frac{\partial S_1}{\partial E} \biggr|_{E = E_\ast} - \frac{\partial S_2}{\partial E} \biggr|_{E = E_{\mathrm{total}} - E_\ast} = 0,
+\]
+and
+\[
+S(E_{\mathrm{total}}) = k_B \log \Omega(E_{\mathrm{total}}) \approx S_1(E_\ast) + S_2(E_{\mathrm{total}} - E_\ast).
+\]
+But since $E_\ast$ maximizes the entropy, in general
+\[
+S(E_{\mathrm{total}}) \geq S_1 (E_1) + S_2(E_2).
+\]
+This is the \emph{second law of thermodynamics}\index{second law of thermodynamics}: entropy increases. Whenever we remove constraints on a system, the number of available states increases dramatically, and the system never returns to its original state.
+
+%lecture 2
+
+\subsection{Temperature}
+\label{sub:temp}
+
+We define the \emph{temperature}\index{temperature} to be $T$, such that
+\[
+\frac{1}{T} = \frac{\partial S}{\partial E}.
+\]
+We will show that temperature satisfies the following property: if two systems have the same temperature, then nothing happens when they are brought together.
+
+We have already seen that energy transfers such that the entropy is maximized. If we want no energy to be transferred, we must already have $E_1 = E_\ast$, and the condition becomes
+\[
+\frac{\partial S_1}{\partial E} \biggr|_{E = E_1} = \frac{\partial S_2}{\partial E} \biggr|_{E = E_2} \implies T_1 = T_2.
+\]
+Note that usually $S$ increases with $E$, so $T$ is positive. Some model systems have $S$ decreasing as $E$ increases, such as systems with a finite number of states, or phase space systems such as spins systems or systems or confined vortices.
+
+In practise, these are coupled to other systems where $S$ increases with $E$, so negative temperatures are at best \emph{metastable} (short lived).
+
+We should think of negative temperatures as actually hotter than $T = \infty$, since $1/T$ is a more natural variable than $T$.
+
+Suppose systems are at slightly different temperatures. Then the entropy changes when they are brought together:
+\begin{align*}
+	\delta S &= \frac{\partial S_1}{\partial E} \biggr|_{E = E_1} \delta E_1 + \frac{\partial S_2}{\partial E} \biggr|_{E = E_2} \delta E_2 \\
+		 &= \left( \frac{\partial S_1}{\partial E} \biggr|_{E = E_1} - \frac{\partial S_2}{\partial E} \biggr|_{E = E_2} \right) \delta E_1  \text{ (as total energy is fixed)} \\
+		 &= \left( \frac1{T_1} - \frac1{T_2} \right) \delta E_1 \geq 0.
+\end{align*}
+So if $T_1 > T_2$, then $\delta E_1 < 0$, and the energy flows from hot to cold.
+
+We will later see that this definition of temperature coincides with the temperature measured by an ideal gas thermometer.
+
+\subsection{Heat Capacity}
+\label{sub:heat_cap}
+
+The \emph{heat capacity}\index{heat capacity} at a constant volume is
+\[
+C_V = \frac{\partial E}{\partial T}.
+\]
+This is something that we can measure! It provides a link between theory and practice:
+\[
+	\frac{\partial S}{\partial T} = \frac{\partial S}{\partial E} \frac{\partial E}{\partial T} = \frac{C_V}{T} \implies \Delta S = \int_{T_1}^{T_2} \frac{C_V(T)}{T} \diff T.
+\]
+This gives us a handle on the entropy differences from $C_V$. Also note that
+\[
+	\frac{\partial^2 S}{\partial E^2} = \frac{\partial}{\partial T} \left( \frac{\partial S}{\partial E} \right) \frac{\partial T}{\partial E} = - \frac{1}{T^2} \frac{1}{C_V}.
+\]
+Hence if $C_V > 0$, then energy increases with temperature, and the slope of $S(E)$ decreases with $E$.
+
+\begin{exbox}[Two State System]
+	Consider a system of $N$ non-interacting particles. Each can sit in one of two states; spin up $\ket \uparrow$, and spin down $\ket \downarrow$. Suppose
+	\[
+	E_\uparrow = \mathcal{E}, \qquad E_\downarrow = 0.
+	\]
+	If there are $N_\uparrow$ states in spin up, and $N_\downarrow = N - N_\uparrow$ spin down, then the total energy is $E = N_\uparrow \mathcal{E}$.
+
+	Now $\Omega(E)$ is the number of states with total energy $E$, which is the number of way to pick $N_\uparrow$ particles from $N$. Hence
+	\[
+		\Omega(E) = \frac{N!}{N_\uparrow!(N - N_\uparrow)!} \implies S(E) = k_B \log \left[ \frac{N!}{N_\uparrow!(N-N_\uparrow)!}\right].
+	\]
+	For large $N$, we can approximate using Stirling's formula:
+	\[
+	\log N! = N \log N - N + \frac{1}{2} \log N + \frac{1}{2} \log (2 \pi) + \mathcal{O}\left( \frac1N\right).
+	\]
+	We are only interested in systems with very large $N$, so the first two terms suffice. Using this,
+	\begin{align*}
+		S(E) &\approx k_B \bigl[ N \log N - N - N_\uparrow \log N_\uparrow + N_\uparrow \\
+		     & \qquad \qquad - (N-N_\uparrow)\log(N-N_\uparrow) + (N-N_\uparrow)\bigr] \\
+		     &= k_B \left[ - (N - N_\uparrow) \log \left( \frac{N - N_\uparrow}{N} \right) - N_\uparrow \log \left( \frac{N_\uparrow}{N} \right) \right] \\
+		     &= - k_B N \left[ \left( 1 - \frac{E}{N \mathcal{E}} \right) \log \left( 1 - \frac{E}{N \mathcal{E}} \right) + \frac{E}{N \mathcal{E}} \log \left(\frac{E}{N \mathcal{E}} \right)\right].
+	\end{align*}
+	This function is symmetric, with maximum about $N\mathcal{E}/2$. This corresponds to when half of the spins are up, and half are down. In this case, $S(E) = N k_B \log 2$.
+
+	The temperature satisfies
+	\[
+	\frac{1}{T} = \frac{\partial S}{\partial E} = \frac{k_B}{\mathcal{E}} \log \left( \frac{N \mathcal{E}}{E} -1 \right).
+	\]
+	We can see this is negative when $E > N \mathcal{E}/2$. Suppose the system is at temperature $T$. Then inverting,
+	\[
+	\frac{N_\uparrow}{N} = \frac{E}{N \mathcal{E}} = \frac{1}{e^{\mathcal{E}/ k_B T} + 1}.
+	\]
+	As $T \to \infty$, this goes to $1/2$, whereas as $T \to 0$, this goes to $0$. Notice that $N_\uparrow/N > 1/2$ corresponds to a negative temperature.
+	%lecture 3
+
+	The heat capacity is
+	\[
+	C_V = \frac{\partial E}{\partial T} = \frac{N \mathcal{E}^2}{k_B T^2} \frac{e^{\mathcal{E}/k_BT}}{(e^{\mathcal{E}/k_BT} + 1)^2}.
+	\]
+	Note that $C_V \propto N$, so it is extensive. Moreover, as $T \to 0$, $C \sim e^{- \mathcal{E}/k_BT}$ which goes to zero exponentially quickly. This is due to the energy gap. As $T \to \infty$, $C_V \to 0$ at the power law rate.
+
+	This $C_V$ is tiny in real solids; it is swamped by phonons and electrons.
+\end{exbox}
+
+\subsection{Pressure, Volume and the First Law}
+\label{sub:p_v}
+
+We now consider other external parameters. One of the most important is the \emph{volume}\index{volume} $V$. Very often, the number of states will depend on $V$:
+\[
+S(E, V) = k_V \log \Omega(E, V).
+\]
+We still have that
+\[
+\frac{1}{T} = \frac{\partial S}{\partial E}\biggr|_V.
+\]
+We can also define \emph{pressure}\index{pressure}, which is
+\[
+p = T \frac{\partial S}{\partial V} \biggr|_E.
+\]
+Consider two systems with pressure $p_1$ and $p_2$, with the same temperature $T$. Put them together so the volume of each can change, with the total volume fixed.
+
+Using the same steps as for temperature, we find that the entropy of the combined system is maximal when
+\[
+\frac{\partial S_1}{\partial V} \biggr|_{V = V_1} = \frac{\partial S_2}{\partial V} \biggr|_{V = V_2} \implies p_1 = p_2,
+\]
+as expected. Let's go back to the single system. Then
+\[
+S = S(E, V) \implies \diff S = \frac{\partial S}{\partial E} \biggr|_V \diff E + \frac{\partial S}{\partial V} \biggr|_E \diff V,
+\]
+hence we get
+\[
+\diff E = T \diff S - p \diff V.
+\]
+This is the \emph{first law of thermodynamics}\index{first law of thermodynamics}. It expresses the constance of energy. Here we can think of $-p \diff V$ as the work done on the system, and $T \diff S$ as the energy transferred to the system as heat.
+
+To make sense of this, we need to discuss adiabatic changes. Suppose the system depends on an external parameter $\lambda$, such as the volume of a box or an external magnetic field. An \emph{adiabatic change}\index{adiabatic} is one that is sufficiently slow that the occupation of the energy levels doesn't change. For macroscopic systems with energy $E(\lambda)$, the number of microstates doesn't change as $\lambda$ changes.
+
+Therefore, an adiabatic change is at constant energy, and the energy changes due to work done on the system. We have
+\[
+	\diff E = \frac{\partial E}{\partial \lambda} \biggr|_\lambda \diff \lambda
+\]
+in an adiabatic change.
+
+\subsection{Canonical Ensemble}
+\label{sub:can_e}
+
+The microcanonical ensemble is at fixed $E$. What about systems at fixed $T$? Consider a system $S$ surrounded by a large reservoir $R$.
+
+The reservoir $R$ has temperature $T$, and it is in equilibrium with the system $S$. Moreover, the energy of $S$ is negligible compared to the energy of $R$. Let $\{\ket n\}$ denote the states of $S$ with energy $\{E_n\}$.
+
+The number of microstates of the combined system $S + R$ is
+\begin{align*}
+	\Omega(E_{\mathrm{total}}) &= \sum_n \Omega_R(E_{\mathrm{total}} - E_n) = \sum_n \exp \left( \frac{S_R(E_{\mathrm{total}} - E_n)}{k_B} \right) \\
+				   &\approx \sum_n \exp \left( \frac{S_R(E_{\mathrm{total}})}{k_B} - \frac{\partial S_R}{\partial E}\biggr|_{E = E_{\mathrm{total}}} \! \! \frac{E_n}{k_B} \right),
+\end{align*} 
+since $E_n \ll E_{\mathrm{total}}$, we can Taylor expand. Hence
+\[
+\Omega(E_{\mathrm{total}}) = e^{S_R(E_{\mathrm{total}})/k_B} \sum_n e^{-E_n/ k_B T}.
+\]
+Now applying the fundamental assumption to the combined system, each of these states is equally likely. Hence the number of states of $S + R$ where $S$ is in $\ket n$ is
+\[
+e^{S_R(E_{\mathrm{total}})/k_B} e^{-E_n/ k_B T}.
+\]
+So the probability that $S$ will be in state $\ket n$ is
+\[
+\Prob(n) = e^{-E_n / k_B T} / \sum_m e^{-E_m k_B T}.
+\]
+This is the \emph{Boltzmann distribution}\index{Boltzmann distribution}.
+
+%lecture 4
+
+If we define $\beta = 1/k_B T$, and $Z = \sum_n e^{-\beta E_n}$, then
+\[
+\Prob(n) = \frac{e^{-\beta E_n}}{Z}.
+\]
+Here $Z$ is the \emph{partition function}\index{partition function}. It contains all the information we need about the system. As an example of this, we claim that for two independent systems at the same temperature,
+\[
+Z = Z_1 Z_2.
+\]
+Indeed,
+\begin{align*}
+	Z &= \sum_{n, m} e^{-\beta(E_n^{(1)} + E_m^{(2)})} = \sum_{n, m} e^{-\beta E_n^{(1)}} e^{-\beta E_m^{(2)}} \\
+	  &= \sum_n e^{-\beta E_n^{(1)}} \sum_{m} e^{-\beta E_m^{(2)}} = Z_1 Z_2.
+\end{align*}
+
+Moreover, the average energy is
+\begin{align*}
+	\braket{E} &= \sum_n \Prob(n) E_n = \frac{1}{Z} \sum_n E_n e^{-\beta E_n} \\
+		   &= - \frac{1}{Z} \frac{\partial Z}{\partial \beta} = - \frac{\partial}{\partial \beta} \log Z.
+\end{align*}
+The spread of energies is given by the variance:
+\[
+	(\Delta E)^2 = \braket{E^2} - \braket E^2 = \frac{\partial^2}{\partial \beta^2} \log Z.
+\]
+The heat capacity (at constant volume) is
+\[
+C_V = \frac{\partial \!\braket E}{\partial T}.
+\]
+We can show (on example sheet 1) that
+\[
+	(\Delta E)^2 = k_B T^2 C_V.
+\]
+Note that $\braket E \propto N$, and $C_V \propto N$. Hence
+\[
+	\frac{\Delta E}{\braket E} \sim \frac{1}{\sqrt N} \to 0 \quad\! \text{as } N \to \infty.
+\]
+The fluctuations around the average value are very small in this limit. We can usually ignore them, and we will write $\braket E = E$. Hence the canonical ensemble is equivalent to the microcanonical ensemble in this limit.
+
+\begin{exbox}
+	We return to the two state system. For a single particle with two states, and $E_\uparrow = \epsilon$, $E_\downarrow = 0$. Then for one particle,
+	\[
+	Z_1 = e^{-\beta E_\downarrow} + e^{-\beta E_\uparrow} = 1 + e^{-\beta \epsilon} = 2 e^{-\beta \epsilon/2} \cosh (\beta \epsilon/2).
+	\]
+	For $N$ particles,
+	\[
+	Z = Z_1^n = 2^n e^{-\beta N \epsilon/2} \cosh^N(\beta \epsilon/2).
+	\]
+	Hence we can calculate
+	\[
+		\braket E = - \frac{\partial}{\partial \beta} \log Z = \frac{N \epsilon}{2} \left[ 1 - \tanh \left( \frac{\beta \epsilon}{2} \right) \right].
+	\]
+	With some algebra, we can show that this is the same reults as before.
+\end{exbox}
+
+\subsection{Entropy in the Canonical System}
+\label{sub:can_ent}
+
+We want to define entropy in the canonical ensemble (or any ensemble) with probability distribution $p(n)$.
+
+Consider $W$ copies of the system, for $W$ very large. Think of this collection of $W$ copies as sitting in the microcanonical ensemble. Then the number of systems in state $\ket n$ is $p(n) W$. The number of ways of arraying the states among all copies is
+\begin{align*}
+	\Omega &= \frac{W!}{\prod_n [p(n)W]!},\\
+	\implies S &= k_B \log \Omega = - k_B W \sum_n p(n) \log p(n),
+\end{align*}
+using Stirling's approximation. This is the entropy for $W$ copies, but since entropy is additive, the entropy for a single system is
+\[
+S = - k_B \sum_n p(n) \log p(n).
+\]
+This is the \emph{Gibbs entropy}\index{Gibbs entropy}, or the Shannon or von Neumann entropy, and it holds for any probability distribution. In the canonical ensemble,
+\[
+S = k_B \frac{\partial}{\partial T}(T \log Z).
+\]
+In the microcanonical ensemble, $p(n) = 1/\Omega(E)$ if $E_n = E$, otherwise it is 0. Hence
+\[
+	S = - k_B \sum_{n : E_n = E} \frac{1}{\Omega(E)} \log \left( \frac{1}{\Omega(E)} \right) = k_B \log \Omega(E).
+\]
+This is in agreement with the Boltzmann entropy.
+
+\subsection{Free Energy}
+\label{sub:free_e}
+
+When $T = 0$, the ground state of a system is determined by minimizing the energy. For $T > 0$, we can say a similar statement: the most likely state of the system is determined by minimizing the (Helmholtz) \emph{free energy}\index{free energy}
+\[
+F = E - TS.
+\]
+Here ``free energy'' means available energy.
+
+%lecture 5
+
+\begin{proofbox}
+	The probability that the system has energy $E$ is
+	\begin{align*}
+		\Prob(E) &= \Omega_S(E) \frac{e^{-E/k_BT}}{Z} = e^{S/k_B} \frac{e^{-E/k_BT}}{Z} \\
+			 &= \frac{e^{-\beta F}}{Z},
+	\end{align*}
+	where $F = E - TS$. Hence the most likely probability minimizes $F$.
+\end{proofbox}
+
+Mathematically, $F$ is ($T$ times) a Legendre transform of $S(E, V)$. Now note that
+\[
+\diff F = \diff E - T \diff S - S \diff T = T \diff S - p \diff V - T \diff S - S \diff T = - S \diff T - p \diff V.
+\]
+Hence it is most natural to think of $F = F(T, V)$, where
+\begin{align*}
+	S &= -\left(\frac{\partial F}{\partial T} \right)_V, & p &= - \left( \frac{\partial F}{\partial V} \right)_T.
+\end{align*}
+Now we can also write $F$ as a function of the partition function:
+\[
+F = - k_B T \log Z.
+\]
+Indeed, from the definition,
+\begin{align*}
+	F &= E - TS = k_B T^2 \frac{\partial}{\partial T} \log Z - k_B T \frac{\partial}{\partial T}(T \log Z) \\
+	  &= - k_B T \log Z.
+\end{align*}
+
+\subsection{Chemical Potential}
+\label{sub:chem_pot}
+
+When there are conserved quantities in the system, the accessible states are restricted to those where these have their correct value, for example the particle number $N$ or the electric charge $Q$.
+
+Here, we will consider $N$. In the microcanonical ensemble, $S(E, V, N) = k_B \log \Omega(E, V, N)$.
+
+Define the \emph{chemical potential}\index{chemical potential},
+\[
+\mu = -T \left( \frac{\partial S}{\partial N} \right)_{E, V}.
+\]
+Suppose two systems can exchange particles. Using the same argument as before, we get that $\mu_1 = \mu_2$ in equilibrium. The first law of thermodynamics becomes
+\[
+\diff E = T \diff S - p \diff V + \mu \diff N.
+\]
+Here $\mu$ is the energy cost to add a particle to the system at fixed entropy and volume. The expression for $\diff F$ becomes
+\[
+\diff F = - S \diff T - p \diff V + \mu \diff N.
+\]
+
+\subsection{Grand Canonical Ensemble}
+\label{sub:grand_can_ens}
+
+Suppose we have a system where the particle number and energy can fluctuate, in equilibrium, with a reservoir at constant $\mu$ and $T$. Then the probability that the system is in the microstate $\ket n$ with energy $E_n$ and particle number $N_n$ is
+
+\[
+\Prob(n) = \frac{e^{-\beta(E_n - \mu N_n)}}{\mathcal{Z}},
+\]
+where we have introduced
+\[
+\mathcal{Z}(T, \mu , V) = \sum_n e^{-\beta(E_n - \mu N_n)},
+\]
+the \emph{grand partition function}\index{grand partition function}. It an be shown that
+\begin{align*}
+	\braket E &= - \mu \braket N = - \frac{\partial}{\partial \beta} \log \mathcal{Z},\\
+	\braket N &= \frac{1}{\beta} \frac{\partial}{\partial \mu} \log \mathcal{Z}, \\
+	(\Delta N)^2 &= \frac{1}{\beta^2} \frac{\partial^2}{\partial \mu^2} \log \mathcal{Z}.
+\end{align*}
+These all coincide in the thermodynamic limit. Moreover, we can show that
+\[
+	\frac{(\Delta N)}{\braket N} \sim \frac{1}{\sqrt{\braket N}},
+\]
+hence fluctuations are negligible in the thermodynamic limit. The \emph{grand canonical potential}\index{grand canonical potential} is
+\[
+\Phi = F - \mu N.
+\]
+It satisfies
+\[
+\diff \Phi = - S \diff T - p \diff V - N \diff \mu,
+\]
+and so $\Phi = \Phi(T, V, \mu)$. We can show that
+\[
+\Phi = - k_B T \log \mathcal{Z}.
+\]
+The proof is the same as for $F$.
+
+\subsection{Extensive versus Intensive}
+\label{sub:ext_int}
+
+Recall an \emph{extensive}\index{extensive} quantity scales proportional to the size of the system, for example $N, V, E, S$. This can be written as
+\[
+S(\lambda E, \lambda V, \lambda N) = \lambda S(E, V, N).
+\]
+An \emph{intensive}\index{intensive} quantity is independent of the size of the system, for example $T, p, \mu$. Note that $F = E - TS$ is extensive, therefore
+\[
+F(T, \lambda V, \lambda N) = \lambda F(T, V, N).
+\]
+There are many ways to solve this, for example $F \sim V^{n+1}/N^n$. However, $\Phi = F - \mu N$ is extensive, hence
+\[
+\Phi(T, \lambda V, \mu) = \lambda \Phi(T, V, \mu).
+\]
+There is only one way to solve this, as $\Phi \propto V$. But we know
+\[
+\left( \frac{\partial \Phi}{\partial V} \right)_{T, \mu} = -p \implies \Phi = - p(T, \mu) V.
+\]
+
+\newpage
+
+\section{Classical Gases}
+\label{sec:clas_gas}
+
+\subsection{Classical Partition Function}
+\label{sub:clas_part}
+
+The quantum partition function is
+\[
+Z = \sum_n e^{-\beta E_n}.
+\]
+%lecture 6
+
+In classical mechanics, the state of a system is specified by the position and momentum of every particle (i.e. by a point in phase space). The energy is the Hamiltonian. For example, for a particle in $\mathbb{R}^3$,
+
+\[
+H = \frac{1}{2m} |\mathbf{P}|^2 + V(\mathbf{q}).
+\]
+This motivates the classical partition function for a single
+\[
+Z_1 = \frac{1}{h^3}\int \Diff3 \mathbf{p} \Diff3 \mathbf{q}\, e^{-\beta H(\mathbf{p}, \mathbf{q})}.
+\]
+\begin{remark}
+	\begin{itemize}
+		\item[]
+		\item This can be derived from the quantum partition function.
+		\item The factor of $1/h^3$ is needed on dimensional grounds, so $Z$ is dimensionless.
+		\item $h$ doesn't appear in any measurable quantity because these are proportional to $\diff (\log Z)/\diff X$.
+		\item The correct value of $h$ can be found by deriving from the quantum partition function $h = 2 \pi \hbar$. This is Planck's constant.
+	\end{itemize}
+\end{remark}
+
+\subsection{Ideal Gas}
+\label{sub:id_gas}
+
+We will define what we mean by the two terms ideal and gas.
+
+\emph{Gas}\index{gas} is a collection of $N$ particles in a box of (large) volume $V$. An \emph{ideal}\index{ideal gas} gas is one that is non-interacting. If we have our standard Hamiltonian $H = |\mathbf{P}|^2/2m$, then
+\[
+Z_1(V, t) = \frac{1}{(2 \pi \hbar)^3} \int \Diff3 \mathbf{q} \Diff3 \mathbf{p} \, e^{-\beta p^2/2m} = \frac{V}{(2 \pi \hbar)^3} \int \Diff3 \mathbf{p}  \, e^{-\beta p^2/2m}.
+\]
+This is a Gaussian integral. Using the fact that
+\[
+	\int e^{-ax^2}\diff x = \sqrt{\frac{\pi}{a}},
+\]
+we get that this comes to
+\[
+	Z_1(V, T) = \frac{V}{(2 \pi \hbar)^3} \left( \sqrt{\frac{2 m \pi}{\beta} } \right)^3 = V \left( \frac{k_B T m}{2 \pi \hbar^2} \right)^{3/2} = \frac{V}{\lambda^3},
+\]
+where
+\[
+	\lambda = \sqrt{\frac{2 \pi \hbar^2}{m k_B T}}
+\]
+is the \emph{thermal de Broglie wavelength}\index{thermal de Broglie wavelength}. For $N$ particles, we have
+\[
+Z(N, V, T) = Z_1^N = \frac{V^N}{\lambda^{3N}}.
+\]
+We can then calculate the pressure, as
+\[
+p = - \left( \frac{\partial F}{\partial V}\right)_{T, N} = \frac{\partial}{\partial V} (k_B T \log Z) = \frac{k_B T N}{V}.
+\]
+This is the \emph{ideal gas law}\index{ideal gas law}. It works well for gases at low densities where interactions between atoms are not important.
+
+This shows that our definition of $T$ is equal to the temperature measured by an ideal gas thermometer. The average energy is
+\[
+\braket E = - \frac{\partial}{\partial \beta} \log Z = \frac{3N}{2} \frac{1}{\beta} = \frac{3}{2} N k_B T = (3N) \times \frac{1}{2} k_B T.
+\]
+This is an instance of the \emph{equipartition of energy}\index{equipartition of energy}---any classical system at temperature $T$ has $k_BT/2$ energy per degree of freedom. Note that as $E = p^2/2m$, we have
+\[
+	\braket p \sim \sqrt{m k_B T} \implies \lambda \sim \frac{\hbar}{\braket p}.
+\]
+The heat capacity is
+\[
+C_V = \frac{\partial E}{\partial T} = \frac{3}{2} N k_B.
+\]
+Recall the Boltzmann constant is
+\[
+	k_B \approx \qty{1.381e-23}{\joule\per\kelvin}.
+\]
+This is the conversion factor between temperature and energy. Why is it so small? Rearranging the ideal gas law, we get
+\[
+\frac{pV}{T} = N k_B.
+\]
+For reasonable $p, V, T$, the left hand side is about $10^2$. Hence $N k_B$ must then have a `reasonable' order of magnitude. Therefore $N \sim 10^{23}$, meaning that small $k_B$ is telling us that atoms are very small.
+
+\subsection{Entropy and the Gibbs Paradox}
+\label{sub:ent_gib_par}
+
+We said that $Z = Z_1^N$. But this is not quite right. As we have seen before, quantum particles are indistinguishable. Swapping two particles gives us back the same states, up to a sign. Hence $Z = Z_1^N$ overcounts states. The correct partition function is
+\[
+Z_{\mathrm{ideal}} = \frac{Z_1^N}{N!} = \frac{V^N}{N! \lambda^{3N}}.
+\]
+This doesn't affect $p$ or $\braket E$, but it does affect entropy. Then
+\[
+	S = \frac{\partial}{\partial T}(T \log Z) = \frac{3}{2} N k_B + k_B \log \left( \frac{V^N}{N! \lambda^{3N}} \right) \approx N k_B \left[ \frac{5}{2} + \log \left( \frac{V}{N \lambda^3} \right) \right],
+\]
+using Stirling's approximation. This is called the Sackur-Tetrode equation.
+
+%lecture 7
+
+In the grand canonical ensemble, the partition function of an ideal gas is
+\begin{align*}
+	\mathcal{Z}_{\mathrm{ideal}}(\mu, V, T) &= \sum_{N = 0}^\infty e^{\beta \mu N} Z_{\mathrm{ideal}} = \sum_{N = 0}^\infty \frac{1}{N!} \left( \frac{e^{\beta \mu}V}{\lambda^3} \right)^N \\
+						&= \exp \left( \frac{e^{\beta \mu}V}{\lambda ^3} \right).
+\end{align*}
+The average number of particles is
+\[
+\braket N = \frac{1}{\beta} \frac{\partial}{\partial \mu} \log \mathcal{Z}_{\mathrm{ideal}} = \frac{e^{ \beta \mu} V}{\lambda^3}.
+\]
+Inverting, we get that
+\[
+\mu = k_B T \log \left( \frac{\lambda^3 N}{V} \right),
+\]
+where $\braket N = N$, as the fluctuations are negligible. For a \emph{classical gas}, we must have that
+\[
+\lambda \ll \left( \frac{V}{N} \right)^{1/3},
+\]
+where this term is the \emph{interparticle spacing}\index{interparticle spacing}. If not, quantum effect become important, as we will see later. Hence $\mu < 0$. While this seems strange, note
+\[
+\mu = \left( \frac{\partial E}{\partial N} \right)_{S, V}.
+\]
+Adding a particle increases $S$, so if we hold $S$ fixed adding a particle must reduce $E$ to compensate. To compute the equation of the state, we use
+\[
+-pV = \Phi = -k_B T \log \mathcal{Z},
+\]
+hence we have
+\[
+pV = k_B T \frac{e^{\beta \mu}V}{\lambda ^3} = k_B T N,
+\]
+the ideal gas law.
+
+\subsection{Maxwell Distribution}
+\label{sub:max_dist}
+
+How fast are particles in a gas moving? Not all particles are moving at the same speed, and we would like to understand the distribution.
+
+The one particle partition function is
+\[
+Z_1 = \frac{1}{(2 \pi \hbar)^3} \int\Diff3\mathbf{q} \Diff3\mathbf{p}e^{-\beta p^2/2m} = \frac{m^2 V}{(2\pi \hbar)^3} \int \diff^3\mathbf{v} e^{-\beta mv^2/2}
+\]
+using the fact that $\mathbf{p} = m \mathbf{v}$. Then this equals
+\[
+\frac{4 \pi m^3 V}{(2 \pi\hbar)^3}\int \diff v\, v^2 e^{-\beta m v^2/2} \sim \sum_{v} \Prob(v).
+\]
+The probability that the particle has speed between $v$ and $v + \diff v$ is
+\[
+f(v) \diff v = \mathcal{N} v^2 e^{-mv^2/2k_BT}.
+\]
+Here $\mathcal{N}$ is the normalisation factor, which we can calculate:
+\[
+\int_0^{\infty} f(v) \diff v = 1 \implies \mathcal{N} = 4\pi \left( \frac{m}{2 \pi k_B T}\right)^{3/2}.
+\]
+Then we can make a cool graph looking at how the mass of a gas affects the distribution of speeds. If you pester I will add this in.
+
+We can check the average $v^2$:
+\[
+	\braket{v^2} = \int_0^\infty \diff v\, v^2 f(v)= \mathcal{N} \int_0^{\infty}v^4 e^{-mv^2/2k_BT} = \frac{3}{2} \frac{2k_B T}{m} = \frac{3 k_B T}{m}.
+\]
+This agrees with
+\[
+	\braket E = \frac{1}{2} m \braket{v^2} = \frac{3}{2} k_B T.
+\]
+
+\subsection{Diatomic Gases}
+\label{sub:digas}
+
+Consider a molecule made of two atoms. As well as translational motion, it can also:
+\begin{itemize}
+	\item rotate, which is only relevant about two axes perpendicular to the axis of symmetry,
+	\item vibrate along the axis of symmetry.
+\end{itemize}
+Assume these modes are independent. For one particle,
+\[
+Z_1 = Z_{\mathrm{trans}}Z_{\mathrm{rot}}Z_{\mathrm{vib}}.
+\]
+
+Let's start by looking at rotations. The Lagrangian is
+\[
+L_{\mathrm{rot}} = \frac{I}{2}(\dot \theta^2 + \sin^2 \theta \dot \phi^2).
+\]
+The canonical momenta are
+\[
+p_\theta = \frac{\partial L_{\mathrm{rot}}}{\partial \dot \theta} = I \dot \theta, \qquad p_\phi = \frac{\partial L_{\mathrm{rot}}}{\partial \phi} = I \sin^2 \theta \dot \phi.
+\]
+Hence the Hamiltonian is
+\[
+H_{\mathrm{rot}} = \dot \theta p_\theta + \dot \phi p_\phi - L_{\mathrm{rot}} = \frac{p_\theta^2}{2I} + \frac{p_\phi^2}{2I \sin^2\theta}.
+\]
+Therefore the partition function is
+\[
+Z_{\mathrm{rot}} = \frac{1}{(2\pi\hbar)^2} \int \diff \theta \diff \phi \diff p_\theta \diff p_\phi\, e^{-\beta H_{\mathrm{rot}}} = \frac{2I k_B T}{\hbar^2}.
+\]
+Therefore the average rotational energy is
+\[
+	\braket{E_{\mathrm{rot}}}= - \frac{\partial}{\partial \beta} \log Z_{\mathrm{rot}} = \frac{1}{\beta} = k_B T.
+\]
+For translation and rotational contributions, this gives
+\[
+\braket E = \frac{5}{2} k_B T N \implies C_V = \frac{5}{2} N k_B.
+\]
+Now let's look at vibrations. We treat this as a classical harmonic oscillator. Then
+\[
+H_{\mathrm{vib}} = \frac{p_z^2}{2m} + \frac{1}{2} m \omega^2z^2,
+\]
+where $z$ is displacement from the equilibrium, and $\omega$ is the frequency, which is related to the strength of the molecular bond. So
+\[
+Z_{\mathrm{vib}} = \frac{1}{2 \pi \hbar} \int \diff z \diff p_z \, e^{-\beta H_{\mathrm{vib}}} = \frac{k_B T}{\hbar \omega} = \frac{1}{\hbar \omega \beta},
+\]
+and so the average energy is
+\[
+	\braket{E_{\mathrm{vib}}} = k_B T.
+\]
+So the total contribution is
+\[
+\braket E = \frac{7}{2} N k_B T \implies C_V = \frac{7}{2} N k_B.
+\]
+
+%lecture 8
+
+But this is not what is observed in experiment. For example, for $H_2$, we have a graph that looks interesting. Basically it's two step function things.
+\begin{itemize}
+	\item At high $T$ it is correct.
+	\item As  $T$ decreases, the vibrational modes `freeze out', then the rotational modes `freeze out'.
+\end{itemize}
+
+This is a big puzzle. It turns out that the freezing of modes is a quantum effects, and is the first time quantum effects appeared in experiments.
+
+\subsection{Interacting Gas}
+\label{sub_int_gas}
+
+Ideal gas makes the assumptions there is no interactions, and we have
+\[
+pV = N k_B T.
+\]
+This is valid for low densities, i.e. small $N/V$. A general equation of state can be written as an expansion on $N/V$:
+\[
+\frac{p}{k_B T} = \frac{N}{V} + B_2(T) \left( \frac{N}{V} \right)^2 + B_3(T) \left( \frac{N}{V} \right)^3 + \cdots.
+\]
+The \emph{virial expansion}\index{virial expansion} coefficients $B_i(T)$ are virial coefficients. We aim to compute these coefficients from first principles.
+
+The potential between neutral atoms is $u(r)$, which looks like $u \sim -1/r^6$ for large $r$ (van der Waals int). For small $r$ it goes to $\infty$, as repulsion kicks in from Pauli exclusion. One expansion is
+\[
+u(r) \sim \left( \frac{r_0}{r} \right)^{12} - \left( \frac{r_0}{r}\right)^6.
+\]
+This is the Lennard-Jones potential. We will use
+\[
+u(r) =
+\begin{cases}
+	\infty & r < r_0,\\
+	-u_0(r_0/r)^6 & r \geq r_0.
+\end{cases}
+\]
+We can draw a diagram for how this looks. This is the hard-core potential. The Hamiltonian is
+\[
+H = \sum_{i = 1}^m \frac{p_i^2}{2m} + \sum_{i > j} u(r_{ij}).
+\]
+The partition function for this Hamiltonian does not factorize, hence it is hard to do calculations. But we can still write
+\begin{align*}
+	Z(N, V, T) &= \frac{1}{N!} \frac{1}{(2 \pi \hbar)^{3N}} \int \left[ \prod_{i = 1}^N \diff^3 p_i \diff^3 r_i \right] e^{-\beta H} \\
+		   &= \frac{1}{N!} \frac{1}{(2 \pi \hbar)^{3N}} \left[ \int \left[ \prod_{i = 1}^N \diff^3 p_i \right] e^{-\beta \sum_j p_j^2 2m} \right] \left[ \int \prod_{i = 1}^N \diff^3r_i e^{-\beta \sum_{j > k} u(r_{jk})} \right] \\
+		   &= \frac{1}{N! \lambda^{3N}} \int \left( \prod_i \Diff3 r_i \right) e^{-\beta \sum_{j > k} u(r_{jk})}
+\end{align*}
+
+Define the \emph{Mayer $f$ function}\index{Mayer $f$ function}
+\[
+f(r) = e^{-\beta u(r)} - 1.
+\]
+Then with our potential, $f(r) = -1$ for $r < r_0$, and $f(r) \to 0$ as $r \to \infty$. Now define $f_{ij} = f(r_{ij})$. Then
+\begin{align*}
+	Z(N, V, T) &= \frac{1}{N! \lambda^{3N}} \int \left( \prod_{i} \Diff3 r_i \right) \prod_{j > k} \left( 1 + f_{jk} \right) \\
+		   &= \frac{1}{N! \lambda^{3N}} \int \left( \prod_i \Diff3 r_i \right) \left( 1 + \sum_{j > k} f_{jk} + \sum_{\substack{j > k \\ l > m}} f_{jk} f_{lm} + \cdots \right).
+\end{align*}
+The first term is simply
+\[
+\int \prod_i \Diff3 r_i = V^N.
+\]
+Each of the terms with one $f$ is the same, and evaluates to
+\[
+\int \left( \prod_{i = 1}^{N} \Diff3 r_i \right) f_{12} = V^{N - 2} \int \Diff3 r_1 \Diff3 r_2 \, f(r_{12}) = V^{N-1} \int \Diff3 r \, f(r)
+\]
+There are $N(N-1)/2 \approx N^2/2$ of these terms, so
+\begin{align*}
+	Z(N, V, T) &\approx \frac{V^N}{N! \lambda^{3N}} \left[1 + \frac{N^2}{2V} \int \Diff3 r \, f(r) + \cdots \right] \\
+		   &= Z_{\mathrm{ideal}}\left[1 + \frac{N}{2V} \int \Diff3 r \, f(r) + \cdots \right]^{N}.
+\end{align*}
+Hence we find
+\[
+	F = -k_B T \log Z = F_{\mathrm{ideal}} - N k_B T \log \left[1 + \frac{N}{2V} \int \Diff3 \, f(r) + \cdots \right].
+\]
+Using the expansion for $\log$, we find
+\begin{align*}
+	p &= - \frac{\partial F}{\partial V} = \frac{N k_B T}{V} \left(1 - \frac{N}{2V} \int \Diff3 f(r) + \cdots \right) \\
+	\implies \frac{pV}{N k_B T} &= 1 - \frac{N}{2V} \int \Diff3 r \, f(r) + \cdots,
+\end{align*}
+which gives us $B_2(T)$ as required.
+
+\begin{exbox}
+	Suppose that $u(r) > 0$ for all $r$. Then $f(r) = e^{-\beta u} - 1 < 0$ for all $r$. Then the contribution of $B_2(T)$ is positive, hence the pressure increases.
+
+	Similarly, if $u(r) < 0$ for all $r$, then $f(r) > 0$, hence the pressure decreases.
+\end{exbox}
+
+%lecture 9
+
+Let's get back to hard wall repulsion. Recall the formula. Then
+\[
+\int \Diff3 r \, f(r) = \int_0^{r_0} \Diff3 r \, (-1) + \int_{r_0}^\infty \Diff3 r \, ( e^{\beta u_0(r_0/r)^6} - 1).
+\]
+For high temperature $\beta u_0 \ll 1$, so
+\[
+e^{\beta u_0(r_0/r)^6} \approx 1 + \beta u_0 \left( \frac{r_0}{r}\right)^6 + \cdots,
+\]
+and hence we find
+\begin{align*}
+	\int \Diff3 r \, f(r) &= - 4\pi \int_0^{r_0}\diff r \, r^2 + \frac{4 \pi u_0}{k_B T} \int_{r_0}^\infty \diff r \, \frac{r_0^6}{r^4} \\
+			      &= \frac{4 \pi r_0^3}{3} \left( -1 + \frac{u_0}{k_B T} \right),
+\end{align*}
+which gives
+\[
+\frac{p V}{N k_B T} = 1 - \frac{N}{V} \left( \frac{a}{k_B T} - b\right),
+\]
+with coefficients $a = 2 \pi r_0^3u_0/3$, $b = 2 \pi r_0^3/3$. We can rewrite this as
+\begin{align*}
+	k_B T &= \frac{V}{N} \left(p + \frac{N^2}{V^2} a \right)\left(1 + \frac{N}{V} b \right)^{-1} \\
+	      &= \frac{V}{N} \left(p + \frac{N^2}{V^2} a \right)\left(1 - \frac{N}{V} b \right),
+\end{align*}
+hence we get
+\[
+k_B T = \left(p + \frac{N^2}{V^2}a \right)\left( \frac{V}{N} - b \right).
+\]
+This is the Van der Waals equation of state. We can also write
+\[
+p = \frac{N k_B T}{V - bN} - a \frac{N^2}{V^2}.
+\]
+The part $V - bN$ is the reduced volume due to hard atoms, and the negative contribution at the end is the reduced pressure due to the attractive forces.
+
+Note that the volume of each atom is $4 \pi/3 (r_0/2)^3 \neq b$. Moreover the excluded volume around each atom is $\Omega = 4 \pi r_0^3/3 = 2b$. Why is this? Note that the configuration space is
+\begin{align*}
+	\frac{1}{N!} V (V - \Omega)(V - 2 \Omega) \cdots &(V - (N-1)\Omega) = \frac{V^N}{N!} \left(1 - \frac{N^2}{2} \frac{\Omega}{V} + \cdots\right) \\
+&\approx \frac{1}{N!} \left( V - \frac{N \Omega}{2} \right)^N.
+\end{align*}
+
+\newpage
+
+\section{Quantum Gases}
+\label{sec:q_gas}
+
+\subsection{Density of States}
+\label{sub_den_stat}
+
+Consider non-relativistic gas in a box with sides of length $L$, so volume $L^3$. We impose periodic boundary conditions. Then given non-interacting particles, we get energy eigenstates
+\[
+\psi = \frac{1}{V^{1/2}} e^{i \mathbf{k} \cdot \mathbf{x}},
+\]
+where $k_i = 2 \pi n_i/L$, for some $n_i \in \mathbb{Z}$. The energy of the particle is
+\[
+E_n = \frac{\hbar^2 k^2}{2m} = \frac{4 \pi^2 \hbar^2}{2m L^2} (n_1^2 + n_2^2 + n_3^2).
+\]
+The single particle partition function is
+\[
+Z_1 = \sum_n e^{-\beta E_n}.
+\]
+Here the exponent is
+\[
+\beta E_n = \pi \frac{\lambda^2}{L^2} n^2,
+\]
+where recall we defined
+\[
+	\lambda = \sqrt{\frac{2 \pi \hbar^2}{m k_B T}}.
+\]
+If we have a large volume, then $\lambda \ll L$, so we have finely spaced energy levels. Thus we can approximate our sum with an integral
+\[
+\sum_n \approx \int \Diff3 n = \frac{V}{(2 \pi)^3} \int \Diff3 k = \frac{4 \pi V}{(2 \pi)^3} \int k^2 \diff k.
+\]
+We can change the variables to energy, as
+\[
+E = \frac{\hbar^2 k^2}{2m} \implies \diff E = \frac{\hbar^2 k}{m} \diff k,
+\]
+which gives us
+\[
+	\int \Diff 3n = \frac{V}{2\pi^2} \int_0^\infty \frac{m}{\hbar^2} \sqrt{\frac{2mE}{\hbar^2}} \diff E = \int_0^\infty g(E) \diff E,
+\]
+where
+\[
+g(E) = \frac{V}{4 \pi^2} \left(\frac{2m}{\hbar^2} \right)^{3/2} E^{1/2}
+\]
+is the \emph{density of states}\index{density of states}. Hence the number of states with energy between $E$ and $E + \diff E$ is $g(E) \diff E$.
+
+For all systems in a cubic volume with periodic boundary conditions, $\mathbf{k}$ is quantised in the same way. But $g(E)$ depends on the relation between $E$ and $k$ (the dispersion relation). For relativistic systems,
+\[
+	E = \sqrt{\hbar^2 k^2 c^2 + m^2 c^4}.
+\]
+Repeating the same steps, we get
+\[
+	g(E) = \frac{VE}{2\pi^2 \hbar^3 c^3} \sqrt{E^2 - m^2 c^4}.
+\]
+For massless particles, we find
+\[
+g(E) = \frac{VE^2}{2 \pi^2 \hbar^3 c^3}.
+\]
+
+\subsection{Photons}
+\label{sub:phot}
+
+A gas of photons at a fixed temperature $T$ is called \emph{blackbody radiation}\index{blackbody radiation}. This is the light emitted by an object if we ignore its atomic emission/absorption lines, i.e. the light emitted by a black object.
+
+%lecture 10
+
+Photons themselves are massless, with energy $E = \hbar\omega$, where $\omega$ is the frequency, and $\lambda = (2\pi c)/\omega$ is the wavelength, and with two polarization states.
+
+Hence the number of states of a photon with energy from $E$ to $E + \diff E$ is
+\[
+g(E) \diff E = 2 \times \frac{V E^2}{2 \pi^2 \hbar^3 c^3} \diff E.
+\]
+The number of states with frequency between $\omega$ and $\omega + \diff \omega$ is
+\[
+g(E) \diff E = g(\omega) \diff \omega = \frac{V\omega^2}{\pi^2 c^3}\diff \omega.
+\]
+Photons are not conserved. Hence the number of photons is not fixed, and states with any number of photons are accessible. So in the partition function, we need to sum over all number of photons. First, we consider photons with frequency $\omega$. A state with $N$ photons has $E = N \hbar \omega$, so
+\[
+Z_\omega = \sum_{N = 0}^\infty e^{-N \beta \hbar \omega} = \frac{1}{1 - e^{-\beta \hbar \omega}}.
+\]
+Including all frequencies,
+\[
+\log Z = \int_0^\infty \diff \omega \, g(\omega) \log Z_\omega = - \frac{V}{\pi^2 c^3} \int_0^\infty \diff \omega\, \omega^2 \log(1 - e^{-\beta \hbar \omega}).
+\]
+The total energy stored in a gas of photons is
+\[
+E = - \frac{\partial}{\partial \beta} \log Z = \frac{V \hbar}{\pi^2 c^3} \int_0^\infty \diff \omega \, \frac{\omega^3}{e^{\beta \hbar \omega} - 1}.
+\]
+The energy of photons with frequency between $\omega$ and $\omega + \diff \omega$ is
+\[
+E(\omega) \diff \omega = \frac{V \hbar}{\pi^2 c^3} \frac{\omega^3}{e^{\beta \hbar \omega} - 1} \diff \omega.
+\]
+This is the \emph{Planck distribution}\index{Planck distribution}. Now there is a cool diagram showing how the distribution changes with temperature.
+
+The maximum of this distribution is at
+\[
+\frac{\diff E}{\diff \omega} \biggr|_{\omega_{\mathrm{max}}} = 0 \implies \omega_{\mathrm{max}} = \zeta \frac{k_B T}{\hbar},
+\]
+where $3 - \zeta = 3 e^{-\zeta} \implies \approx 2.822$. This is \emph{Wien's law}\index{Wien's law}, and it tells you the colour of a hot object.
+
+If we go back to the total energy, we find it is
+\[
+E = \int_0^\infty E(\omega) \diff \omega = \frac{V(k_B T)^4}{\pi^2 c^3 \hbar^3} \int_0^\infty \frac{x^3}{e^x - 1} \diff x = \frac{V (\pi k_B T)^4}{15 \pi^2 c^3 \hbar^3}.
+\]
+The energy density is then
+\[
+\mathcal{E} = \frac{E}{V} = \frac{\pi^2 k_B^4}{15 \hbar^3 c^3} T^4.
+\]
+This is closely related to the \emph{Stefan-Boltzmann law}\index{Stefan-Boltzmann law}, which states that the energy flux (the rate of transfer of energy from a surface, per unit area) is
+\[
+\frac{\mathcal{E} c}{4} = \sigma T^4,
+\]
+where
+\[
+\sigma = \frac{\pi^2 k_B^4}{60 \hbar^3 c^2}
+\]
+is the Stefan constant.
+
+From the free energy, we can compute other quantities:
+\begin{align*}
+	F &= - k_B T \log Z = \frac{V k_B T}{\pi^2 c^3} \int_0^\infty \diff \omega \, \omega^2 \log(1 - e^{-\beta \hbar \omega}) \\
+	  &= - \frac{V \hbar}{3 \pi^2 c^3} \int_0^\infty \diff \omega \, \frac{\omega^3}{e^{\beta \hbar \omega} - 1} = - \frac{V \hbar}{3 \pi^2 c^3} \frac{1}{\beta^4 \hbar^4} \int_0^\infty \diff x \, \frac{x^3}{e^{x} - 1} \\
+	  &= - \frac{V\pi^2}{45 \hbar^3 c^3} (k_B T)^4 = - \frac{\mathcal{E} V}{3} = - \frac{4 \sigma VT^4}{3c}.
+\end{align*}
+The radiation pressure is
+\[
+p = - \left( \frac{\partial F}{\partial V} \right)_T = \frac{E}{3V} = \frac{4 \sigma}{3c} T^4.
+\]
+The entropy is
+\[
+S = - \left( \frac{\partial F}{\partial T} \right)_V = \frac{16 \sigma V T^3}{3c}.
+\]
+The heat capacity is
+\[
+C_V = \left( \frac{\partial E}{\partial T} \right)_V = \frac{16 V \sigma}{c} T^3.
+\]
+The most accurate example of blackbody radiation known is cosmic microwave background radiation, at $T \approx \qty{2.7}{\kelvin}$.
+
+\subsection{Rayleigh-Jeans Law}
+\label{sub:rjl}
+
+Compare the Planck distribution with the classical result, where there is no minimum energy for a given frequency. This is effectively $\hbar \omega \ll k_B T$, so
+\[
+\frac{1}{e^{\beta \hbar \omega} - 1} \approx \frac{1}{\beta \hbar \omega}.
+\]
+The Planck distribution becomes
+\[
+E(\omega) = \frac{V \omega^2 k_B T}{\pi^2 c^3}.
+\]
+This is \emph{Rayleigh-Jeans Law}\index{Rayleigh-Jeans law}. If we try extrapolate to large $\omega$,
+\[
+E = \int_0^\infty E(\omega) \diff \omega = \infty.
+\]
+This is another example of the breakdown of classical physics.
+
+%lecture 11
+
+\subsection{Debye Model of Phonons}
+\label{sub:db_mod}
+
+The vibrations of a crystal (i.e. sound waves) also come in discrete lumps of energy due to quantum mechanics. These are called \emph{phonons}\index{phonon}. The energy of a phonon is $E = \hbar \omega = \hbar |\mathbf{k}| c_s$, where $c_s$ is the speed of sound. In fact $E = \hbar \omega$ is correct, but $\omega = |\mathbf{k}|c_s$ is an approximation valid for small $|\mathbf{k}|$. In fact,
+\[
+\omega \sim \left| \sin \left( \frac{|\mathbf{k}|a}{2} \right)\right|.
+\]
+Phonons have three polarisations, and the density of states is
+\[
+g(\omega) = 3 \times \frac{V}{2 \pi^2 c_s^3} \omega^2.
+\]
+Note that phonons cannot have arbitrarily high $\omega$. The minimum wavelength is set by the atomic spacing---there is nothing to vibrate on smaller distances.
+
+High $\omega$ implies a small wavelength $\lambda = 2\pi c_s/\omega$, which gives the max frequency $\omega_D$, the \emph{Debye frequency}. We will use the following argument to determine $\omega_D$: consider the number of single-phonon states
+\[
+\int_0^{\omega_D} g(\omega) \diff \omega = \frac{V \omega_D^3}{2 \pi^2 c_s^3}.
+\]
+We identify this with the number of degrees of freedom $3N$, to get
+\[
+\omega_D = \left( \frac{6\pi^2 N}{V} \right)^{1/3} c_s.
+\]
+The Debye temperature is
+\[
+T_D = \frac{\hbar \omega_D}{k_B}.
+\]
+By the time you reach $T_D$, you can excite phonons of all allowed frequency. For lead, $T_D \sim \qty{100}{\kelvin}$, and for diamond $T_D \sim \qty{2000}{\kelvin}$.
+
+Like photons, phonons are not conserved. For a single frequency,
+\[
+Z_\omega = \frac{1}{1 - e^{-\beta \hbar \omega}},
+\]
+like photons. Hence we find
+\[
+\log Z_{\mathrm{phonon}} = \int_0^{\omega_D} \diff \omega\, g(\omega) \log Z_\omega.
+\]
+The total energy in vibrations is
+\[
+\langle E \rangle = - \frac{\partial}{\partial \beta} \log Z_{\mathrm{phonon}} = \frac{3 V \hbar}{2 \pi^2 c_s^3}\int_0^{\omega_D} \frac{\omega^3}{e^{\beta \hbar \omega} - 1} \diff \omega.
+\]
+Substitute $x = \beta \hbar \omega$, then the upper limit becomes $x_D = T_D/T$, and so
+\begin{align*}
+	\langle E \rangle &= \frac{3V}{2 \pi^2 \hbar^3 c_s^3} (k_B T)^4 \int_0^{T_D/T} \frac{x^3}{e^x - 1} \diff x.
+\end{align*}
+This is the single integral, as for photons, but the upper limit is not $\infty$. We have two limits:
+\begin{itemize}
+	\item If $T \gg T_D$, we can Taylor expand
+		\begin{align*}
+			\int_0^{T_D/T}\diff x \, \frac{x^3}{e^x - 1} &= \int_0^{T_D/T}\diff x \, (x^2 + \cdots) \\
+								     &\approx \frac{1}{3} \left( \frac{T_D}{T} \right)^3.
+		\end{align*}
+		Hence we find
+		\[
+		C_V = \left( \frac{\partial E}{\partial T} \right)_V = \frac{V k_B^4 T_D^3}{2\pi^2 \hbar^3 c_s^3} = 3N k_B.
+		\]
+		This is the \emph{Dulong-Petit law}.
+	\item If $T \ll T_D$, then we get
+		\begin{align*}
+			\int_0^\infty \diff x \, \frac{x^3}{e^x - 1} &= \frac{\pi^4}{15} \\
+			\implies C_V &= N k_B \frac{12 \pi^4}{5} \left( \frac{T}{T_D} \right)^3.
+		\end{align*}
+		Once again there is a diagram for how $C_V$ evolves with temperature.
+\end{itemize}
+
+This agrees with experimental data, unlike the earlier Einstein model.
+
+\subsection{Diatomic Gas Revisited}
+\label{sub:dg_rev}
+
+Recall the disagreement between classical physics predictions $C_V = \frac{7}{2} N k_B$, and the experimental results. This `freezing out' is a quantum effect.
+
+Recall that rotations have energy levels
+\[
+E = \frac{\hbar^2}{2I}J(J+1),
+\]
+for $J = 0, 1, 2, \ldots$. This has degeneracy $2J + 1$, hence
+\[
+Z_{\mathrm{rot}} = \sum_{J = 0}^\infty (2J + 1) e^{-\beta \hbar^2 J(J+1)/2I}.
+\]
+For $T \gg \hbar^2/2Ik_B$, we can approximate this by the integral
+\[
+Z_{\mathrm{rot}} \approx \int_0^\infty \diff x \, (2x + 1) e^{-\beta \hbar^2 x(x+1) / 2I} = \frac{2I}{\beta \hbar^2}.
+\]
+This agrees with the classical result. However, if $T \ll \hbar^2/2Ik_B$, then all states except $J = 0$ are unimportant. Hence $Z_{\mathrm{rot}} \approx 1$, and $C_V \approx 0$.
+
+For vibrations, we have
+\[
+	E = \hbar \omega \left(n + \frac12\right).
+\]
+Hence we have
+\[
+Z_{\mathrm{vib}} = \sum_n e^{-\beta \hbar \omega(n+1/2)} = e^{-\beta \hbar \omega} \sum_n e^{-\beta \hbar \omega n} = \frac{e^{-\beta \hbar \omega/2}}{1 - e^{-\beta \hbar \omega}}.
+\]
+For a high temperature, $\beta \hbar \omega \ll 1$, so $Z_{\mathrm{vib}} = 1/\beta \hbar \omega$, which agrees with the classical result. For a low temperature, we have $Z_{\mathrm{vib}} \approx e^{-\beta \hbar \omega/2}$, hence
+\[
+E_{\mathrm{vib}} = \frac{\hbar \omega}{2} \implies C_V = 0.
+\]
+Hence quantum mechanics implies that the modes freeze at low temperature.
+
+%lecture 12
+
+\subsection{Bosons}
+\label{sub:bos}
+
+Our classical treatment of ideal gas is valid if
+\[
+	\lambda = \sqrt{\frac{2 \pi \hbar^2}{m k_B T}} \ll \left( \frac{V}{N} \right)^{1/3},
+\]
+where $V/N$ is the interparticle separation. For low temperature, quantum effects become important (i.e. $\lambda \approx (V/N)^{1/3}$). If there are no interactions, we only need to consider quantum statistics. Recall that quantum particles are indistinguishable and there are two types:
+\begin{itemize}
+	\item \emph{Bosons}\index{boson}: these are integer spin particles, where the wavefunction is symmetric under the interchange of two particles: $\psi(\mathbf{r}_1, \mathbf{r}_2) = \psi(\mathbf{r}_2, \mathbf{r}_1)$.
+	\item \emph{Fermions}\index{fermion}: these are half-integer spin particles, and have anti-symmetric wavefunction $\psi(\mathbf{r}_1, \mathbf{r}_2) = - \psi(\mathbf{r}_2, \mathbf{r}_1)$. Due to this, fermions obey the Pauli exclusion principle: two identical fermions cannot both occupy the same state.
+\end{itemize}
+
+\begin{exbox}
+	Some examples of fermions are: electrons, quarks, neutrinos, protons, neutrinos.
+
+	Some examples of bosons are: photons, gluons, W and Z bosons, and the Higgs boson.
+
+	An atom or nucleus with $N$ fermions is a:
+	\begin{itemize}
+		\item boson if $N$ is even,
+		\item fermion if $N$ is odd.
+	\end{itemize}
+\end{exbox}
+
+Label the single-particle energy states $\ket r$ with energy $E_r$. Say the number of particles in state $\ket r$ is $n_r$. In the canonical ensemble, 
+\[
+	Z = \sum_{\{n_r\}} e^{-\beta n_r E_r},
+\]
+where the sum is over all sets $\{n_r\}$ such that $\sum_r n_r = N$. This constraint is rather awkward to deal with, and it is much easier to work in the grand canonical ensemble where $N$ can fluctuate, and we don't have to impose this constraint.
+
+With no constraint, the occupation number $n_r$ of each state is independent, and for the state $\ket r$, the grand partition function is
+\[
+\mathcal Z_r = \sum_{n_r = 0}^\infty e^{\beta n_r(E_r - \mu)} = \frac{1}{1 - e^{-\beta(E_r - \mu)}}.
+\]
+For the convergence of the sum, we need $(E_r- \mu) > 0$ for all $r$. Picking $E_0 = 0$ as the ground state, we require $\mu < 0$. Because all of the states are independent, the full grand partition function is
+\[
+\mathcal Z = \prod_r \frac{1}{1 - e^{-\beta(E_r - \mu)}}.
+\]
+The average number of particles is
+\[
+N = \frac{1}{\beta} \frac{\partial}{\partial \mu} \log \mathcal Z = \sum_r \frac{1}{e^{\beta(E_r - \mu)} - 1} = \sum_r \langle n_r \rangle,
+\]
+where $\langle n_r \rangle$ is the average number of particles in state $r$. This is the \emph{Bose-Einstein distribution}\index{Bose-Einstein distribution}. We will write $n_r$ for $\langle n_r \rangle$. We have already seen this expression for photons and phonons with $\mu = 0$. This arises because we sum over all the particle numbers.
+
+Define the \emph{fugacity}\index{fugacity} as $z = e^{\beta \mu}$. Then $0 < z < 1$ since $\mu < 0$.
+
+We will now look at an ideal Bose gas, in the non-relativistic setting. Recall that
+\[
+E = \frac{\hbar^2 k^2}{2m}, \qquad g(E) = \frac{V}{4\pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} E^{1/2}.
+\]
+The total number if particles is
+\[
+N(\mu, T, V) = \int \diff E \, g(E) n(E) = \int \diff E \, \frac{g(E)}{z^{-1}e^{\beta E} - 1}.
+\]
+The energy is
+\[
+E(\mu, T, V) = \int \diff E \, \frac{E g(E)}{z^{-1} e^{\beta E} - 1}.
+\]
+The pressure is then
+\begin{align*}
+	pV &= \frac{1}{\beta} \log \mathcal{Z} = - \frac{1}{\beta} \int \diff E \, g(E) \log(1 - z e^{-\beta E}).
+\end{align*}
+We integrate by parts and recall that $g(E) \sim E^{1/2}$, to get
+\[
+pV = \frac{2}{3} \int \diff E \, \frac{E g(E)}{z^{-1} e^{\beta E} - 1} = \frac{2}{3} E.
+\]
+We now look at a high temperature expansion, and try to expand in the limit $z = e^{\beta \mu} \ll 1$. Then
+\begin{align*}
+	\frac{N}{V} &= \frac{1}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \int_0^\infty \diff E \, \frac{E^{1/2}}{z^{-1} e^{\beta E} - 1} = \frac{1}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \int_0^{\infty} \diff E \, \frac{ze^{-\beta E} E^{1/2}}{1 - z e^{-\beta E}} \\
+		    &= \frac{1}{\lambda^2} \frac{2}{\sqrt \pi} \int_0^\infty \diff x \, \frac{x^{1/2} z e^{-x}}{1 - z e^{-x}} = \frac{1}{\lambda^3} g_{3/2}(z),
+\end{align*}
+where we define
+\[
+g_n(z) = \frac{1}{\Gamma(n)} \int_0^{\infty} \diff x \frac{x^{n-1}}{z e^{x} - 1} = \frac{1}{\Gamma(n)} \int_0^\infty \diff x \, \frac{x^{n-1} z e^{-x}}{1 - z e^{-x}}.
+\]
+%lecture 13
+Note that $\Gamma(\frac{3}{2}) = \frac{\sqrt \pi}{2}$ and $\Gamma (\frac{5}{2})= \frac{3 \sqrt \pi}{4}$. Expanding $g_{3/2}(z)$ for $z \ll 1$, we find it is
+\[
+	\frac{2}{\sqrt p} z \int_0^\infty \diff x \, \sqrt x e^{-x} (1 + z e^{-x} + \cdots),
+\]
+and if we sub in $x = u^2$ this gives Gaussian integrals. We can solve to find
+\[
+\frac{N}{V} = \frac{z}{\lambda^3}\left(1 + z \frac{2}{2 \sqrt 2} + \cdots \right).
+\]
+Since $z \ll 1$, this expansion is only consistent if $\lambda^3N/V \ll 1$, i.e. $\lambda \ll V/N$. This is the classical limit, and corresponds to high temperature expansion. Note that if $T \to \infty$, then $\beta \to 0$, and we might expect $z = e^{\beta \mu} \to 1$. But at fixed $N$, $\mu$ depends on $T$. Since $z/\lambda^3$ is fixed for $z \ll 1$, we get $z \sim T^{-3/2}$ as $T \to \infty$.
+
+To get the equation of state, we compute $E$:
+\begin{align*}
+	\frac{E}{V} &= \frac{2z}{\beta \lambda^3 \sqrt \pi} \int_0^\infty \diff x \, x^{3/2} \frac{e^{-x}}{1 - z e^{-x}} = \frac{3}{2} \frac{k_B T}{\lambda^3} g_{5/2}(z) \\
+		    &= \frac{3z}{2 \lambda^3 \beta} \left(1 + \frac{z}{4 \sqrt 2} + \cdots \right).
+\end{align*}
+We want this as a function of $N$, so using our previous formula we may invert $N/V$ to find
+\[
+z = \frac{\lambda^3 N}{V} \left(1 - \frac{1}{2 \sqrt 2} \frac{\lambda^3 N}{V} + \cdots \right)
+\]
+\[
+\implies \frac{E}{V} = \frac{3}{2} \frac{N}{\beta V} \left(1 - \frac{1}{2 \sqrt 2} \frac{\lambda^3N}{V} \right)\left(1 + \frac{1}{4 \sqrt 2} \frac{\lambda^3 N}{V} \right) + \cdots.
+\]
+But $pV = \frac{2}{3}E$, so
+\[
+pV = N k_B T \left(1 - \frac{\lambda^3 N}{4 \sqrt 2 V} + \cdots \right).
+\]
+This corresponds to a contribution from being a classical ideal gas, plus a second virial from quantum statistics. For a high temperature quantum gas of bosons, this degenerates to a classical gas.
+
+We now consider the low temperature limit of an ideal Bose gas. Recall that $\mu \in (-\infty, 0)$ and $z = e^{\beta \mu}$. The high temperature is $z \to 0$, we expect the low temperature to be $z \to 1$. Recall that
+\[
+\frac{N}{V} = \frac{1}{\lambda ^3} g_{3/2}(z).
+\]
+As $T \to \infty$, $\lambda \sim T^{-1/2} \to 0$, but $z \to 0$ and $g_{3/2}(z) \to 0$ to keep $N/V$ fixed. For $T \to 0$, we need to understand $g_n(z)$.
+\begin{align*}
+	g_n(z) &= \frac{1}{\Gamma(n)} \int_0^\infty \diff x \, \frac{ze^{-x} x^{n-1}}{1 - z e^{-x}} \\
+	       &= \frac{1}{\Gamma(n)} \int_0^\infty \diff x \, x^{n-1} z e^{-x} \sum_{m = 0}^{\infty} z^m e^{-mx} \\
+	       &= \frac{1}{\Gamma(n)}\sum_{m = 1}^\infty z^m \int_0^\infty \diff x\, x^{n-1} e^{-mx} \\
+	       &= \frac{1}{\Gamma(n)} \sum_{m = 1}^\infty \frac{z^m}{m^n} \int_0^\infty \diff u \, u^{n-1} e^{-u},
+\end{align*}
+hence we find that
+\[
+g_n(z) = \sum_{m = 1}^\infty \frac{z^m}{m^n} \implies g_n(1) = \zeta(n),
+\]
+the Riemann zeta function, so $\zeta(\frac{3}{2}) \approx 2.612$. So as $T$ decreases, $z \to 1$ and $g_{3/2}(z)$ increases, so $N/V$ is fixed. But at some temperature $T_c$, $z \approx 1$, so
+\[
+\frac{N}{V} = \left( \frac{m k_B T}{ 2 \pi \hbar^2} \right)^{3/2} \zeta \left( \frac{3}{2} \right),
+\]
+hence we get
+\[
+T_c = \frac{2 \pi \hbar^2}{m k_B} \left( \frac{N}{V} \frac{1}{\zeta(3/2)} \right)^{2/3}.
+\]
+If we lower $T < T_c$, then at face value we find that $N/V$ goes down. But this seems nonsensical. In fact, we missed something when we replaced the sum over states with an integral:
+\[
+\sum_n \approx V(\cdots) \int \diff E \, E^{1/2}.
+\]
+Because of $\sqrt E$, there is no density of states for $E = 0$, so the ground state is missing. How many particles are in the ground state? From the Bose-Einstein distribution with $E_0 = 0$,
+\[
+n_0 = \frac{1}{z^{-1} - 1}.
+\]
+For most values of $z \in (0, 1)$, $n_0$ is quite small, so ignoring it doesn't matter. But when $z \approx 1 - 1/N$, we get a large fraction in the ground state. Redoing the calculation with
+\[
+N = \frac{V}{\lambda^3} g_{3/2}(z) + \frac{z}{1-z},
+\]
+we have no problem keeping $N$ fixed as $T \to 0$. For finite $N$, we can never get to $z = 1$, and instead $z$ must level out to $z \approx 1 - 1/N$. The fraction of the particles in the ground state for $T \ll T_c$ is
+\[
+\frac{n_0}{N} = 1 - \frac{V}{N \lambda^3} \zeta \left( \frac{3}{2} \right) = 1 - \left( \frac{T}{T_c}\right)^{3/2}.
+\]
+%lecture 14
+Now we have a diagram showing how $z$ evolves with $T$. For $T \ll T_C$, we have $z \sim 1$, but for $T \gg T_c$, we have $z \sim T^{-3/2}$. For a low temperature, we have a macroscopic number of particles in a single quantum state. This is the \emph{Bose-Einstein condensate}\index{Bose-Einstein condensate}. The equation of state is
+\[
+p = \frac{2}{3} \frac{E}{V} = \frac{k_B T}{\lambda ^3}g_{5/2}(z).
+\]
+For $T \ll T_C$, $z \approx 1$ so
+\[
+p \approx \frac{k_B T}{\lambda^3} \zeta\left( \frac{5}{2} \right) \sim T^{5/2}.
+\]
+This is independent of $N/V$.
+
+\subsection{Phase Transition}
+\label{sub:pha_tr}
+
+A \emph{phase transition}\index{phase transition} is a discontinuity in a physical observable. The formation of the Bose-Einstein condensate is an example.
+
+For an example, we look at the heat capacity.
+\[
+	\frac{C_V}{V} = \frac{1}{V} \frac{\diff E}{\diff T} = \underbrace{\frac{15}{4} \frac{k_B}{\lambda^3} g_{5/2}(z)}_{\text{I}} + \underbrace{\frac{3}{2} \frac{k_B T}{\lambda^3} \frac{\diff g_{5/2}}{\diff z} \frac{\diff z}{\diff T}}_{\text{II}}.
+\]
+Term I contributes for $T < T_c$ and $T > T_c$, but the second term is only important for $T > T_c$. For $T < T_c$,
+\[
+\frac{C_V}{V} \approx \frac{15}{4} \frac{k_B}{\lambda^3} \zeta \left( \frac{5}{2}\right) \sim T^{3/2}.
+\]
+Note that $g_{5/2}(z) < g_{5/2}(1)$, and $\diff z/\diff t < 0$, hence $C_V$ decreases as $T$ increases for $T > T_C$, so $C_V$ has a maximum at $T = T_c$. A long calculation gives, for $T > T_c$,
+\[
+C_V = \frac{15 k_B V}{4 \lambda^3} g_{5/2}(z) - b \left( \frac{T - T_c}{T_c} \right).
+\]
+Another cool drawing goes here. The discontinuity in the derivative of $C_V$ is because
+\[
+\frac{\diff z}{\diff T} \sim
+\begin{cases}
+	- b(T - T_c) & T > T_c,\\
+	0 & T < T_c.
+\end{cases}
+\]
+Note this is actually truly discontinuous only in the $N \to \infty$ limit.
+
+An example of a Bose-Einstein condensate (BEC) is superfluid Helium-4. This is a Bose condensation of strongly interacting atoms. The graph of $C_V$ versus $T$ for Helium-4 is called the $\lambda$-transition, as it looks like a $\lambda$.
+
+\subsection{Fermions}
+\label{sub:ferm}
+
+An important thing for fermions is the Pauli exclusion principle: two fermions cannot occupy the same system. We work in the grand canonical ensemble. The grand partition function for state $\ket r$ is
+\[
+\mathcal{Z}_r = \sum_{n = 0, 1} e^{-\beta n (E_r - \mu)} = 1 + e^{-\beta(E_r - \mu)},
+\]
+as each state is either occupied or unoccupied. There is no restriction on $\mu$, it can be either positive or negative. Now
+\[
+\mathcal{Z} = \prod_r \mathcal{Z}_r,
+\]
+and we find
+\[
+\langle N\rangle = \frac{1}{\beta} \frac{\partial}{\partial \mu} \log \mathcal{Z} = \sum_r \frac{1}{e^{\beta(E_r - \mu)} + 1} = \sum_r \langle n_r \rangle.
+\]
+We will write $n_r = \langle n_r\rangle$ to be the average number of particles in state $\ket r$, so
+\[
+n_r = \frac{1}{e^{\beta(E_r - \mu)} + 1}.
+\]
+This is the \emph{Fermi-Dirac distribution}\index{Fermi-Dirac distribution}. For an ideal Fermi-gas in the non-relativistic setting,
+\[
+E = \frac{\hbar^2 k^2}{2m}.
+\]
+Since Fermions have half-integer spin $s$, there will be a degeneracy $g_s = (2s+1)$. So the density of states is
+\[
+g(E) = \frac{g_s V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} E^{1/2}.
+\]
+Now the total number of particles and the total energy is
+\[
+N = \int \diff E \, \frac{g(E)}{z^{-1} e^{\beta E} + 1}, \qquad E = \int \diff E \, \frac{E g(E)}{z^{-1} e^{\beta E}  + 1.}
+\]
+We can also find
+\[
+p V = k_B T \log \mathcal{Z} = \frac{2}{3} E.
+\]
+This is done by integrating by parts. For high temperature, we can expand for $z \ll 1$. Then
+\[
+pV = N k_B T \left( 1 + \frac{\lambda^3 N}{4 \sqrt 2 g_s V} + \cdots \right).
+\]
+This is a classical ideal gas contribution, plus a contribution which has the opposite sign for bosons. We can also calculate heat capacity, which approaches $3 N k_B/2$, but from below instead of above (as for bosons).
+
+We look at low temperature by starting with the zero temperature case. At $T = 0$, the Fermi-Dirac distribution is very simple:
+\[
+\frac{1}{e ^{\beta(E - \mu)} + 1} \to
+\begin{cases}
+	1 & E < \mu, \\
+	0 & E > \mu.
+\end{cases}
+\]
+Define the \emph{Fermi energy}\index{Fermi energy} as $E_F = \mu$ at $T = 0$, with fixed $N$. Then
+\[
+N = \int_0^{E_F} g(E) \diff E = \frac{g_s V}{6 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} E_F^{3/2}.
+\]
+Rearranging, we find
+\[
+E_F = \frac{\hbar^2}{2m} \left( \frac{6 \pi^2 N}{g_s V} \right)^{2/3}.
+\]
+%lecture 15
+
+This is the characteristic energy scale of the problem. Associated with this is the temperature scale
+\[
+T_F = \frac{E_F}{k_B},
+\]
+the \emph{Fermi temperature}. Now $T_F \sim \qty{10e4}{\kelvin}$ for electrons in metal, whereas $T_F \sim \qty{10e7}{\kelvin}$ for a white dwarf. High temperature corresponds to $T \gg T_F$.
+
+Define the \emph{Fermi momentum}\index{Fermi momentum} $k_F$ such that
+\[
+	\hbar k_F = \sqrt{2m E_F}.
+\]
+All states with momentum $|\mathbf{k}| < k_F$ are filled, and form the \emph{Fermi sea}\index{Fermi sea}. Those states with $|\mathbf{k}| = k_F$ form the \emph{Fermi surface}\index{Fermi surface}.
+
+At $T = 0$, the equation of state is
+\[
+pV = \frac{2}{3} E = \frac{2}{3} \int_0^{E_F} E g(E) \diff E = \frac{2}{3} \frac{3}{5} E_F N = \frac{2}{5} E_F N.
+\]
+So $p \neq 0$ at $T = 0$, which is different from a classical ideal gas. This is called \emph{degeneracy pressure}\index{degeneracy pressure}, which is due to Pauli's exclusion principle. It supports white dwarfs and neutron stars.
+
+For a low temperature Fermi gas, with $T \ll T_F$, we get the following picture which I will not draw. See Tong's notes. Basically the occupancy $n(E)$ is 1 for small energies, and decreases to $0$ around $E_F$. The width of this change is about $k_B T$. At low temperature,
+\[
+\frac{\mu}{k_B T} \approx \frac{E_F}{k_B T} \gg 1 \implies z = e^{\beta \mu} \gg 1.
+\]
+If we want to expand our expression for $E$ at low $T$, keeping $N$ fixed, we need a bit of skill. The rigorous way to do this is tricky, and is known as the Sommerfeld expansion. We will sketch out the result. We claim that
+\[
+	\frac{\diff N}{\diff T} = 0 \text{ at } T = 0 \implies \frac{\diff \mu}{\diff T} = 0 \text{ at } T = 0.
+\]
+Indeed,
+\begin{align*}
+	\frac{\diff N}{\diff T} &= \frac{\diff}{\diff T} \int_0^\infty \diff E \, \frac{g(E)}{e^{\beta(E - \mu)} + 1} \\
+				&= \int \diff E \, g(E) \frac{\diff}{\diff T} \left[ \frac{1}{e^{\beta(E - \mu)} + 1} \right] \\
+				&\approx g(E_F) \int_0^\infty \diff E \left[ \frac{\partial}{\partial T} \left[ \frac{1}{e^{\beta(E - \mu)} + 1} \right] + \frac{\diff \mu}{\diff T} (\cdots) \right],
+\end{align*}
+since this term only varies near $E_F$. Now this last term equals zero if and only if $\diff \mu/\diff T = 0$ at $T = 0$. The first term is
+\begin{align*}
+	&\approx g(E_F) \int_0^\infty \diff E \, \frac{(E - E_F)}{k_B T^2} \frac{e^{\beta(E - E_F)}}{(e^{\beta(E - E_F)} + 1)^2} \\
+	&= g(E_F) \int_0^\infty \diff E \, \left( \frac{E - E_F}{k_B T^2} \right) \frac{1}{4 \cosh^2[\beta(E - E_F)/2]} \approx 0,
+\end{align*}
+since the first term is odd around $E_F$, while the latter is even around $E_F$. The heat capacity is
+\begin{align*}
+	C_V &= \left( \frac{\partial E}{\partial T} \right)_{N, V} = \int_0^\infty \diff E \, [E g(E)] \frac{\partial}{\partial T} \left[ \frac{1}{e^{\beta(E - \mu)} + 1} \right] \\
+	    &\approx \int_0^\infty \diff E \, \left[ E_F g(E_F) + \frac{3}{2} g(E_F) (E - E_F) + \cdots \right] \frac{\partial}{\partial T} \left[ \frac{1}{e^{\beta(E - \mu)} + 1} \right],
+\end{align*}
+by Taylor expanding. The first term vanishes by an odd/even argument, the same we used for $\diff N / \diff T$. The second term survives. Define $x = \beta(E - E_F)$. The
+\[
+C_V \approx \frac{3}{2} g(E_F) T k_B^2 \int_{-\infty}^{\infty} \diff x \, \frac{x^2}{4 \cosh^2(x/2)}.
+\]
+Since only the region near $E_F$ contributes, we can extend the limits. So for low temperatures, $C_V \sim T g(E_F)$. We aim to understand this result.
+\begin{itemize}
+	\item At low $T$, only fermions within $\sim k_B T$ of $E_F$ participate in physics.
+	\item The number of such particles is $g(E_F)$.
+	\item Each gets energy $\sim k_B T$.
+	\item Therefore the total energy is $\sim g(E_F) (k_B T)^2 \implies C_V \sim g(E_F) k_B^2 T$.
+\end{itemize}
+
+Since $N \sim E_F^{3/2}$, we can write $C_V \sim N k_B (T/T_F)$, and $g(E_F) \sim E_F^{1/2}$.
+
+Helium-3 ($2 \prot + 1 \neut + 1 \elec$) is well described as an ideal Fermi gas. It is gaseous down to $\sim \qty{3}{\kelvin}$, and the mass is small, so $\lambda$ is relatively large for $T \sim \qty{10}{\kelvin}$. Therefore the quantum effect is significant.
+
+For metals, despite there being strong interactions between electrons, the free Fermi gas described conductions in metals very well. This is Landau's Fermi liquid theory, and states
+\[
+C_V = \gamma T + \alpha T^3,
+\]
+where the first term comes from electrons, and the latter from phonons. Hence phonons dominate at high $T$. The Debye temperature is the relevant scale for phonons. We have $T_D \sim \qty{10e2}{\kelvin}$, and $T_F \sim \qty{10e4}{\kelvin}$, and they have a comparable contribution at $\sim \qty{1}{\kelvin}$.
+
+%lecture 16
+
+\subsection{Pauli Paramagnetism}
+\label{sub:pp}
+
+A magnetic field affects electrons in two ways:
+\begin{itemize}
+	\item They move in circles (due to $v \times B$ force).
+	\item Their spins are polarised.
+\end{itemize}
+We will discuss the latter. Note that
+\[
+E_{\mathrm{spin}} = \mu_B B s,
+\]
+where $\mu_B = \frac{|e| \hbar}{2mc}$ is the \emph{Bohr magnetism}\index{Bohr magnetism}, and $s$ is the spin. Since spin up and down have difference energies, we have different occupation numbers:
+\begin{align*}
+	\frac{N_\uparrow}{V} &= \frac{1}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \int_0^E \diff E \frac{E^{1/2}}{e^{\beta(E + \mu_B B - \mu)} + 1}, \\
+	\frac{N_\downarrow}{V} &= \frac{1}{4\pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \int_0^\infty \diff E \frac{E^{1/2}}{e^{\beta(E - \mu_B B - \mu)} + 1}.
+\end{align*}
+The \emph{magnetization}\index{magnetization} is
+\[
+M = - \frac{\partial E}{\partial B}.
+\]
+Recall that $E = N_\uparrow \mu_B B - N_\downarrow \mu_B B$, so we easily get
+\[
+M = - \mu_B (N_\uparrow  - N_\downarrow).
+\]
+We calculate this at different limits. At high temperature, let $z = e^{\beta \mu}$. Then the integrals go to
+\[
+\frac{z}{\lambda^3} e^{\mp \beta \mu_B B},
+\]
+as $z \to 0$. Thus
+\[
+M \approx \frac{2 \mu_B V z}{\lambda ^3} \sinh (\beta \mu_B B).
+\]
+The particle number is
+\[
+	N = N_\uparrow + N_\downarrow \sim \frac{2 V z}{\lambda^3} \cosh (\beta \mu_B B),
+\]
+so taking a ratio of these two,
+\[
+M \approx \mu_B N \tanh (\beta \mu_B B).
+\]
+This agrees with classical mechanics, which makes sense as we have seen at high temperature that quantum effects do not matter..
+
+The \emph{magnetic susceptibility}\index{magnetic susceptibility} is
+\[
+\chi = \frac{\partial M}{\partial B}.
+\]
+We find that
+\[
+\chi |_{B= 0} = \frac{N \mu_B^2}{k_B T} \sim \frac{1}{T}.
+\]
+This is \emph{Curie's law}. We can draw an interesting picture to represent how full each region is (see Tong). Probably put this in. At $B = 0$ we get a parabola sort of thing, and as $B$ changes the up and down states get filled at different levels. This causes magnetic fields.
+
+For low temperature, $z \gg 1$. Using low temperature approximation to the integrals,
+\[
+	M \approx \frac{\mu_B V}{\partial \pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} [(E_F + \mu_B B)^{3/2} - (E_F - \mu_B B)^{3/2}] \approx \frac{\mu_B^2 V}{2\pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} E_F^{1/2}B,
+\]
+by expanding and assuming $\mu_B B \ll E_F$. We find that
+\[
+M = \mu_B^2 g(E_F) B \implies \chi = \mu_B^2 g(E_F).
+\]
+This says that only states at the Fermi surface can contribute by flipping their spins, as lower energy states cannot flip as their charge dual is occupied already.
+
+\newpage
+
+\section{Classical Thermodynamics}
+\label{sec:therm}
+
+\subsection{Temperature and the Zeroth Law}
+\label{sub:t_0}
+
+We start with some definitions.
+\begin{itemize}
+	\item A system that is isolated from all outside influences is contained within \emph{adiabatic walls}\index{adiabatic walls}. Refer to such systems as \emph{insulated}\index{insulated}.
+	\item Walls that are not adiabatic are \emph{diathermal}\index{diathermal walls}. Systems that are separated by diathermal walls are in \emph{thermal contact}\index{thermal contact}.
+	\item An isolated system will relax to \emph{equilibrium}\index{equilibrium}, where no further macroscopic change is noticeable.
+\end{itemize}
+
+We have avoided using energy or temperature, as these are not yet defined. The system in equilibrium is described using macroscopic variables, e.g. for a gas, $p$ and $V$ will specify the state. We now go through the laws of thermodynamics, starting with the zeroth.
+
+\begin{center}
+	If two systems $A$ and $B$ are each in equilibrium with $C$, i.e. there is no change when they are brought into thermal contact, then they are also in equilibrium with each other.
+\end{center}
+
+Hence equilibrium is transitive, and this allows us to define temperature. Consider gases $A : (p_1, V_1)$ and $C : (p_3, V_3)$. For generic $(p_1, V_1)$ and $(p_3, V_3)$, there will be a change when the systems are placed in thermal contact. If they are in equilibrium, there is no change, so there is some relationship
+\[
+F_{AC}(p_1, V_1; p_3, V_3) = 0,
+\]
+or
+\[
+V_3 = f_{AC}(p_1, V_1; p_3).
+\]
+But if another gas $B : (p_2, V_2)$ is also in equilibrium with $C$, we also have
+\[
+F_{BC} (p_2, V_2; p_3, V_3) = 0,
+\]
+or
+\[
+V_3 f_{BC}(p_2, V_3; p_3)
+\]
+Hence we get
+\[
+f_{AC}(p_1, V_3; p_3) = f_{BC}(p_2, V_2; p_3).
+\]
+But by the zeroth law,
+\[
+F_{AB}(p_1, V_1; p_2, V_2) = 0.
+\]
+%lecture 17
+
+But this doesn't depend on $p_3$, so it must be possible to cancel $p_3$ on both sides, to get
+\[
+\theta_A(p_1, V_1) = \theta_B(p_2, V_2).
+\]
+The function $\theta_A$ refers only to the properties of $A$; it is a function of the state. It's value is called the \emph{temperature}\index{temperature}, and
+\[
+T = \theta(p, V)
+\]
+is the \emph{equation of state}\index{equation of state}. The above argument says that there exists a property called temperature. We need a reference system, and for that we choose the ideal gas
+\[
+T = \frac{pV}{N k_B}.
+\]
+
+\subsection{The First Law}
+\label{sub:therm_1}
+
+The first law says that the amount of work required to change an isolated system from state $1$ to state $2$ is independent of how the work is performed. This allows us to define another function of state: the energy $E(p, V)$.
+
+Doing some work $W$ on a system in any way you choose will result in a change of energy $\Delta E = W$. For systems that are not isolated, the state can change without doing work, e.g. being placed in thermal contact with another system at a different temperature. We call this other way to transfer energy \emph{heat}\index{heat} $Q$:
+\[
+\Delta E = W + Q.
+\]
+We do not have $E = W + Q$. Once the system gains energy, it does not matter how it got it. Heat is not a type of energy, it is a mode of transferring energy.
+\begin{definition}
+	A \emph{quasi-static}\index{quasi-static} process is effectively in equilibrium at each stage, and can be described by $p, V$ at each stage.
+\end{definition}
+The infinitesimal version of the first law says
+\[
+\diff E = \dbar Q + \dbar W.
+\]
+Here $E$ is a function of state:
+\[
+\diff E = \left( \frac{\partial E}{\partial p} \right)_V \diff p + \left( \frac{\partial E}{\partial V}\right)_p \diff V.
+\]
+There is no such expression for $\dbar Q$ and $\dbar W$, they are just small. We will restrict to one type of work: compressing. The work done is force times distance, so
+\[
+\dbar W = - p \diff V.
+\]
+Note the sign: $\dbar W$ is the work done on the system. There is no function $W(p, V)$ which has $\diff W = - p \diff V$, so this is not an exact differential. Considering the quasi-static paths,
+\[
+\int \diff E = E(p_2, V_2) - E(p_1, V_1)
+\]
+is independent of the path, and
+\[
+\int \dbar W = - \int_{V_1}^{V_2} p(V) \diff V
+\]
+depends on the path taken.
+
+\subsection{The Second Law}
+\label{sub:law_2}
+
+\begin{definition}
+	A \emph{reversible process}\index{reversible process} is a quasi-static process that can be run in reverse (no friction).
+\end{definition}
+
+Consider a loop in the plane. Then $\oint \diff E = 0$, but note that
+\[
+\oint \dbar W = -\oint p \diff V \neq 0,
+\]
+and so
+\[
+\oint \dbar Q = \oint p \diff V,
+\]
+so the heat absorbed or omitted is the work done by or on the object. So going around a reversible cycle transfers heat into work; the second law is the statement that there is an arrow of time in the universe.
+
+Consider the following statements:
+\begin{itemize}
+	\item Kelvin: No process is possible whose sole effect is to convert heat entirely into work.
+	\item Clausius: No process is possible whose sole effect is transfer of heat from a colder body to a hotter body.
+\end{itemize}
+
+We claim that Kelvin not being true implies Clausius is not true. Indeed, suppose we built a Kelvin machine that violates Kelvin's statements and uses work to power a fridge.
+%lecture 18
+
+Suppose a Kelvin machine takes $Q$ heat from a hot reservoir, and converts it into work $W$ that is used to power a fridge. This fridge takes $Q_C$ heat from a cold reservoir, and gives out $Q_H$ heat into the hot reservoir. Then
+\[
+Q_C = Q_H - Q,
+\]
+by conservation of energy, since $W = Q$. This violates Clausius' statement.
+
+A similar argument shows how, if Clausius was not true, then Kelvin is not true. These sorts of machines that extract or deposit heat to reservoirs and do work are called \emph{heat engines}.
+
+\subsection{Carnot Cycle}
+\label{sub:car_cy}
+
+A particle series of reversible processes run in a cycle, operating between two temperatures $T_H$ and $T_C < T_H$. Consider a cycle in the $p, V$ plane, between points $A, B, C, D$. The part between $A, B$ is an isotherm at $T_H$, and the part from $C, D$ is an isotherm at $T_C$. The other pats are adiabats. We describe the entire cycle (draw in cycle at some point):
+\begin{itemize}
+	\item $A\to B$: we have an isothermal expansion at the constant hot temperature $T_H$. Here heat $Q_H$ is absorbed from a reservoir.
+	\item $B \to C$: this is adiabatic expansion. System is isolated, so no heat is absorbed. $T$ decreases.
+	\item $C \to D$: isothermal contraction at constant cold temperature $T_C$. Heat $Q_C$ is dumped into a reservoir.
+	\item $D\to A$: adiabatic contraction. The system is isolated so no heat is emitted. $T$ increases.
+\end{itemize}
+Because we are back at the starting point, the work performed by the system is $W = Q_H - Q_C$.
+
+We can also draw this as a rectangle in the $T, S$ plane. Describe the \emph{efficiency}\index{efficiency} as
+\[
+\eta = \frac{W}{Q_H} = \frac{Q_H - Q_C}{Q_H} = 1 - \frac{Q_C}{Q_H}.
+\]
+We also have a cute drawing of the cycle. \emph{Carnot's theorem}\index{Carnot's theorem} says that of all the engines operating between two heat reservoirs, a reversible engine is the most efficient. This implies all reversible engines have the same efficiency $\eta(T_H, T_C)$.
+
+\begin{proofbox}
+	Consider another ``super-Carnot'' engine, which is not necessarily reversible, and a Carnot engine running in reverse. Let this super-Carnot engine SC pump work into the reverse Carnot engine to power it.
+
+	Suppose SC takes $Q_H'$ heat from the hot reservoir and dumps $Q_C'$ from the cold, and the reverse Carnot takes $Q_C$ from the cold reservoir and converts it into $Q_H$ heat, to pump in the hot reservoir. Then $Q_H' - Q_H = Q_C' - Q_C$ is the heat extracted from the hot engine, and deposited to the cold one. From Clausius, $Q_H' \geq Q_H$, so
+	\[
+	\eta_{\mathrm{SC}} = \frac{W}{Q_H'} \leq \frac{W}{Q_H} = \eta_{\mathrm{Carnot}},
+	\]
+	i.e. $\eta_{\mathrm{Carnot}} \geq \eta_{\mathrm{SC}}$. If the SC engine is reversible, then running it backwards and using a similar argument show $\eta_{\mathrm{SC}} \geq \eta_{\mathrm{Carnot}}$, so $\eta_{\mathrm{SC}} = \eta_{\mathrm{Carnot}}$.
+\end{proofbox}
+
+\subsection{Thermodynamic Temperature Scale}
+\label{sub:tts}
+
+We can use a Carnot cycle to define a temperature. Consider two Carnot engines: one operating between $T_1$, and $T_2 < T_1$, and the other between $T_2$ and $T_3 < T_2$.
+
+Then efficiency only depends on the temperatures:
+\begin{itemize}
+	\item If the first extracts $Q_1$ at $T_1$ and emits $Q_2$ at $T_2$, then
+		\[
+		Q_2 = Q_1(1 - \eta(T_1, T_2)).
+		\]
+	\item If the second takes in $Q_2$ and $T_2$ and emits $Q_3$ at $T_3$, then
+		\[
+		Q_3 = Q_2(1 - \eta(T_2, T_3)) = Q_1(1 - \eta(T_1, T_2))(1 - \eta(T_2, T_3)).
+		\]
+	\item But we could think of the whole system as a Carnot engine operating between $T_1$ and $T_3$, so
+		\[
+		Q_3 = Q_1(1 - \eta(T_1, T_3)).
+		\]
+\end{itemize}
+
+Equating the expressions for $Q_3$,
+\[
+	(1 - \eta(T_1, T_3)) = (1 - \eta(T_1, T_2))(1 - \eta(T_2, T_3)).
+\]
+The factor on $T_2$ must cancel on the right hand side, so
+\[
+1 - \eta(T_1, T_3) = \frac{f(T_3)}{f(T_1)},
+\]
+for some  function $f(T)$. We can pick a function to define a thermodynamic temperature, so $f(T) = T$. Hence
+\[
+\eta(T_1, T_3) = 1 - \frac{T_3}{T_1}.
+\]
+%lecture 19
+
+Let's look at an example of a Carnot ideal gas. All Carnot cycles have the same efficiency. We will compute this for a classical monatomic ideal gas.
+
+For an ideal gas recall the equation of state $pV = Nk_B T$, $E = \frac{3}{2} N k_B T$, and $C_V = \frac{3}{2} N k_B$.
+\begin{itemize}
+	\item Along the isotherms $\diff T = 0$ implies $\diff E = 0$, so from the first law, $\dbar Q = - \dbar W$. So
+		\begin{align*}
+			Q_H &= \int_A^B \dbar Q = - \int_A^B \dbar W = \int_A^B p \diff V \\
+			    &= \int_A^B \frac{N k_B T_H}{V} \diff V = Nk_B T \log(V_B/V_A),
+		\end{align*}
+		along $AB$. Similarly, along $CD$, $Q_C = - N k_B T_C \log(V_D/V_C)$.
+	\item Along the adiabats, $\dbar Q = 0$, so $\diff E = - p \diff V$. But as $\diff E = C_V \diff T = - \frac{Nk_B T}{V} \diff V$, we see
+		\[
+			\frac{\diff T}{T} = - \left( \frac{Nk_B}{C_V} \right) \frac{\diff V}{V} = - \frac{2}{3} \frac{\diff V}{V} \implies \log T = - \frac{2}{3} \log V + \text{const},
+		\]
+		hence $T V^{2/3}$ is constant. So $B \to C$, $T_H V_B^{2/3} = T_C V_C^{2/3}$, and $D \to A$ shows $T_C V_D^{2/3} = T_H V_A^{2/3}$. Dividing,
+		\[
+		\frac{V_A}{V_B} = \frac{V_D}{V_C} \implies \frac{Q_H}{Q_C} = \frac{T_H}{T_C} \frac{\log(V_B/V_A)}{\log(V_D/V_C)} = \frac{T_H}{T_C}.
+		\]
+\end{itemize}
+Hence the efficiency of the Carnot cycle is
+\[
+\eta_{\mathrm{carnot}} = 1 - \frac{Q_C}{Q_H} = 1 - \frac{T_C}{T_H}.
+\]
+This is true for all Carnot cycles of any system.
+
+\subsection{Entropy}
+\label{thm_ent}
+
+For a Carnot cycle,
+\[
+\frac{Q_H}{T_H} = \frac{Q_C}{T_C}.
+\]
+Or, if we write $Q_1 = Q_H$, $T_1 = T_H$, $Q_2 = -Q_C$ and $T_2 = T_C$, then
+\[
+\sum_{i = 1}^2 \frac{Q_i}{T_i} = 0.
+\]
+Here $Q_i$ all represent the heat in. Consider reversible cycle $ABCD$ and $EBFD$. Then along $ABCD$,
+\[
+\frac{Q_{AB}}{T_H} + \frac{Q_{CD}}{T_C} = 0.
+\]
+Along $EBFD$,
+\[
+\frac{Q_{EB}}{T_H} + \frac{Q_{FG}}{T_{FG}} = 0.
+\]
+For $AEGFCD$,
+\[
+\frac{Q_{AE}}{T_H} + \frac{Q_{GF}}{T_{FG}} + \frac{Q_{CD}}{T_C} = 0.
+\]
+Breaking up further, we may arbitrarily approximate any path, hence
+\[
+\oint \frac{\dbar Q}{T} = 0,
+\]
+for reversible processes. In particular, for any two paths between $A$ and $B$, say $C_1$ and $C_2$,
+\[
+\int_{C_1} \frac{\dbar Q}{T} = \int_{C_2} \frac{\dbar Q}{T},
+\]
+for reversible states. Hence there is a new function of state we have not seen yet. This is \emph{entropy}\index{entropy}
+\[
+S(A) = \int_0^{A} \frac{\dbar Q}{T},
+\]
+where $0$ is some reference state, and we integrate along some reversible process. Now $S(p, V)$ is a function of state. Note
+\[
+\diff E = \dbar Q + \dbar W = T \diff S - p \diff V.
+\]
+This is the same entropy as the entropy we introduced when counting microstates.
+
+For an irreversible engine extracting $Q_H'$ at $T_H$, and emitting $Q_C'$ at $T_C$ doing the same work $W$ as a Carnot engine extracting $Q_H$ and emitting $Q_C$,
+\begin{align*}
+	W &= Q_H' - Q_C' = Q_H - Q_C \\
+	\implies \frac{Q_H'}{T_H} - \frac{Q_C'}{T_C} &= \frac{Q_H}{T_H} - \frac{Q_C}{T_C} + (Q_H' - Q_H) \left( \frac{1}{T_H} - \frac{1}{T_C} \right)\\
+										 &= (Q_H' - Q_H) \left( \frac{1}{T_H} - \frac{1}{T_C}\right).
+\end{align*}
+Note that as $T_H > T_C$, the latter term is less than $0$. Note also $\eta' < \eta_{\mathrm{carnot}}$, so $Q_H' > Q_H$ as they do equal work. Thus
+\[
+\frac{Q_H'}{T_H} - \frac{Q_C'}{T_C} \leq 0,
+\]
+with equality if $\eta' = \eta_{\mathrm{carnot}}$. Considering lots of small (not necessarily reversible) processes, using the same method as before,
+\[
+\oint \frac{\dbar Q}{T} \leq 0,
+\]
+with equality if our process is reversible. Consider two paths $C_1$ and $C_2$ from $A$ to $B$. Suppose $C_1$ is irreversible, whereas $C_2$ is reversible. Then
+\[
+\oint \frac{\dbar Q}{T} = \int_{C_1} \frac{\dbar Q}{T} - \int_{C_2} \frac{\dbar Q}{T} \leq 0,
+\]
+hence
+\[
+\int_{C_1} \frac{\dbar Q}{T} \leq S(B) - S(A).
+\]
+Now here's the punchline. Suppose path $1$ is adiabatic, i.e. isolated. Then $\dbar Q = 0$ on path $1$, so $S(B) \geq S(A)$. This shows entropy never decreases in an isolated system.
+%lecture 20
+
+\subsection{Thermodynamic Potential}
+\label{sub:thm_pot}
+
+We now have several functions of state: $E, S$ and $T$. We can choose almost any two of $p, V, E, T, S$ to specify the state. It is most natural to think of $E = E(S, V)$, so
+\[
+\diff E = T \diff S - p \diff V.
+\]
+Taking mixed partial derivatives gives
+\[
+\frac{\partial^2 E}{\partial S \partial V} = \left( \frac{\partial T}{\partial V}\right)_S = - \left( \frac{\partial p}{\partial S} \right)_V.
+\]
+This is a \emph{Maxwell relation}\index{Maxwell relation}. It holds for all systems. We can also define the \emph{Helmholtz free energy}
+\[
+F = E - TS \implies \diff F = - S \diff T - p \diff V,
+\]
+and the \emph{Gibbs free energy}
+\[
+G = E + pV - T S \implies \diff G = - S \diff T + V \diff p,
+\]
+and the \emph{enthalpy}\index{enthalpy}
+\[
+H = E + p V \implies \diff H = T \diff S + V \diff p.
+\]
+Each of the thermodynamic potentials gives a Maxwell relation. We can also get results by taking further derivatives, e.g.
+\[
+C_V - C_p = T \left( \frac{\partial S}{\partial T} \right)_V - T \left(\frac{\partial S}{\partial T} \right)_p = T \left( \frac{\partial V}{\partial T} \right)_p \left( \frac{\partial p}{\partial T} \right)_V.
+\]
+\begin{remark}
+	Recall the Gibbs free energy. Recall that it also depends on $N$, so in fact should be $G(T, p, N)$. Hence
+	\[
+		\diff G = - S \diff T + V \diff p + \mu \diff N.
+	\]
+	Since it is extensive,
+	\begin{align*}
+		 & G(T, p, \lambda N) = \lambda G(T, p, N) \\
+		\implies & G(T, p, N) = \mu(T, p) N.
+	\end{align*}
+\end{remark}
+
+\subsection{The Third Law}
+\label{sub:law3}
+
+The third law says that
+\[
+	\frac{S}{N} \to 0 \text{ as } T \to 0 \text{ and } N \to \infty.
+\]
+This does not give us a new function of state. Recall
+\[
+S(B) - S(A) = \int_A^B \diff T \frac{C_V}{T} \implies C_V \to T^n
+\]
+as $T\to 0$ for some $n > 0$ (or faster), otherwise the integral does not converge.
+
+The heat capacity of a classical ideal gas is constant, and would violate this. Including quantum effects, heat capacities satisfy this. Hence low temperature needs quantum description.
+
+\newpage
+
+\section{Phase Transitions}
+\label{sub:pt}
+
+A \emph{phase transition}\index{phase transition} is an abrupt, discontinuous change in properties of a system.
+
+\subsection{Liquid-Gas Transition}
+\label{sub:lgt}
+
+Recall the van-der-Waals equation
+\[
+p = \frac{k_B T}{v - b} - \frac{a}{v^2},
+\]
+where $v = V/N$, and density is $\rho = 1/v$. Plotting the isotherms on the $(p, v)$ plane, we get a picture! Which is not here. But look at Tong. For $T > T_C$, this is monotonically decreasing. $T = T_C$ is special, and for $T < T_C$ there are two turning points.
+
+We can determine $T_C$ from finding when there is a single point of inflection, i.e.
+\[
+\frac{\partial p}{\partial v} = \frac{\partial^2 p}{\partial v^2} = 0 \implies k_B T_C = \frac{8a}{27 b}.
+\]
+Consider $T < T_C$. The problem is now, for fixed pressure, there are three possible densities, $A$, $B$ and $C$.
+\begin{itemize}
+	\item At solution $B$, $\partial p/\partial v > 0$. Physically, what this means is if we squeeze the system, its pressure decreases, and if it expands the pressure increases. This means the solution is unstable.
+	\item At solution $A$, $v > b$, so atoms are closely packed, and $|\partial p/\partial v|$ is large, so it is hard to compress. This is a \emph{liquid}.
+	\item At solution $C$, $v \gg b$, and $|\partial p/\partial v|$ is small, which corresponds to a \emph{gas}.
+\end{itemize}
+
+What replaces solution $B$? This is what we will discuss.
+
+So far, we have assumed constant density. But with two phases (liquid and gas), they can coexist. Looking at the conditions for equilibrium, they must have:
+\begin{itemize}
+	\item The same temperature.
+	\item The same pressure.
+	\item The same chemical potential.
+\end{itemize}
+We have shown the first two, but not the third. How can we check that $\mu_{\mathrm{liquid}} = \mu_{\mathrm{gas}}$? Moving along the isotherm, consider $\mu(p, T)$, so
+\[
+\diff \mu = \left( \frac{\partial \mu}{\partial p}\right)_T \diff p.
+\]
+Singe $G(p, T, N) = \mu(p, T)$ and $\diff G = - S \diff T + V \diff p + \mu \diff N$,
+\[
+\left( \frac{\partial \mu}{\partial p} \right)_T N = \left( \frac{\partial G}{\partial p} \right)_{N, T} = V.
+\]
+%lecture 21
+
+We now check that $\mu_{\mathrm{gas}} = \mu_{\mathrm{liquid}}$. Integrating this relation along an isotherm,
+\[
+\mu(p, T) = \mu_{\mathrm{liquid}} + \int_{p_{liquid}}^p \frac{V(p', T)}{N} \diff p'.
+\]
+Hence for $\mu_{\mathrm{liquid}}$ to equal $\mu_{\mathrm{gas}}$, we need the area of the shaded regions to be equal. (See diagram which I don't) have. For fixed $T$, this means there is a unique $p$ at which liquid and gas coexist. This defines the \emph{co-existence curve}, a parabola sort of thing where for each temperature, we have the pressure at which co-existence exists.
+
+Inside the co-existence curve, liquid and gas can both coexist. Hence the average density can vary at fixed $p$. For these pressures, we can have a mixture of liquids and gas.
+
+For example, if we start at $T > T_C$ and start to cool, then we get a phase transition.
+
+Now consider the curves of the maxima and minima, known as the \emph{spinodal curve}. The area within is the unstable region, with $\diff p / \diff V > 0$. Phase equilibrium will remove this, but all other points shown in the shaded region.
+
+These regions are \emph{meta-stable}\index{meta-stable}, for example supercooled vapour, or superheated liquid. They exist, but small disturbances will lead to phase separation.
+
+\subsection{Clausius-Clapeyron Equation}
+\label{sub:cceq}
+
+Consider the $p$-$T$ plane (again we have another diagram). For $T < T_C$, there are two distinct states, liquid and gas, separated by a line of discontinuities, i.e. phase transitions. For $T > T_C$, there is no distinction between the two. At $T = T_C$, we have a critical point. On either side of the line, all particles are either in gas or liquid phase.
+
+\subsection{Gibbs Free Energy}
+\label{sub:gfe}
+
+Recall the Gibbs free $G = E + p V - T S$ is minimized at equilibrium at constant $p, T$. To see this,
+\begin{itemize}
+	\item Look at our microcanonical ensemble.
+	\item Alternatively, we have equations
+		\[
+		\diff G = \diff E + p \diff V - T \diff S,
+		\]
+		and we know
+		\[
+		\diff E = \dbar Q - p \diff V.
+		\]
+		Hence combining,
+		\[
+		\diff G = \dbar Q - T \diff S.
+		\]
+		But $T \diff S \geq \dbar Q$ from the second law, so $\diff G \leq 0$, and $G$ is minimised at equilibrium, which is constant $p$ and $T$.
+\end{itemize}
+
+Look at the phase transition line again. We have $\mu_{\mathrm{liquid}}  = \mu_{\mathrm{gas}}$. How does $\mu$ change as we move along this line? Note
+\begin{align*}
+	\diff \mu_{\mathrm{liquid}} &= - \frac{S_{\mathrm{liquid}}}{N_{\mathrm{liquid}}} \diff T + \frac{V_{\mathrm{liquid}}}{N_{\mathrm{liquid}}} \diff p = - s_l \diff T + v_l \diff p \\
+				    &= \diff \mu_{\mathrm{gas}} = - s_g \diff T + v_g \diff p,
+\end{align*}
+hence equating we get
+\[
+\frac{\diff p}{\diff T} = \frac{s_g - s_l}{v_g - v_l} = \frac{L}{T(v_g - v_l)},
+\]
+which is the \emph{Clausis-Clapeyron equation}. This tells us the state of the line, and $L = T(s_g - s_l)$ is the latent heat.
+%lecture 22
+
+A phase transition is:
+\begin{itemize}
+	\item First order/discontinuous---there is a discontinuity in the first derivative of free energy.
+	\item Second order/continuous---the first derivative of free energy is continuous, but there is a discontinuity or divergence in the second derivative.
+\end{itemize}
+For $T < T_C$,
+\[
+V = \left( \frac{\partial G}{\partial p} \right)_T
+\]
+is discontinuous, hence first order. $S$ is also a discontinuity. For $T \to T_C$, $v_l \to v_g$, this is second order or continuous.
+
+For most materials, this liquid-gas phase transition is part of a larger phase diagram which includes solids. Generically, it looks like this: (insert picture). For high pressure, low temperature we have a solid, for intermediate values a liquid, and at high temperature, low pressure we have gas. The critical point between gas and liquid is still there, but there is also a triple point. For water $T_c \approx \qty{647}{\kelvin}$, and $p_c \approx \qty{218}{atm}$.
+
+Looking at the critical point in more detail,
+ \[
+p = \frac{k_B T}{v - b} - \frac{a}{v^2} \implies pv^3 - (pb + k_B T)v^2 + av - ab = 0.
+\]
+For $T = T_C$, we have three degenerate roots, hence this takes the form $p_c(v - v_c)^3 = 0$. From this we can deduce
+\[
+k_B T_c = \frac{8a}{27b}, \qquad v_c = 3b, \qquad p_c = \frac{a}{27b^2}.
+\]
+Define reduced variables
+\[
+\bar T= \frac{T}{T_C}, \qquad \bar v = \frac{v}{v_C}, \qquad \bar p = \frac{p}{p_C}.
+\]
+Then the van der Waals equation has the same for all gases
+\[
+\bar p = \frac{8}{3} \frac{\bar T}{\bar v - 1/3} - \frac{3}{\bar v^2}.
+\]
+This is the law of corresponding states. It predicts a universal ratio
+\[
+\frac{p_cv_c}{k_B T_c} = \frac{3}{8} = 0.375.
+\]
+Experimental values are around $0.28$ to $0.3$. We can plot the coexistence curve $\bar T$ versus $\bar v$. If all gases sit on the same line, then this shows universality.
+
+\subsection{Critical Exponents}
+\label{sub:ce}
+
+Consider the behaviour as we approach the critical point. We will investigate a few questions.
+\begin{itemize}
+	\item How does $v_l - v_g$ vary as we approach the critical point along the coexistence curve? Recall that
+		\[
+		p = \frac{8 \bar T}{3 \bar v_l - 1} - \frac{3}{\bar v_l^2} = \frac{8 \bar T}{3 \bar v_g - 1} - \frac{3}{\bar v_g^2}.
+		\]
+		\[
+		\implies \bar T = \frac{(3 \bar v_l - 1)(3 \bar v_g - 1)(\bar v_l + \bar v_g)}{8 \bar v_g^2 \bar v_l^2}.
+		\]
+		Expanding for small $\bar v_g - \bar v_l$,
+		\begin{align*}
+			\bar T &\approx 1 - \frac{1}{16}(\bar v_g - \bar v_l)^2 \\
+			\implies \bar v_g &- \bar v_l \sim (T_C - T)^\beta,
+		\end{align*}
+		where $\beta = 1/2$.
+	\item How does pressure vary with volume on the critical isotherm $T = T_C$?. At $T = T_C$, there is a unique $p(v, T_C)$, and
+		\[
+		\left( \frac{\partial p}{\partial v} \right) = \left( \frac{\partial^2 p}{\partial v^2} \right) = 0 \implies (p - p_C) \sim (v - v_C)^\delta,
+		\]
+		where $\delta = 3$.
+	\item How does the compressibility
+		\[
+		\kappa = - \frac{1}{v} \left( \frac{\partial v}{\partial p} \right)_T
+		\]
+		change as we approach $T \to T_C$ from above? At $T = T_C$, again change in pressure is $0$, so we expect
+		\[
+		\left( \frac{\partial p}{\partial v} \right)_T = - A(T - T_C)
+		\]
+		at $v = v_c$, hence we find
+		\[
+		K \sim (T - T_C)^{-\gamma},
+		\]
+		for $\gamma = 1$.
+\end{itemize}
+
+Note our answers for the latter two problems only needed the assumption of analytic behaviour close to the critical point, and we might expect them to be correct even if the vdW equation is wrong. $\beta, \delta, \gamma$ are examples of \emph{critical exponents}\index{critical exponent}. Experimental results show that
+\[
+\beta \approx 0.32, \qquad \delta \approx 4.8, \qquad \gamma \approx 1.2.
+\]
+We are missing something. What are we missing (beyond the approximation in vdW)? It turns our we are missing \emph{fluctuations}. Consider the grand canonical ensemble. Usually, we have
+\[
+\frac{(\Delta N)}{N} \approx \frac{1}{\sqrt N},
+\]
+where $\Delta N$ gives us our density fluctuates. Recall that
+\[
+\log \mathcal{Z} = \beta V p(T, \mu),
+\]
+and we can express
+\begin{align*}
+	\langle N \rangle &= \frac{1}{\beta} \frac{\partial}{\partial \mu}(\log \mathcal{Z})_{T, V} = V \left( \frac{\partial p}{\partial \mu} \right)_{T, V}, \\
+	(\Delta N)^2 &= \frac{1}{\beta} \left( \frac{\partial \langle N \rangle}{\partial \mu} \right)_{T, V}, \\
+	\frac{(\Delta N)^2}{\langle N\rangle} &= \frac{1}{V \beta} \left( \frac{\partial \langle N \rangle}{ \partial \mu} \right)_{T, V} \left( \frac{\partial \mu}{\partial p} \right)_{T, V} = \frac{1}{V \beta} \left( \frac{\partial \langle N \rangle}{\partial p} \right)_{T, V} \\
+	\frac{(\Delta N)^2}{N} &= \frac{1}{\beta} \left( \frac{\partial \langle N \rangle}{\partial V} \right)_{p, T} \left[ -\frac{1}{V} \left( \frac{\partial V}{\partial p}\right)_{N, T} \right].
+\end{align*}
+This last term tends to infinity at the critical point, so the fluctuations are large. Understanding how to deal with this correctly is the subject of critical phenomena.
+%lecture 23
+
+\subsection{The Ising Model}
+\label{sub:is_mod}
+
+The \emph{Ising model}\index{Ising model} consists of $N$ sites in a $d$-dimensional lattice, and a spin variable on each site $i$:
+\[
+s_i = 
+\begin{cases}
+	+1 & \text{spin up},\\
+	-1 & \text{spin down}.
+\end{cases}
+\]
+The overall energy is
+\[
+E = -J \sum_{\langle i j \rangle} s_i s_j - B \sum_{i = 1}^N s_i,
+\]
+where the first term is a sum over nearest neighbour pairs, and $B$ is the magnetic field. We now have some drawings of hermaphrodites in various dimensions. Let $q$ be the number of nearest neighbours.
+
+\begin{itemize}
+	\item If $J > 0$, then spins want to align, giving a ferromagnet.
+	\item If $J < 0$, then spins want to anti-align, giving an anti-ferromagnet.
+\end{itemize}
+We will consider $J > 0$. In the canonical ensemble,
+\[
+	Z = \sum_{\{s_i\}} e^{-\beta E[s_i]}.
+\]
+Define the \emph{average magnetisation}\index{average magnetisation}
+\[
+m = \frac{1}{N} \sum_i \langle s_i \rangle = \frac{1}{N \beta} \frac{\partial \log Z}{\partial B}.
+\]
+
+In mean field theory, we make the following approximation: fluctuations around the average are small, so
+\begin{align*}
+	s_i s_j &= [(s_i - m) + m][(s_j - m) + m] \\
+		&= (s_i - m)(s_j - m) + m (s_j - m) + m (s_i - m) + m^2.
+\end{align*}
+We will assume we can neglect the first terms when we calculate $E$. Then
+\begin{align*}
+	E_{\mathrm{mf}} &= J \sum_{\langle i j \rangle} [m(s_i + s_j) - m^2] - B \sum_i s_i \\
+			&= \frac{1}{2} J N q m^2 - (Jqm + B)\sum_i s_i.
+\end{align*}
+This is now a similar problem we have seen before, with $B_{\mathrm{eff}} = B + J qm$. Then
+\begin{align*}
+	Z &= e^{-\frac{1}{2} \beta J N q m^2} \left( e^{-\beta B_{\mathrm{eff}}} + e^{\beta B_{\mathrm{eff}}} \right)^N \\
+	  &= e^{-\frac{1}{2} \beta J N q m^2} 2^N \cosh^N(\beta B_{\mathrm{eff}}).
+\end{align*}
+But this still depends on $m$, which we don't know. We can determine $m$ self-consistently:
+\[
+m = \frac{1}{N \beta} \frac{\partial \log Z}{\partial B} = \tanh ( \beta B + \beta J qm).
+\]
+We can use this to find $m$. First we consider $B = 0$, which corresponds to $m = \tanh(\beta J qm )$.
+\begin{itemize}
+	\item If $\beta J q < 1$, i.e. $k_B T > Jq$, then graphically the only solution is $m = 0$.
+	\item If $\beta J q > 1$, i.e. $k_B T < Jq$, then we now have three solutions: $m = 0$ and $m = \pm m_0$. The former is unstable. As $T \to 0$, we expect $m \to \pm 1$, i.e. all spins are up or down.
+	\item We have critical temperature $k_B T_C = Jq$. Here bifurcation occurs, and an abrupt change occurs as $T$ is decreased through $T_C$, as although $m$ is continuous the derivative is discontinuous, giving a second order phase transition.
+\end{itemize}
+
+We now look at solutions for $B \neq 0$. Taylor expanding for small $\beta B$ and $m$, we find
+\[
+	m \to \frac{B}{k_B T}\text{ as } T \to \infty.
+\]
+This goes smoothly to zero. Moreover, now there is no ambiguity whether we go to $+m_0$ or $-m_0$ at low temperature, as we always pick he sign of $B$.
+
+However, $m$ changes discontinuously if we vary $B$ from $B > 0$ to $B < 0$, for $T < T_C$. This gives a first order phase transition. Compare this diagram to the $(p, T)$ diagram and boundary between liquid and gas.
+
+We now compute the critical exponents.
+\begin{itemize}
+	\item How does $m$ decrease at $B = 0$, as we approach the critical point? Note for small $m$,
+		\begin{align*}
+			m &\approx \beta J q m - \frac{1}{3} (\beta J q m)^3 + \cdots \\
+			\implies m_0 &\sim \pm (T_C - T)^{1/2},
+		\end{align*}
+		so the exponent is $\beta = 1/2$.
+	\item How does $m$ vary with $B$ at $T = T_C$? Since $\beta J q = 1$, we have
+		\begin{align*}
+			m &= \tanh \left( \frac{B}{J q} + m\right) \\
+			  &\approx \frac{B}{Jq} + m - \frac{1}{3} \left( \frac{B}{Jq} + m \right)^3 + \cdots \\
+			\implies m &\sim B^{1/3},
+		\end{align*}
+		so $\delta = 3$.
+\end{itemize}
+
+
+\newpage
+
+\printindex
+
+\end{document}

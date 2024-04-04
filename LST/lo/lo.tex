@@ -1,0 +1,113 @@
+\documentclass[12pt]{article}
+
+\usepackage{ishn}
+\usepackage{upgreek}
+
+\makeindex[intoc]
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1em}
+		\Huge
+		\textbf{II Large Ordinals}
+
+		\vspace{1em}
+		\large
+		Ishan Nath, Lent 2023
+
+		\vspace{1.5em}
+
+		\Large
+
+		Based on Lectures by Prof. Imre Leader
+
+		\vspace{1em}
+
+		\large
+		\today
+	\end{center}
+	
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\tableofcontents
+
+\newpage
+
+\section{The First Interesting Ordinal}
+
+The first interesting ordinal is $\epsilon_0$: the first fixed point of $\omega^{\alpha}$.
+
+The interesting property has to do with PA: Peano Arithmetic. Famously G\"{o}del showed PA is incomplete: $\mathsf{PA} \not \vdash CON(\mathsf{PA})$.
+
+$\epsilon_0$ is the first ordinal that PA can't prove is a well-ordering.
+\begin{center}
+	$\epsilon_0$ is the proof-theoretic ordinal of PA.
+\end{center}
+
+What does this mean? If we take $\omega + \omega$, there exists a relation on $\mathbb{N}$, which gives a well-ordering of order-type $\omega+\omega$, and is computable.
+
+PA proves, for any $p$ and well-ordering,
+\[
+	\mathsf{PA} \vdash (\forall x)((\forall y)(y R x \Rightarrow p(y)) \Rightarrow p(x)).
+\]
+A digression: consider the fast-growing hierarchy: $f_1(x) = 2x, f_2(x) = 2^{x} = f_1^{(x)}(1), f_3(x) = 2^{2^{\cdots}} = f_2^{(x)}(1)$.
+
+Then $f_{\omega}(x) = f_x(x), f_{\omega+1}(x) = f_{\omega}^{(x)}(1)$, and we can keep going till $f_{\epsilon_0}$.
+
+Now consider the statement $(\forall x)(\exists y)p(x,y)$. If the least such $y$ (as a function of $x$) grows as fast as $f_{\epsilon_0}$, then $\mathsf{PA}$ cannot prove it.
+
+In 1930's, Gentzen proved that, given a proof of $t$ from PA, one can associate an ordinal $< \epsilon_0$, and associate a rooted tree of decreasing ordinals starting from $t$.
+
+Gentzen also showed if $PA \vdash \bot$, then there would be an infinitely decreasing branch, which cannot happen as ordinals.
+
+Moreover, if PA proves $\epsilon_0$, running this process would produce an infinite tree.
+
+\section{The second interesting ordinals}
+
+Let's look at $\Gamma_0$. First, define $0 \ast \alpha = w^{\alpha}$. Then let $1 \ast \alpha$ be the $\alpha$'th fixed point of $\beta \to 0 \ast \beta$, namely $1 \ast \alpha = \epsilon_{\alpha}$.
+
+Similarly, there are fixed points of $1 \ast \alpha$, so let $2 \ast \alpha$ be the $\alpha$'th fixed point of $\beta \mapsto 1 \ast \beta = \epsilon_{\beta}$. We have $2 \ast 0 = \epsilon_{\epsilon_{\cdots}} = \zeta_0$.
+
+We can continue to get $n \ast \alpha$, and then define $\omega \ast \alpha = \sup\{n \ast \alpha \mid n \in \mathbb{N}\}$. We can define $\omega + 1 \ast \alpha$ similarly.
+
+The question is whether there exists $\alpha$ such that $\alpha \ast 0 = \alpha$. The answer is yes, as let $\alpha_0 = 0$, $\alpha_{n+1} = \alpha_n \ast 0$, then taking the supremum.
+
+The fixed point is then $\Gamma_0$, which is said to be inpredicative.
+
+We can keep going. Let $1 \ast 0 \ast 0 = \Gamma_0$, and $1 \ast 1 \ast \alpha$ be the $\alpha$'th fixed point of $\beta \mapsto 1 \ast 0 \ast \beta$. Keeping on going, we get $\alpha \ast 0 \ast 0$, and the fixed point is the Ackermann ordinal.
+
+Going further, $\sup\{1 \ast 0, 1 \ast 0 \ast 0, 1 \ast 0 \ast 0 \ast 0, \ldots\}$ is the small Veblen ordinal. We can also keep going, define $1 \ast 0 \ast 0 \ast \cdots$ infinitely many times, and get the fixed point to get the large Veblen ordinal.
+
+\section{The third interesting ordinal}
+
+Let's look at $B$, the Bachmann-Howard ordinal.
+
+This is constructed by a function $\phi$, using $0, 1, + , \cdot, \hat{}, \omega$ and $\omega_1$, meaning an ordinal that is bigger than any other ordinal.
+
+Then we define $\phi(\alpha)$ to be the least ordinal that you cannot construct from the above constructions and $\phi$ at times previously.
+
+Computing, $\phi(0) = \epsilon_0$, and $\phi(1) = \epsilon_1$. In general, $\phi(n) = \epsilon_n$.
+
+Then $\phi(\omega) = \epsilon_{\omega}$, and we can conjecture $\phi(\alpha) = \epsilon_{\alpha}$. However, something weird happens at $\zeta_0$.
+
+As predicted, $\phi(\zeta_0) = \epsilon_{\zeta_0} = \zeta_0$. But $\phi(\zeta_0+1) = \epsilon_{\zeta_0} = \zeta_0$.
+
+So then we get $\phi(\alpha) = \zeta_0$ for all $\alpha$ with $\zeta_0 \leq \alpha < \omega_1$. Moreover $\phi(\omega_1) = \zeta_0$.
+
+But magically, $\phi(\omega_1 + 1) = \epsilon_{\zeta_0 + 1}$, and so on: we get $\phi(\omega_1 + \alpha) = \epsilon_{\zeta_0 + \alpha}$ until $\alpha = \zeta_1$. Then $\phi(\omega_1 \cdot 2) = \zeta_1$, $\phi(\omega_1 \cdots 3)= \zeta_2$, until $\phi(\omega_1 \cdot \alpha) = \zeta_{\alpha}$ until $\alpha = 3 \ast 0$.
+
+Then $\phi(\omega_1^{3}) = 4 \ast 0$, and $\phi(\omega_1^{\omega}) = \omega \ast 0$, and then taking the limit, $\phi(\omega_1^{\omega_1}) = \Gamma_0$. Moreover $\phi(\omega_1^{\omega_1^2})$ is the Ackerman ordinal, $\phi(\omega_1^{\omega_1^{\omega}})$ is the small Veblen ordinal, and also $\phi(\omega_1^{\omega_1^{\omega_1}})$ is the large Veblen ordinal.
+
+But notice our notation stops at $\omega_1^{\omega_1^{\cdots}}$, and we let $\phi(\omega_1^{\omega_1^{\cdots}}) = B$.
+
+\section{The fourth interesting ordinal}
+
+This is $\omega_1^{\mathsf{CK}}$. For each of the previous ordinals, we can write a computer program to describe an ordinal.
+
+Call $\alpha$ computable if as before: if there is a well-ordering of the naturals that a computer program can check. However, there are only countably many programs, so let $\omega_1^{\mathsf{CK}}$ be the first non-computable ordinal.
+
+\end{document}

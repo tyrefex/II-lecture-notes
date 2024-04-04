@@ -1,0 +1,2821 @@
+\documentclass[12pt]{article}
+
+\usepackage{ishn}
+
+\makeindex[intoc]
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1em}
+		\Huge
+		\textbf{II Principles of Quantum Mechanics}
+
+		\vspace{1em}
+		\large
+		Ishan Nath, Michaelmas 2023
+
+		\vspace{1.5em}
+
+		\Large
+
+		Based on Lectures by Prof. Enrico Pajer
+
+		\vspace{1em}
+
+		\large
+		\today
+	\end{center}
+	
+\end{titlepage}
+\hypersetup{pageanchor=true}
+\setcounter{tocdepth}{2}
+
+\tableofcontents
+
+\newpage
+
+%lecture 1
+
+\setcounter{section}{-1}
+
+\section{Postulates of Quantum Mechanics}
+\label{sec:postulates}
+
+The following are the key postulates we take for quantum mechanics:
+\begin{enumerate}[label = Postulate \Roman*.]
+	\item The state of the system is a vector in a Hilbert space. Moreover the probabilities for events to happen are obtained from vector products.
+	\item Observables are Hermitian linear operators on $\mathcal{H}$.
+	\item Time evolution is governed by
+		\[
+		i \hbar \partial_t \psi = H\psi,
+		\]
+		the time-dependent Schr\"{o}dinger equation.
+\end{enumerate}
+
+\newpage
+
+\section{Hilbert Spaces}
+\label{sec:hilbert_spaces}
+
+Quantum mechanics lives in a Hilbert space\index{Hilbert space}. This is a vector space $\mathcal{H}$ over $\mathbb{C}$, equipped with an inner product $(\cdot, \cdot) : \mathcal{H} \times \mathcal{H} \to \mathbb{C}$. The inner product satisfies:
+\begin{itemize}
+	\item $(\phi, \psi) = (\psi, \phi)^{\ast}$,
+	\item $(\phi, a\psi) = a (\phi, \psi)$ (but $(a \phi, \psi) = a^{\ast} (\phi, \psi)$),
+	\item $(\phi, \phi) \geq 0$ with equality if and only if $\phi = 0$.
+\end{itemize}
+
+This inner product induces a norm $\|\psi\| = \sqrt{(\psi, \psi)}$, which satisfies the Cauchy-Schwarz inequality
+\[
+|(\psi, \phi)| \le \|\phi\|\|\psi\|.
+\]
+Moreover we assume that $\mathcal{H}$ is complete, i.e. every Cauchy sequence converges inside $\mathcal{H}$.
+
+\begin{exbox}[Examples of Hilbert Spaces]
+	Finite dimensional $\mathcal{H}$ are simple: $\mathcal{H} \cong \mathbb{C}^{n}$ for some $n \in \mathbb{N}$, with
+	\[
+	v, u \in \mathcal{H} \implies(v, u) = \sum_{i=1}^{n} v_i^{\ast} u_i.
+	\]
+	In quantum mechanics these arise in various circumstances; either as a toy model, an approximation, or a subspace.
+
+	However most of the time $\dim \mathcal{H} = \infty$. In quantum mechanics, these Hilbert spaces are all isomorphic to $\ell^2$, which is the space of all square-summable infinite sequences of complex numbers. Here the inner product is
+	\[
+		(v, u) = \sum_{i=1}^{\infty} v_i^{\ast} u_i < \infty,
+	\]
+	by Cauchy-Schwarz.
+
+	For example, for a particle on a circle, the wavefunction is
+	\[
+	\psi(\theta) = \sum_n a_n e^{i n \theta},
+	\]
+	with
+	\[
+	\|\psi\|^2 = \int_0^{2\pi} |\phi(\theta)|^2\diff\theta = 2\pi\sum_{n=1}^{\infty}|a_n|^2.
+	\]
+	For the one-dimensional quantum harmonic oscillator, the wavefunctions are
+	\[
+	\psi(x)=\sum_{n=1}^{n} a_n H_n(x) e^{-\alpha x^2},
+	\]
+	where $H$ are the Hermite polynomials. Again, $\|\phi\|^2=\sum |a_n|^2$.
+
+	Another example is $L^2(\mathbb{R},\diff x)$, i.e. the functions $f : \mathbb{R} \to \mathbb{C}$ such that
+	\[
+		\int |f(x)|^2\diff x < \infty.
+	\]
+	Then the inner product is
+	\[
+		(\phi,\psi) = \int \phi(x)^{\ast}\psi(x) \diff x < \infty.
+	\]
+	$\psi$ not need to be smooth, or even differentiable or continuous.
+\end{exbox}
+
+A Hilbert space $\mathcal{H}$ is \emph{separable}\index{separable} if it has a dense and countable subspace.
+
+All separable Hilbert spaces are isomorphic to each other. All Hilbert spaces in quantum mechanics are separable, including $\ell^2$ and $L^2$. Hence $\ell^2$ is isomorphic to $L^2$.
+
+\subsection{Dual Spaces}
+\label{sub:dual_spaces}
+
+The dual $\mathcal{H}^{\ast}$ of a Hilbert space $\mathcal{H}$ is the space of linear maps $f : \mathcal{H} \to \mathbb{C}$. Under various assumptions, $\mathcal{H}^{\ast}$ is isomorphic to $\mathcal{H}$.
+
+\begin{itemize}
+	\item For $\dim \mathcal{H} < \infty$, this is true by taking a dual basis. If we define $f_\phi = (\phi, \cdot)$ as a linear map, then we can show each $f \in \mathcal{H}^{\ast}$ is of this type. Here $\mathcal{H}^{\ast}$ inherits an inner product from $\mathcal{H}$: $\|f_\phi\|_{\mathcal{H}^{\ast}} = \|\phi\|_{\mathcal{H}}$.
+	\item For $\dim \mathcal{H} = \infty$, this is not true in general. But it is true for $\mathcal{H}^{\ast}_{\text{continuous}}$, the space of continuous linear maps (Riesz representation theorem).
+\end{itemize}
+
+\subsection{Dirac Notation}
+\label{sub:dirac_not}
+
+Here is a useful piece of notation by Dirac:
+\begin{itemize}
+	\item if $\psi \in \mathcal{H}$, we place it inside a `ket': $\ket{\psi}$.
+	\item if $\chi \in \mathcal{H}^{\ast}$, we place it inside a `bra': $\bra{\chi}$.
+\end{itemize}
+Hence the action of $\bra{\chi}$ on $\ket{\psi}$ is written $\braket{\chi|\psi} \in \mathbb{C}$, and is called a bra-ket.
+
+You may think of this as follows: given basis $\ket{n}$ for  $n = 1, \ldots$
+\begin{itemize}
+	 \item we have vectors $\ket{v}$,
+	 \item we have linear maps $\bra{u}$,
+	 \item and we have scalars $\braket{u|v}$.
+\end{itemize}
+
+%lecture 2
+
+\subsection{Continuum States}
+\label{sub:continuum}
+
+In this course, either $\mathcal{H} \cong \mathbb{C}^{m}$ or $\mathcal{H} \cong \ell^2$. In these spaces we can expand in an orthonormal basis $\{\ket{\phi_n}\} \in \mathcal{H}$, where $\braket{\phi_n|\phi_m} = \delta_{m,n}$.
+
+For any $\ket{\psi} \in \mathcal{H}$,
+\[
+	\ket{\psi} = \sum_{n} a_n \ket{\phi_n}.
+\]
+We can generalise this to \emph{continuum states}. For example, in $L^2(\mathbb{R}, \diff x)$ and for all $x \in \mathbb{R}$ we have a continuum state\index{continuum state} $\ket{x}$, normalized such that
+\[
+	\braket{x|x'} = \delta(x - x').
+\]
+Expanding $\ket{\psi} \in L^2(\mathbb{R}, \diff x)$ as
+\[
+	\ket{\psi} = \int_ \mathbb{R} \psi(x')\ket{x'} \diff x',
+\]
+we get that
+\[
+	\braket{x|\psi} = \int \braket{x |\psi(x')| x'}\diff x' = \int \psi(x') \braket{x|x'} \diff x' = \psi(x).
+\]
+The normalization condition ensures that
+\[
+	\braket{\phi|\psi} = \int \diff x' \bra{x'}\phi(x')^{\ast} \int \diff x\, \psi(x) \ket{x} = \int_ \mathbb{R} \phi(x)^{\ast} \psi(x) \diff x.
+\]
+Note that $\braket{x|x} = \delta(x - x)$, which is undefined. Hence continuum states are not normalizable in $L^2(\mathbb{R}, \diff x)$. We can formally define them in further courses, see II Analysis of Functions.
+
+\subsection{Different Bases}
+\label{sub:different_bases}
+
+The Dirac notation frees us from having to pick a basis. For example, we could use the momentum basis $\{\ket{p}\}$,
+\[
+	\ket{\psi} = \int \psi(x) \ket{x} \diff x = \int \tilde \psi(p) \ket{p} \diff p.
+\]
+These are related. We will later show that
+\[
+	\braket{x|p} = e^{ixp/\hbar} \frac{1}{\sqrt{2\pi \hbar}} = \braket{p|x}^{\ast},
+\]
+and hence
+\[
+	\psi(x) = \braket{x|\psi} = \int \braket{x|\tilde \psi(p)|p} \diff p = \int \tilde \psi(p) \frac{e^{ipx/\hbar}}{\sqrt{2 \pi \hbar}} \diff p.
+\]
+So $\psi(x)$ and $\tilde \psi(p)$ are related by a Fourier transform.
+
+\subsection{Tensor Products}
+\label{sub:tensor_products}
+
+More complicated systems require larger Hilbert spaces. We can build them by taking tensor products.
+
+Let $\dim(\mathcal{H}_1), \dim(\mathcal{H}_2) < \infty$, and let $\{\ket{e_a}\} \in \mathcal{H}_1$, $\{\ket{f_\alpha}\} \in \mathcal{H}_2$ be orthonormal bases. Then,
+\[
+	\mathcal{H}_1 \otimes \mathcal{H}_2 \ni \ket{\psi} = \sum_{a,\alpha} c_{a\alpha}\ket{e_a} \otimes \ket{f_\alpha}.
+\]
+The inner product is defined on basis elements:
+\[
+	(\bra{e_a} \otimes \bra{f_\alpha}) (\ket{e_b} \otimes \ket{f_\beta}) = \braket{e_a|e_b} \braket{f_\alpha|f_\beta},
+\]
+then we can extend to $\mathcal{H}_1 \otimes \mathcal{H}_2$ by linearity.
+
+\begin{exbox}
+	If $\{\ket{x}\}$ and $\{\ket{y}\}$ are continuum states of a particle moving in the $x$ and $y$ directions, then a particle in $\mathbb{R}^2$ is
+	\[
+		\ket{\psi} = \int_{\mathbb{R} \times \mathbb{R}} \psi(x, y) \ket{x} \otimes \ket{y} \diff x \diff y.
+	\]
+	Note that $\psi(x, y) \neq \psi_1(x)\psi_2(y)$. Again the inner product is
+	\begin{align*}
+	\braket{\phi|\psi} &= \int \phi^{\ast}(x', y') \psi(x, y) (\bra{x'} \otimes \bra{y'})(\ket x \otimes \ket y) \diff x \diff x' \diff y \diff y' \\
+			   &= \int_{\mathbb{R}^2} \phi^{\ast}(x, y) \psi(x, y) \diff x \diff y.
+	\end{align*}
+\end{exbox}
+
+A shorthand notation is
+\[
+	\ket \psi = \int \psi(\mathbf{x}) \ket{\mathbf{x}} \Diff3 \mathbf{x},
+\]
+where $\psi(\mathbf{x}) = \psi(x_1, x_2, x_3)$, and $\ket{\mathbf{x}} = \ket{x, y, z} = \ket x \otimes \ket y \otimes \ket z$.
+
+\subsection{Quantum Systems with Internal Structure}
+\label{sub:internal_structure}
+
+Take a simple model: a hydrogen atom consisting of an electron $\elec$ and a proton $\prot$, so
+\[
+	\ket \psi = \int \psi (\mathbf{x}_{\elec} \mathbf{x}_{\prot}) \ket{\mathbf{x}_{\elec}} \otimes \ket{\mathbf{x}_{\prot}} \Diff3 \mathbf{x}_{\elec} \Diff3 \mathbf{x}_{\prot} \in L^2(\mathbb{R}^{6}, \Diff3\mathbf{x}_{\elec}, \Diff3\mathbf{x}_{\prot}).
+\]
+We can also introduce $\mathbf{x}_{\mathrm{rel}} = \mathbf{x}_{\elec} - \mathbf{x}_{\prot}$ and
+\[
+\mathbf{x}_{\mathrm{CM}} = \frac{m_{\elec} \mathbf{x}_{\elec} + m_{\prot} \mathbf{x}_{\prot} }{m_{\elec} + m_{\prot}},
+\]
+and instead we can write
+\[
+	\ket \psi = \int \psi'(\mathbf{x}_{\mathrm{CM}}, \mathbf{x}_{\mathrm{rel}}) \ket{\mathbf{x}_{\mathrm{CM}}} \otimes \ket{\mathbf{x}_{\mathrm{rel}}} \Diff3 \mathbf{x}_{\mathrm{CM}} \Diff3 \mathbf{x}_{\mathrm{rel}}.
+\]
+This is convenient, for example $\psi' = \approx e^{i \mathbf{k} \mathbf{x}_{\mathrm{CM}}} \psi_{\mathrm{rel}}(\mathbf{x}_{\mathrm{rel}})$.
+
+For $N$-particles,
+\[
+L^2(\mathbb{R}^{3N},\Diff3 x_1, \ldots, \Diff3 x_n) = \bigotimes_{a = 1}^{N} L^2(\mathbb{R}^3, \Diff3 x_a).
+\]
+Spin means electrons are actually described by a pair of wavefunctions:
+\[
+\ket \psi \in L^2(\mathbb{R}^3, \Diff3 x) \otimes \mathbb{C}^2 \implies \psi(\mathbf{x}) =
+\begin{pmatrix}
+	\psi_{\uparrow}(\mathbf{x})\\ \psi_{\downarrow}(\mathbf{x})
+\end{pmatrix}.
+\]
+
+\newpage
+
+\section{Linear Operators}
+\label{sec:linear_operators}
+
+The main thing to note is that observables are represented by Hermitian linear operators.
+
+For $\dim \mathcal{H} = n < \infty$, a linear operator $A$ is an $n \times n$ matrix $A : \mathcal{H} \to \mathcal{H}$.
+
+The linear operators form an associative, but not commutative, algebra over the field $\mathbb{C}$ (called the Universal Covering Algebra, or simply the Operator Algebra). The linear sum of two operators is simply
+\[
+	(\alpha A + \beta B) \ket \psi = \alpha A \ket \psi + \beta B \ket \psi,
+\]
+for all $\alpha, \beta \in \mathbb{C}$ and $\ket \psi \in \mathcal{H}$. We can also define the product under composition:
+\[
+AB \ket \psi = A( B \ket \psi).
+\]
+We define a \emph{commutator}\index{commutator} of $A$ and $B$ as $[A,B] = AB - BA$. The commutator satisfies:
+\begin{itemize}
+	\item Antisymmetric: $[A, B] = - [B, A]$.
+	\item Linear: $[\alpha A + \beta B, C] = \alpha[A, C] + \beta[B, C]$.
+	\item Leibniz rule: $[A,BC] = B[A,C] + [A,B]C$.
+	\item Jacobi identities: $[A,[B,C]] + [B,[C,A]] + [C,[A,B]] = 0$.
+\end{itemize}
+
+%lecture 3
+
+The inner product allows us to define the \emph{adjoint} $A^{\dagger}$ of $A$, by\index{adjoint}\index{Hermitian conjugate}
+\[
+	\braket{\phi|A^{\dagger}|\psi} = \braket{\psi|A|\phi}^{\ast},
+\]
+for all $\ket{\phi}$ and $\ket{\psi} \in \mathcal{H}$. It obeys:
+\begin{itemize}
+	\item $(A+B)^{\dagger} = A^{\dagger} + B^{\dagger}$.
+	\item $(AB)^{\dagger} = B^{\dagger} A^{\dagger}$.
+	\item $(A^{\dagger})^{\dagger} = A$.
+\end{itemize}
+An operator satisfying $A^{\dagger} = A$ is called \emph{Hermitian}\index{Hermitian} or \emph{self-adjoint}.
+
+\subsection{Eigenstates and Eigenvalues}
+\label{sub:eigen}
+
+A state $\ket{\psi} \in \mathcal{H}$ is an \emph{eigenstate}\index{eigenstate} of $A$ if $A \ket \psi = a \psi$ for $a \in \mathbb{C}$, where $a \in \mathbb{C}$ is the \emph{eigenvalue}\index{eigenvalue}.
+\begin{itemize}
+	\item Often we label the states by their eigenvalues, for example we would write
+		\[
+		A \ket a = a \ket a.
+		\]
+	\item If a linear operator $Q$ is Hermitian and $Q \ket q = q \ket q$, then $q \in \mathbb{R}$. Indeed,
+		\[
+			q \braket{q|q} = \braket{q|Q|q} = \braket{q|Q|q}^{\ast} = q^{\ast} \braket{q|q}.
+		\]
+	\item If $q_1 \neq q_2$, then $\braket{q_1|q_2} = 0$. Indeed, 
+		\begin{align*}
+			0 &= \braket{q_2|Q-Q^{\dagger}|q_1} = \braket{q_1|Q|q_1} - \braket{q_2|Q^{\dagger}|q_1} \\
+			  &= q_1 \braket{q_2|q_1} - q_2 \braket{q_1|q_2}^{\ast} \\
+			  &= (q_1 - q_2) \braket{q_2|q_1},
+		\end{align*}
+		hence $\braket{q_2|q_1} = 0$.
+	\item Let $\{\ket n\}$ form an orthonormal basis of eigenvalues, where $Q \ket n = q_n \ket n$. Then we can easily compute $Q \ket \psi$ for all $\ket \psi \in \mathcal{H}$: Writing
+		\[
+		\ket \psi = \sum_{n} c_n \ket n,
+		\]
+		we get
+		\[
+		Q \ket \psi = Q \Biggl( \sum_n c_n \ket n \Biggr) = \sum_n c_n q_n \ket n.
+		\]
+	\item Notice that we can write
+		\[
+		\mathbbm{1}_{\mathcal{H}} = \sum_n \ket n \bra n.
+		\]
+	\item We can also define $f(Q)$ by
+		\[
+		f(Q) = \sum_n f(q_n) \ket n \bra n,
+		\]
+		which exists as long as $f(q_n)$ exists for all $n$.
+	\item The matrix elements of $A$ in the basis is
+		\[
+			A_{kn} = \braket{k|A|n}.
+		\]
+		Then
+		\[
+			(AB)_{km} = \braket{k|AB|n} = \sum_n \braket{k|A|n} \braket{n|B|m} = \sum_n A_{kn} B_{nm}.
+		\]
+		So composition is matrix multiplication. Moreover,
+		\[
+			(A^{\dagger})_{mn} = \braket{m|A^{\dagger}|n} = \braket{n|A|m}^{\ast} = (A_{nm})^{\ast}.
+		\]
+\end{itemize}
+
+\subsection{Infinite Dimensions}
+\label{sub:inf_dim}
+
+Let's mention (and ignore) some issues of $\dim \mathcal{H} = \infty$,such as $L^2$.
+\begin{itemize}
+	\item An operator $A$ is \emph{bounded}\index{bounded operator} if there exists $M \in \mathbb{R}$ such that $\|A \ket \psi\| < M \|\ket \psi\|$, for all $\ket \psi \in \mathcal{H}$.
+	\item If $\dim \mathcal{H} < \infty$, then all operators are bounded. This is not true if $\dim \mathcal{H} = \infty$.
+	\item If $A$ is unbounded, then it is only defined on a subset of $\mathcal{H}$, called the \emph{domain}\index{domain} of $A$. Here $\Dom(A) \subseteq \mathcal{H}$.
+\end{itemize}
+
+The position $X$ and momentum $P$ operators are unbounded. For example, we could have $\psi(x) \in L^2$, but not $x \cdot \psi (x)$ or $-i \partial_x \psi \hbar$.
+\begin{itemize}
+	\item Continuum states hide this computation:
+		\begin{align*}
+			\braket{x|P|\psi} &= \int \frac{\diff p}{\sqrt{2 \pi \hbar}} \braket{x|p} \braket{p|P|\psi} = \int e^{ipx/\hbar} p \tilde \psi(p) \frac{\diff p}{\sqrt{2 \pi \hbar}} \\
+					  &= -i \hbar \frac{\partial}{\partial x} \Biggl[ \int e^{ipx/\hbar} \tilde \psi(p) \frac{\diff p}{\sqrt{2 \pi \hbar}} \Biggr] = -i \hbar \partial_x \braket{x|\psi} = -i \partial_x \hbar \psi(x).
+		\end{align*}
+\end{itemize}
+
+\subsection{Operators for Composite Systems}
+\label{sub:comp_ops}
+
+Let $\{\ket{e_a}\}$ be a basis of $\mathcal{H}_1$ and $A : \mathcal{H}_1 \to \mathcal{H}_1$, and $\{\ket{f_\alpha}\}$ be a basis of $\mathcal{H}_2$ and $B:\mathcal{H}_2 \to \mathcal{H}_2$. Then we can define
+\[
+A \otimes B : \mathcal{H}_1 \otimes \mathcal{H}_2 \to \mathcal{H}_1 \otimes \mathcal{H}_2
+\]
+by
+\[
+	(A \otimes B)(\ket{e_a} \otimes \ket{f_\alpha}) = (A\ket{e_a}) \otimes (B\ket{f_\alpha}).
+\]
+This can be extended linearly to the whole $\mathcal{H} = \mathcal{H}_1 \otimes \mathcal{H}_2$. Note that
+\[
+	[A \otimes \mathbbm{1}_{\mathcal{H}_1}, \mathbbm{1}_{\mathcal{H}_1} \otimes B] = 0
+\]
+for all $A$ and $B$.
+
+\begin{exbox}
+	The hydrogen atom is described by
+	\[
+	H = \frac{\mathbf{p}_\prot^2}{2m_\prot} \otimes \mathbbm{1}_{\elec} + \mathbbm{1}_{\prot} \otimes \frac{\mathbf{p}_\elec^2}{2m_\elec} - \frac{q^2}{4 \pi \eps_0} \frac{1}{|\mathbf{X}_\elec - \mathbf{X}_\prot|}.
+	\]
+	We can also rewrite this as
+	\[
+		H = \frac{\mathbf{p}_{\mathrm{CM}}^2}{2M} \otimes \mathbbm{1}_{\mathrm{rel}} + \mathbbm{1}_{\mathrm{CM}} \otimes \biggl[ \frac{\mathbf{p}_{\mathrm{rel}}^2}{2\mu} - \frac{q^2}{4 \pi \eps_0} \frac{1}{|\mathbf{X}_{\mathrm{rel}}} \biggr],
+	\]
+	where $\mathbf{p}_{\mathrm{CM}} = \mathbf{p}_\prot + \mathbf{p}_\elec$,
+	\[
+	\mathbf{p}_{\mathrm{rel}} = \frac{m_\prot \mathbf{p}_\elec - m_\elec \mathbf{p}_\prot}{M},
+	\]
+	$M = m_\elec + m_\prot$ and $\mu = \frac{m_\elec m_\prot}{M}$ is the reduced mass.
+\end{exbox}
+
+\subsection{Postulates of Quantum Mechanics}
+\label{sub:postulates_again}
+
+Recall the postulates of quantum mechanics:
+\begin{itemize}
+	\item The state of a system is specified by $\ket \psi \in \mathcal{H}$, with $\ket \psi \neq 0$.
+	\item Any complete system of orthogonal eigenstates $\{\ket {\phi_1}, \ket {\phi_2}, \ldots\}$ is in one-to-one correspondence with possible outcomes of measurements.
+	\item The probability to observe the outcomes corresponding to $\ket {\phi_n}$ in state $\ket \psi$ is
+		\[
+			\mathbb{P}(\ket \psi \to \ket {\phi_n}) = \frac{|\braket{\phi_n|\psi}|^2}{\braket{\phi_n|\phi_n}\braket{\psi|\psi}}.
+		\]
+\end{itemize}
+
+This is the probabilistic interpretation of quantum mechanics, given by Born.
+
+%lecture 4
+
+Let's look at these postulates in more detail.
+
+Postulate I says that
+\[
+	\mathbb{P}(\ket \psi \to \ket{\phi_n}) = \frac{|\braket{\phi_n|\psi}|^2}{\braket{\phi_n|\phi_n}\braket{\psi|\psi}}.
+\]
+
+Note that physical states correspond to rays in $\mathcal{H}$ namely $\ket {\psi_1}$ and $\ket{\psi_2}$ belong to the same ray if and only if $\ket {\psi_1} = \lambda \ket{\psi_2}$, for $\lambda \in \mathbb{C}^{\ast}$.
+
+Often we simply pick $\|\psi\| = 1$ on the representative. Note that probability begin positive required a positive norm for the states, or unitarity.
+
+Postulate II says that observables are represented by linear operators in $\mathcal{H}$. The \emph{expectation value}\index{expectation value} $\braket Q_\psi$ of a property corresponding to $Q$ in state $\ket \psi$ is
+\[
+	\braket Q_\psi = \frac{\braket{\psi|Q|\psi}}{\braket{\psi|\psi}}.
+\]
+Note that $Q$ acting on $\ket \psi$ has nothing to do with the process of measuring.
+
+We have two options for how to build our framework of quantum mechanics:
+\begin{enumerate}
+	\item We can start from $\mathcal{H}$, and define observables as operators.
+	\item We start from an algebra of observables, and define/build $\mathcal{H}$ as a representation (see Von Neumann, and the Gelfand-Naimark-Segal construction).
+\end{enumerate}
+
+Postulate III says that the dynamical evolution of a system if governed by
+\[
+i \hbar \frac{\partial}{\partial t} \ket \psi = H \ket \psi.
+\]
+This is the time-dependent Schr\"odinger equation. The operator $H$ is called the \emph{Hamiltonian}\index{Hamiltonian}.
+
+The form of $H$ depends on the system. Note that $\mathcal{H}$ does not involve time.
+
+\subsection{The Generalized Uncertainty Principle}
+\label{sub:gen_unc_pri}
+
+We define the root mean square deviation or \emph{uncertainty}\index{uncertainty} $\Delta_\psi(Q)$ of $Q = Q^{\dagger}$ in state $\ket \psi$ as
+\[
+	\Delta_\psi Q = \sqrt{\braket{Q^2}_\psi - \braket Q_\psi^2}.
+\]
+Since $Q$ is Hermitian,
+\[
+\braket{Q^2}_\psi - \braket Q_\psi^2 = \braket{\psi|(Q-\braket Q_\psi)^2|\psi} = \|(Q - \braket Q_\psi)\ket \psi\|^2 \geq 0,
+\]
+so $\Delta_\psi Q$ is well defined, and vanishes only if $Q \ket \psi = q \ket \psi$ for some $q$.
+
+The \emph{uncertainty principle}\index{uncertainty principle} for Hermitian operators $A, B$ is as follows:
+
+Let $\ket{\psi_A} = A \ket \psi - \braket A_\psi \ket \psi$, and the same for $B$. Then, $\|\ket{\psi_A}\| = \Delta_\psi A$, and $\|\ket{\psi_B}\| = \Delta_\psi B$. We get:
+\[
+	2 i \,\mathrm{Im} \braket{\psi_A|\psi_B} = \braket{\psi|AB|\psi}  - \braket{\psi|AB|\psi}^{\ast} = \braket{\psi|[A,B]|\psi}.
+\]
+By Cauchy-Schwarz, we get
+\[
+	\Delta_\psi A \Delta_\psi B = \|\ket{\psi_A}\|\|\ket{\psi_B}\| \geq |\braket{\psi_A|\psi_B}| \geq \frac{1}{2}|\braket{[A,B]}_\psi|.
+\]
+
+\newpage
+
+\section{The Quantum Mechanic Oscillator}
+\label{sec:qmo}
+
+Take the Hamiltonian for the one-dimensional quantum mechanic oscillator:
+\[
+H = \frac{P^2}{2m} + \frac{1}{2} m\omega^2 X^2.
+\]
+Introducing the \emph{raising} and \emph{lowering} operators\index{raising operator}\index{lowering operator}
+\[
+	A = \frac{1}{\sqrt{2 m \hbar \omega}}(m \omega X + iP), \qquad A^{\dagger} = \frac{1}{\sqrt{2m \hbar \omega}} (m\omega X - iP).
+\]
+These are convenient because
+\begin{align*}
+	A^{\dagger}A &= \frac{1}{2m\hbar \omega}(m\omega X - iP)(m\omega X + iP) \\
+		     &= \frac{1}{2m\hbar \omega} (P^2 + m^2 \omega^2 X^2 + m \omega i [X,P]) = \frac{1}{\hbar \omega}H - \frac{1}{2},
+\end{align*}
+as $[X,P] = i \hbar$. Thus
+\[
+H = \hbar \omega \biggl(A^{\dagger}A + \frac{1}{2} \biggr) = \hbar \omega \biggl(N + \frac{1}{2} \biggr),
+\]
+where $N = A^{\dagger}A$ is called the \emph{number operator}\index{number operator}, and $N^{\dagger} = N$.
+
+The commutation relations become
+\begin{align*}
+	[A, A^{\dagger}] &= \frac{1}{2m\hbar \omega}([\omega m X + iP], \omega m X - iP]) \\
+			 &= \frac{-i m \omega}{2 m \hbar \omega} ([X, P] - [P,X]) = 1,
+\end{align*}
+and $[A,A] = [A^{\dagger}, A^{\dagger}] = 0$. Consequently,
+\[
+	[N,A^{\dagger}] = [A^{\dagger}A,A^{\dagger}] = A^{\dagger}[A,A^{\dagger}] + [A^{\dagger},A^{\dagger}]A = A^{\dagger},
+\]
+and similarly we can get $[N,A] = -A$.
+
+\subsection{Building the Hilbert Space}
+\label{sub:build_H}
+
+Let $\ket n$ be a normalized eigenstate of $N$, so $N \ket n = n \ket n$. Then
+\[
+	N(A^{\dagger}\ket n) = ([N,A^{\dagger}] + A^{\dagger}N)\ket n = (A^{\dagger} + A^{\dagger}n)\ket n = (1+n) A^{\dagger} \ket n.
+\]
+Similarly, $N(A \ket n) = (n-1) (A \ket n)$.
+
+Provided that $A^{\dagger} \ket n$ and $A \ket n$ are non-zero, these are new eigenvectors of $N$.
+
+Now lets put some restrictions on $n$. Note that
+\[
+	n = \braket{n|N|n} = \braket{n|A^{\dagger}A|n} = \|A\ket n\|^2 \geq 0.
+\]
+Since $A$ decreases the eigenvalue of an eigenvector, there exists $n_{\min}$ such that $A \ket{n_{\min}} = 0$. Then $n_{\min} = 0$. Hence $n \in \mathbb{N}_0$.
+
+To normalize, we let $A^{\dagger}\ket n = c_n \ket{n+1}$ for some $c_n \in \mathbb{C}$. Then
+\[
+	|c_n|^2 = \|A^{\dagger} \ket n\| = \braket{n|AA^{\dagger}|n} = \braket{n|N+[A,A^{\dagger}]|n}=n+1,
+\]
+so we can choose $c_n = \sqrt{n+1}$.
+
+In summary,
+\begin{itemize}
+	\item We have a ground state $\ket 0$, such that $A \ket 0 = 0$.
+	\item There are normalized eigenvectors of $H$ (and $N$)
+		\[
+			\ket n = \frac{1}{\sqrt{n!}} (A^{\dagger})^{n} \ket 0.
+		\]
+	\item The span of these vectors is called \emph{Fock} (Hilbert) space\index{Fock space}.
+\end{itemize}
+
+%lecture 5
+
+\subsection{Position Space Wavefunctions}
+\label{sub:pos_wavefn}
+
+We can derive the wavefunction of energy eigenstates as follows. Let $\psi_0(x) = \braket{x|0}$ be the wavefunction of the ground state. Then
+\[
+	0 = \braket{x|A|0} \propto \braket{x|m\omega X + i P|0} = m \omega x \psi_0(x) + \hbar \partial_x \psi_0(x).
+\]
+Solving this ODE, we find that
+\[
+\psi_0(x) = \biggl(\frac{m \omega}{\pi \hbar} \biggr)^{1/4} \exp \biggl( - \frac{m \omega}{2 \hbar} x^2 \biggr).
+\]
+This is normalized such that
+\[
+	\braket{0|0} = \int_{-\infty}^{\infty} |\psi_0(x)|^2 = 1.
+\]
+Then the higher energy states are obtained by differentiation:
+\[
+	\psi_1(x) = \braket{x|A^{\dagger}|0} = m \omega x \psi_0(x) - \hbar \partial_x \psi_0(x) \propto 3x \exp \biggl( - \frac{m \omega}{2\hbar} x^2 \biggr).
+\]
+Repeating this action generates the Hermite polynomials.
+
+\subsection{Uncertainty}
+\label{sub:uncertainty}
+
+The uncertainty principle says that
+\[
+	\Delta_\psi X \Delta_\psi P \geq \frac{1}{2}|\braket{[X,P]}_\psi| = \frac{\hbar}{2},
+\]
+for all $\ket \psi \in \mathcal{H}$. Let's compute this on $\ket 0$: Recall that $(\Delta_\psi X)^2 = \braket{X^2}_\psi -  \braket X_\psi^2 = \braket{X^2}_\psi$. In terms of $A$ and $A^{\dagger}$, we have
+\[
+	X = \sqrt{\frac{\hbar}{2 m \omega}}(A + A^{\dagger}).
+\] 
+Note that for any $\ket n$, we have
+\[
+	\braket{n|X|n} \propto \braket{n|A+A^{\dagger}|n} = 0.
+\]
+However
+\begin{align*}
+	\frac{2 m\omega}{\hbar} \braket{0|X^2|0} &= \braket{0|(A+A^{\dagger})^2|0} = \braket{0|AA^{\dagger}|0} \\
+						 &= \braket{0|[A,A^{\dagger}] + A^{\dagger}A|0} = 1.
+\end{align*}
+Similarly, $\braket{0|P|0} = 0$, and $\braket{0|P^2|0} = \frac{m\hbar \omega}{2}$. Combining this, we get
+\[
+	\Delta_0 X \Delta_0P = \sqrt{\braket{0|X^2|0}\braket{0|P^2|0}} = \frac{\hbar}{2}.
+\]
+Hence the ground state has minimal uncertainty. We will see later that there are other states with minimum uncertainty.
+
+\newpage
+
+\section{Transformations in Quantum Mechanics}
+\label{sec:transformations}
+
+A \emph{transformation}\index{transformation} is a map from configuration $R$ to $R$' that preserves probabilities:
+
+In quantum mechanics, these transformations are represented by linear unitary operators:
+\[
+	\braket{U\phi|U\psi} = \braket{\phi|\psi},
+\]
+or $U^{\dagger}U = 1$. It could also be an anti-linear, anti-unitary operator. The proof of this is Wagner's theorem.
+
+We let $U \ket \psi = \ket{\psi'}$. The fact that the transformation must be unitary comes from the conservation of probability, Note that the transformations form a group $G$, and for all $g_1, g_2 \in G$, $U(g_1) \cdot U(g_2) = U(g_1 g_2)$.
+
+The identity operator is $U(e) = \mathbbm{1}_{\mathcal{H}}$.
+
+\subsection{Transformations of Operators}
+\label{sub:transform_ops}
+
+Let $A : \mathcal{H} \to \mathcal{H}$ be an operator. Then under a transformation $U$, $\braket{\psi|A|\psi}$ becomes
+\[
+	\braket{\psi'|A|\psi'} = \braket{\psi|U^{\dagger}AU|\psi}.
+\]
+Hence we can equivalently transform operators instead of states, by letting
+\[
+A \to A' = U^{\dagger} A U = U^{-1} A U.
+\]
+Then $A'B' = (AB)'$, and $[A',B'] = [A,B]'$. Note that similarity preserves the spectrum of $A$. Indeed, if $A \ket a = a \ket a$, then $U^{\dagger} \ket a$ is an eigenvector of $A'$ with the same eigenvalue.
+
+\subsection{Continuous Transformations}
+\label{sub:cont_trans}
+
+Let $U$ depend smoothly on $\theta \in \mathbb{R}$, with $U(0) = \mathbbm{1}_{\mathcal{H}}$. For $\theta \ll 1$, by Taylor expansion,
+\[
+U(\theta) = \mathbbm{1}_{\mathcal{H}} - i \theta T + \mathcal{O}(\theta^2).
+\]
+$T$ is called the \emph{generator}\index{generator} of the transformation. The $-i$ term is included by convention.
+
+As $U$ is unitary, $T$ is Hermitian:
+\[
+1 = U^{\dagger}U = (1+i\theta T^{\dagger})(1 - i\theta T) + \mathcal{O}(\theta^2) = 1 + i \theta(T^{\dagger} - T) + \mathcal{O}(\theta^2).
+\]
+So $T^{\dagger} = T$. Therefore, generators can be observables.
+
+The action of $U$ on states is given by
+\[
+	\ket{\psi'} = \ket \psi = (1-i\theta T)\ket\psi \implies \ket \psi \mapsto \ket \psi + \delta \ket \psi,
+\]
+where $\delta \ket \psi = -i \theta T \ket \psi$, and the action on operators is given by
+\[
+A' = U^{\dagger}AU = (1+i\theta T^{\dagger})A(1-i\theta T) = A + \delta A,
+\]
+where $\delta A = i \theta[T, A]$. For finite transformations,
+\[
+U = \lim_{N \to \infty} \biggl(1 - i \frac{\theta}{N} T \biggr)^{N} = e^{-i \theta T} = \sum_{n = 0}^{\infty} (-i \theta T)^{n} \frac{1}{n!}.
+\]
+
+%lecture 6
+
+\subsection{Spatial Transformations}
+\label{sub:space_trans}
+
+We will look at translations in $\mathbb{R}^3$. Let the translation by $\mathbf{a} \in \mathbb{R}^3$ be represented by $U(\mathbf{a})$. Then as translations commute,
+\[
+U(\mathbf{a})U(\mathbf{b}) = U(\mathbf{a}+\mathbf{b})=U(\mathbf{b}+\mathbf{a})=U(\mathbf{b})U(\mathbf{a}),
+\]
+and moreover $U^{\dagger}(\mathbf{a})=U(-\mathbf{a})$. For infinitesimal terms $\delta \mathbf{a}$, we get
+\[
+U(\delta \mathbf{a}) = \mathbbm{1}_{\mathcal{H}} - \frac{i}{\hbar} \delta \mathbf{a} \cdot \mathbf{P} + \mathcal{O}(\delta \mathbf{a}^2),
+\]
+and so
+\[
+U(\mathbf{a}) = e^{-i \mathbf{a} \cdot \mathbf{P}}.
+\]
+Here the operator $\mathbf{P}/\hbar$ generates translations, and as $U(\delta \mathbf{a}), U(\delta \mathbf{b})$ commute, we get $[\mathbf{P}_i, \mathbf{P}_j] = 0$ for Cartesian coordinates $i = x, y, z$.
+
+\subsection{Canonical Commutation Relations}
+\label{sub:can_com_rel}
+
+If $\ket{\psi'} = U(\mathbf{a})\ket \psi$, we must have
+\[
+	\braket{\mathbf{X}}_{\psi'} = \braket{\psi|U^{\dagger}(\mathbf{a})\mathbf{X}U(\mathbf{a})|\psi} = \braket{\mathbf{X}}_\psi + \mathbf{a}.
+\]
+This must be true for all $\ket \psi \in \mathcal{H}$, so
+\[
+U^{\dagger}(\mathbf{a})\mathbf{X} U(\mathbf{a}) = \mathbf{X} + \mathbf{a} \mathbbm{1}_{\mathcal{H}}.
+\]
+Infinitesimally, we get
+\[
+\biggl(1 + i \frac{\delta \mathbf{a}}{\hbar} \cdot \mathbf{P} \biggr) \mathbf{X} \biggl( 1 - \frac{i}{\hbar} \delta \mathbf{a} \cdot \mathbf{P} \biggr) + \mathcal{O}(\delta \mathbf{a}^2) = \mathbf{X} + \delta \mathbf{a}.
+\]
+For this to be true at $\mathcal{O}(\delta \mathbf{a})$, we need
+\[
+	[X_i, P_j] = i \hbar \delta_{ij} \mathbbm{1}_{\mathcal{H}}.
+\]
+Note the algebra of observables needs $\dim \mathcal{H} = \infty$, as in finite dimensions,
+\[
+\dim \mathcal{H} = \Tr (\mathbbm{1}_{\mathcal{H}}) = -\frac{i}{\hbar} \Tr(XP - PX) = 0.
+\]
+This argument fails for $\dim \mathcal{H} = \infty$, as the trace is not necessarily defined. This is why the quantum mechanics of a particle needs to be defined on functional spaces, such as $L^2(\mathbb{R}, \diff x)$.
+
+\subsection{Translations on the Wavefunction}
+\label{sub:trans_wave}
+
+$\psi(\mathbf{x}) = \braket{\mathbf{x}|\psi}$ is the wavefunction in position space. Let $\ket{\mathbf{x}} \to \ket{\mathbf{x}'} = U(\mathbf{a})\ket{\mathbf{x}}$. Then
+\begin{align*}
+	\mathbf{X} \ket{\mathbf{x}'} &= \mathbf{X} U(\mathbf{a})\ket{\mathbf{x}} = ([\mathbf{X},U(\mathbf{a}] + U(\mathbf{a}) \mathbf{X})\ket{\mathbf{x}}\\
+				     &= (\mathbf{a} + \mathbf{x})U(\mathbf{a})\ket{\mathbf{x}} = (\mathbf{a} +\mathbf{x}) \ket{\mathbf{x}'}.
+\end{align*}
+After a transformation $\ket \psi \to U(\mathbf{a})\ket \psi$,
+\[
+	\psi_{\mathrm{trasnform}}(\mathbf{x})=\braket{\mathbf{x}|U(\mathbf{a}|\psi}=\braket{\mathbf{x}-\mathbf{a}|\psi}=\psi(\mathbf{x}-\mathbf{a}).
+\]
+For infinitesimal translations,
+\[
+\psi(\mathbf{x} - \delta \mathbf{a}) - \psi(\mathbf{x}) = - \delta \mathbf{a} \cdot \nabla \psi(\mathbf{x}).
+\]
+Also we know
+\[
+	\braket{\mathbf{x} | 1 - \frac{i}{\hbar} \delta \mathbf{a} \cdot \mathbf{P} | \psi} - \braket{\mathbf{x}|\psi} = -\frac{i}{\hbar} \braket{\mathbf{x}|\delta \mathbf{a} \cdot \mathbf{P} | \psi}.
+\]
+Comparing these two expressions, we get that
+\[
+	\braket{\mathbf{x}|\mathbf{P}|\psi}= - i \hbar \nabla \psi (\mathbf{x}).
+\]
+
+\subsection{Examples}
+\label{sub:com_ex}
+
+Take an eigenstate $\ket{\mathbf{p}}$ obeying $\mathbf{P} \ket{\mathbf{p}} = \mathbf{p} \ket{\mathbf{p}}$. After a translation,
+\begin{align*}
+	\psi_{\mathbf{p}}(\mathbf{x}) = \braket{\mathbf{x}|\mathbf{p}} \to \psi_{\mathbf{p}}(\mathbf{x} - \mathbf{a}) &= \braket{\mathbf{x}|U(\mathbf{a})|\mathbf{p}} = \braket{\mathbf{x}|e^{-i\mathbf{a} \cdot \mathbf{P}/\hbar}|\mathbf{p}} \\
+														      &= e^{-i\mathbf{a}\cdot \mathbf{p}/\hbar} \braket{\mathbf{x}|\mathbf{p}}.
+\end{align*}
+Hence we get $\psi_{\mathbf{p}}(\mathbf{x} - \mathbf{a}) = e^{-i \mathbf{a} \cdot \mathbf{p}/\hbar}\psi_{\mathbf{p}}(\mathbf{x})$, which is solved by
+\[
+\psi_{\mathbf{p}}(\mathbf{x}) = \frac{1}{(2 \pi \hbar)^{3/2}} e^{i \mathbf{p} \cdot \mathbf{x}/\hbar},
+\]
+where we normalise such that $\braket{\mathbf{p}|\mathbf{p}'} = \delta^3(\mathbf{p} - \mathbf{p}')$.
+
+Now consider the ground state of a quantum mechanical oscillator in 1 dimension. We have
+\[
+	\psi_0 = \braket{x|0} = C e^{-x^2 \alpha^2/2},
+\]
+for some $C$ and $\alpha$. The translated state $U(a)\ket 0$ is called a \emph{coherent state}\index{coherent state}
+\[
+	\psi_{a}^{\mathrm{coherent}}(x) = \braket{x|U(a)|0} = C e^{-\alpha^2(x-a)^2/2}.
+\]
+This has the same variance as $\ket 0$, but is centred at $x = a$. This is not an energy eigenstate; it will oscillate in time.
+
+\subsection{\texorpdfstring{Rotations in $\mathbb{R}^3$}{Rotations in R3}}
+\label{sub:rotations}
+
+An anti-clockwise rotation $|\bm{}{\alpha}|$ around the $\bm{\hat \alpha}$ axis corresponds to
+\[
+\mathbf{v} \mapsto \mathbf{v}' = R(\bm{\alpha})\mathbf{v}.
+\]
+Since $\mathbf{v}' \cdot \mathbf{v}' = \mathbf{v} \cdot \mathbf{v}$, we have $\det R = 1$, so this is in $\mathsf{SO}(3)$. This is not abelian:
+\[
+R(\bm{\alpha})R(\bm{\beta}) \neq R(\bm{\beta})R(\bm{\alpha}).
+\]
+For infinitesimal rotations,
+\[
+R(\delta \bm{a}) \mathbf{v} = \mathbf{v} + \delta \bm{\alpha} \times \mathbf{v} + \mathcal{O}(\delta \bm{a}^2).
+\]
+Composing small rotations,
+\[
+R(\delta \bm{\alpha})(R \delta \bm{\beta}) \mathbf{v} = \mathbf{v} + \delta \bm{\beta} \times \mathbf{v} + \delta \bm{\alpha}\times (\mathbf{v} + \delta \bm{\beta} \times \mathbf{v}) + \mathcal{O}(\delta \bm{\alpha}^2, \delta \bm{\beta}^2).
+\]
+Hence we see that
+\[
+	[R(\delta \bm{\alpha}), R(\delta \bm{\beta})] \mathbf{v} = \delta \bm{\alpha} \times(\delta \bm{\beta} \times \mathbf{v}) - \delta \bm{\beta} \times (\delta \bm{\alpha} \times \mathbf{v}) = (\delta \bm{\alpha} \times \delta \bm{\beta}) \times \mathbf{v}.
+\]
+This is $R(\delta \bm{\alpha} \times \delta \bm{\beta}) - \mathbbm{1}_{\mathbb{R}^3}$ infinitesimally.
+
+\subsection{Rotation Operator}
+\label{sub:rot_op}
+
+Let $U(\bm{\alpha})$ denote rotations on $\mathcal{H}$. Hence,
+\[
+U(\bm{\alpha}) = \mathbbm{1}_{\mathcal{H}} - i \frac{\bm{\alpha}}{\hbar} \mathbf{J} + \mathcal{O}(\bm{\alpha}^2) \implies U(\bm{\alpha}) = e^{-i \bm{\alpha} \cdot \mathbf{J} /\hbar}.
+\]
+The commutation relation on $\mathbf{v}$ implies
+\[
+	[U(\bm{\alpha}), U(\bm{\beta})] = U(\bm{\alpha} \times \bm{\beta}) - \mathbbm{1}_{\mathcal{H}}.
+\]
+In terms of the generator,
+\[
+	[J_i, J_j] = i \hbar \eps_{ijk} J_k.
+\]
+This is $\mathsf{SO}(3)$ algebra.
+%lecture 7
+For $U(\bm{\alpha})$ to be a rotation operator, we must have:
+\[
+	\mathbf{X}' = U^{\dagger}(\bm{\alpha})\mathbf{X} U(\bm{\alpha}) = R(\bm{\alpha})\mathbf{X}.
+\]
+Here $U$ is a scalar operator on a Hilbert space, and $R$ is the usual matrix of rotations in $\mathbb{R}^3$. For an infinitesimal rotation, this says:
+\[
+	\biggl(1 + \frac{i}{\hbar} \delta \bm{\alpha} \cdot \mathbf{J} + \cdots \biggr) \mathbf{X} \biggl(1 - \frac{i}{\hbar} \delta \bm{\alpha} \cdot \mathbf{J} + \cdots \biggr) = \mathbf{X} + \delta \bm{\alpha} \times \mathbf{X} + \cdots,
+\]
+so $[J_i, X_j] = i\hbar \eps_{ijk} X_k$.
+
+A \emph{vector operator}\index{vector operator} $\mathbf{V}$ is any operator such that $U^{\dagger}(\bm{\alpha})\mathbf{V} U(\bm{\alpha}) = R(\bm{\alpha})\mathbf{V}$, or equivalently
+\[
+	[J_i, V_j] = i \hbar \eps_{ijk} V_k.
+\]
+A \emph{scalar operator}\index{scalar operator} $S$ transforms trivially under rotations: $U^{\dagger}(\bm{a})S U(\bm{\alpha}) = S$, or equivalently
+\[
+	[J_i, S] = 0.
+\]
+If $\mathbf{V}, \mathbf{W}$ are vector operators
+\begin{align*}
+	U^{\dagger}(\bm{\alpha})(\mathbf{V} \cdot \mathbf{W}) U(\bm{\alpha}) &= (U^{\dagger}(\bm{\alpha})\mathbf{V} U(\bm{\alpha})) \cdot (U^{\dagger}(\bm{\alpha}) \mathbf{V} U(\bm{\alpha})) \\
+									     &= (R(\bm{\alpha}) \mathbf{V}) \cdot (R(\bm{\alpha}) \mathbf{W}) = \mathbf{V} \cdot \mathbf{W},
+\end{align*}
+so $\mathbf{V} \cdot \mathbf{W}$ is a scalar.
+
+\subsection{Translations around a Circle}
+\label{sub:trans_circle}
+
+For a point particle, we can build up a rotation by successive translations along edges of an $N \gg 1$ sided regular polygon in the plane with a unit normal $\mathbf{n}$.
+
+Each translation is through $\delta \mathbf{a} = \frac{2\pi}{N} \mathbf{n} \times \mathbf{X}$. Using the translation operator,
+\[
+U(\delta \mathbf{a}) = 1 - \frac{i}{\hbar} \frac{2\pi}{N} (\mathbf{n} \times \mathbf{X}) \cdot \mathbf{P} + \cdots = 1 - \frac{i}{\hbar} \frac{2\pi}{N} \mathbf{n} \cdot \mathbf{L},
+\]
+where $\mathbf{L} = \mathbf{X} \times \mathbf{P}$. As $N \to \infty$, these give translations around a circular path:
+\[
+	[L_i, L_j] = i \hbar \eps_{ijk} L_k, \qquad [L_i, X_j] = i\hbar \eps_{ijk} X_k, \qquad [L_i, P_j] = i\hbar \eps_{ijk} P_k.
+\]
+So if $\mathcal{H} = L^2(\mathbb{R}^3, \diff^3 x)$ then $\mathbf{L}$ and $\mathbf{J}$ act exactly the same way.
+
+\subsection{Rotating Composite Systems}
+\label{sub:rot_comp}
+
+When $\mathcal{H}=L^2(\mathbb{R}^3, \diff^3 x) \otimes \mathcal{H}_{\mathrm{internal}}$, then $\mathbf{J} \neq \mathbf{L}$. For a composite system, the composition of translations is not necessarily equal to a rotation about the same axis.
+
+Hence we can define the \emph{spin operator}\index{spin operator} $\mathbf{S} = \mathbf{J} - \mathbf{L}$.
+
+Using the conjugation relations of $\mathbf{J}$ and $\mathbf{L}$, we see that
+\[
+	[S_i, X_j] = 0 = [S_i, P_j].
+\]
+This shows that $\mathbf{S}$ has nothing to do with the wavefunction. Moreover, we can calculate
+\[
+	[S_i, S_j] = ih \eps_{ijk} S_k.
+\]
+This means that $\mathbf{S}$ generates some form of rotations, as some $\mathsf{SO}(3)$ algebra.
+
+\subsection{Parity}
+\label{sub:parity}
+
+Not every transformation has a Hermitian generator. The parity $P$ transformation $\mathbf{x} \mapsto -\mathbf{x}$ represents $\mathbb{Z}_2$. There is no `small parameter' here, instead parity is represented by a unitary operator $\Pi : \mathcal{H} \to \mathcal{H}$, obeying $\Pi^2 = \id_{\mathcal{H}}$. Thus the eigenvalues of $\Pi$ are $\pm1$.
+
+Position transforms under parity as
+\[
+\Pi^{\dagger} \mathbf{X} \Pi = \Pi \mathbf{X} \Pi = - \mathbf{X},
+\]
+or equivalently $\{\Pi, \mathbf{X}\} = \Pi \mathbf{X} + \mathbf{X} \Pi = 0$.
+
+However, we have $\Pi^{\dagger} \mathbf{L} \Pi = \mathbf{L}$ and $\Pi^{\dagger} \mathbf{J} \Pi = \mathbf{J}$. We say $\mathbf{L}$ and $\mathbf{J}$ are \emph{pesudo-vector operators}\index{pseudo-vector operators}.
+
+Just as for rotations, $\Pi$ can act subtly on composite systems where $\mathcal{H} = L^2(\mathbb{R}^3, \Diff3x) \otimes \mathcal{H}_{\mathrm{internal}}$.
+
+Physical particles can have intrinsic parity: if $\ket \psi \in \mathcal{H}$ is a parity eigenstate, then
+\[
+	\braket{\mathbf{x}|\Pi|\psi} = \eta\braket{-\mathbf{x}|\psi} = \eta \psi(-\mathbf{x}),
+\]
+where $\eta^2 = 1$.
+
+%lecture 8
+
+\newpage
+
+\section{Time Evolution}
+\label{sec:time_evols}
+
+The Schr\"odinger equation determines time evolution:
+\[
+	i \hbar \frac{\partial \ket{\psi(t)}}{\partial t} = H \ket{\psi(t)},
+\]
+where $H = H^{\dagger}$ is the Hamiltonian. Note that $H$ generates time translations, assuming $\partial_t H = 0$:
+\[
+	\ket{\psi(t)} = U(t) \ket{\psi(0)},
+\]
+where $U(t) = e^{-iHt/\hbar}$. This is called the Schr\"odinger picture.
+
+\subsection{Heisenberg Picture}
+\label{sub:walter_pic}
+
+Alternatively, we can think of operators as evolving in time, while the states do not.
+
+The expected value of $Q$ at time $t$ is
+\[
+	\braket{\psi(t)|Q|\psi(t)} = \braket{\psi(0)|U^{\dagger}(t)Q U(t)|\psi(0)} = \braket{\psi(0)|Q_H(t)|\psi(0)}.
+\]
+The Heisenberg picture says that
+\[
+Q_H(t) = U^{\dagger}(t) Q_S U(t),
+\]
+where $U(t) = e^{-iHt/\hbar}$ and $Q_s = Q = Q_H(t = 0)$. Moreover we have $\ket \psi = \ket{\psi(0)}$ for all of time.
+
+Differentiating, we obtain
+\begin{align*}
+	\frac{\diff}{\diff t}Q_H(t) &= \frac{i}{\hbar}U^{\dagger}(t)[H, Q_S] U(t) + U^{\dagger}(t) \frac{\partial Q_S}{\partial t} U(t) \\
+				    &= \frac{i}{\hbar} [H,Q_H] + \frac{\partial Q}{\partial t}(t) \biggr|_H.
+\end{align*}
+This is called the \emph{Heisenberg equation}\index{Heisenberg equation}.
+
+\subsection{Dynamics}
+\label{sub:dynamics}
+
+The Heisenberg equation (and the Schr\"odinger equation) is dependent on the Hamiltonian $H$. For motion in $\mathbb{R}^3$, we should choose $H = H(\mathbf{X}, \mathbf{P}, \ldots)$.
+
+The simplest non-trivial Hamiltonian is $H = \mathbf{P}^2/2m$, which is rotation invariant. To model obstacles, we can add a potential $V(\mathbf{X})$. Then,
+\[
+H = \frac{\mathbf{P}^2}{2m} + V(\mathbf{X}).
+\]
+In the Heisenberg picture, the operators transform as
+\[
+\frac{\diff \mathbf{X}(t)}{\diff t} = \frac{\mathbf{P}(t)}{m}, \qquad \frac{\diff \mathbf{P}(t)}{\diff t} = - \nabla V(t),
+\]
+where
+\[
+\nabla V(t) = U^{\dagger}(t) \nabla V(\mathbf{X}) U(t).
+\]
+The translation generator $\mathbf{P}$ can be interpreted as classical momentum.
+
+\subsection{Example: QHO}
+\label{sub:ex_qmo}
+
+Consider a translation by $x_0$ of the ground state of the quantum mechanics oscillator:
+\[
+	\ket{0,x_0} = e^{-ix_0 P/\hbar}\ket 0.
+\]
+In the Heisenberg picture, we get
+\[
+P(t) = U^{\dagger}(t) P U(t) = P \cos \omega t - X m \omega \sin \omega t.
+\]
+Evaluating for time $t$ gives a new state
+\begin{align*}
+	U(t) \ket{0;x_0} &= U(t) e^{-i x_0 P/\hbar} U^{\dagger}(t) U(t) \ket 0 \\
+			 &= e^{-i x_0 P(-t)/\hbar} e^{-i\omega t/2} \ket 0 \\
+			 &= e^{-i(m\omega x_0 X \sin \omega t + x_0 P \cos \omega t)/\hbar} e^{-i \omega t/2} \ket 0.
+\end{align*}
+Using the commutation of exponentials, we can get
+\[
+	U(t) \ket{0, x_0} = e^{-i(m\omega x_0/\hbar)X \sin \omega t} e^{-i(x_0/\hbar) P \cos \omega t)} e^{i \phi(t)} \ket 0,
+\]
+This is a Gaussian centered at $x(t) = x_0 \cos \omega(t)$ with momentum $m \dot x(t) = - m \omega x_0 \sin \omega t$. This behaves as a lump of motion released at time $t$ from rest.
+
+\subsection{Conserved Quantities}
+\label{sub:conserved_qs}
+
+If $Q_H$ is time independent, then we say it is \emph{conserved}\index{conserved}. Suppose $\partial_t Q_S = 0$. Then in the Heisenburg picture,
+\[
+	\frac{\diff Q_H}{\diff t} = \frac{i}{\hbar} [H, Q_H] = U^{\dagger}(t) [H,Q] U(t).
+\]
+Hence conserved quantities commute with the Hamiltonian. Also, consider a conserved quantity $Q$ with eigenstates $Q \ket q = q \ket q$ at $t = 0$.
+
+At time $t$, we have $\ket{q,t=0}$ becomes $\ket{q, t} = U(t) \ket{q, 0}$, and
+\[
+	Q U(t) \ket{q, 0} = U(t) Q\ket{q,0} = q \ket{q, t},
+\]
+so these are still $Q$ eigenstates. Hence it is useful to choose these as bases.
+
+Note that if the eigenspace has dimension more than 1, then it may be the case that the state will change.
+
+\subsection{Symmetries}
+\label{sub:symms}
+
+Consider a transformation $U(\theta) = e^{-i\theta T}$, so that
+\[
+H \to U^{\dagger}(\theta) H U(\theta)
+\]
+is the transformed Hamiltonian.
+
+\begin{definition}
+	A transformation is a \emph{symmetry}\index{symmetry} if $H$ remains unchanged, so 
+	\[
+		U^{\dagger}(\theta) H U(\theta) = H \iff [T,H] = 0.
+	\]
+\end{definition}
+
+Hence symmetries of $H$ correspond to conserved quantities $T$.
+
+%lecture 9
+
+\newpage
+
+\section{Angular Momentum}
+\label{sec:ang_mom}
+
+The generator $\mathbf{J}$ obeys the $\mathsf{SO}(3)$ algebra:
+\[
+	[J_i, J_k] = i\hbar \eps_{ijk}J_k.
+\]
+We can find a finite dimensional representation of this algebra. First notice
+\[
+	0 = \Tr_{\mathcal{H}}([J_i, J_j]) = i\hbar \eps_{ijk} \Tr_{\mathcal{H}}(J_k),
+\]
+so $J_i$ is represented by traceless matrices for $i = 1, 2, 3$. We can build $\mathcal{H}$, by first choosing how to label our states.
+
+We can choose one, say $J_z$. However, then $J_{x}$ and $J_y$ do not commute with it, so we cannot find a simultaneous eigenbasis. However, note
+\[
+	[J_i, \mathbf{J} \cdot \mathbf{J}] = [J_i, J_j]J_j + J_j[J_i, J_j] = i\hbar (\eps_{ijk} J_k J_j + \eps_{ijk} J_k J_k) = 0.
+\]
+So we may label the eigenstates as $\ket{\beta, m}$ where
+\[
+	\mathbf{J}^2\ket{\beta,m} = \beta \hbar^2\ket{\beta, m}, \qquad J_z\ket{\beta, m} = m \hbar \ket{\beta, m},
+\]
+and also $\braket{\beta', m'|\beta,m} = \delta_{\beta\beta'}\delta_{mm'}$.
+
+\subsection{Lowering and Raising}
+\label{sub:low_raise}
+
+We proceed as we did with the quantum mechanic oscillator. Define a new raising and lowering operator by
+\[
+J_{\pm} = J_x \pm i J_y.
+\]
+Their commutators are
+\[
+	[J_z, J_{\pm}] = [J_z, J_x] \pm i [J_z, J_y] = i\hbar(J_y \mp iJ_x) = \pm \hbar J_{\pm}.
+\]
+We learn that
+\begin{align*}
+	\mathbf{J}^2 (J_{\pm}\ket{\beta, m}) &= ([\mathbf{J}^2, J_{\pm}] + J_{\pm} \mathbf{J}^2) \ket{\beta, m} = \beta \hbar^2 J_{\pm} \ket{\beta, m}, \\
+	J_z(J_{\pm}\ket{\beta, m}) &= ([J_z,J_{\pm}] + J_{\pm} J_z)\ket{\beta,m} = (m \pm 1)\hbar J_{\pm} \ket{\beta, m}.
+\end{align*}
+
+If $J_{\pm}\ket{\beta, m}$ is non-vanishing, then these are eigenvectors of $\mathbf{J}^2$ with eigenvalue $\beta$, and of $J_z$ with eigenvalues $m \pm 1$. To fix $\beta$ and $m$, we examine the norm:
+
+\begin{align*}
+	\|J_{+}\ket{\beta,m}\|^2 &= \ket{\beta,m|J_-J_+|\beta,m} = \ket{\beta,m|(J_x-iJ_y)(J_x+iJ_y)|\beta,m}\\
+				 &=\ket{\beta,m|J_x^2+J_y^2 + i[J_x,J_y]|\beta,m} = \ket{\beta,m|\mathbf{J}^2-J_z^2-\hbar J_z|\beta,m}\\
+				 &=\hbar^2(\beta-m(m+1))\geq 0.
+\end{align*}
+As $J_+$ increases $m$ and preserved $\beta$, we must have $\beta = j(j+1)$ for $j$ the maximum value of $m$.
+
+States with $m = j$ are called the highest weight states in representation theory. Similarly, for $J_-$,
+\[
+	\|J_-\ket{\beta,m}\|^2 = \hbar^2(\beta - m(m-1)) \geq 0.
+\]
+So we also need $\beta = j'(j' - 1)$ for $j'$ the minimum of $m$. Comparing $j'(j'-1) = j(j+1)$, we either have $j = -j'$ or $j' = j+1$. The latter is impossible, so it must be the former.
+
+Also $j - j' = 2j \in \mathbb{N}$, because $J_{\pm}$ is changing $m$ by one. Summarising,
+\[
+\beta = j(j+1), \qquad 2j \in \mathbb{N}_0.
+\]
+We relabel states by $\ket{\beta,m} \to \ket{j,m}$.
+
+From $-j$ to $j$ we take $2j$ steps, so $\dim \mathcal{H} = 2j+1 < \infty$. Hence
+\[
+	j = \{0, 1/2, 1, 3/2, 2, \ldots\}, \qquad m = \{-j, -j+1, \ldots, j-1, j\}.
+\]
+Then the operators act as $J_z\ket{j,m} = \hbar m\ket{j,m}$ and $\mathbf{J}^2\ket{j,m} = \hbar^2 j(j+1)\ket{j,m}$. We also get
+\begin{align*}
+	J_{+}\ket{j,m} &= \sqrt{j(j+1)-m(m+1)} \hbar \ket{j,m+1}, \\
+	J_-\ket{j,m} &= \sqrt{j(j+1)-m(m-1)}\hbar \ket{j,m-1},
+\end{align*}
+so that $\braket{j,m|j,m}=1$. Since $J_x = (J_+ + J_-)/2$ and $J_y = (J_+ + J_-)/2i$, we can see the action of all rotations $J_i$.
+
+These operators stay inside $\mathcal{H}_j$, which is the Hilbert space for some $j$.
+
+\begin{remark}
+	\begin{itemize}
+		\item[]
+		\item We could have also worked with $J_x$ or $J_y$.
+		\item The eigenvectors of $J_z$ are never eigenvectors of $J_x$ or $J_y$.
+		\item $\ket{j,j}$ have maximal angular momentum along $\hat z$.
+		\item Since $\braket{j,j|J_{x,y}|j,j} \neq 0$, we have some uncertainty
+			\[
+				\braket{j,j|J_x^2+J_y^2|j,j} = \braket{j,j|\mathbf{J}^2-J_z^2|j,j} = \hbar^2(j(j+1)-j^2) = \hbar^2j \neq 0.
+			\]
+			Compare this to $\braket{j,j|J_z^2|j,j} = \hbar^2 j^2$. Thus,
+			\[
+				\frac{\braket{j,j|J_x^2+J_y^2|j,j}}{\braket{j,j|J_z^2|j,j}} = \frac{1}{j}.
+			\]
+			This is negligible for macroscopic systems with $j \gg 1$, but not for $j$ in quantum mechanics.
+	\end{itemize}	
+\end{remark}
+
+\subsection{Classical Limit}
+\label{sub:classical_lim}
+
+Consider measuring $\mathbf{J}$ along $\mathbf{x} = (\sin\theta, 0, \cos\theta)$. Classically, we would find this to be $\hbar j \cos \theta$, and in quantum mechanics we find the same thing on average:
+\begin{align*}
+	\braket{j,j|\mathbf{n} \cdot \mathbf{J} | j,j} &= \braket{j,j|\cos\theta J_z + \sin\theta J_x|j,j} \\
+						       &= \cos \theta \hbar j.
+\end{align*}
+We can also compute
+\begin{align*}
+	\braket{j,j|(\mathbf{n} \cdot \mathbf{J})^2|j,j} &= \cos^2\theta \braket{J_z^2} + \sin^2\theta \braket{J_x^2} + \cos \theta \sin \theta \braket{J_xJ_z+J_zJ_x} \\
+							 &= \cos^2\theta \hbar^2 j^2 + \sin^2\theta \frac{1}{4} \braket{j,j|J_{+}J_{-}|j,j} \\
+							 &= \hbar^2(j^2 \cos^2\theta + j \sin^2\theta/2),
+\end{align*}
+hence the functional uncertainty is
+\[
+	\frac{\sqrt{\Delta_{\ket{j,j}}(\mathbf{n} \cdot \mathbf{J})}}{\braket{\mathbf{n} \cdot \mathbf{J}}} \propto \frac{1}{\sqrt j},
+\]
+which goes to $0$ as $j \gg 1$.
+
+\begin{exbox}
+	Consider a carbon-monoxide atom. The Hamiltonian can be modelled as (with $I = I_x = I_y \neq I_z$):
+	\[
+	H = \frac{J_x^2}{2I_x} + \frac{J_y^2}{2I_y} + \frac{J_z^2}{2I_z} = \frac{\mathbf{J}^2}{2I} + J_z^2\biggl( \frac{1}{2I_z} - \frac{1}{2I} \biggr).
+	\]
+	Hence $\ket{j,m}$ are energy eigenstates with
+	\begin{align*}
+		&H\ket{j,m} = E_{j,m}\ket{j,m} \\
+		\implies& E_{j,m} = \frac{j(j+1)\hbar^2}{2I} + m^2\hbar^2 \biggl(\frac{1}{2I_z} - \frac{1}{2I} \biggr)
+	\end{align*}
+	For carbon monoxide, $I_z \ll I$, hence only $m = 0$ is accessible at low energies.
+
+	Then the energy difference is
+	\[
+	|E_j - E_{j-1}| = \frac{j\hbar^2}{I},
+	\]
+	with corresponding frequency
+	\[
+		\nu_j = \frac{2 \pi \hbar j}{I} \approx j \cdot \qty{113}{\giga\hertz}.
+	\]
+	This is used in astronomy to observe gas.
+\end{exbox}
+
+\subsection{Integers and Half Integers}
+\label{sub:ints_half_ints}
+
+We can place further restrictions on $\mathcal{H}$. Suppose $\ket \psi \in \mathcal{H}_j$, and
+\[
+	\ket \psi = \sum_{m = -j}^{j} a_m \ket{j,m},
+\]
+then
+\[
+	U(\alpha \hat z) \ket \psi = \sum_{m = -j}^{j} a_m e^{-i\alpha J_z/\hbar} \ket{j,m} = \sum_{m = -j}^{j} a_m e^{-i \alpha m} \ket{j,m}.
+\]
+When $j \in \mathbb{N}_0$, we get that $U(2 \pi \hat z) = \mathbbm{1}_{\mathcal{H}_j}$, as expected for $\mathsf{SO}(3)$.
+
+However when $j \in \mathbb{N}_0 + \frac{1}{2}$, we find that $U(2\pi \hat z) = -\mathbbm{1}_{\mathcal{H}_j}$.
+
+Here half-integer values of $j$ are allowed because $\lambda \mathbbm{1}_{\mathcal{H}}$ acts trivially on projective $\mathcal{H}$. Mathematically, for $j = N + \frac{1}{2}$, these are not a representation of $\mathsf{SO}(3)$, but it is a projective representation.
+
+\subsection{Spinors}
+\label{sub:spinors}
+
+Recall the spin operator, $\mathbf{J} = \mathbf{L} + \mathbf{S}$. Then $\mathbf{S}$ is the spin operator, and obeys the same algebra $[S_i, S_j] = i \hbar \eps_{ijk} S_k$ as $\mathbf{J}$.
+
+Hence $\mathbf{S}$ has some representation. Our notation will be that representations of spin $\mathbf{S}$ will have eigenstates $\ket{s, \sigma}$, where
+\begin{align*}
+	\mathbf{S}^2 \ket{s, \sigma} &= s(s+1)\hbar^2 \ket{s, \sigma}, \\
+	S_z\ket{s, \sigma} &= \sigma \hbar \ket{s, \sigma},
+\end{align*}
+with $\sigma \in \{-s, \ldots, s\}$.
+
+Spin is an intrinsic property of a particle, like the charge. So a particle of spin $s$ lives in
+\[
+\mathcal{H} = L^2(\mathbb{R}^3) \otimes \mathbb{C}^{2s+1}.
+\]
+
+If $s = 0$, then we have the scalar configuration. Here there is only one state $\ket{s = 0, \sigma = 0}$ and
+\[
+	e^{-i\alpha \mathbf{S}/\hbar} \ket{0,0} = \ket{0,0}
+\]
+is invariant under rotation. Examples of scalars include sound, and the Higgs boson.
+
+For $s = 1/2$, we have many examples, such as electrons, quarks, leptons, neutron, protons and many more. Here we have two linearly independent states. We focus on $\mathcal{H}_{1/2}$.
+
+We say that $\ket{1/2, 1/2} = \ket{\uparrow}$, and $\ket{1/2,-1/2} = \ket{\downarrow}$.
+
+Any state can be written as $\ket \psi = a \ket{\uparrow} + b \ket{\downarrow}$, with $|a|^2 + |b^2| = 1$ for $\|\psi\| = 1$.
+
+In this basis,
+\[
+S_z =
+\begin{pmatrix}
+	\braket{\uparrow|S_z|\uparrow}& \braket{\uparrow|S_z|\downarrow} \\
+	\braket{\downarrow|S_z|\uparrow} & \braket{\downarrow|S_z|\downarrow}
+\end{pmatrix}
+=\frac{\hbar}{2}
+\begin{pmatrix}
+	1&0\\0&-1
+\end{pmatrix}
+=\frac{\hbar}{2}\sigma_z.
+\]
+Using $S_x = \frac{1}{2} (S_+ + S_-)$, we find that
+\[
+S_x = \frac{\hbar}{2}
+\begin{pmatrix}
+	0&1\\1&0
+\end{pmatrix}
+=\frac{\hbar}{2}\sigma_x, \qquad S_y = \frac{\hbar}{2}
+\begin{pmatrix}
+	0&-i\\i&0
+\end{pmatrix}
+=\frac{\hbar}{2}\sigma_y.
+\]
+We write $\mathbf{S} = \frac{\hbar}{2} \bm{\sigma}$, where $\bm{\sigma} = (\sigma_x, \sigma_y, \sigma_z)$ are the Pauli matrices.
+
+\subsection{Stern-Gerlach Experiment}
+\label{sub:stern_gerlach}
+
+This was an experiment that showed that the spins of particles are quantized, and for the silver atom found that $s = 1/2$.
+
+Schematically, silver atoms are passed through a slowly varying magnetic field, and hit a detector. The Hamiltonian for this is
+\[
+H = \frac{\mathbf{P}^2}{2M} - \bm{\mu} \cdot \mathbf{B},
+\]
+where we have the magnetic dipole moment
+\[
+\bm{\mu} = \frac{\mu \mathbf{S}}{\hbar s}.
+\]
+
+Classically, a magnetic dipole $\bm{\mu}= \gamma \mathbf{S}$ in a magnetic field $\mathbf{B}$ experiences a torque:
+\[
+\mathbf{\dot S} = \bm{\mu} \times \mathbf{B}.
+\]
+If $\bm{\mu}$ and $\mathbf{B}$ are constant, then $\mathbf{S}$ precesses around $\mathbf{B}$ with angular velocity
+\[
+\bm{\omega} = -\gamma \mathbf{B}.
+\]
+Consider a proton $\prot$ with
+\[
+	\gamma = g_{\prot} \frac{e}{2 m_{\prot} c}, \qquad g_{\prot} = \qty{5.5}{\gram}.
+\]
+If $\prot$ cannot move, then the Hamiltonian is
+\[
+H = - \gamma \mathbf{S} \cdot \mathbf{B},
+\]
+with $\mathbf{B} = B \hat z$. Suppose initial state is
+\[
+	\ket{\mathbf{n} \uparrow} = e^{-i \phi/2} \cos \frac{\theta}{2} \ket{\uparrow} + e^{+i \phi/2} \sin \frac{\theta}{2} \ket{\downarrow},
+\]
+with the spin maximally aligned along
+\[
+\mathbf{n} = (\cos \phi \sin \theta, \sin \phi \sin \theta, \cos \theta).
+\]
+Then we get that
+\begin{align*}
+	\ket{\mathbf{n} \uparrow, t} &= U(t) \ket{\mathbf{n} \uparrow} = e^{-i H t} \ket{\mathbf{n} \uparrow} \\
+				     &= e^{i(\omega t - \phi)/2} \cos \frac{\theta}{2} \ket{\uparrow} + e^{-i(\omega t - \phi)/2}\sin \frac{\theta}{2} \ket{\downarrow},
+\end{align*}
+which is maximally aligned along $\phi(t) = \phi - \omega t$, where
+\[
+\omega = \gamma B.
+\]
+This still precesses (on average).
+
+Spin 1 particles include the W$^{(\pm)}$ and $Z$ vector boson, which mediate electroweak interactions (such as nuclear fusion and radioactivity).
+
+Here $\dim \mathcal{H}_s = 2s + 1 = 3$, so $\mathcal{H}_{s=1} = \mathbb{C}^3$. The basis of $\mathbf{S}^2$ and $S_z$ eigenvectors are
+\[
+	\ket{1,1} = \ket +, \qquad \ket{1, 0} = \ket 0, \qquad \ket{1, -1} = \ket -.
+\]
+In this basis, we get
+\begin{align*}
+	S_x &= \frac{\hbar}{\sqrt 2}
+	\begin{pmatrix}
+		0&1&0\\1&0&1\\0&1&0
+	\end{pmatrix}
+	,\\
+	S_y&=\frac{\hbar}{\sqrt2}
+	\begin{pmatrix}
+		0&-i&0\\i&0&-i\\0&i&0
+	\end{pmatrix}
+	,\\
+	S_z&=\hbar
+	\begin{pmatrix}
+		1&0&0\\0&0&0\\0&0&-1
+	\end{pmatrix}.
+\end{align*}
+These are found using
+\begin{align*}
+	S_+ \ket 0 &= \sqrt 2\hbar \ket +, & S_- \ket 0 &= \sqrt 2 \hbar \ket -. \\
+	S_+ \ket - &= \sqrt 2 \hbar \ket 0, & S_-\ket + &= \sqrt 2 \hbar \ket 0.
+\end{align*}
+
+\subsection{Orbital Angular Momentum}
+\label{sub:orb_ang_mom}
+
+Consider the orbital angular momentum $\mathbf{L} = \mathbf{X} \times \mathbf{P}$, for a single particle. Recall that $\mathbf{J} = \mathbf{L} + \mathbf{S}$. Assume that this particle has 0 spin (hence is scalar). Then $\ket \psi \in L^2(\mathbb{R}^3)$.
+
+We want $U(\bm{\alpha}) = e^{-i \alpha \mathbf{L}/\hbar}$ to describe rotations. Then we need
+\[
+	U^{\dagger}(\bm{\alpha}) \mathbf{X} U(\bm{\alpha}) = R(\bm{\alpha})\mathbf{X} \implies U(\bm{\alpha})\ket{\mathbf{x}} = \ket{R(\bm{\alpha})\mathbf{x}}.
+\]
+Under rotations $\ket \psi \to \ket{\psi'} = U(\bm{\alpha}) \ket \psi$, we have wavefunctions
+\[
+	\braket{\mathbf{x}|\psi} = \psi(\mathbf{x}) \to \braket{\mathbf{x}|U(\bm{\alpha})|\psi} = \braket{R^{-1}(\bm{\alpha})\mathbf{x}|\psi}=\psi((R^{-1}(\bm{\alpha})\mathbf{x})).
+\]
+This representation is unitary:
+\begin{align*}
+	\braket{\phi'|\psi'} &= \int_{\mathbb{R}^3} \Diff3 \mathbf{x} \phi(R^{-1}(\bm{\alpha})\mathbf{x})^{\ast} \psi(R^{-1}(\bm{\alpha})\mathbf{x}) \\
+			     &= \int_{\mathbb{R}^3} \Diff3 \mathbf{\tilde x} \phi(\mathbf{\tilde x})^{\ast} \psi(\mathbf{\tilde x}) = \braket{\phi, \psi},
+\end{align*}
+where $\mathbf{\tilde x} = R^{-1} \mathbf{x}$.
+
+\subsection{Irrepresentation of Orbital Angular Momentum}
+\label{sub:irrep_oam}
+
+Recall that the algebra for $\mathbf{L}$ is $[L_i, L_j] = i \hbar \eps_{ijk} L_k$, so we can simultaneously diagonalize $\mathbf{L}^2$ and $L_z$, with
+\[
+	\mathbf{L}^2 \ket{\ell, m} = \hbar^2 \ell(\ell+1) \ket{\ell,m}, \qquad L_z\ket{\ell,m} = \hbar m \ket{\ell, m}.
+\]
+For $R(\bm{\alpha}) \in \mathsf{SO}(3)$, we have $R(2 \pi \hat z) = \mathbbm{1}_{\mathcal{H}}$, so
+\[
+e^{-2 \pi i L_z/\hbar} = \mathbbm{1}_{L^2(\mathbb{R}^3)}.
+\]
+This is only true for $J$ and $m$ integers, which is unlike spin which can be a half integer.
+
+Let us embed $H_\ell$, which is the $(2\ell+1)$ dimensional representation into $L^2(\mathbb{R}^3)$. Note that $L_z = X_xP_y - X_yP_x$, then
+\[
+	\braket{\mathbf{x}|L_z|\psi} = -i\hbar \biggl( x \frac{\partial}{\partial y} - y \frac{\partial}{\partial x} \biggr) \psi(\mathbf{x}) = -i \hbar \frac{\partial}{\partial \phi} \psi(r, \theta, \phi).
+\]
+Then we get
+\[
+	\braket{\mathbf{x}|\ell,m} = e^{-i m \phi} K_{\ell,m}(r, \theta)
+\]
+for some function $K_{\ell,m}$. The raising and lowering operators $L_{\pm}$ act as
+\[
+	\braket{\mathbf{x}|L_{\pm}|\psi} = i \hbar \biggl( (y \mp ix) \frac{\partial}{\partial z} - z \biggl( \frac{\partial}{\partial y} \mp i \frac{\partial}{\partial x} \biggr) \biggr) \psi(\mathbf{x}).
+\]
+The highest weight state for some $L$ is defined by $L_+\ket{\ell,\ell} = 0$. Hence, since
+\[
+	\braket{\mathbf{x}|L_{\pm}|\ell,m} = \pm e^{\pm i \phi} \biggl( \frac{\partial}{\partial \theta} \pm i \cot \theta \frac{\partial}{\partial \phi} \biggr) e^{im \phi} K_{\ell,m}(r, \theta),
+\]
+we get that this is solved by
+\[
+	\psi_{\ket{\ell,\ell}} = R_\ell(r) e^{i \ell \phi} \sin^{\ell} \theta,
+\]
+for some $R_\ell(r)$. The other states $\ket{\ell,m}$ are obtained by acting with $L_-$ on $\ket{\ell, \ell}$. The eigenstates we have constructed are called \emph{spherical harmonics}\index{spherical harmonics}, and are denoted by $Y_\ell^m(\theta, \phi)$. Hence
+\[
+	\psi_{\ket{\ell,m}} = R_\ell(r) Y_\ell^m (\theta, \phi).
+\]
+The eigenstate correlation
+\[
+	\mathbf{L}^2 \ket {\ell, m} = \ell(\ell+1)\hbar^2 \ket{\ell,m},
+\]
+implies that
+\[
+- \nabla^2_{S^2} Y_\ell^m (\theta, \phi) = \ell(\ell+1) Y_\ell^m(\theta, \phi).
+\]
+Hence $Y_\ell^m$ are orthonormal, as
+\[
+\int_{S^2} Y_{\ell'}^{m'} (\theta, \phi)^{\ast} Y_\ell^m(\theta, \phi) \sin \theta \diff \theta \diff \phi = \delta_{\ell\ell'} \delta_{mm'}.
+\]
+
+%lecture 12
+
+Under parity, these spherical harmonics satisfy
+\[
+Y_\ell^m(-\mathbf{\hat x}) = (-1)^\ell Y_\ell^m(\mathbf{\hat x}) \iff Y_\ell^m(\pi - \theta, \pi + \phi) = (-1)^\ell Y_\ell^m(\theta, \phi).
+\]
+
+\newpage
+
+\section{Central Potentials}
+\label{sec:cent_potent}
+
+Consider a particle of mass $M$ moving in a central potential
+\[
+H = \frac{\mathbf{P}^2}{2m} + V(|\mathbf{X}|).
+\]
+Since $[H, \mathbf{L}^2] = 0 = [H, L_z] = [\mathbf{L}^2, L_z]$, we can simultaneously diagonalize all of these operators. We use a basis $\ket{n, \ell, m}$ such that
+\[
+	H\ket{n, \ell, m} = E_{n, \ell, m} \ket{n, \ell, m},
+\]
+and as usual
+\begin{align*}
+	L_z\ket{n, \ell, m} &= \hbar m \ket{n, \ell, m}, \\
+	\mathbf{L}^2 \ket{n, \ell, m} &= \hbar^2 \ell(\ell+1)\ket{n, \ell, m}.
+\end{align*}
+Note that $[H, L_{\pm}] = 0$, hence $E_n$ must be independent of $m$. Thus $E_{n, \ell, m} = E_{n, \ell}$. We say that there is a $(2\ell+1)$ degeneracy from reaising and lowering.
+
+Generally, we do expect $E_{n, \ell}$ to depend on $\ell$.
+
+\subsection{Hydrogen Atom}
+\label{sub:h_atom}
+
+With the Coulomb potential, the Hamiltonian is.
+\[
+H = \frac{\mathbf{P}^2}{2 \mu} - \frac{\kappa}{|\mathbf{X}|},
+\]
+we define the reduced mass
+\[
+\mu = \frac{m_{\elec}m_{\prot}}{m_{\elec} + m_{\prot}}.
+\]
+Here we have
+\[
+\kappa = \frac{e^2}{4 \pi \eps_0}.
+\]
+This obeys $[H, \mathbf{L}] = 0$. The energy levels are
+\[
+E_{n, \ell , m} = - \frac{R}{n^2},
+\]
+where $R$ is the Rydberg constant
+\[
+	R = \frac{\mu e^{4}}{32 \pi^2 \eps_0^2 \hbar^2} \approx \qty{13.6}{\electronvolt}.
+\]
+The $n$'th energy level is degenerate. For fixed $n$, we can have $m \in \{-\ell , \ldots, \ell \}$ and we can have $\ell \in \{0, 1, 2, \ldots, n-1\}$, so in total we have
+\[
+\sum_{\ell =0}^{n-1}(2\ell +1)=2\cdot\frac{n(n-1)}{2}+n=n^2.
+\]
+This is a lot of degeneracy. As we will see, this is because we have an extra symmetry.
+
+Classically, Keplerian orbits close because the Runge-Lenz vector satisfies
+\[
+\mathbf{r} = \frac{1}{\mu} \mathbf{p} \times \bm{\ell} - \kappa \frac{\mathbf{x}}{|\mathbf{x}|} \implies \mathbf{\dot r} = 0.
+\]
+Hence we have an extra relation
+\[
+|\mathbf{r}|^2 = \kappa^2 + \frac{2E}{\mu}|\bm{\ell }|^2.
+\]
+In quantum mechanics, we can define the Runge-Lenz operator $\mathbf{R}^{\dagger} = \mathbf{R}$, where
+\[
+\mathbf{R} = \frac{1}{2 \mu} (\mathbf{P} \times \mathbf{L} - \mathbf{L} \times \mathbf{P}) - \kappa \frac{\mathbf{X}}{|\mathbf{X}|},
+\]
+then $\mathbf{R}$ is conserved for bound orbits. This means $[H, \mathbf{R}] = 0$, and also $\mathbf{L} \cdot \mathbf{R} = \mathbf{R} \cdot \mathbf{L} = 0$.
+
+Then we find that
+\[
+\mathbf{R}^2 = \kappa^2 + \frac{2H}{\mu}(\mathbf{L}^2 + \hbar^2),
+\]
+so the eigenvalues of $H$ are fixed by those of $\mathbf{L}^2$ and $\mathbf{R}$. Notice also that
+\[
+	[L_i, R_j] = i \hbar \eps_{ijk} R_k,
+\]
+and
+\[
+	[R_i, R_j] = \frac{2i \hbar}{\mu} H \eps_{ijk} R_k.
+\]
+Let's solve the eigenstate problem again using $\mathbf{R}$. The right choice of operators are
+\[
+	\mathbf{A}_{\pm} = \frac{1}{2} \biggl( \mathbf{L} \pm \sqrt{\frac{\mu}{-2H}} \mathbf{R} \biggr).
+\]
+Here $\mathbf{A}_{\pm}$ are Hermitian for $E < 0$, and obey
+\begin{align*}
+	[A_{i+}, A_{j+}] &= i \hbar\eps_{ijk} A_{k+}, \\
+	[A_{i-}, A_{j-}] &= i \hbar \eps_{ijk} A_{k-},\\
+	[A_{i+}, A_{j-}] &= 0.
+\end{align*}
+So we find a symmetry algebra of $\mathsf{SU}(2) \times \mathsf{SU}(1)$, which is the same algebra as angular momentum. The eigenvalues are  $(a_{\pm})(a_{\pm}+1)\hbar^2$, for $|\mathbf{A}_{\pm}|^2$, with $a_{\pm} \in \{0, \frac{1}{2}, 1, \frac{3}{2}, \ldots \}$.
+
+Since $\mathbf{L} \cdot \mathbf{R} = \mathbf{R} \cdot \mathbf{L} = 0$, we get
+\[
+|\mathbf{A}_+|^2 = |\mathbf{A}_-|^2 = \frac{1}{2}\mathbf{L}^2 - \frac{\mu}{2H} \mathbf{R}^2 = - \frac{\mu \kappa^2}{8H} - \frac{\hbar^2}{4},
+\]
+hence $a_+ = a_- = a$. Hence we can label the states as $\ket{a, m_+, m_-}$, where $m_{\pm}$ are the eigenvalues of $A_{z\pm}$. The energy levels are then
+\[
+E = - \frac{\mu \kappa^2}{8} \frac{1}{a(a+1)\hbar^2 + \hbar^2/4} = - \frac{\mu \kappa^2}{2} \frac{1}{(2a + 1)^2} = - \frac{\mu \kappa}{2} \frac{1}{n^2}.
+\]
+The degeneracy is $(2a+1)^2 = n^2$, by looking at all possible values of $m_+$, $m_-$.
+
+\subsection{3D Harmonic Oscillator}
+\label{sub:3d_ho}
+
+For the 3D simple harmonic oscillator, we have
+\[
+H = \frac{1}{2m}(P_x^2 + P_y^2 + P_z^2) + \frac{1}{2}m\omega^2(X^2 + Y^2 + Z^2) = H_X + H_Y + H_Z.
+\]
+The raising and lowering operators
+\[
+	\mathbf{A}^{\dagger} = \frac{1}{\sqrt{2m \omega}} (m\omega \mathbf{X} - i \mathbf{P}),
+\]
+and $\mathbf{A} = (\mathbf{A}^{\dagger})^{\dagger}$, show that the energy eigenstates are
+\[
+	\ket{\mathbf{n}} = \ket{n_x, n_y, n_z} = \frac{1}{\sqrt{n_x!n_y!n_z!}}(A_x^{\dagger})^{n_x}(A_y^{\dagger})^{n_y}(A_z^{\dagger})^{n_z} \ket 0,
+\]
+and the energy is
+\[
+E_n = \biggl(N + \frac{3}{2}\biggr) \hbar \omega,
+\]
+where $N = n_x + n_y + n_z$. Hence the degeneracy is $(N+2)(N+1)/2$, which is also quite large.
+
+%lecture 13
+
+Note that we can also write the Hamiltonian as
+\[
+H = \hbar \omega \biggl(\mathbf{A}^{\dagger} \mathbf{A} + \frac{3}{2} \biggr),
+\]
+which was more symmetry. Note that $H$ is invariant under unitary transformation $A_i \to U_{ij} A_j$, where $U^{\dagger}_{ki} U_{ij} = \delta_{ij}$.
+
+Note that $U_{ij}$ mixes $\mathbf{X}$ and $\mathbf{P}$. $U_{ij}$ has 9 real parameters, hence there are 9 corresponding conserved generators. Note there's a unitary operator $U_{(U, T)} : \mathcal{H} \to \mathcal{H}$ with
+\[
+U = \mathbbm{1}_{\mathcal{H}} - i \eps_{ij} T_{ij},
+\]
+with $T^{\dagger} = T$ the Hermitian generator, with $[T_{ij}, H] = 0$. Demanding that $U$ generates the rotation of $\mathbf{A}$ and $\mathbf{A}^{\dagger}$, we find
+\[
+T_{ij} = A_{i}^{\dagger} A_j.
+\]
+Indeed, note that
+\begin{align*}
+	\frac{1}{\hbar \omega} [T_{ij}, H] &= [A_i^{\dagger} A_j, A_k^{\dagger} A_k] = A_i^{\dagger} [A_j, A_k^{\dagger}] A_k + A_k^{\dagger} [A_i^{\dagger}, A_k] A_j\\
+					   &= - A_i^{\dagger} \delta_{jk} A_k + A_k^{\dagger} \delta_{ik} A_j = 0.
+\end{align*}
+Decomposing $T_{ij}$ into the trace, antisymmetric and traceless symmetric parts, we have
+\[
+	T_{ij} = \frac{\delta_{ij}}{3} \mathbf{A}^{\dagger} \cdot \mathbf{A} + \frac{A_i^{\dagger} A_j - A_j^{\dagger} A_i}{2} + \biggl[ \frac{A_i^{\dagger} A_j - A_j^{\dagger} A_i}{2} - \frac{1}{3} \delta_{ij} \mathbf{A}^{\dagger} \mathbf{A} \biggr],
+\]
+we get that
+\[
+	\Tr(T) = H + \text{constant},
+\]
+is clearly conserved. The remaining 8 components generate $\mathsf{SU}(3) = \mathsf{U}(3)/\mathsf{U}(1)$. The antisymmetric part is just $\mathsf{SO}(3) \subset \mathsf{SU}(3)$:
+\begin{align*}
+	\eps_{ijk} A_j^{\dagger} A_k &= \frac{1}{2m \hbar \omega} \eps_{ijk}(m \omega X_j - i P_j)(m \omega X_k + i P_k) \\
+				     &= \frac{i}{2\hbar} \eps_{ijk} (X_j P_k - P_j X_k) = \frac{i}{\hbar} L_i.
+\end{align*}
+This is just the orbital angular momentum:
+\[
+\mathbf{L} = \mathbf{X} \times \mathbf{P} = -i \hbar \mathbf{A}^{\dagger} \times \mathbf{A}.
+\]
+The traceless symmetric part is new to us. It mixes $\mathbf{X}$ and $\mathbf{P}$, and is responsible for the extra degeneracy.
+
+\newpage
+
+\section{Addition of Angular Momentum}
+\label{sec:add_mom}
+
+Classically, when we want to find the total angular momentum of two systems, we have
+\[
+\mathbf{J}_{\mathrm{total}} = \mathbf{J}_1 + \mathbf{J}_2.
+\]
+From the triangle inequality, this gives
+\[
+|\mathbf{J}_1| + |\mathbf{J}_2| \geq |\mathbf{J}_{\mathrm{total}}| \geq |\mathbf{J}_1| - |\mathbf{J}_2|,
+\]
+where $|\mathbf{J}_1| \geq |\mathbf{J}_2|$. Equality occurs if our systems are aligned or anti-aligned.
+
+Let's see what happens in quantum mechanics. Consider $\mathcal{H}_{j_1}, \mathcal{H}_{j_2}$ with basis $\ket{j_i, m_i}$, eigenvectors of $(\mathbf{J}_i^2, \mathbf{J}_{i,z})$ for $i = 1, 2$. Then, $\ket{j_1, m_1} \otimes \ket{j_2, m_2}$ is a basis for $\mathcal{H}_{j_1} \otimes \mathcal{H}_{j_2} = \mathcal{H}_{\mathrm{total}}$.
+
+We want to find this in terms of $\mathbf{J}_{\mathrm{total}} = \mathbf{J}_1 + \mathbf{J}_2$. Mathematically, we want to deduce $\mathcal{H}_{j_1}\otimes \mathcal{H}_{j_2}$ as $\bigoplus \mathcal{H}_j$.
+
+The total angular momentum is
+\[
+\mathbf{J}^2 = \mathbf{J}_1^2 + \mathbf{J}_2^2 + 2 \mathbf{J}_1 \mathbf{J}_2.
+\]
+We want to figure out how
+\[
+\mathbf{J}_1 \cdot \mathbf{J}_2 = J_{1x}J_{2x} + J_{1y}J_{2y} + J_{1z}J_{2z}
+\]
+acts. Using
+\[
+J_x = \frac{J_+ + J_-}{2}, \qquad J_y = \frac{J_+ - J_-}{2i},
+\]
+we get that
+\begin{align*}
+	2 \mathbf{J}_1 \cdot \mathbf{J}_2 &= 2 \biggl( \frac{J_{1+} + J_{1-}}{2} \frac{J_{2+} + J_{2-}}{2} + \frac{J_{1+}-J_{1-}}{2i} \frac{J_{2+}-J_{2-}}{2i} + J_{1z}J_{2z} \biggr) \\
+					  &= J_{1+}J_{2-} + J_{1-}J_{2+} + 2J_{1z}J_{2z},
+\end{align*}
+hence we get
+\[
+\mathbf{J}^2 = \mathbf{J}_1^2 + \mathbf{J}_2^2 + J_{1+} J_{2-} + J_{1-} J_{2+} + 2 J_{1z} J_{2z}.
+\]
+Considering the maximally aligned state $\ket{j_1, j_1} \ket{j_2, j_2}$, then
+\[
+	J_z \ket{j_1, j_1} \ket{j_2, j_2} = (j_1 + j_2) \hbar \ket{j_1, j_1} \ket{j_2, j_2},
+\]
+hence this is an eigenvector. Moreover
+\begin{align*}
+	\mathbf{J}^2 \ket{j_1, j_1} \ket{j_2, j_2} &= \bigl[ j_1(j_1+1) + j_2(j_2+1) + 2j_1j_2\bigr] \ket{j_1,j_1}\ket{j_2,j_2} \\
+						   &= (j_1+j_2)(j_1+j_2+1)\ket{j_1,j_1}\ket{j_2,j_2}.
+\end{align*}
+Hence we can identify $\ket{j_1,j_1}\ket{j_2,j_2} = \ket{j,j}$, an eigenvector of the combined system.
+
+We can find more states by acting with $J_- = J_{1-} + J_{2-}$ on $\ket{j,j}$. Recall that
+\begin{align*}
+	J_-\ket{j,m} &= \sqrt{j(j+1)-m(m-1)} \hbar \ket{j,m-1}, \\
+	\implies J_-\ket{j,j} &= \sqrt{2j} \hbar \ket{j,j-1}, \\
+	J_{i-} \ket{j_{i}, j_i} &= \sqrt{2j_i} \hbar \ket{j_i, j_{i-1}}
+\end{align*}
+for $i = 1, 2$. Comparing these results, we see that
+\[
+	\ket{j,j-1} = \sqrt{\frac{j_1}{j}} \ket{j_1,j_1-1}\ket{j_2,j_2} + \sqrt{\frac{j_2}{j}} \ket{j_1,j_1}\ket{j_2,j_2-1}.
+\]
+Repeating this builds all $\ket{j, m}$ with $j = j_1 + j_2$ and $m \in \{-j, -j+1, \ldots, j-1, j\}$.
+
+But there are also imperfectly aligned states. For example, we will try to find $\ket{j-1,j-1}$. Note that this must be orthogonal to $\ket{j, j-1}$ as they are eigenstates of $\mathbf{J}^2$ with different eigenvalues. Hence we can find
+\[
+	\ket{j-1,j-1}= \sqrt{\frac{j_2}{j}} \ket{j_1,j_1-1}\ket{j_2,j_2} - \sqrt{\frac{j_1}{j}}\ket{j_1,j_1}\ket{j_2,j_2-1}.
+\]
+We can then obtain the full multiplet $\ket{j-1,m}$ by acting with $J_-$.
+
+We expect this process to provide an eigenvalue for $\mathbf{J}^2$, at least until $|j_1 - j_2|$. If this was true, the total number of states would be $(2j+1)$ for each $j \in \{j_1 - j_2, \ldots, j_1+j_2\}$ giving
+\[
+\sum_{j = j_1 - j_2}^{j_1+j_2} (2j+1) = 2 \cdot \frac{2j_1(2j_2+1)}{2} + 2j_2 + 1 = (2j_1 +1)(2j_2+1).
+\]
+Since $\dim(\mathcal{H}_{j_1} \otimes \mathcal{H}_{j_2}) = \dim(\mathcal{H}_{j_1}) \cdot \dim(\mathcal{H}_{j_2}) = (2j_1+1)(2j_2+1)$, this shows we will have all states.
+
+%lecture 14
+
+\subsection{Examples of Addition}
+\label{sub:ex_add}
+
+We will look at some examples of tensor products of Hilbert spaces and the corresponding irreducible decomposition.
+
+\subsubsection{$\frac{1}{2} \otimes \frac{1}{2} = 1 \oplus 0$}
+\label{subsub:add_ex_1}
+
+Take $j_1 = j_2 = \frac{1}{2}$. Then $j = 1$ or $j = 0$.
+
+This is the case for a Hydrogen atom, so we use the notation $\ket \uparrow_\elec, \ket \downarrow_\elec$ for the basis of $\mathcal{H}_{1/2}$ of the electron $\elec$, and $\ket \uparrow_\prot, \ket \downarrow_\prot$ for the basis of the proton $\prot$.
+
+We start from the highest weight
+\[
+	\ket{j, j} = \ket{1, 1} = \ket \uparrow_{\elec} \ket \uparrow_{\prot}.
+\]
+To build the rest of $\mathcal{H}_1$, we act on this with $J_-$. Using $J_- = J_{\elec -} + J_{\prot -}$, we find
+\[
+	\ket{1, 0} = \frac{1}{\sqrt 2} J_- \ket \uparrow_\elec \ket \uparrow_\prot = \frac{1}{\sqrt 2} (\ket \downarrow_\elec \ket \uparrow_\prot + \ket \uparrow_\elec + \ket\downarrow_\prot),
+\]
+and finally
+\[
+	\ket{1,-1} = \ket\downarrow_\elec\ket\downarrow_\prot.
+\]
+If we apply $J_-$ again, we get zero. Note that this spin 1 multiplet is symmetric under permutations $\elec \leftrightarrow \prot$.
+
+The remaining state is
+\[
+	\ket{0,0} = \frac{1}{\sqrt 2} (\ket\downarrow_\elec\ket\uparrow_\prot - \ket\uparrow_\elec\ket\downarrow_\prot).
+\]
+This vector is antisymmetric under $\elec \leftrightarrow \prot$, and indeed we can see that $\ket{0,0}$ is annihilated by $J_z = J_{\elec z} + J_{\prot z}$.
+
+This shows that
+\[
+\mathcal{H}_{1/2} \otimes \mathcal{H}_{1/2} = \mathcal{H}_1 \oplus \mathcal{H}_0.
+\]
+Often $(\ket{1, 1}, \ket{1, 0}, \ket{1, -1})$ is called the \emph{triplet}, and $\ket{0,0}$ is called the \emph{singlet}.
+
+\subsubsection{$1 \otimes \frac{1}{2} = \frac{3}{2} \oplus \frac{1}{2}$}
+\label{subsub:add_ex_2}
+
+We can check that the dimensions are correct.
+
+For the $j = 3/2$ subspace, we obtain
+\begin{align*}
+	\ket{3/2, 3/2} &= \ket{1, 1} \ket\uparrow, \\
+	\ket{3/2, 1/2} &= \sqrt{\frac{2}{3}} \ket{1,0} \ket\uparrow + \sqrt{\frac{1}{3}} \ket{1,1} \ket\downarrow,\\
+	\ket{3/2, -1/2} &= \sqrt{\frac{1}{3}}\ket{1,-1}\ket\uparrow + \sqrt{\frac{2}{3}}\ket{1,0}\ket\downarrow,\\
+	\ket{3/2,-3/2} &= \ket{1,-1}\ket\downarrow.
+\end{align*}
+Moreover we can find
+\begin{align*}
+	\ket{1/2,1/2} &= \sqrt{\frac{1}{3}} \ket{1,0}\ket\uparrow - \sqrt{\frac{2}{3}}\ket{1,1}\ket\downarrow,\\
+	\ket{1/2,-1/2}&= \sqrt{\frac{2}{3}} \ket{1,-1}\ket{\uparrow} - \sqrt{\frac{1}{3}} \ket{1,0}\ket\downarrow.
+\end{align*}
+The numbers in the linear combinations are called \emph{Clebsch-Gordon coefficients}\index{Clebsch-Gordon coefficients}:
+\[
+	C(j,m;j_1,m_1,j_2,m_2) = \braket{j,m|j_1,m_2; j_2,m_2}.
+\]
+For example, reading from the above we get
+\[
+	C(1/2, -1/2; 1, -1, 1/2, 1/2) = \sqrt{\frac{2}{3}}.
+\]
+\subsection{Wigner-Eckart Theorem}
+\label{sub:we_thm}
+
+Using $J_{\pm}$, we can align the system by changing $m$, but not $j$. Moreover, scalar operators don't change $j$ or $m$, as $\mathbf{J}$ commutes with $S$, hence $S \ket{j,m}$ satisfies
+\begin{align*}
+	J_z(S\ket{j,m}) &= ([J_z, S] + S J_z)\ket{j,m} = \hbar m S \ket{j,m}, \\
+	\mathbf{J}^2 (S \ket{j,m}) &= \hbar^2 j(j+1) S\ket{j,m}.
+\end{align*}
+To find an operator to find $j$, we need to act with vector operators.
+
+Recall that a vector operator $\mathbf{V}$ transforms as
+\[
+U^{\dagger}(\bm{\alpha}) \mathbf{V} U(\bm{\alpha}) = R(\bm{\alpha}) \mathbf{V}.
+\]
+Consider the simplest case: we have the state $\ket{0,0}$ with $j = m = 0$. Acting with $\mathbf{V} \neq \mathbf{J}$,
+\begin{align*}
+	U(\bm{\alpha}) \mathbf{V} \ket {0,0} &= U(\bm{\alpha}) \mathbf{V} U^{\dagger}(\bm{\alpha}) U(\bm{\alpha}) \ket{0,0} \\
+					     &= R(-\bm{\alpha}) \mathbf{V} \ket{0,0} \neq \ket{0,0}.
+\end{align*}
+More systematically, we introduce the \emph{spherical basis}\index{spherical basis}, as for $J_{\pm}$ and $J_z$.
+
+We treat $\mathbb{R}^3$ as $\mathbb{C} \otimes \mathbb{R}$. Then,
+\[
+\mathbf{v} = (v_1, v_2, v_3) \implies v^+ = \frac{v_1 + i v_2}{\sqrt 2}, \qquad v^- = \frac{v_1 - i v_2}{\sqrt 2}, \qquad v^0 = v_z.
+\]
+Now, we consider the vector operators (check these):
+\[
+V^{+ 1}  = - (V_x + i V_y) \frac{1}{\sqrt 2}, \qquad V^{-1} = (V_x - i V_y) \frac{1}{\sqrt 2}, \qquad V^0 = V_z.
+\]
+The commutation relations now imply
+\begin{align*}
+	[J_i, V_j] = i \hbar \eps_{ijk} V_k \implies & [J_z, V^m] = m \hbar V^m, \\
+		   &[J_{\pm}, V^m] = \hbar \sqrt{2 - m(m\pm 1)} V^{m \pm 1}.
+\end{align*}
+More generally, if we have a $2j+1$ tensor $T_{(j)}^{m}$ with $m \in \{-j, \ldots, j\}$, then
+\[
+	[J_z, T_{(j)}^{m}] = m \hbar T_{(j)}^{m}, \qquad [J_{\pm}, T_{(j)}^m] = \hbar \sqrt{j(j+1)-m(m\pm 1)} T_{(j)}^{m \pm 1}.
+\]
+For example, we can build $j = 2$ as follows:
+\begin{align*}
+	T_{(2)}^{\pm 2} &= V_{(1)}^{\pm1} W_{(1)}^{\pm1}, \\
+	T_{(2)}^{\pm 1} &= \frac{V_{(1)}^{0}W_{(1)}^{\pm1} + V_{(1)}^{\pm1}W_{(1)}^0}{\sqrt 2},\\
+	T_{(2)}^0 &= \frac{V_{(1)}^1W_{(1)}^{-1} + V_{(1)}^{-1} W_{(1)}^{1} + 2 V_{(1)}^0 W_{(1)}^0}{\sqrt 6}.
+\end{align*}
+
+%lecture 15
+
+\subsection{Combining Angular Momentum of States and Operators}
+\label{sub:comb_ang_mom}
+
+We can similarly combine angular momentum of states and numbers:
+\begin{align*}
+	J_z(T_{(j_1)}^{m_1} \ket{j_2, m_2}) &= ([J_z, T_{(j_1)}^{m_1}] + T_{(j_1)}^{m_1} J_z) \ket{j_2, m_2} \\
+					    &= \hbar (m_1 + m_2) (T_{(j_1)}^{m_1} \ket{j_2, m_2}), \\
+	J_{\pm}(T_{(j_1)}^{m_1} \ket{j_2,m_2}) &= ([J_{\pm}, T_{(j_1)}^{m_1}] + T_{(j_1)}^{m_1} J_{\pm} ) \ket{j_2, m_2} \\
+					       &= \hbar \sqrt{j_1(j_1+1)-m_1(m_1\pm1)}T_{(j_1)}^{m_1\pm 1} \ket{j_2, m_2} \\
+					       &\qquad + \hbar\sqrt{j_2(j_2+1)-m_2(m_2\pm1)}T_{(j_1)}^{m_1}\ket{j_2,m_2\pm1}.
+\end{align*}
+Using this, we can show that $T_{(j_1)}^{m_1} \ket{j_2, m_2}$ decompose into states of total angular momentum $j \in \{|j_1-j_2|, \ldots, j_1 + j_2\}$, just like for states $\ket{j_1, m_1} \otimes \ket{j_2, m_2}$. We can extend each component by taking the inner products
+\[
+	\braket{j,m|T_{(j_1)}^{m_1}|j_2, m_2}.
+\]
+Consider a tensor $T_{(j_2)}^{m_2}$, and two states $\ket{\alpha, j_3, m_3}$ and $\ket{\beta, j_1, m_1}$, where $\alpha$ and $\beta$ represent other possible quantum numbers. Here $\alpha$ and $\beta$ are implicit.
+
+Then the \emph{Wigner-Eckart theorem}\index{Wigner-Eckart theorem} says that there exists a so called \emph{reduced matrix element} $\braket{j_3 \|T_{(j_2)}\| j_1}$ such that
+\[
+	\braket{j_3, m_3|T_{(j_2)}^{m_2}|j_1,m_1} = \braket{j_3,m_3|j_2,m_2,j_1,m_1} \braket{j_3\|T_{(j_2)}\|j_1}.
+\]
+For each $j_1, j_2, j_3$, the original object has $(2j_1+1)(2j_2+1)(2j_3+1)$ elements, but we can compute it from a single one of them using the Clepsch-Gordon coefficients.
+
+As a sketch of the proof, using the equation about transformations of $T_{(j_2)}^{m_2} \ket{j_3, m_3}$, we can relate each value with $m_1, m_2, m_3$ with another value with $\tilde m_1, \tilde m_2, \tilde m_3$, and recognize the solution as the Clepsch-Gordon coefficients.
+
+\subsection{Dipole Transition}
+\label{sub:dip_trans}
+
+Suppose an atom interacts with an electric field $\mathbf{E}$ with
+\[
+\Delta H \approx \mathbf{E} \cdot \mathbf{X}.
+\]
+If $\mathbf{E}$ is constant, then there are transitions between the $\ket{n, j, m}$ states of the atom. These are proportional to
+\[
+	|\braket{n',\ell', m' | \mathbf{E} \cdot \mathbf{X} |n, \ell , m}|^2.
+\]
+Note that $\mathbf{X}$ is a spin-1 operators, with spherical components $X^0$, $X^{\pm 1}$. So $\mathbf{X} \ket{n,\ell , m}$ can have total angular momentum equal to $\ell, \ell + 1$ or $\ell - 1$, and angular momentum $m+1, m, m-1$ along $\hat z$.
+
+Hence we have so-called ``reduction rules'' $|\ell' - \ell| \leq 1$, $\ell +\ell' \geq 1$, $|m' - m| \leq 1$. If these are violated, then transition cannot occur.
+
+For example, $\braket{2, 1, m' | \mathbf{X} | 4, 2, m}$ contains $45$ components, but it suffices to just compute one. We will take it to be the simplest: $m = m' = 0$ and $X^0 = X_z$. Then,
+\[
+	\braket{2, 1, m'| X^i | 4, 2,m} = \frac{\braket{1, m'|1, i; 2, m}}{\braket{1, 0|1, 0; 2, 0}} \braket{2, 1, 0 | X^0 | 4, 2, 0}.
+\]
+
+\newpage
+
+\section{Indistinguishable Particles}
+\label{sec:ind_part}
+
+An important fact about quantum physics is that all electrons are all indistinguishable, as are all protons, quarks, and most particles.
+
+These electrons have the same Hilbert spaces $L^2(\mathbb{R}^3) \otimes \mathbb{C}^2$, hence any two electrons have the same set of quantum numbers. Theoretically, this means we can't distinguish two different electrons.
+
+This poses some interesting problems when we try to build a Hilbert space of the composite of electrons. For two particles, we will let $\ket \psi \in \mathcal{H}_1 \otimes \mathcal{H}_2$, with basis $\{\ket{\alpha_1, \alpha_2} = \ket{\alpha_1} \otimes \ket{\alpha_2} \}$, and where $\alpha_1, \alpha_2$ are a collection of all quantum numbers.
+
+Because these particles are indistinguishable, we want the two spaces to be physically identical, i.e. $\ket{\alpha_1, \alpha_2} = \lambda \ket{\alpha_2, \alpha_1}$. Exchanging twice, we find that $\lambda^2 = 1$, so $\lambda = \pm1$.
+
+If $\lambda = +1$, the particle is called a \emph{boson}\index{boson}. If $\lambda = -1$, the particle is called a \emph{fermion}\index{fermion}.
+
+These are named after Satyendra Bose and Enrico Fermi, respectively.
+
+These two indistinguishable bosons have state
+\[
+	\ket \phi = \frac{\ket{\alpha_1, \alpha_2} + \ket{\alpha_2, \alpha_1}}{\sqrt 2},
+\]
+whereas for two indistinguishable fermions, we have
+\[
+	\ket \psi = \frac{\ket{\alpha_1, \alpha_2} - \ket{\alpha_2, \alpha_1}}{\sqrt 2}.
+\]
+If $\alpha_1 = \alpha_2$, then $\ket \psi = 0$, so no two fermions can be in the same quantum states. This is \emph{Pauli's exclusion principle}.
+
+%lecture 16
+
+\subsection{Pauli Exclusion Principle}
+\label{sub:pauli_exc}\index{Pauli exclusion principle}
+
+If all quantum numbers of two indistinguishable fermions are the same, i.e. $\alpha_1 = \alpha_2$, then $\ket{\alpha_1, \alpha_2} = 0$.
+
+It is important to exchange all quantum numbers. For example,
+\[
+\psi_{\sigma_1, \sigma_2}(\mathbf{x}_1, \mathbf{x}_2) = - \psi_{\sigma_2, \sigma_1}(\mathbf{x}_2, \mathbf{x}_1),
+\]
+but there is no relation between $\psi_{\sigma_1, \sigma_2}(\mathbf{x}_1, \mathbf{x}_2)$ and $\psi_{\sigma_2, \sigma_1}(\mathbf{x}_1, \mathbf{x}_2)$.
+
+\subsection{Many Identical Particles}
+\label{sub:many_part}
+
+For $N$ identical particles, let $\sigma$ be a permutation. Then, if the operator $W_\sigma$ implements this permutation of the quantum state, i.e.
+\[
+	W_\sigma \ket{\alpha_1, \alpha_2, \ldots, \alpha_N} = \lambda_\sigma \ket{\alpha_{\sigma(1)}, \alpha_{\sigma(2)}, \ldots, \alpha_{\sigma(N)}}.
+\]
+Here $\lambda_\sigma = \pm 1$. For bosons, $\lambda_\sigma = 1$ for all $\sigma$, where for fermions $\lambda_\sigma = \sgn(\sigma)$.
+
+Hence the Hilbert space $\mathcal{H}_N$ for $N$ indistinguishable particles is
+\begin{align*}
+	\mathcal{H}_{N \text{ bosons}} &= \Sym \otimes \mathcal{H}_{1 \text{ boson}},\\
+	\mathcal{H}_{N \text{ fermions}} &= \mathrm{Alt} \otimes \mathcal{H}_{1 \text{ fermion}}.
+\end{align*}
+where we quotient out by symmetries.
+
+\subsection{Spin and Statistic}
+\label{sub:spin_stats}
+
+It turns out that particles with integer spin $s \in \{0, 1, 2, \ldots\}$ are bosons, where those with half integer spin $s \in \{\frac{1}{2}, \frac{3}{2}, \ldots\}$ are fermions.
+
+This applies to composite particles. For example, the Hydrogen atom is a composite of fundamental particles, hence it is a boson.
+
+Note this definition is self consistent; a (composite) particle has integer spin if and only if it is a sum of an even number of fermions.
+
+This fact relies on relativity, and will be seen in Part III Quantum Field Theory.
+
+\subsection{Ideal Quantum Gas}
+\label{sub:ideal_gas}
+
+Consider $N$ indistinguishable free fermions in a box of size $L$. Then
+\[
+H = \sum_{i = 1}^{N} \frac{\mathbf{P}_i^2}{2m}.
+\]
+A single particle state has energy eigenstates $\ket{\mathbf{K}}$ with $E = \frac{\hbar \mathbf{K}^2}{2 m}$ and $\mathbf{K} = \frac{2\pi}{L} (n_1, n_2, n_3)$. Then
+\[
+	\braket{\mathbf{x} |\mathbf{K}} = \frac{e^{-i \mathbf{K} \cdot \mathbf{x}}}{L^{3/2}}.
+\]
+By Pauli exclusion principle, there can only be 1 fermion in state $\mathbf{n}$. At low energy, the first $N$ energy levels are filled. The highest filled level is called the \emph{Fermi level}\index{Fermi level} and has \emph{Fermi energy}
+\[
+E_F = \frac{\hbar^2 \mathbf{K}_F^2}{2m},
+\]
+and \emph{Fermi momentum} $\mathbf{K}_F$.
+
+Let us see how this energy changes with the volume. For $N \gg 1$, we go to the continuum. Each electron occupies a volume of
+\[
+\biggl( \frac{2 \pi}{L}\biggr)^{3} \implies \frac{4 \pi |\mathbf{K}_f|^3}{3} = \biggl( \frac{2 \pi}{L} \biggr)^3 N,
+\]
+hence the total energy is
+\[
+E_{\mathrm{total}} = \int_0^{|\mathbf{K}|_F} \diff K \frac{\hbar^2 K^2}{2 m_\elec} \frac{4 \pi K^2}{2\pi/L^3} = \frac{\hbar^2 |\mathbf{K}|_F^5 L^3}{20 \pi^2 m_\elec} = \frac{\hbar^2}{20 \pi^2 m_\elec}(6 \pi^2 N)^{5/3} V^{-2/3}.
+\]
+Any reduction in the size of the box (at fixed $N$) is opposed by a ``degeneracy pressure''
+\[
+P_{\mathrm{deg}} = \frac{\partial E_{\mathrm{total}}}{\partial V} \biggl|_N = \frac{\hbar^2 (6 \pi^2 N)^{5/3}}{30 \pi^2 m_\elec} \frac{1}{V^{5/3}}.
+\]
+
+\subsection{Exchange and Parity}
+\label{sub:ex_par}
+
+Exchanging two indistinguishable particles is related to parity. Define quantities
+\begin{align*}
+	\mathbf{X}_{\mathrm{com}} &= \frac{\mathbf{X}_1 + \mathbf{X}_2}{2}, & \mathbf{P}_{\mathrm{com}} &= \mathbf{P}_1 + \mathbf{P}_2, \\
+	\mathbf{X}_{\mathrm{rel}} &= \mathbf{X}_1 - \mathbf{X}_2, & \mathbf{P}_{\mathrm{rel}} &= \frac{\mathbf{P}_1 - \mathbf{P}_2}{2}.
+\end{align*}
+Exchanging particles 1 and 2 leaves $\mathbf{X}_{\mathrm{com}}$ and $\mathbf{P}_{\mathrm{com}}$ unchanged, but acts like parity on $(\mathbf{X}_{\mathrm{rel}}, \mathbf{P}_{\mathrm{rel}})$.
+
+Recall the spherical harmonics, and that $Y_\ell^m(- \mathbf{\hat x}) =  (-1)^{\ell }Y_\ell^m(\mathbf{\hat x})$. Then if two indistinguishable particles have relative angular momentum $\ell $ then their wavefunction must be symmetric (resp. antisymmetric) if $\ell$ is even (resp. odd).
+
+Complete behaviour under exchange also involves spin.
+\begin{itemize}
+	\item For bosons, the spin state must have the same symmetry as the spatial wavefunction.
+	\item For fermions, the spin state must have the opposite symmetry as the spatial wavefunction.
+\end{itemize}
+Consider the dynamics of a pion $\pi^{-}$ orbiting a deuterium nucleus $D^{+}$. This has the same energy levels as the Hydrogen atom. We suppose the atom is in the ground state $\ket{n, \ell,m} = \ket{1, 0,0}$, and also the relevant spins are $s_{\pi} = 0$ and $s_D = 1$, so the atom has total angular momentum $j = 1$.
+
+The atom decays into two neutrons $n$, so
+\[
+\pi^{-} + D^{+} \to n + n.
+\]
+Since $s_n = \frac{1}{2}$, neutrons are fermions. So the final state must be anti-symmetric.
+
+The total angular momentum is conserved, so $j= 1$ in the final state. Recall that $\frac{1}{2} \otimes \frac{1}{2} = 1 \oplus 0$. Note if $s_{n,n} = 0$, then $\ell$ is even, but then $j$ cannot be 1.
+
+%lecture 17
+
+Hence we must have $s_{n,n} = 1$, and then $j \in \{\ell+1,\ell,\ell-1\}$. As $j = 1$ and $\ell$ must be odd, we have $\ell = 1$.
+
+Assuming parity is conserved, we can find the parity $\eta_\pi$ of the pion. From conservation of parity,
+\[
+	\eta_\pi \eta_D = (-1)^{\ell}\eta_n^2 = -1.
+\]
+We know that $\eta_D = 1$ for physical reasons (it is the $s$-wave bound state of a proton and neutron, which have the same parity).
+
+We conclude that $\eta_\pi = -1$, hence it is a pseudo-scalar.
+
+\newpage
+
+\section{Time Independent Perturbation Theory}
+\label{sec:ti_pert_thy}
+
+For realistic systems, we usually cannot solve the dynamics exactly. In this section, we will develop approximate methods to solve these problems.
+
+Suppose that
+\[
+H = H_0 + \Delta H,
+\]
+and that we can solve for $H_0$. For $\lambda \in [0, 1]$, let
+\[
+H_\lambda = H_0 + \lambda \Delta H.
+\]
+Clearly $H_{1} = H$. We will try to Taylor expand in $\lambda$ around $\lambda = 0$.
+
+We seek energy eigenstates $\ket{E_\lambda}$ of $H_\lambda$. If $\lambda$-dependence is analytic at $\lambda = 0$, then so are the eigenstates:
+\begin{align*}
+	\ket{E_\lambda} &= \ket{\alpha} + \lambda \ket{\beta} + \lambda^2 \ket{\gamma} + \cdots \\
+	E(\lambda) &= E^{(0)} + \lambda E^{(1)} + \lambda^2 E^{(2)} + \cdots
+\end{align*}
+Plugging this expansion into the exact equation $H_\lambda \ket{E_\lambda} = E(\lambda) \ket{E_\lambda}$ gives
+\begin{align*}
+	(H_0 + \lambda \Delta H)(\ket \alpha &+ \lambda \ket \beta + \lambda^2 \ket \gamma + \cdots) \\
+									      &= (E^{(0)} + \lambda E^{(1)} + \lambda^2 E^{(2)} + \cdots)(\ket \alpha + \lambda \ket \beta + \lambda^2 \ket \gamma + \cdots).
+\end{align*}
+To zeroth order in $\lambda$, we get
+\[
+H_0 \ket \alpha = E^{(0)} \ket \alpha.
+\]
+To first order in $\lambda$, we find
+\[
+H_0 \ket \beta + \Delta H \ket \alpha = E^{(0)} \ket \beta + E^{(1)} \ket \alpha.
+\]
+To second order in $\lambda$, we find
+\[
+H_0 \ket \gamma + \Delta H \ket \beta = E^{(0)} \ket \gamma + E^{(1)} \ket \beta + E^{(2)} \ket \alpha.
+\]
+The zeroth order solution says that $\ket \alpha$ is an eigenstate of $H_0$ with eigenvalue $E^{(0)}$. Hence we change notation to $\ket\alpha = \ket n$, and $E^{(0)} = E_n$.
+
+For each $n$, the first order equation says
+\[
+	H_0 \ket{\beta_n} + \Delta H \ket n = E_n \ket{\beta_n} + E_n^{(1)} \ket n.
+\]
+Contracting both sides with $\bra n$, we find
+\[
+	\braket{n|H_0|\beta_n} + \braket{n|\Delta H|n} = E_n \braket{n|\beta_n} + E_n^{(1)}.
+\]
+Since $\braket{n|H_0|\beta_n} = \overline{\braket{\beta_n|H_0|n}} = \overline{\braket{\beta_n|E_n|n}} = E_n \braket{n|\beta_n}$, this becomes
+\[
+	\braket{n|\Delta H|n} = E_n^{(1)}.
+\]
+If we instead contract with $\bra m \neq \bra n$, we get
+\[
+	\braket{m|\Delta H| n} = (E_n - E_m) \braket{m|\beta_n}.
+\]
+Writing $\ket{\beta_n}$ in the basis $\{ \ket k\}$, i.e.
+\[
+	\ket{\beta_n} = \sum b_k \ket k,
+\]
+we get that if $E_n \neq E_m$, then
+\[
+	b_m = \frac{\braket{m|\Delta H|n}}{E_n - E_m} \implies \ket{\beta_n} = \sum_{m \neq n} \frac{\braket{m|\Delta H|n}}{E_n - E_m} \ket m.
+\]
+We can check that if we impose $\braket{E_\lambda|E_\lambda} = 1$, we must have that $b_n = \braket{n|\beta_n} = 0 + \mathcal{O}(\lambda^2)$.
+
+At the second order $\mathcal{O}(\lambda^2)$, we have
+\[
+	H_0 \ket{\gamma_n} + \Delta H \ket{\beta_n} = E_n \ket{\gamma_n} + \braket{n|\Delta H| n} \ket{\beta_n} + E_n^{(2)} \ket n.
+\]
+Contracting with $\bra n$ again, we get
+\[
+	E_n^{(2)} = \braket{n|\Delta H| \beta_n} = \sum_{m \neq n} \frac{|\braket{n|\Delta H|m}|^2}{E_n - E_m}.
+\]
+Note that this is always negative for $n = 0$, the ground state. From this we can see that nearby states matter the most, and nearby levels are driven apart.
+
+\subsection{Examples of Perturbation}
+\label{sub:ex_pert}
+
+We take the Hamiltonian
+\[
+H = \frac{P^2}{2m} + \frac{1}{2} m \omega^2 X^2 - \lambda m \omega^2 x_0 X,
+\]
+which we can rewrite as
+\[
+H = \frac{P^2}{2m} + \frac{1}{2} m \omega^2 (X - x_0 \lambda)^2 - \frac{1}{2} \lambda^2 m \omega^2 x_0^2.
+\]
+The exact energy levels are
+\[
+E_n(\lambda) = h \omega\biggl(n + \frac{1}{2}\biggr) - \frac{1}{2} \lambda^2 m \omega^2 x_0^2.
+\]
+These are indeed analytic in $\lambda$. Now let's compute this perturbation theory. Letting $\Delta H = - \lambda m \omega^2 x_0 X$ as a perturbation,
+\begin{align*}
+	E_n(\lambda) &= E_n + \lambda \braket{n|\Delta H|n} + \lambda^2 m^2 \omega^{4} x_0^2 \sum_{n \neq m} \frac{|\braket{n|X|m}|^2}{(n-m)\hbar \omega} + \mathcal{O}(\lambda^3) \\
+	&= \hbar \omega \biggl(n + \frac{1}{2} \biggr) - \frac{1}{2} \lambda^2 m^2 \omega^2 x_0^2 + \mathcal{O}(\lambda^3),
+\end{align*}
+which is exact.
+
+Now instead let us try replacing $\omega \to \omega(\lambda) = \omega\sqrt{1 + \lambda}$, then
+\[
+H = \frac{P^2}{2m} + \frac{1}{2} m \omega^2(1+\lambda)X^2.
+\]
+The exact energy levels are
+\[
+	E_n(\lambda) = \hbar \omega \sqrt{1 + \lambda} \biggl(n + \frac{1}{2} \biggr).
+\]
+Taking $\Delta H = \frac{1}{2} m \omega^2 \lambda X^2$ as a perturbation,
+\begin{align*}
+	E_n(\lambda) &= E_n + \frac{\lambda}{2} m \omega^2 \braket{n|X^2|n} + \frac{\lambda^2}{4} m^2 \omega^{4} \sum_{n \neq m} \frac{|\braket{n|X^2|m}|^2}{(n-m)\hbar \omega} \\
+		     &= \biggl(n + \frac{1}{2} \biggr) \hbar \omega \biggl(1 + \frac{\lambda}{2} - \frac{\lambda^2}{8} + \mathcal{O}(\lambda^3) \biggr),
+\end{align*}
+which matches the Taylor expansion of $\sqrt{1 + \lambda}$.
+
+%lecture 18
+
+Perturbation theory converges to the exact $E_n(\lambda)$ for $|\lambda| < 1$. Hence perturbation theory has a finite radius of convergence.
+
+For our third example, consider
+\[
+H = \frac{P^2}{2m} + \lambda X^4.
+\]
+This is hard to solve analytically. Using perturbation, we get
+\[
+E_0(\lambda) = \frac{1}{2} \hbar \omega + \sum_{n = 1}^{\infty} \lambda^n a_n,
+\]
+where
+\[
+	a_n = \frac{(-1)^{n+1} 3^n \sqrt 6}{\pi^{3/2}} \Gamma\biggl(n + \frac12\biggr) \biggl[1 - \frac{95}{72} \frac{1}{n} + \mathcal{O}\biggl(\frac{1}{n^2}\biggr)\biggr].
+\]
+For $n \to \infty$, note that $\Gamma(n + \frac12) \sim n! \sim n^n$. Then,
+\[
+\Delta E_0(\lambda) \sim \sum_{n}^{\infty} (\lambda n)^n.
+\]
+Hence the radius of convergence of the perturbation theory is $0$. Physically, taking $\lambda X^4$ for any $\lambda < 0$ makes the potential unbounded.
+
+Usually, perturbation theory doesn't converge, but is \emph{asymptotic}:
+\[
+	\lim_{\lambda \to 0^+} \frac{1}{\lambda^N} \biggl[E(\lambda) - \sum_{n = 1}^{N} \lambda^n E^{(n)} \biggr] = 0.
+\]
+However, we have
+\[
+\lim_{N \to \infty} \sum_{n = 0}^{N} \lambda^n E^{(n)} = \infty.
+\]
+The optimal $N$ gives a good approximation for small $\lambda$.
+
+\subsection{Fine Structure of Hydrogen}
+\label{sub:fine_h}
+
+The spectrum of $H$ that we studied so far is called the \emph{gross structure}\index{gross structure}. The bound states are $\ket{n, \ell, m}$ with
+\[
+E_n = - \frac{1}{2} \mu c^2 \frac{\alpha^2}{n^2},
+\]
+where
+\[
+\mu = \frac{m_\elec m_\prot}{m_\elec + m_\prot}
+\]
+is the reduced mass, and
+\[
+\alpha = \frac{e^2}{4 \pi \eps_0 \hbar c}
+\]
+is called the fine structure constant. Let's estimate the relativistic corrections. The electron's velocity is roughly
+\[
+v^2 \mu \sim \frac{\mathbf{p}^2}{\mu} \sim E \sim \mu c^2 \frac{\alpha^2}{n^2} \implies \frac{v}{c} \sim \frac{\alpha}{n}.
+\]
+There are relativistic effects controlled by this velocity. Since $\alpha \approx \frac1{137}$, we can treat this as a problem in perturbation theory. There are two effects.
+
+\textbf{Kinetic correction:} The relativistic dispersion relation for massive particles is
+\[
+	E = \sqrt{\mu^2 c^4 + \mathbf{p}^2 c^2} = \mu c^2 + \frac{\mathbf{p}^2}{2 \mu} - \frac{\mathbf{p}^4}{8 \mu^3 c^2} + \cdots
+\]
+We treat this as a perturbation
+\[
+\Delta H = - \frac{\mathbf{p}^4}{8 \mu^3 c^2}
+\]
+to $H_0 = \mathbf{p}^2/2\mu$. We expect that
+\[
+	\frac{\braket{\Delta H}}{\braket{H_0}} \sim \biggl(\frac{v}{c} \biggr)^2 \propto \alpha^2.
+\]
+The energy is corrected by
+\[
+	E_{n, \ell, m}^{(1)} = \braket{n, \ell, m|\Delta H|n, \ell, m}.
+\]
+Can we use non-degenerate perturbation theory? To answer this, note that $[\mathbf{L}, \Delta H] = 0$, hence it follows
+\[
+	0 = \braket{n, \ell', m'|[\mathbf{L}^2, \Delta H] | n, \ell, m} = \hbar^2(\ell'(\ell'+1) - \ell(\ell+1)) \braket{n, \ell', m'|\Delta H|n, \ell, m},
+\]
+and also
+\[
+	0 = \braket{n, \ell', m'|[L_z, \Delta H]|n, \ell, m} = \hbar(m' - m) \braket{n, \ell', m'|\Delta H|n, \ell, m},
+\]
+so $\braket{n, \ell', m'|\Delta H|n, \ell, m} \propto \delta_{\ell \ell'}\delta_{m m'}$ and we can use non-degenerate perturbation theory.
+
+Now we use some tricks to compute $\braket{\Delta H}$: 
+\begin{align*}
+	\braket{\Delta H}_{n, \ell, m} &= \frac{\braket{(H_0 - V)^2}_{n, \ell, m}}{2 \mu c^2} \\
+				       &= -\frac{E_n^2 - 2 E_n \braket{V}_{n, \ell, m} + \braket{V^2}_{n, \ell, m}}{2 \mu c^2}.
+\end{align*}
+Also, the virial theorem says that $2 \braket{T} = - \braket{V}$, so
+\[
+	E_n = \braket{T} + \braket{V} = \frac{\braket{V}}{2},
+\]
+hence we get
+\begin{align*}
+	\braket{\Delta H}_{n, \ell, m} &= \frac{3 E_n^2}{2 \mu c^2} + \frac{\braket{V^2}_{n, \ell, m}}{2 \mu c^2} \\
+				       &= \frac{1}{2} \mu c^2 \frac{3}{4} \frac{\alpha^{4}}{n^4} - \frac{\hbar^2}{2 \mu} \braket{ \frac{\alpha^2}{r^2} }_{n, \ell, m}.
+\end{align*}
+The remaining term $\braket{r^{-2}}$ can be reabsorbed into the effective potential
+\[
+	V_{\mathrm{eff}}(r) = - \frac{e^2}{4 \pi \eps_0} \frac{1}{r} + \frac{\hbar}{2 \mu} \biggl[ \frac{\ell(\ell+1)}{r^2} + \frac{\alpha^2}{^2} \biggr],
+\]
+where the fictitious angular momentum $\ell'$ is such that
+\[
+\ell'(\ell'+1) = \ell(\ell+1) + \alpha^2.
+\]
+We already know the energy levels of $V_{\mathrm{eff}}$ are
+\[
+E_n(\ell') = -\frac{1}{2} \mu \alpha^2 c^2 \frac{1}{(\ell'+1)^2}.
+\]
+To leading order, we have $\ell' = \ell + \delta \ell$, where
+\[
+\delta \ell = \frac{\alpha^2}{(2\ell + 1)},
+\]
+so we get
+\[
+	E_n(\ell + \delta \ell) = -\frac{1}{2} \mu \alpha^2 c^2 \biggl[ \frac{1}{(\ell + 1)^2} - \frac{2 \delta \ell }{(\ell + 1)^3} + \cdots \biggr]
+\]
+Combining all the corrections, we obtain
+\[
+E_{n, \ell, m}^{(1)} = - \frac{1}{2} \mu c^2 \frac{\alpha^{4}}{n^4} \biggl( \frac{n}{\ell + 1/2} - \frac{3}{4} \biggr).
+\]
+%lecture 19
+\textbf{Spin-orbit coupling:} Another relativistic effect is spin-orbit coupling. The electron in the Coulomb field of the proton with velocity $\mathbf{v}$ feels a magnetic field
+\[
+\mathbf{B} = \frac{\gamma}{c^2} \mathbf{v} \times \mathbf{E} = \frac{1}{\mu c^2} \mathbf{p} \times \biggl( \frac{e}{4 \pi \eps_0} \frac{\mathbf{\hat x}}{|\mathbf{x}|^2} \biggr) = - \frac{e}{4 \pi \eps_0 \mu c^2} \frac{\mathbf{L}}{|\mathbf{x}|^3}.
+\]
+Here $\gamma = (1 - (v/c)^2)^{-1/2}$ is the Lorentz factor, and $\mathbf{p} = m \mathbf{v} \gamma$.
+
+Spin-orbit coupling between the electron's magnetic dipole moment $\mathbf{m}$ and this electric field gives another alteration to the Hamiltonian:
+\[
+\Delta H_{\mathrm{SO}} = - \mathbf{m} \cdot \mathbf{B} = - \frac{e}{2 \mu} \mathbf{B} \cdot \mathbf{S} = - \frac{e^2}{8 \pi \eps_0 \mu c^2} \frac{\mathbf{L} \cdot \mathbf{S}}{|\mathbf{X}|^3}.
+\]
+This depends on $j = \ell \pm 1/2$ for $\ket{\uparrow}$ and $\ket{\downarrow}$.
+
+For $\ell = 0$, this is trivial, but for $\ell \neq 0$ it depends on the spin. Let's write
+\[
+\mathbf{L} \cdot \mathbf{S} = (\mathbf{J}^2 - \mathbf{L}^2 - \mathbf{S}^2)\frac{1}{2},
+\]
+then indexing our states by $\ket{n, j, m_j; \ell}$, we have
+\begin{align*}
+	\mathbf{L} \cdot \mathbf{S} \ket{n, j, m_j; \ell} &= \frac{\hbar^2}{2} \biggl(j(j+1) - \ell(\ell+1) - \frac{3}{4} \biggr) \ket{n, j, m_j; \ell} \\
+							  &= \frac{\hbar^2}{2}
+							  \begin{cases}
+								  \ell \ket{n, j, m_j; \ell} & j = \ell + 1/2,\\
+								  -(\ell+1)\ket{n, j, m_j; \ell} & j = \ell - 1/2.
+							  \end{cases}
+\end{align*}
+After a bit of work, we can add this to obtain
+\[
+	E_{n, j, \ell } = - \frac{1}{2} \mu \alpha^2 c^2 \biggl[ \frac{1}{n^2} - \frac{\alpha^2}{n^3} \biggl(\frac{3}{4n} - \frac{1}{j + 1/2} \biggr) + \mathcal{O}(\alpha^{4}) \biggr].
+\]
+\begin{remark}
+	\begin{itemize}
+		\item[]
+		\item The degeneracy in $\ell$ is now lifted, however the Runge-Lenz vector is no longer conserved.
+		\item For the general periodic table, the electron feels the attraction of $Z$ protons, so we should rescale $\alpha \to Z \alpha$.
+
+			This rescaling shows relativistic corrections are most important for heavier atoms, for example
+			\[
+			E_{n, \ell+1/2, \ell } - E_{n, \ell - 1/2, \ell } = \frac{1}{2} \mu c^2 \frac{1}{n^3} \frac{Z^4 \alpha^4}{\ell(\ell+1)}.
+			\]
+			 This is good for the $2p$ state of hydrogen, but for iron for example is only a 10\% correction.
+	\end{itemize}
+\end{remark}
+
+\subsection{Degenerate Perturbation Theory}
+\label{sub:deg_pt}
+
+If $H_0$ has degenerate eigenstates, even a tiny perturbation can have a large effect. We saw this problem in our expansion
+\[
+	\ket{n_\lambda} = \ket{n} + \lambda \sum_{m \neq n} \frac{\braket{m|\Delta H| n}}{E_n - E_m} + \mathcal{O}(\lambda^2).
+\]
+Assume there are finitely many degenerate states forming the $N$-dimensional subspace $V \in \mathcal{H}$, and $H_0 \ket \psi = E_V \ket \psi$ for all $\ket \psi \in V$. Let $\{\ket r\}$ be an orthonormal basis for $V$.
+
+Then divergences are avoided if $\braket{r'|\Delta H|r} = \delta_{r r'}$, that is, if $\Delta H$ is diagonal in $V$. Since $\Delta H = \Delta H^{\dagger}$, we can always diagonalize it.
+
+Let $\{\ket n\}$ be a new basis of eigenvectors of $H_0$ such that $\Delta H$ is diagonal in every degenerate subspace, that is, $\braket{m|\Delta H|n} = 0$ if $E_n = E_m$. Then the perturbation theory formula applies.
+
+\begin{exbox}[Linear Stark Effect]
+	Put the hydrogen atom in an electric field $\mathbf{E} = |E| \hat x_3$. Then,
+	\[
+	\Delta H = - e | E| X_3.
+	\]
+	By parity, $\braket{1, 0, 0|X_3|1, 0, 0} = 0$, so $E_0^{(1)} = 0$. The first excited state $n = 2$ has degeneracy 4.
+
+	Parity implies that $\braket{2, \ell', m' | X_3| 2, \ell, m}$ vanishes unless $|\ell'-\ell|$ is odd. Also, $[L_z, X_3] = 0$, so we have
+	\[
+		\braket{2, 0, 0 | X_3 | 2, 1, \pm 1} = 0.
+	\]
+	Within $V$, the perturbation $\Delta H$ acts as
+	\[
+	\Delta H = e |E|
+	\begin{pmatrix}
+		0&0&a&0 \\
+		0&0&0&0 \\
+		a^{\ast}&0&0&0\\
+		0&0&0&0,
+	\end{pmatrix}
+	\]
+	where $a = \braket{2, 0, 0|X_3|2, 1, 0} = -3 a_0$. The eigenvalues of $\Delta H$ in $V$ are $e |E| a_0 \times \{-3, 0, 0, 3\}$. Moreover $\Delta H$ is diagonal in basis
+	\[
+		\frac{\ket{2, 0, 0} - \ket{2, 1, 0}}{\sqrt 2}, \qquad \ket{2, 1, 1}, \qquad \ket{2, 1, -1}, \qquad \frac{\ket{2, 0, 0} + \ket{2, 1, 0}}{\sqrt 2}.
+	\]
+	Note that the degeneracy between $\ket{2, 1, \pm 1}$ is not lifted. Even a small $|E|$ causes the $n = 2$ states to align to
+	\[
+		\frac{\ket{2, 0, 0} + \ket{2, 1, 0}}{\sqrt 2}.
+	\]
+\end{exbox}
+
+%lecture 20
+
+\newpage
+
+\section{Time-Dependent Perturbation Theory}
+\label{sec:time_pt}
+
+Consider a system with time-independent $H_0$ and time-dependent perturbation operator $\Delta (t)$. Some examples include:
+\begin{itemize}
+	\item An atom perturbed by electromagnetic radiation.
+	\item A particle scattering.
+\end{itemize}
+Let $\{\ket n\}$ be an orthonormal basis of $\mathcal{H}$, with $H_0 \ket n = E_n \ket n$. Then,
+\[
+	\ket{\psi(t)} = \sum_n e^{-i E_n t/\hbar} a_n(t) \ket n. \tag{$\ast$}
+\]
+Here $a_n(t)$ depends on $t$ because of $\Delta(t)$.
+
+As before, let $H_\lambda = H_0 + \lambda \Delta(t)$, and we will expand in  $\lambda$, trying to approximate $\lambda = 1$. Plugging $(\ast)$ in, we get
+ \[
+\sum_n (a_n E_n + i \hbar \dot a_n) e^{-i E_n t/\hbar} \ket n = \sum_n a_n (E_n + \lambda \Delta (t)) e^{-i E_n t/\hbar} \ket n.
+\]
+Contracting with $\bra k$, we get
+\[
+	i \hbar \dot a_k = \lambda \sum_n a_n(t) e^{i t (E_k - E_n)/\hbar} \braket{k|\Delta(t)|n},
+\]
+so we get
+\[
+	a_k(t) = a_k(t_0) + \frac{\lambda}{i \hbar} \int_{t_0}^{t} \sum_n a_n(t') e^{-i (E_n - E_k)t'/\hbar} \braket{k|\Delta(t')|n} \diff t'.
+\]
+This is exact. We will try approximate
+\[
+a_n(t) = a_n^{(0)}(t) + \lambda a_n^{(1)}(t) + \mathcal{O}(\lambda^2),
+\]
+and solve order-by-order in $\lambda$.
+
+In the $0$'th term, we have
+\[
+a_n(t) = a_n^{(0)}(t_0),
+\]
+hence $a_n(t)$ is constant. To first order,
+\[
+	a_k^{(1)}(t) = \frac{1}{i \hbar} \int_{t_0}^t \diff t' \sum_n a_n^{(0)}(t') e^{i \omega_{kn} t'/\hbar} \braket{k|\Delta(t')|n},
+\]
+where $\omega_{kn} = E_k - E_n$. Let's simply start in state $\ket m$ at $t = t_0$. Then $a_n^{(0)}(t) = \delta_{mn}$. Hence to first order
+\[
+	a_k(t) = \delta_{km} + \frac{\lambda}{i \hbar} \int_{t_0}^t e^{i \omega_{km} t'/\hbar} \braket{k|\Delta(t')|m} \diff t'.
+\]
+
+\subsection{Applications}
+\label{sub:app_time_pt}
+
+\begin{exbox}[Forced Oscillator]
+	Consider a harmonic oscillator perturbed by time-dependent force
+	\[
+	\Delta(t) = F_0 X e^{-t^2/\tau^2},
+	\]
+	where $F_0$ and $\tau$ are real parameters and $X$ is the position operator. The Hamiltonian is
+	\[
+	H_\lambda = \frac{P^2}{2m} + \frac{1}{2} m \omega^2 X^2 - \lambda F_0 X e^{-t^2/\tau^2}.
+	\]
+	Suppose $\ket{\psi(t = -\infty)} = \ket 0$. For $\ket k \neq \ket 0$, we compute
+	\begin{align*}
+		\lim_{t \to +\infty} a_k(t) &= - \frac{F_0}{i \hbar} \int_{-\infty}^{\infty} \diff t' e^{i k \omega t'} e^{-t'^2/\tau^2} \braket{k|X|0} \\
+					    &= i F_0 \sqrt{\frac{\pi \hbar}{2 m \omega}} \tau e^{-k^2 \omega^2 \tau^2/4} \braket{k|A^{\dagger}|0}.
+	\end{align*}
+	The probability that the oscillator is in state $\ket 1$ after infinite time is
+	\[
+	\mathbb{P}(\ket 0 \to \ket 1) = \frac{\pi \hbar F_0^2}{2 m \omega} \tau^2 e^{-\omega^2 \tau^2/2}.
+	\]
+	Note that:
+\begin{itemize}
+	\item The maximum probability is achieved when $\tau = \sqrt 2 / \omega$, when we have resonance.
+	\item If we turn on and off the interaction adiabatically, i.e. much slower than the frequency $\omega$ of the quantum harmonic oscillator, then there is no transition.
+	\item The higher states are excited at higher orders in the perturbation theory.
+\end{itemize}
+\end{exbox}
+
+\begin{exbox}[Monochromatic Perturbation]
+	Consider the perturbation
+	\[
+	\Delta(t)=
+	\begin{cases}
+		0 & t < 0,\\
+		\Delta e^{-i \omega t} + \Delta^{\dagger}e^{i\omega t} & t \geq 0,
+	\end{cases}
+	\]
+	where $\Delta$ is a time-independent operator. If the state was $\ket m$ at $t < 0$, then for $t > 0$ and $\ket k \neq \ket m$,
+	\begin{align*}
+		a_k(t) &= \frac{\braket{k|\Delta|m}}{\hbar(\omega_{km} - \omega)}\bigl[e^{i(\omega_{km} - \omega)t} - 1 \bigr] + \frac{\braket{k|\Delta^{\dagger}|m}}{\hbar(\omega_{km} + \omega)} \bigl[e^{i(\omega_{km} + \omega)t} - 1 \bigr].
+	\end{align*}
+	At $t \to \infty$, the first term contributes only if $E_k - E_m \approx \hbar \omega$. This is called \emph{absorption}\index{absorption}. Conversely, the second term dominates only when $E_k - E_m = - \hbar \omega$, and is called \emph{stimulated emission}\index{stimulated emission}. In terms of probabilities,
+	\[
+	|a_k(t)|^2 =
+	\begin{dcases}
+		\frac{4}{\hbar^2} \frac{|\braket{k|\Delta|m}|^2}{(\omega_{km} - \omega)^2} \sin^2 \biggl( \frac{(\omega_{km} - \omega)t}{2} \biggr), \\
+		\frac{4}{\hbar^2} \frac{|\braket{k|\Delta^{\dagger}|m}|^2}{(\omega_{km} + \omega)^2} \sin^2\biggl( \frac{(\omega_{km} + \omega)}{2} t \biggr).
+	\end{dcases}
+	\]
+	We claim that as distributions,
+	\[
+	\frac{\sin^2(\omega_{km} t / 2)}{\omega_{km}^2} \approx \frac{\pi}{2} \delta(\omega_{km})t + \mathcal{O}(t^2).
+	\]
+	Define the `transition rate' from $\ket m$ to $\ket k$ by
+	\[
+	\Gamma(\ket m \to \ket k) = \lim_{t \to \infty} \partial_t|a_k(t)|^2.
+	\]
+	At late times,
+	\[
+	\Gamma_{m \to k} =
+	\begin{cases}
+		\frac{2 \pi}{\hbar} |\braket{k|\Delta|m}|^2 \delta(E_k - E_m - \hbar \omega), \\
+		\frac{2 \pi}{\hbar} |\braket{k|\Delta^{\dagger}|m}|^2 \delta(E_k - E_m + \hbar \omega).
+	\end{cases}
+	\]
+	This is called \emph{Fermi's golden rule}\index{Fermi's golden rule}.
+\end{exbox}
+%lecture 21
+\begin{exbox}[Ionization]
+	Strong radiation can ionize the atom, liberating an electron to the continuum state.
+
+	Consider hydrogen's ground state 
+	\[
+		\braket{\mathbf{x}|1,0,0} = e^{-r/a} \frac{1}{\sqrt{\pi a^3}}.
+	\]
+	We will compute the transition to the plane wave:
+	\[
+		\braket{\mathbf{x}|\mathbf{k}} = e^{i \mathbf{k} \cdot \mathbf{x}} \frac{1}{(2 \pi \hbar)^{3/2}}.
+	\]
+	This neglects the Coulomb interaction in the final state. In the dipole approximation, the perturbation is
+	\[
+	\Delta(t) = e(\mathbf{E} \cdot \mathbf{X} e^{-i \omega t} + (\mathbf{E} \cdot \mathbf{X})^{\dagger} e^{i \omega t}) = 2e \mathbf{E} \cdot \mathbf{X} \cos (\omega t),
+	\]
+	for radiation of frequency $\omega$ and electric field $\mathbf{E} = |\mathbf{E}|^{1/2}$.
+
+	The matrix element is
+	\begin{align*}
+		\braket{\mathbf{k} | X_3 | 1, 0, 0} &= \int \Diff3 x \frac{e^{-i \mathbf{k} \cdot \mathbf{x}} z e^{-r/a}}{(2 \pi \hbar)^{3/2}\sqrt{\pi a^3}} = \frac{4 \pi k_z}{i (2 \pi \hbar)^{3/2} \sqrt{\pi a^3}} \frac{8a^{5}}{(1 + |\mathbf{k}|^2 a^2)^3} \\
+						    &\approx \frac{8 \sqrt 2 \cos \theta}{i \pi \hbar^{3/2} k^{5} a^{5/2}},
+	\end{align*}
+	using $k^2a^2 \gg 1$ in the dipole approximation (and $\cos \theta = \mathbf{\hat E} \cdot \mathbf{\hat k}$).
+
+	The transition absorbs energy. So Fermi's golden rule gives
+	\[
+		\Gamma_{\ket{1,0,0} \to \ket k} = \frac{2\pi}{\hbar} e^2 E^2 |\braket{\mathbf{k}|X_3|1,0,0}^2| \delta(E_{\mathbf{k}} - E_{1, 0, 0} - \hbar \omega).
+	\]
+	We define the differential transition rate
+	\[
+	\diff \Gamma = \frac{2 \pi}{\hbar} e^2 E^2 \delta(E_{\mathbf{k}} - E_{1, 0, 0} - \hbar \omega) \hbar^3 k^2 \diff k \sin \theta \diff \theta \diff \phi.
+	\]
+	Note that the Dirac delta sets
+	\[
+		\hbar |\mathbf{k}| = \sqrt{2m(\hbar \omega - E_{1, 0, 0})} \approx \sqrt{2m \hbar \omega}.
+	\]
+	Putting everything together,
+	\[
+	\frac{\diff \Gamma}{\diff \Omega} = \frac{256 e^2 E^2 m_\elec \cos^2\theta}{\pi \hbar^3 k^3 a^{5}}.
+	\]
+\end{exbox}
+
+\newpage
+
+\section{Density and Information}
+\label{sec:dense_info}
+
+\subsection{The Density Operator}
+\label{sub:den_op}
+
+We have the following issues:
+\begin{itemize}
+	\item Often we don't know the exact quantum state.
+	\item It is hard to discuss measurement because we need to quantize the environment.
+\end{itemize}
+
+To make progress, we define a \emph{density operator}\index{density operator}:
+\[
+	\rho = \sum_{\alpha} p_\alpha \ket{\psi_\alpha} \bra{\psi_\alpha},
+\]
+where $p_\alpha \in \mathbb{R}$ are classical probabilities to be in the state $\ket{\psi_\alpha} \in \mathcal{H}$. Note these need not be orthogonal.
+
+If there exists $\ket x \in \mathcal{H}$ such that $\rho = \ket x \bra x$, then the system is in a \emph{pure state}\index{pure state} otherwise it is in a \emph{mixed state}\index{mixed state}.
+
+More formally, any $\rho : \mathcal{H} \to \mathcal{H}$ satisfying:
+\begin{enumerate}
+	\item $\rho = \rho^{\dagger}$,
+	\item $\braket{\phi | \rho | \phi} \geq 0$ for all $\ket \phi \in \mathcal{H}$, which we will write as $\rho \geq 0$,
+	\item $\Tr \rho = 1$,
+\end{enumerate}
+is the density operator of some system.
+\begin{proofbox}
+	We only prove for $\dim \mathcal{H} < \infty$.
+
+	Take a basis $\{ \ket n \}$ of eigenstates of $\rho$, such that $\rho \ket n = p_n \ket n$, and $p_n \in \mathbb{R}$ since $\rho = \rho^{\dagger}$.
+
+	In this basis, we have
+	\[
+	\rho = \sum_n p_n \ket n \bra n,
+	\]
+	and we can normalize such that $\sum p_n = 1$.
+\end{proofbox}
+We can think of $\rho$ as a matrix, with $\rho_{mn} = \braket{m|\rho|n}$. Moreover all component of $\rho_{mn}$ are bounded:
+\begin{itemize}
+	\item The diagonal elements $\rho_{nn} \leq 1$ as $\Tr \rho = 1$.
+	\item The off-diagonal elements are bounded by $\rho \geq 0$ and Cauchy-Schwarz. Let $\rho = A^{\dagger} A$. Then,
+		\[
+			|\rho_{mn}|^2 = |\braket{m|A^{\dagger}A|n}|^2 \leq \|A\ket m\| \|A \ket n\| = \rho_{mm} \rho_{nn} \leq \frac{1}{4}.
+		\]
+\end{itemize}
+Moreover, a system is pure if and only if $\rho^2 = \rho$.
+\begin{proofbox}
+	If $\rho = \ket x \bra x$, then
+	\[
+	\rho^2 = \ket x \bra x \ket x \bra x = \ket x \bra x = \rho.
+	\]
+	On the other hand, if $\rho(1 - \rho) = 0$, then the eigenvalues of $\rho$ are either $0$ or $1$. Since $\Tr \rho = 1$, there is only one eigenvector equal to one.
+
+	Then there exists a normalized eigenstate $\ket x \in \mathcal{H}$ such that $\rho = \ket x \bra x$.
+\end{proofbox}
+Equivalent conditions for purity are:
+\begin{itemize}
+	\item $\rho^{n} = \rho$. One way is obvious. Conversely, in a diagonal basis $p_\alpha^{n} = p_\alpha$, so $p_\alpha \in \{0, 1\}$, hence $p_\alpha^2 = p_\alpha$.
+	\item $\Tr \rho^2 = 1$. One way is obvious. Conversely, $\sum p_\alpha^2 = 1$, so by Cauchy-Schwarz $p_\alpha \in \{0, 1\}$.
+\end{itemize}
+Moreover, $\det \rho \geq 0$.
+
+\subsection{Quantum Mechanics with the Density Operator}
+\label{sub:qm_den_op}
+
+$\rho$ is specified by $(\dim \mathcal{H})^2 - 1$ parameters. For a system described by $\rho$, the expectation value of $Q = Q^{\dagger}$ is
+\[
+	\braket Q = \Tr_{\mathcal{H}} (\rho \cdot Q) = \sum_\alpha p_\alpha \Tr(\ket{\psi_\alpha} \bra{\psi_\alpha} Q) = \sum_\alpha p_\alpha \braket{\psi_\alpha|Q|\psi_\alpha}.
+\]
+In the Schr\"odinger picture,
+\[
+	\ket {\psi(t)} = U(t) \ket{\psi(0)}.
+\]
+Hence we have
+\[
+	\rho(t) = U(t) \rho(0) U^{\dagger}(t) \implies \frac{\partial}{\partial t}\rho(t) = - \frac{i}{\hbar} [H, \rho(t)].
+\]
+%lecture 22
+In the Heisenberg picture $\rho_{H}(t) = \rho(0)$. Note that the expectation of an operator $Q$ does not depend on the picture we take:
+\begin{align*}
+	\braket Q_H &= \Tr[\rho_H Q_H(t)] = \Tr[\rho(0) U^{\dagger}(t) Q(0) U(t)] \\
+		    &= \Tr[U(t) \rho(0) U^{\dagger}(t) Q(0)] = \Tr[\rho_S Q_S] = \braket Q_S.
+\end{align*}
+\begin{exbox}
+	Let us take a two-state system with basis $\ket \uparrow, \ket \downarrow$. If the state is $\ket \uparrow$, then $\rho = \ket \uparrow \bra \uparrow$.
+
+	If the classical probability to be in the state $\ket \uparrow$ or $\ket \downarrow$ is $1/2$, then
+	\[
+		\rho = \frac{1}{2} \ket \uparrow \bra \uparrow + \frac{1}{2} \ket \downarrow \bra \downarrow = \frac{1}{2} \mathbbm{1}_{\mathcal{H}} = \frac{1}{2}(\ket{\uparrow_x} \bra{\uparrow_x} + \ket{\downarrow_x} \bra{\downarrow_x}).
+	\]
+	$\rho$ gives the least information about the system. If it can be in $\ket \uparrow$ or $\ket{\uparrow_x}$ with probability $1/2$, then
+	\begin{align*}
+		\rho &= \frac{1}{2} ( \ket \uparrow \bra \uparrow + \ket{\uparrow_x} \bra{\uparrow_x}) \\
+		     &= \frac{1}{2} \ket \uparrow \bra \uparrow + \frac{1}{4}(\ket \uparrow + \ket \downarrow)(\bra \uparrow + \bra \downarrow) \\
+		     &= \frac{1}{4} \mathbbm{1}_{\mathcal{H}} + \frac{1}{2} \ket \uparrow \bra \uparrow + \frac{1}{4} \ket \uparrow \bra \downarrow + \frac{1}{4} \ket \downarrow \bra \uparrow \\
+		     &=
+		     \begin{pmatrix}
+			     3/4 & 1/4 \\
+			     1/4 & 1/4
+		     \end{pmatrix}.
+	\end{align*}
+	More systematically, any Hermitian matrix can be written as
+	\[
+	\rho = \frac{1}{2}(\mathbbm{1}_{\mathcal{H}} + \mathbf{b} \cdot \bm{\sigma}) = \frac{1}{2}
+	\begin{pmatrix}
+		1 + b_z & b_x - i b_y \\
+		b_x + i b_y & 1 - b_z
+	\end{pmatrix}.
+	\]
+	Since $\Tr \sigma_i = 0$, the coefficient of $\mathbbm{1}_{\mathcal{H}}$ has to be $1/2$. Moreover $\rho \geq 0$ requires
+	\[
+	\det \rho = \frac{1}{4}(1 - \mathbf{b} \cdot \mathbf{b}) \geq 0 \implies |\mathbf{b}| \leq 1.
+	\]
+	This is called Bloch's sphere.
+	\begin{itemize}
+		\item If $|\mathbf{b}| = 1$, then the system is pure with spin along $\mathbf{b}$.
+		\item If $|\mathbf{b}| < 1$, then the system is mixed as both eigenvalues are positive.
+		\item For $\mathbf{b} \neq 0$, the spin is preferentially along $\mathbf{b}$.
+		\item When $\mathbf{b} = 0$, $\rho = \frac{1}{2} \mathbbm{1}_{\mathcal{H}}$ is maximally ignorant about the state.
+	\end{itemize}
+\end{exbox}
+
+\subsection{The No-Cloning Theorem}
+\label{sub:nc_thm}
+
+We cannot make an exact copy of a quantum system. Let's try to copy a normalized $\ket \psi \in \mathcal{H}_1$ to $\mathcal{H}_2 \sim \mathcal{H}_1$.
+
+The initial state is $\ket \psi \otimes \ket e$ for $\ket e \in \mathcal{H}_2$, being some blank state.
+
+Now we want a unitary operator $C^{\dagger} = C^{-1}$ such that
+\[
+C : \ket \psi \otimes \ket e \to e^{-i \alpha(\psi, e)} \ket \psi \otimes \ket \psi.
+\]
+We claim that such a $C$ does not exist. Indeed, if $C$ existed,
+\begin{align*}
+	\braket{\phi|\psi} &= (\bra \phi_1 \bra e_2) (\ket \phi_1 \ket e_2) = (\bra \phi_1 \bra e_2) C^{\dagger} C (\ket \phi_1 \ket e_2) \\
+			   &= e^{i( \alpha(\phi, e) - \alpha(\phi, e))} \langle \phi, \psi\rangle^2.
+\end{align*}
+So we have $|\braket{\phi|\psi}|^2 = |\braket{\phi|\psi}|$, hence $|\braket{\phi|\psi}| = 1$ or $0$. But this cannot be true for all $\ket \psi$ and $\ket \phi \in \mathcal{H}_1$, so $C$ cannot exist.
+
+This theorem shows that to measure a system we have to disturb it. We cannot copy it to avoid this problem.
+
+\subsection{Von Neumann Entropy}
+\label{sub:entropy}
+
+The von Neumann entropy of a density matrix is
+\[
+S(\rho) = - \Tr (\rho \log \rho).
+\]
+It quantifies how much information $\rho$ has about the system. Note that the eigenvalues of $\rho$ are in $[0, 1]$, so $S(\rho) \geq 0$.
+
+Moreover, $S(\rho) = 0$ if and only if $\rho$ is pure, and $S(\rho)$ is concave. If $\rho_i$ are density operators and $\kappa_i \geq 0$ are with $\sum \kappa_i = 1$, then
+\[
+S \biggl( \sum_i \kappa_i \rho_i \biggr) \geq \sum_i \kappa_i S(\rho_i).
+\]
+To maximize entropy subject to $\Tr \rho = 1$, we can use Legendre multipliers $\lambda$ and extremize $S(\rho) - \lambda(1 - \Tr \rho)$:
+\begin{align*}
+	0 &= - \Tr(\delta \rho \log \rho + \rho \rho^{-1} \rho - \lambda \delta \rho) \\
+	0 &= \delta \lambda (\Tr \rho - 1) \\
+	\implies \rho_{\mathrm{max}} &= \frac{1}{\dim \mathcal{H}} \mathbbm{1}_{\mathcal{H}}.
+\end{align*}
+If $\dim \mathcal{H} < \infty$, then the maximal entropy is
+\[
+S_{\mathrm{max}} = S(\rho_{\mathrm{max}}) = \log (\dim \mathcal{H}).
+\]
+All states are equally likely.
+
+\subsection{Thermal Density Operator: Gibbs Distribution}
+\label{sub:gibbs_dist}
+
+The density operator description is essential in quantum statistical mechanics. Let's extremize $S$ at at a fixed average energy $\Tr(\rho H) = U$, for some constant $U$.
+
+Again using Lagrange multipliers $\lambda$ and $\beta$, we solve
+\[
+	0 = \delta[S(\rho) - \lambda(\Tr(\rho) - 1) - \beta(\Tr(\rho H) - U)],
+\]
+which gives us the three equations:
+\begin{align*}
+	0 &= \Tr[ \delta \rho(\log \rho + 1 + \lambda + \beta H)], \\
+	\Tr(\rho) &= 1,\\
+	\Tr(\rho H) &= U.
+\end{align*}
+
+%lecture 23
+
+The solution of the first equation is $\rho = e^{-\beta H} e^{-\lambda - 1}$. Note that $\beta$ and $\lambda$ are fixed by the two conditions $\Tr(\beta H) = U$ and $\Tr \rho = 1$ respectively, so we find that
+\[
+	\rho = \frac{e^{-\beta H}}{\Tr(e^{-\beta H})} = \frac{1}{Z[\beta]} \sum_n e^{-\beta E_n \ket n \bra n},
+\]
+with $Z[\beta] = \Tr[e^{-\beta H}]$ the \emph{thermal partition function}\index{thermal partition function}.
+
+\subsection{Entanglement}
+\label{sub:entanglement}
+
+Consider the bipartite system $\mathcal{H} = \mathcal{H}_A \otimes \mathcal{H}_B$.
+
+We are interested in $A$, while $B$ is the environment. A state $\ket \psi \in \mathcal{H}$ that can be written as $\ket \psi = \ket \phi_A \otimes \ket \chi_B$ is called a \emph{product state}\index{product state}. Otherwise, it is called an \emph{entangled state}\index{entangled state}.
+
+\begin{exbox}
+	If $\mathcal{H}_A$ and $\mathcal{H}_B$ are qubits, then
+	\[
+		\ket \psi = \ket \uparrow \ket \downarrow \qquad \text{ and } \qquad \ket{\tilde \psi} = \biggl( \frac{\ket \uparrow + \ket \downarrow}{\sqrt 2} \biggr) \ket \downarrow
+	\]
+	are product states, while
+	\[
+		\ket{\mathrm{EPR}} = \frac{\ket \uparrow \ket \downarrow - \ket \downarrow \ket \uparrow}{\sqrt 2}
+	\]
+	is entangled.
+\end{exbox}
+
+\subsection{Reduced Density Operator}
+\label{sub:reduced_density}
+
+The reduced density operator $\rho_A$ for the subsystem $A$ is
+\[
+	\rho_A = \Tr_{\mathcal{H}_B}(\rho_{AB}) = \sum_n \braket{\beta_n | \rho_{AB} | \beta_n}.
+\]
+$\rho_A$ is useful to compute observables that depend only on $A$.
+
+\begin{exbox}
+	If $Q = Q_A \otimes \mathbbm{1}_{B}$, then
+	\[
+		\braket Q = \Tr_{\mathcal{H}_A \otimes \mathcal{H}_B} (\rho_{AB} Q) = \Tr_{\mathcal{H}_A} (\rho_A Q_A).
+	\]
+	For example, if
+	\[
+	\ket \psi = \frac{1}{\sqrt 2}( \ket \uparrow + \ket \downarrow)_A \otimes \ket \downarrow_B \in \mathcal{H},
+	\]
+	then we have
+	\[
+	\rho_A = \Tr_{\mathcal{H}_B}(\rho_{AB}) = \frac{1}{2} (\ket \uparrow + \ket \downarrow)(\bra \uparrow + \bra \downarrow) = \frac{1}{2}
+	\begin{pmatrix}
+		1 & 1 \\ 1 & 1
+	\end{pmatrix}
+	= \rho_A^2,
+	\]
+	so $\rho_A$ is pure. For the entangled state
+	\[
+		\ket{\mathrm{EPR}} = \frac{1}{\sqrt 2}(\ket\uparrow_A \ket\downarrow_B - \ket\downarrow_A\ket\uparrow_B),
+	\]
+	we have
+	\[
+		\rho_A = \Tr_{\mathcal{H}_B}(\ket{\mathrm{EPR}} \bra{\mathrm{EPR}}) = \frac{1}{2}
+		\begin{pmatrix}
+			1 & 0 \\ 0 & 1
+		\end{pmatrix}
+		\neq \rho_A^2,
+	\]
+	so $\rho_A$ is mixed.
+\end{exbox}
+
+\subsection{Entanglement Entropy}
+\label{sub:ent_entropy}
+
+Entanglement entropy quantifies entanglement between two subsystems. It is defined as
+\[
+S_A(\rho_A) = - \Tr_{\mathcal{H}_A}(\rho_A \log \rho_A).
+\]
+It is just the von Neumann entropy of $\rho_A$.
+
+Schmidt decomposition says that any $\ket \psi \in \mathcal{H}_A \otimes \mathcal{H}_B$ can be written as
+\[
+	\ket \psi = \sum_{i = 1}^{N} \alpha_i \ket{\phi_i} \otimes \ket{\chi_i},
+\]
+with $\{\ket{\phi_i}\}$ and $\{\ket{\chi_i}\}$ being orthonormal subsets in $\mathcal{H}_A$ and $\mathcal{H}_B$ respectively, $\alpha_i \in \mathbb{R}$ and $N = \min(\dim \mathcal{H}_A, \dim \mathcal{H}_B)$.
+
+This is much simpler than writing
+\[
+	\ket \psi = \sum_{i, \alpha} c_{i, \alpha} \ket{e_i}_A \otimes \ket{f_\alpha}_B.
+\]
+Using this, $\rho_A$ or $\rho_B$ are diagonal:
+\[
+	\rho_A = \sum_k \sum_i \braket{\chi_k| \alpha_i \ket{\phi_i} \ket{\chi_i} \bra{\phi_i} \bra{\chi_i} a_i^{\ast} | \chi_k}_B = \sum_i |\alpha_i|^2 \ket{\phi_i} \bra{\phi_i}.
+\]
+
+Assume that $\rho_{AB}$ is pure. Then we claim that $S_A = S_B$. Indeed, using Schmidt decomposition,
+\[
+S_A = \sum_i |\alpha_i|^2 \log |\alpha_i|^2 = S_B.
+\]
+Since $S$ is basis independent, $S_A = S_B$.
+
+Moreover, $\rho_A$ is pure if and only if $\rho_{AB}$ is a product state. Indeed, if $S_A = 0$, then $\alpha_i = \{1, 0, 0, \ldots\}$ so $\ket \psi = \alpha_1 \ket{\phi_1} \otimes \ket{\chi_1}$, and $\rho_{AB}$ is in a product state.
+
+Conversely, $\rho_A$ is mixed if and only if $\rho_{AB}$ is entangled.
+
+If $A$ and $B$ are entangled, we lose information about $A$ when tracing over $B$.
+
+\subsection{Sub-additivity}
+\label{sub:subadd}
+
+Sub-additivity states that
+\[
+S_{A \cup B} \leq S_A + S_B.
+\]
+Hence we introduce the \emph{quantum mutual information}\index{quantum mutual information} $I$:
+\[
+I(A:B) = S_A + S_B - S_{A \cup B} \geq 0.
+\]
+The proof uses Jensen's inequality.
+
+Strong sub-additivity says that
+\[
+S_{A \cup B \cup C} \leq S_{A \cup B} + S_{B \cup C} - S_B.
+\]
+
+\section{Measurement}
+\label{sec:measurement}
+
+\subsection{Decoherence}
+\label{sub:decoherence}
+
+What happens when we measure in quantum mechanics?
+
+Assume that we are in a pure and separable state at $t = 0$, so $\rho(0) = \ket{\psi_0} \bra{\psi_0}$ for some $\ket{\psi_0} = \ket \phi \otimes \ket \chi \in \mathcal{H} = \mathcal{H}_A \otimes \mathcal{H}_B$.
+
+Then $\rho_A(0) = \ket \phi \bra \phi = \rho_A^2$ is pure. The time evolution of $\rho$ is
+\[
+	\rho(t) = U_{AB}(t) \rho(0) U_{AB}^{\dagger}(t) = U_{AB}(t) \ket{\psi_0} \bra{\psi_0} U_{AB}^{\dagger}(t).
+\]
+If $U_{AB}(t) = U_A(t) \otimes U_B(t)$, then $\rho_A(t)$ remains pure. Conversely, for general $U_{AB} \neq U_A \otimes U_B$, we have
+\[
+	\rho_A(t) = \Tr_{\mathcal{H}_B}(U_{AB} \ket{\psi_0} \bra{\psi_0} U_{AB}^{\dagger}) = \sum_\beta M_\beta(t) \rho_0 M_\beta^{\dagger}(t),
+\] 
+where $M_\beta(t) = \braket{\beta|U_{AB}(t)|\chi}$ and $\{\ket \beta\}$ is a basis of $\mathcal{H}_B$, and with $M_\beta(t) : \mathcal{H}_A \to \mathcal{H}_A$ and $\sum_\beta M_\beta^{\dagger} M_\beta = \mathbbm{1}_{\mathcal{H}_A}$, using $\braket{\chi|\chi} = 1$.
+
+$\rho_A(t)$ is in general mixed, so interaction leads to entanglement. This is \emph{decoherence}\index{decoherence}.
+
+%lecture 24
+
+\subsection{Decoherence and Measurement}
+\label{sub:dec_meas}
+
+Let $A = \spn \{ \ket \uparrow, \ket \downarrow \}$ and $B = \spn \{ \ket 0, \ket 1, \ket 2\}$. Here $A$ represents our state we want to measure, and $B$ is our measuring instrument.
+
+An ideal measurement of $A$ will change $B$, but not $A$. Suppose our measurement is the operator $U$, which acts as
+\begin{align*}
+	U(\ket \uparrow \otimes \ket 0) &= \ket \uparrow ( \sqrt{1 - p} \ket 0 + \sqrt{p} \ket 1), \\
+	U(\ket \downarrow \otimes \ket 0) &= \ket \downarrow(\sqrt{1 - p} \ket 0 + \sqrt p \ket 2),
+\end{align*}
+for some probability $0 \leq p \leq 1$. Then
+\begin{align*}
+	M_0 &= \braket{0|U|0} = \sqrt{1 - p} \mathbbm{1}_{\mathcal{H}_A}, \\
+	M_1 &= \braket{1|U|1} = \sqrt p \ket \uparrow \bra \uparrow, \\
+	M_2 &= \braket{2|U|0} = \sqrt p \ket \downarrow \bra \downarrow.
+\end{align*}
+$\rho_A$ evolves as
+\[
+\rho_A(0) =
+\begin{pmatrix}
+	\rho_{\uparrow \uparrow} & \rho_{\uparrow \downarrow} \\
+	\rho_{\downarrow \uparrow} & \rho_{\downarrow \downarrow}
+\end{pmatrix}
+\to \sum_{\beta} M_\beta \rho_A(0) M_\beta^{\dagger} =
+\begin{pmatrix}
+	\rho_{\uparrow \uparrow} & (1 - p)\rho_{\uparrow \downarrow} \\
+	(1-p) \rho_{\downarrow \uparrow} & \rho_{\downarrow \downarrow}
+\end{pmatrix}.
+\]
+Suppose $U$ acts over time $\delta t$, and define the rate as $\Gamma = p/\delta t$. After a time of $t = N \delta t$, the off diagonal elements of $\rho_A$ become
+\[
+	(1 - p)^N = \biggl(1 - \frac{\Gamma t}{N} \biggr)^n \to e^{- \Gamma t}.
+\]
+This is called \emph{phase damping}\index{phase damping}: if $A$ is initially $\ket \psi = a \ket \uparrow + b \ket \downarrow$, then
+\[
+\lim_{t \to \infty} \rho_A(t) = \lim_{t \to \infty}
+\begin{pmatrix}
+	|a|^2 & e^{- \Gamma t} a \bar b \\
+	\bar a b e^{-\Gamma t} & |b|^2
+\end{pmatrix} =
+\begin{pmatrix}
+	|a|^2 & 0 \\ 0 & |b|^2
+\end{pmatrix}.
+\]
+As $A$ entangles with $B$, we are unlikely to find $A$ in a superposition of states in the bases preferred by the apparatus.
+
+\subsection{EPR Paradox}
+\label{sub:epr_paradox}
+
+A famous debate in physics is whether quantum mechanics is probabilistic because of some hidden aspects of reality.
+
+Einstein, Podolsky and Rosen devised a thought experiment to argue that quantum mechanics is an incomplete description of reality.
+
+In Bohr's version of the EPR paradox, we start with and electron-positron pair in the spin-0 state
+ \[
+	 \ket{\mathrm{EPR}} = \frac{1}{\sqrt 2} ( \ket{\uparrow \downarrow} - \ket{\downarrow \uparrow}) = \frac{1}{\sqrt 2}(\ket{\uparrow_{\mathbf{a}}\downarrow_{\mathbf{a}}} - \ket{\downarrow_{\mathbf{a}}\uparrow_{\mathbf{a}}}).
+\]
+The electron travels to Alice, and the positron to Bob.
+
+Alice measures the spin along $\mathbf{a}$, If $A$ measures $\hbar/2$, then
+\[
+	\ket{\mathrm{EPR}} \to \ket{\uparrow_{\mathbf{a}} \downarrow_{\mathbf{a}}} = \ket{\uparrow_{\mathbf{a}}} \otimes \ket{\downarrow_{\mathbf{a}}}.
+\]
+Bob measures the spin along $\mathbf{b}$. Since Bob's state $\ket{\uparrow_{\mathbf{b}}}$ is
+\[
+	\ket{\uparrow_{\mathbf{b}}} = \cos \frac{\theta}{2} e^{-i \phi / 2} \ket{\uparrow_{\mathbf{a}}} + \sin \frac{\theta}{2} e^{i \phi/2} \ket{\downarrow_{\mathbf{a}}},
+\]
+the probability that Bob finds the positron in $\ket{\uparrow_{\mathbf{b}}}$ is
+\[
+	\mathbb{P}(B \text{ measures } \ket{\uparrow_{\mathbf{b}}}) = |\braket{\uparrow_{\mathbf{b}}|\downarrow_{\mathbf{a}}}|^2 = \sin^2 \frac{\theta}{2}.
+\]
+In particular, after Alice measures, Bob will never find $\hbar/2$ along $\mathbf{a}$.
+
+Einstein found the causality of this paradoxical, as the electron and neutrino could have been galaxies apart, yet one measurement still affects the other.
+
+As a rebuttal, even if Alice and Bob are spacelike separated, there is no notion of causality. Indeed the probability is completely symmetric.
+
+Suppose we could find hidden variables $\mathbf{v} \in \mathbb{R}^{n}$ that could completely determine the spins. Let $p(\mathbf{v}) \Diff n \mathbf{v}$ be the probability for $\mathbf{v}$ to be in $\mathbf{v} + \Diff n \mathbf{v}$.
+
+We now look at the spins of the electron along their respective directions. By conservation of angular momentum,
+\[
+s_{\mathrm{e}}(\mathbf{a}, \mathbf{v}) + s_{\mathrm{p}}(\mathbf{a}, \mathbf{v}) = 0.
+\]
+Hence looking at the average value,
+\begin{align*}
+	\langle s_{\mathrm{e}}(\mathbf{a}) s_{\mathrm{p}}(\mathbf{b})\rangle &= \int p(\mathbf{v}) s_{\mathrm{e}}(\mathbf{a}, \mathbf{v}) s_{\mathrm{p}}(\mathbf{b}, \mathbf{v}) \Diff n \mathbf{v} \\
+									     &= - \int p(\mathbf{v}) s_{\mathrm{e}}(\mathbf{a}, \mathbf{v}) s_{\mathrm{e}}(\mathbf{b}, \mathbf{v}) \Diff n \mathbf{v}.
+\end{align*}
+
+\subsection{Bell's Inequality}
+\label{sub:bell}
+
+Notice that $s_{\mathrm{e}}(\mathbf{a}, \mathbf{v})^2 = \frac{\hbar^2}{4}$, for all $\mathbf{a}$.
+
+Suppose Bob measures the spin along $\mathbf{b}'$ instead of $\mathbf{b}$. Using this fact, we have
+\begin{align*}
+	\langle s_{\mathrm{e}}(\mathbf{a}) s_{\mathrm{p}}(\mathbf{b}) \rangle - \langle s_{\mathrm{e}}(\mathbf{a}) &s_{\mathrm{p}}(\mathbf{b}') \rangle = \int p(\mathbf{v}) s_{\mathrm{e}}(\mathbf{a}, \mathbf{v}) \bigl[ s_{\mathrm{p}}(\mathbf{b}, \mathbf{v}) - s_{\mathrm{p}}(\mathbf{b}', \mathbf{v}) \bigr] \Diff n \mathbf{v} \\
+																		       &= \int p(\mathbf{v}) s_{\mathrm{e}}(\mathbf{a}, \mathbf{v}) s_{\mathrm{p}}(\mathbf{b}, \mathbf{v}) \biggl[ 1 - \frac{4}{\hbar^2} s_{\mathrm{p}}(\mathbf{b}, \mathbf{v}) s_{\mathrm{p}}(\mathbf{b}', \mathbf{v}) \biggr] \Diff n \mathbf{v}.
+\end{align*}
+
+Notice that the quantity $[1 - 4 s_{\mathrm{p}}(\mathbf{b}, \mathbf{v}) s_{\mathrm{p}}(\mathbf{b}', \mathbf{v})/\hbar^2] \geq 0$, and the quantity $s_{\mathrm{e}}(\mathbf{a}, \mathbf{v})s_{\mathrm{p}}(\mathbf{b}, \mathbf{v})$ fluctuates between $\pm \hbar^2/4$.
+
+Replacing this fluctuation by $\hbar^2/4$ gives Bell's inequality:
+\begin{align*}
+	|\langle s_{\mathrm{e}}(\mathbf{a}) s_{\mathrm{p}}(\mathbf{b}) \rangle - \langle s_{\mathrm{e}}(\mathbf{a}) s_{\mathrm{p}}(\mathbf{b}') \rangle| &\leq \int p(\mathbf{v}) \biggl[\frac{\hbar^2}{4} - s_{\mathrm{p}}(\mathbf{b}, \mathbf{v}) s_{\mathrm{p}}(\mathbf{b}', \mathbf{v}) \biggr] \Diff n \mathbf{v} \\
+																			 &= \frac{\hbar^2}{4} - \langle s_{\mathrm{p}}(\mathbf{b}) s_{\mathrm{p}}(\mathbf{b}')\rangle.
+\end{align*}
+This is a bound on theories of hidden variables.
+
+However, quantum mechanics violates Bell's inequalities. Note that
+\begin{align*}
+	(\mathbf{a} \cdot \mathbf{S}_{\mathrm{e}} \otimes \mathbbm{1}_{\mathrm{p}})(\mathbbm{1}_{\mathrm{e}} \otimes \mathbf{b} \cdot \mathbf{S}_{\mathrm{p}})\ket{\mathrm{EPR}} &= -(\mathbbm{1}_{\mathrm{e}} \otimes \mathbf{a} \cdot \mathbf{S}_{\mathrm{p}})(\mathbbm{1}_{\mathrm{e}} \otimes \mathbf{b} \cdot \mathbf{S}_{\mathrm{p}}) \ket{\mathrm{EPR}} \\
+																						 &= - \mathbbm{1}_{\mathrm{e}} \otimes(\mathbf{a} \cdot \mathbf{S}_{\mathrm{p}} \, \mathbf{b} \cdot \mathbf{S}_{\mathrm{p}}) \ket{\mathrm{EPR}}.
+\end{align*}
+We now have that
+\[
+\mathbf{a} \cdot \mathbf{S} \, \mathbf{b} \cdot \mathbf{S} = \frac{\hbar^2}{4} \mathbf{a} \cdot \mathbf{b} \mathbbm{1}_{\mathcal{H}} + \frac{i \hbar}{2} (\mathbf{a} \times \mathbf{b}) \cdot \mathbf{S}.
+\]
+However, $\braket{\mathrm{EPR}|\mathbf{S}_{\mathrm{p}}|\mathrm{EPR}} = 0$. Hence,
+\[
+	\braket{\mathbf{a} \cdot \mathbf{S}_{\mathrm{p}} \, \mathbf{b} \cdot \mathbf{S}_{\mathrm{p}}} = \frac{\hbar^2}{4} \mathbf{a} \cdot \mathbf{b}.
+\]
+
+Now in Bell's inequality, the left hand side comes to
+\[
+|\langle\mathbf{a} \cdot \mathbf{S}_{\mathrm{p}} \, \mathbf{b} \cdot \mathbf{S}_{\mathrm{p}} \rangle - \langle \mathbf{a} \cdot \mathbf{S}_{\mathrm{p}} \, \mathbf{b}' \cdot \mathbf{S}_{\mathrm{p}}\rangle| = \frac{\hbar^2}{4}|\mathbf{a} \cdot (\mathbf{b} - \mathbf{b}')|,
+\]
+and the right hand side is
+\[
+\frac{\hbar^2}{4} - \langle\mathbf{b} \cdot \mathbf{S}_{\mathrm{p}} \, \mathbf{b}' \cdot \mathbf{S}_{\mathrm{p}} \rangle = \frac{\hbar^2}{4}(1 - \mathbf{b} \cdot \mathbf{b}').
+\]
+In particular, for $\mathbf{a} = \mathbf{\hat x}$, $\mathbf{b} = \mathbf{\hat y}$ and $\mathbf{b'} = (\mathbf{\hat x} + \mathbf{\hat y})/\sqrt 2$, Bell's inequality is violated.
+
+Experimentally testing the CHSH inequality shows that it is indeed violated. Quantum mechanics wins.
+
+
+%Let $p$ be a prime. Call a sequence $a_0,a_1,\ldots$ of integers \emph{interesting} if $p\mid a_0$ and \begin{itemize} \item there exists some integer $k$ such that for all positive integers $i$, we have $a_{i+1}=ka_i-a_{i-1}$. \item there exist integers $k$ and $l$ such that $p\nmid l$ and for all positive integers $i$ we have $a_{i+1}=ka_i+la_{i-1}$. \end{itemize} Let $\{a_i\}$ be an interesting sequence. Prove that the subsequence of $\{a_i\}$ containing the elements divisible by $p$ is also interesting.
+
+%Around a circle are written $2024$ positive integers, such that each number divides the sum of its two neighbours and the smallest number is $1$. Prove that the largest number is at most \begin{itemize} \item $2^{2024}$. \item $2^{1600}$. \item $7^{506}$. \end{itemize}
+
+\newpage
+
+\printindex
+
+\end{document}

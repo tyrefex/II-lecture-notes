@@ -1,0 +1,1111 @@
+\documentclass[12pt]{article}
+
+\usepackage{ishn}
+
+\makeindex[intoc]
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1em}
+		\Huge
+		\textbf{II Stochastic Financial Models}
+
+		\vspace{1em}
+		\large
+		Ishan Nath, Michaelmas 2023
+
+		\vspace{1.5em}
+
+		\Large
+
+		Based on Lectures by Dr. Michael Tehranchi
+
+		\vspace{1em}
+
+		\large
+		\today
+	\end{center}
+	
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}
+\label{sec:intro}
+
+Probability and Measure is desirable; not required. We will talk about about $\sigma$-algebras later. Moreover sometimes Fubini's or the dominated convergence theorem is used, without proof.
+
+In the following models, we will use the following assumptions. Note that these are clearly false in the real world:
+
+\begin{itemize}
+	\item No dividends.
+	\item  Shares are infinitely divisible. This is a reasonable assumption for a large investor.
+	\item No bid-ask spread, which is reasonable for liquid markets.
+	\item No price impact of buying/selling, so our investing size is not too large.
+	\item No transaction fees.
+	\item No short-selling constraints.
+\end{itemize}
+
+In the following, we use the conventions:
+\begin{itemize}
+	\item We will have $d$ stocks (risky assets).
+	\item $S^i_t$ is the price of asset $i$ at time $t$. For this course, $t \in \{0, 1\}$ or $\{0, 1, 2, \ldots\}$ or $[0,\infty]$. The first few lectures will be focused on the one-period model.
+	\item $S_t = (S^1_t, \ldots, S^d_t)^T \in \mathbb{R}^d$ is the vector of asset prices.
+	\item We will also assume there is a constant risk-free interest rate $r$.
+\end{itemize}
+
+\subsection{One-period Setup}
+\label{sub:one_period_setup}
+
+For one-period, we will assume that $S_0$ is not random, but $S_1$ is a random vector. Moreover will assume that there is no uncertainty in the distribution.
+
+Our investor holds $\theta^i$ shares of asset $i$. Denote by $\theta = (\theta^1, \ldots, \theta^d)^T \in \mathbb{R}^d$ the vector of the total position of the investor.
+
+Note that $\theta^i < 0$ means that the investor is shorting $|\theta^i|$ shares.
+
+The investor will also put $\theta^0$ in the bank, gaining the risk-free interest rate on this investment.
+
+Let $X_t$ denote the wealth, or liquidation value, of the portfolio at time $t$. At time $0$, this is simply
+\[
+X_0 = \theta^0 + \sum_{i=1}^{d} \theta^i S^i_0 = \theta^0 + \theta \cdot S_0.
+\]
+As time progresses, $\theta^0$ accrues interest, so
+\[
+X_1 = \theta^0 (1+r) + \theta \cdot S_1.
+\]
+Hence
+\[
+	X_1 = (1+r)X_0 + \theta \cdot (S_1 - (1+r) S_0). \tag{1.1}\label{eq:1.1}
+\]
+In general,
+\[
+	X_t = (1+r)X_{t-1} + \theta_t \cdot (S_t - (1+r)S_{t-1}). \tag{1.2}\label{eq:1.2}
+\]
+
+\newpage
+
+\section{The mean-variance portfolio problem}
+\label{sec:mv_problem}
+
+This is a problem first proposed by Markowitz in 1952. There are several variations; sometimes we want to find solutions where $\theta^i \geq 0$ for all $i$, i.e. we are not allowed to short.
+
+Given $X_0$, our goal is to find the portfolio $\theta \in \mathbb{R}^{d}$ to minimise $\Var(X_1)$, subject to $\mathbb{E}[X_1] \ge m$.
+
+We will say that $\mathbb{E}[S_1] = \mu \in \mathbb{R}^{d}$, and $\Cov(S_1) = \mathbb{E}[(S_1 - \mu)(S_1 - \mu)^T] = V$. This covariance matrix is symmetric and non-negative definite.
+
+For this problem assume that $\mu \neq (1+r)S_0$, and that $V$ is positive definite, hence $V^{-1}$ exists. Then, from (\ref{eq:1.1}) we get
+\[
+\mathbb{E}[X_1] = (1+r)X_0 + \theta \cdot (\mu - (1+r)S_0),
+\]
+\[
+\Var(X_1) = \theta^{T} V \theta.
+\]
+Our problem is hence to minimize $\theta^T V \theta$ subject to $\theta^T (\mu - (1+r)S_0) \ge m - (1+r)X_0$.
+
+We will not prove this, but note the following:
+
+\begin{theorem}
+	The optimal portfolio is
+	\[
+	\theta = \lambda V^{-1}(\mu - (1+r)S_0),
+	\]
+	where
+	\[
+	\lambda = \frac{(m-(1+r)X_0))^+}{(\mu - (1+r)S_0)^T V^{-1} (\mu - (1+r)S_0)}.
+	\]
+\end{theorem}
+
+Here we use the convention $a^{+} = \max\{a, 0\}$.
+
+%lecture 2
+
+\begin{lemma}
+	The minima of $\theta^{T}V\theta$ subject to $\theta^{T}a = b$ is
+	\[
+	\frac{b^2}{a^{T}V^{-1}a},
+	\]
+	where $V$ is positive definite, $a \in \mathbb{R}^{d}$, $a \neq 0$ and $b \in \mathbb{R}$ is given. The unique minimiser in $\theta = \lambda V^{-1} a$, where
+	\[
+	\lambda = \frac{b}{a^{T}V^{-1}a}.
+	\]
+\end{lemma}
+
+\begin{proofbox}
+	The first method will be taking the Lagrangian
+	\[
+	L(\theta, \lambda) = \frac{1}{2} \theta^{T} V\theta + \lambda(b - a^{T}\theta).
+	\]
+	We can minimize by setting the derivatives $0$, i.e.
+	\[
+	D_\theta L = V\theta - \lambda a = 0 \implies \theta = \lambda V^{-1} a.
+	\]
+	Pick $\lambda$ to be feasible: so
+	\[
+	\theta^{T} a = b \implies \lambda a^{T} V^{-1} a = b \implies \lambda = \frac{b}{a^{T}V^{-1}a}.
+	\]
+	This isn't very formal; let's work backwards instead. Define $\lambda = b/(a^{T}V^{-1}a)$, and suppose $\theta^{T}a = b$. Then we get
+	\begin{align*}
+		\theta^{T}V\theta &= \theta^{T}V\theta + 2\lambda(b - a^{T}\theta) \\
+				  &= (\theta - \lambda V^{-1}a)^{T}V(\theta - \lambda V^{-1}a) + 2 \lambda b - \lambda^2 a^{T}V^{-1} a \\
+				  &\geq 2 \lambda b - \lambda^2 a^{T} V^{-1} a = \frac{b^2}{a^{T}V^{-1}a}.
+	\end{align*}
+	Since $V$ is positive definite, we have equality if and only if $\theta = \lambda V^{-1}a$.
+
+	Let's look at another proof. Note that
+	\begin{align*}
+		(\theta^{T}a)^2 &= ((V^{1/2}\theta)^{T}(V^{-1/2}a))^2 \\
+				&\leq (\theta^{T}V\theta)(a^{T}V^{-1}a) \\
+		\implies \theta^{T}V\theta &\geq \frac{(a^{T}\theta)^2}{a^{T}V^{-1}a} = \frac{b^2}{a^{T}V^{-1}a},
+	\end{align*}
+	when $a^{T}\theta = b$. We have equality in Cauchy-Schwarz if and only if $V^{1/2}\theta = \lambda V^{-1/2}a$ for some $\lambda \in \mathbb{R}$, or $\theta = \lambda V^{-1}a$.
+\end{proofbox}
+
+As an application, if $a = \mu - (1 + r)S_0$, and $b = \mathbb{E}[X_1] - (1+r)X_0$, then
+\[
+\Var(X_1) \geq \frac{(\mathbb{E}[X_1] - (1+r)X_0)^2}{(\mu - (1+r)S_0)^{T}V^{-1}(\mu - (1+r)S_0)},
+\]
+with equality if and only if $\theta = \lambda V^{-1}(\mu - (1+r)S_0)$, where
+\[
+\lambda = \frac{\mathbb{E}[X_1] - (1+r)X_0}{(\mu - (1+r)S_0)^{T}V^{-1}(\mu - (1+r)S_0)}.
+\]
+
+\begin{definition}
+	The \emph{mean-variance efficient frontier}\index{mean-variance efficient frontier} is the lower boundary of the set of possible pairs $(\mathbb{E}[X_1], \Var(X_1))$, i.e. the points on the parabola.
+
+	A portfolio is \emph{mean-variance efficient}\index{mean-variance efficient} if it is the optimal solution of some mean-variance portfolio problem.
+\end{definition}
+
+Recall that we wanted to minimize $\Var(X_1)$ subject to $\mathbb{E}[X_1] \geq m$. However we can figure out what do to by looking at the above. If $m \leq (1+r)X_0$ then we choose $\theta = 0$ (i.e. we don't invest in risky assets). If $m \geq (1+r)X_0$, we choose $\theta = \lambda V^{-1} (\mu - (1+r)S_0)$, where $\lambda$ is as before.
+
+\begin{theorem}[Mutual fund theorem]\index{mutual fund theorem}
+	$\theta$ is mean-variance efficient if and only if $\theta = \lambda V^{-1}(\mu - (1+r)S_0)$ for some $\lambda \geq 0$.
+\end{theorem}
+
+\begin{proofbox}
+	If it is mean-variance efficient, we know it must have this form. Conversely, given $\lambda \geq 0$, let $m = (1+r)X_0 + \lambda(\mu - (1+r)S_0)^{T} V^{-1} (\mu - (1+r)S_0)$.  Then $\theta$ is the optimal solution to the mean-variance problem with target $m$.
+\end{proofbox}
+
+\subsection{Capital Asset Pricing Model}
+\label{sub:capm}
+
+This subsection will be an application of the mutual fund theorem.
+
+\begin{theorem}[Linear regression coefficients]
+	Let $X$ and $Y$ be square-integrable, with $\Var(X) > 0$. There are unique constants $a$ and $b$ such that
+	\[
+	Y = a + bX + Z,
+	\]
+	where $\mathbb{E}[Z] = 0$, and $\Cov(X, Z) = 0$.
+\end{theorem}
+
+\begin{proofbox}
+	Suppose this formula holds, so $Z = Y - a - bX$. Then
+	\[
+	\mathbb{E}[Z] = \mathbb{E}[Y] - a - b \mathbb{E}[X],
+	\]
+	\[
+	\Cov(X, Z) = \Cov(X, Y) - b \Var(X).
+	\]
+	These are two unknowns, so their unique solution to $\mathbb{E}[Z] = 0$ and $\Cov(X, Z) = 0$ is given by
+	\[
+	b = \frac{\Cov(X, Y)}{\Var(X)}, \qquad a = \mathbb{E}[Y] - b \mathbb{E}[X].
+	\]
+\end{proofbox}
+
+\begin{definition}
+	$\theta_{\mathrm{mar}} = V^{-1}(\mu - (1+r)S_0)$ is called the \emph{market portfolio}\index{market portfolio}.
+\end{definition}
+
+\begin{definition}
+	Fix $X_0 > 0$ and $\theta \in \mathbb{R}^{d}$. The \emph{excess return of the portfolio}\index{excess return} $R^{\mathrm{ex}}$ is
+	\[
+	\frac{X_1}{X_0} - (1+r) = \frac{\theta^{T}}{X_0}(S_1 - (1+r)S_0).
+	\]
+	Then the excess return of the market is
+	\[
+		R^{\mathrm{ex}}_{\mathrm{mar}} = \frac{\theta^{T}_{\mathrm{mar}}}{X_0}(S_1 - (1+r)S_0).
+	\]
+\end{definition}
+
+\begin{theorem}[$\alpha$ is zero]
+	Fix $X_0 > 0$ and $\theta \in \mathbb{R}^{d}$. Let $\alpha, \beta$ be such that
+	\[
+		R^{\mathrm{ex}} = \alpha + \beta R^{\mathrm{ex}}_{\mathrm{mar}} + \eps,
+	\]
+	where $\mathbb{E}[\eps] = 0$ and $\Cov(\eps, R^{\mathrm{ex}}_{\mathrm{mar}}) = 0$. Then $\alpha = 0$.
+\end{theorem}
+
+%lecture 3
+
+\begin{proofbox}
+	This is just a calculation. We need to calculate
+	\begin{align*}
+	\Cov(R^{\mathrm{ex}}, R^{\mathrm{ex}}_{\mathrm{mar}}) &= \Cov \biggl( \frac{\theta^{T}}{X_0}(S_1 - (1+r)S_0), \frac{\theta^{T}_{\mathrm{mar}}}{X_0}(S_1-(1+r)S_0)\biggr) \\
+											 &= \frac{\theta^{T}}{X_0}\frac{V \theta_{\mathrm{mar}}}{X_0} = \frac{\theta^{T}}{X_0^2} (\mu - (1+r)S_0) \\
+											 &= \frac{\mathbb{E}[R^{\mathrm{ex}}]}{X_0}.
+	\end{align*}
+	Hence we get
+	\[
+	\Var(R^{\mathrm{ex}}_{\mathrm{max}}) = \frac{\mathbb{E}[R^{\mathrm{ex}}_{\mathrm{mar}}]}{X_0} = \Cov(R^{\mathrm{ex}}_{\mathrm{mar}}, R^{\mathrm{ex}}_{\mathrm{mar}}).
+	\]
+	Therefore
+	\[
+	\beta = \frac{\Cov(R^{\mathrm{ex}}, R^{\mathrm{ex}}_{\mathrm{mar}})}{\Var(R^{\mathrm{ex}}_{\mathrm{mar}})} = \frac{\mathbb{E}[R^{\mathrm{ex}}]}{\mathbb{E}[R^{\mathrm{ex}}_{\mathrm{mar}}]},
+	\]
+	and so
+	\[
+	\alpha = \mathbb{E}[R^{\mathrm{ex}}] - \beta \mathbb{E}[R^{\mathrm{ex}}_{\mathrm{mar}}] = 0.
+	\]
+\end{proofbox}
+
+The assumptions in our model are as follows:
+\begin{itemize}
+	\item There are $K$ agents, where agent $k$ holds portfolio $\theta_k$.
+	\item There are $n_i$ shares of asset $i$ in total. Let $n = (n_1, \ldots, n_d)^{T} > 0$.
+	\item All investors are mean-variance efficient, and they agree on the mean and covariance of $S_1$.
+	\item By mutual fund theorem $\theta_k = \lambda_k \theta_{\mathrm{mar}}$ for $\lambda_k \geq 0$ scalar.
+	\item As supply equals demand,
+		\[
+		\sum_{k = 1}^{K}\theta_k = n = \Biggl( \sum_{k = 1}^{K} \lambda_k \Biggr) \theta_{\mathrm{mar}} = \Lambda \theta_{\mathrm{mar}}.
+		\]
+\end{itemize}
+
+The implication is that $R^{\mathrm{ex}}_{\mathrm{mar}}$ is the excess return of a broad market index (such as S\&P 500 or FTSE), and that
+\[
+R^{\mathrm{ex}} = \beta R^{\mathrm{ex}}_{\mathrm{mar}} + \eps.
+\]
+This is a testable theory, and we can test it in the market and see that it often fails; we can find (negative) $\alpha$ in places. The reason is that some of the assumptions we have made are very strong: we assume a frictionless market without spreads and market impact, but we also assume that all other investors behave nicely.
+
+\newpage
+
+\section{Expected Utility Hypothesis}
+\label{sec:utility}
+
+So far, implicitly, an investor would prefer $X$ over $Y$ if either:
+\begin{itemize}
+	\item $\mathbb{E}[X] > \mathbb{E}[Y]$, $\Var(X) \leq \Var(Y)$, or
+	\item $\mathbb{E}[X] \geq \mathbb{E}[Y]$, $\Var(X) < \Var(Y)$.
+\end{itemize}
+
+This is quite strong. Let's assume a different condition.
+
+\begin{proposition}[Expected Utility Hypothesis]\index{expected utility hypothesis}\index{utility function}
+	An agent prefers $X$ to $Y$ if and only if
+	 \[
+	\mathbb{E}[U(X)] \geq \mathbb{E}[U(Y)],
+	\]
+	for a given function $U$, called the agent's utility function.
+\end{proposition}
+
+Note that if $\hat U(x) = a + bU(x)$ for all $x$, where $a, b \in \mathbb{R}$ and $b > 0$, then the preferences induced by $\hat U$ and $U$ are the same. The von-Neumann-Morgenstern theorem characterizes the preferences equivalent to the expected utility hypothesis.
+
+\begin{definition}
+	An expected utility agent is \emph{indifferent}\index{indifferent} to $X$ and $Y$ if and only if $\mathbb{E}[U(X)] = \mathbb{E}[U(Y)]$.
+\end{definition}
+
+\subsection{Risk-aversion and Concavity}
+
+For now, we will assume:
+\begin{itemize}
+	\item $U$ is strictly increasing,
+		 \[
+		U(x) > U(y) \iff x > y.
+		\]
+		The implication is, if $X \geq Y$ a.s. and $\mathbb{P}(X > Y) > 0$, then $\mathbb{E}[U(X)] > \mathbb{E}[U(Y)]$, so $X$ is preferred to $Y$.
+	\item $U$ is concave,
+		\[
+		U(px + (1-p)y) > pU(x) + (1-p)U(y),
+		\]
+		for all $x \neq y$ and $0 < p < 1$.
+
+		The implication is, if $X$ is not constant, then by Jensen's inequality
+		\[
+		\mathbb{E}[U(X)] < U(\mathbb{E}[X]).
+		\]
+		Hence $\mathbb{E}[X]$ is preferred to $X$.
+\end{itemize}
+
+%lecture 4
+
+\subsection{Concave functions}
+\label{sub:concave}
+
+First we assume that $U$ is always increasing, strictly concave and twice differentiable.
+
+The derivative $U'$ is called the \emph{marginal utility}\index{marginal utility}. This is positive as $U$ is increasing, but decreasing as $U$ is concave. This means that $U''$ is negative.
+
+\begin{definition}
+	The \emph{coefficient of absolute risk aversion}\index{absolute risk aversion} is
+	\[
+	\frac{-U''(x)}{U'(x)}.
+	\]
+	The \emph{coefficient of relative risk aversion}\index{relative risk aversion} is
+	\[
+	\frac{- x U''(x)}{U'(x)},
+	\]
+	when $x > 0$.
+\end{definition}
+
+\begin{exbox}
+	Here are some important utility functions.
+	\begin{enumerate}
+		\item $U(x) = - e^{-\gamma x}$ is the CARA (constant absolute risk aversion) utility function. Indeed,
+			\[
+			U'(x) = \gamma e^{-\gamma x}, \qquad U''(x) = - \gamma^2 e^{-\gamma x},
+			\]
+			\[
+			\implies \frac{U''(x)}{U'(x)} = \gamma
+			\]
+			is constant.
+	\item $U(x) = x^{1-R}/(1-R)$, for $R > 0$, $R \neq 1$ is the CRRA (constant relative risk aversion) utility function. We can calculate that
+		\[
+		\frac{-x U''(x)}{U'(x)} = R.
+		\]
+		Note this function is not defined everywhere. To be fully define the functions, we can let
+		\[
+		U(x)=
+		\begin{cases}
+			\frac{x^{1-R}}{1-R} & x > 0,\\
+			-\infty & x \leq 0.
+		\end{cases}
+		\]
+		\item $U(x) = \log x$ is the CRRA utility function with $R = 1$.
+		\item $U(x) = x$ is a utility function that is not strictly concave. This is the \emph{risk-neutral utility}.
+	\end{enumerate}
+\end{exbox}
+
+Let's prove some basic facts about concave functions.
+
+\begin{theorem}
+	Concave functions are continuous, and differential concave functions have graphs that lie beneath their tangents.
+\end{theorem}
+
+To prove this we first prove a lemma:
+
+\begin{lemma}
+	Let $U$ be concave and $a < b < c$. Then,
+	\[
+	\frac{u(b) - u(a)}{b - a} \geq \frac{u(c) - u(b)}{c - b}.
+	\]
+\end{lemma}
+
+\begin{proofbox}
+	Note that
+	\[
+	b = \biggl( \frac{b-a}{c-a} \biggr) c + \biggl(\frac{c-b}{c-a} \biggr)a,
+	\]
+	and these coefficients are in $(0, 1)$. Hence applying the definition of concavity,
+	\[
+		u(b) \geq \biggl( \frac{b-a}{c-a} \biggr) u(c) + \biggl( \frac{c-b}{c-a} \biggr) u(a).
+	\]
+	Rearranging gives what we want.
+\end{proofbox}
+
+Now we can apply this lemma to prove continuity.
+
+\begin{proofbox}
+	Fix $x$, $0 < \eps < t$. Apply the lemma to
+	\[
+	x-t < x - \eps < x < x + \eps < x + t.
+	\]
+	Then we get that
+	\[
+	\frac{\eps}{t} (u(x) - u(x-t)) \geq u(x) - u(x-\eps) \geq u(x+\eps)-u(x) \geq \frac{\eps}{t} (u(x+t) - u(x)),
+	\]
+	which goes to $0$ as $\eps \to 0$.
+
+	Moreover if $u$ is differentiable at $x$, then we have
+	\[
+	u(x) - u(x-t) \geq t u'(x) \geq u(x+t) - u(x),
+	\]
+	by taking $\eps \to 0$. This gives
+	\[
+	u(y) \leq u(x) + u'(x) (y-x).
+	\]
+	Note if $u$ is twice differentiable, we can use second-order Taylor's:
+	\[
+	u(y) = u(x) + u'(x) (y-x) + u''(z) \frac{(y-x)^2}{2},
+	\]
+	where $u''(z) \leq 0$.
+\end{proofbox}
+
+\begin{theorem}
+	Increasing concave functions are unbounded to the left, i.e. $u(x) \to -\infty$ as $x \to -\infty$.
+\end{theorem}
+
+\begin{proofbox}
+	Pick $x < a < b$. Then,
+	\[
+	u(x) \leq u(a) + \biggl( \frac{x-a}{b-a} \biggr) (u(b) - u(a)),
+	\]
+	which goes to $-\infty$ as $x \to -\infty$
+\end{proofbox}
+
+\subsection{Optimal Investment and Marginal Utility}
+\label{sub:optimal_invest}
+
+\begin{theorem}
+	Consider the problem of maximizing $\mathbb{E}[U(X_1)]$ given $X_0$, where
+	\[
+		X_1 = (1+r)X_0 + \theta^{T}(S_1 - (1+r)S_0),
+	\]
+	where $U$ is increasing, concave and suitable. If $\theta^{\ast}$ is optimal, then
+	\[
+	S_0 = \frac{1}{1+r} \frac{\mathbb{E}[U'(X_1^{\ast})S_1]}{\mathbb{E}[U'(X_1^{\ast})]},
+	\]
+	where
+	\[
+	X_1^{\ast} = (1+r)X_0 + (\theta^{\ast})^{T}(S_1 - (1+r)S_0).
+	\]
+\end{theorem}
+
+%lecture 5
+
+\begin{proofbox}
+	Let 
+	\[
+	f(\theta) = \mathbb{E}[U((1+r)X_0) + \theta^{T}(S_1-(1+r)S_0))].
+	\]
+	At the maximum,
+	\[
+	Df(\theta^{\ast}) = 0 = \mathbb{E}[U'(X_1^{\ast})(S_1-(1+r)S_0)].
+	\]
+	This rearranges to what we want.
+\end{proofbox}
+
+\newpage
+
+\section{Pricing Contingent Claims}
+\label{sec:price_cont}
+
+For us, a contingent claim is a random variable (the payout is random). The payout for us is at time 1. We will introduce the following framework:
+\begin{itemize}
+	\item There are $d$ assets given (fundamental).
+	\item We introduce a new contingent claim with payout $Y$.
+	\item Often $Y = g(S_1)$, a function of the price of the stocks at time 1, but not necessarily.
+\end{itemize}
+We are interested in finding a good time $0$ price of the claim.
+
+The most important example is a \emph{call option}\index{call option}: the right but not the obligation to buy some given asset at a fixed price $K$, often called the \emph{strike price}\index{strike price}.
+
+We will assume that the actors are rational. That is, if at time 1 the asset has price greater than $K$, then the buyer will exercise the option and sell the asset on the market, making $S_1 - K$. If the asset has price less than $K$, then the buyer will not exercise the right. This gives a payout
+\begin{align*}
+	\text{payout} &= 
+	\begin{cases}
+		S_1 - K & S_1 > K,\\
+		0 & S_1 \leq K,
+	\end{cases}
+	\\
+		      &= (S_1-K)^{+} = g(S_1).
+\end{align*}
+
+\subsection{Utility Indifference Pricing}
+\label{sub:u_price}
+
+Fix $X_0$ to be an initial wealth, and $U$ an increasing concave utility function. Let
+\[
+	\mathcal{X} = \{X_1 = (1+r)X_0 + \theta^{T}(S_1 - (1+r)S_0) \mid \theta \in \mathbb{R}^{d} \}.
+\]
+Note that the investor would prefer to buy one claim with payout $Y$ and price $\pi$ if there exists $X_1^{\ast} = X^{\ast}$ such that
+\[
+\mathbb{E}[U(X^{\ast} + Y - (1+r)\pi)] > \mathbb{E}[U(X)],
+\]
+for all $X \in \mathcal{X}$.
+
+We will assume $U$, the distribution of $S_1$, $X_0$, $Y$, the values $r, S_0$ and $\pi$ are such that every utility maximisation problem has an optimal solution.
+
+\begin{definition}
+	The (utility) \emph{indifference (reservation) price}\index{indifference price} of the claim with payout $Y$ is any $\pi$ such that
+	\[
+	\max_{X \in \mathcal{X}}\mathbb{E}[U(X+Y-(1+r)\pi)] = \max_{X \in X} \mathbb{E}[U(X)].
+	\]
+\end{definition}
+
+Here are some properties of the indifference price. First, our assumptions lead to the following.
+
+\begin{theorem}
+	The indifference price exists and is unique.
+\end{theorem}
+
+From this, we let $\pi(Y)$ denote the indifference price of the claim with payout $Y$. Now we will relate indifference prices of different claims.
+
+\begin{theorem}
+	If $Y_0 \leq Y_1$ almost surely and $\mathbb{P}(Y_0 < Y_1) > 0$, then $\pi(Y_0) < \pi(Y_1)$.
+\end{theorem}
+
+Moreover, we can show that indifference prices are concave:
+\begin{theorem}[Indifference prices are concave]
+	\[
+	\pi(pY_1 + (1-p)Y_0) \geq p \pi(Y_1) + (1-p)\pi(Y_0),
+	\]
+	for all payouts $Y_0, Y_1$ and all $0 < p < 1$.
+\end{theorem}
+
+\begin{definition}
+	The \emph{marginal utility price}\index{marginal utility price} of $Y$ is
+	\[
+	\pi_0(Y) = \frac{\mathbb{E}[U'(X^{\ast})Y]}{(1+r)\mathbb{E}[U'(X^{\ast})]},
+	\]
+	where $X^{\ast}$ solves
+	\[
+	\mathbb{E}[U(X^{\ast})] = \max_{X \in \mathcal{X}} \mathbb{E}[U(X)].
+	\]
+\end{definition}
+
+Now we have a nice little theorem.
+
+\begin{theorem}
+	$\pi(Y) \leq \pi_0(Y)$ for any claim.
+\end{theorem}
+
+In fact, we can find the following.
+
+\begin{theorem}
+	\[
+	\lim_{\eps \to 0} \frac{\pi(\eps Y)}{\eps} = \pi_0(Y).
+	\]
+\end{theorem}
+
+%lecture 6
+
+To prove this, we introduce the following definition:
+\begin{definition}
+	We define
+	\[
+	V(Z) = \max_{X \in \mathcal{X}} \mathbb{E}[U(X+Z)].
+	\]
+	This is the \emph{indirect utility}\index{indirect utility} of the random payout $Z$.
+\end{definition}
+
+In this notation, $\pi$ is the indifference price of payout $Y$ if and only if
+\[
+V(Y - (1 + r)\pi) = V(0).
+\]
+
+\begin{lemma}
+	If $Z_0 \leq Z_1$ almost surely, and $\mathbb{P}(Z_0 < Z_1) > 0$, then $V(Z_0) < V(Z_1)$.
+\end{lemma}
+
+\begin{proofbox}
+	Let $X^i$ be such that
+	\[
+	V(Z_i) = \mathbb{E}[U(X^i + Z_i)],
+	\]
+	for $i = 0, 1$. Then
+	\begin{align*}
+		V(Z_1) &= \mathbb{E}[U(X^1 + Z_1)] \geq \mathbb{E}[U(X^0 + Z_1)] \text{ as $X^1$ is a maximizer}\\
+		       &> \mathbb{E}[U(X^0 + Z_0)] \text{ as  } Z_1 \geq Z_0 \\
+		       &= V(Z_0).
+	\end{align*}
+\end{proofbox}
+
+\begin{lemma}
+	The indirect utility satisfies
+	\[
+	V(pZ_1 + (1-p)Z_0) \geq p V(Z_1) + (1-p)Z_0,
+	\]
+	for all $0 < p < 1$.
+\end{lemma}
+
+\begin{proofbox}
+	Let $X^i$ be as before. Note that
+	\begin{align*}
+		p X^1 + (1-p) X^0 &= p((1 + r)X_0 + \theta_1^{T}(S_1 - (1_r)S_0)) \\
+				  &\qquad\qquad+ (1-p)((1+r)X_0 + \theta_0^{T}(S_1 - (1+r)S_0)) \\
+		&= (1+r)X_0 + (p \theta_1 + (1-p)\theta_0)^{T}(S_1 - (1+r)S_0) \in \mathcal{X},
+	\end{align*}
+	so we have
+	\begin{align*}
+		p V(Z_1) + (1-p) V(Z_0) &= \mathbb{E}[p U(X^1 + Z_1) + (1-p)U(X^0 + Z_0)] \\
+					&\leq \mathbb{E}[U(pX^1 + (1-p)X^0 + p Z_1 + (1-p) Z_0)] \\
+					&\leq \max_{X \in \mathcal{X}} \mathbb{E}[U(X + p Z_1 + (1-p) Z_0)] \\
+					&= V(pZ_1 + (1-p)Z_0).
+	\end{align*}
+\end{proofbox}
+
+Now we can prove the existence and uniqueness of indifference prices.
+
+\begin{proofbox}
+	We show there is a unique solution to $V(Y - (1+r)\pi) = V(0)$. Note that
+	\[
+	V(0) = \mathbb{E}[U(X^{\ast})] \in (U(-\infty), U(\infty)) = (-\infty, U(\infty)).
+	\]
+	Now consider $x \mapsto V(Y + x)$. This is strictly increasing and concave, by our lemma. Hence it is continuous (by concavity), with range $(\infty, \lim V(Y+x))$.
+
+	But by MCT (actually not entirely sure, Fatou and MCT require non-negativity),
+	\[
+	V(Y + x) \geq \mathbb{E}[U(X^\ast + Y + x)] \uparrow U(\infty).
+	\]
+	Hence there exists a unique $x$ such that $V(Y + x) = V(0)$, and the unique $\pi$ is $-x/(1+r)$.
+\end{proofbox}
+
+Now we can prove that indifference prices increase.
+
+\begin{proofbox}
+	Let $Y_0 \leq Y_1$ almost surely, and $\mathbb{P}(Y_0 < Y_1) > 0$. Then
+	\begin{align*}
+		V(Y_0 - (1+r)\pi(Y_0)) &= V(0) = V(Y_1 - (1+r) \pi(Y_1)) \\
+				       & \geq V(Y_0 - (1+r)\pi(Y_1)),
+	\end{align*}
+	and so $-(1+r)\pi(Y_0) > -(1+r)\pi(Y_1)$ since $x \mapsto V(Y_0 + x)$ is strictly increasing. Hence $\pi(Y_1) > \pi(Y_0)$.
+\end{proofbox}
+
+Here is a proof of concavity.
+
+\begin{proofbox}
+	We are given $Y_0, Y_1$ and $0 < p < 1$. Then
+	\begin{align*}
+		V(pY_1 + (1&-p)Y_0 - (1+r)\pi(pY_1 + (1-p)Y_0)) = V(0) \\
+				    &= V(Y_1 - (1+r)\pi(Y_1)) = V(Y_0 - (1+r)\pi(Y_0)) \\
+							       &= p V(Y_1 - (1+r)\pi(Y_1)) + (1-p) V(Y_0 - (1+r)\pi(Y_0)) \\
+							       &\leq V(pY_1 + (1-p)Y_0 - (1+r)(p \pi(Y_1) + (1-p) \pi(Y_0))),
+	\end{align*}
+	hence $\pi(pY_1 + (1-p)Y_0) \geq p\pi(Y_1) + (1-p)\pi(Y_0)$.
+\end{proofbox}
+
+Now we prove the marginal utility price is bigger than the indifference price.
+
+\begin{proofbox}
+	Let $X^{\ast}$ be such that $V(0) = \mathbb{E}[U(X^{\ast})]$. Let $X^1$ be such that $V(Y - (1+r)\pi(Y)) = \mathbb{E}[U(X^1 + Y - (1+r)\pi(Y_0))]$. Then,
+	\begin{align*}
+		V(0) &= V(Y - (1+r)\pi(Y)) = \mathbb{E}[U(X^1 + Y - (1+r)\pi(Y))] \\
+		     &\leq \mathbb{E}[U(X^{\ast}) + U'(X^{\ast})(X^1 - X^{\ast} + Y - (1+r)\pi(Y))] \\
+		     &= V(0) + \mathbb{E}[U'(X^{\ast})(X^1 - X^{\ast})] + \mathbb{E}[U'(X^{\ast})(Y - (1+r)\pi(Y))].
+	\end{align*}
+	Now we claim the bit in the middle is 0. Assuming this, we have
+	\[
+	\pi(Y) \leq \frac{1}{1 + r} \frac{\mathbb{E}[U'(X^{\ast})Y]}{\mathbb{E}[U'(X^{\ast})]} = \pi_0(Y).
+	\]
+	To prove this claim note that
+	\begin{align*}
+		\mathbb{E}[U'(X^{\ast})(X^{\ast} - X^1)] &= (\theta^{\ast} - \theta^1)^{T} \mathbb{E}[U'(X^{\ast}) (S_1 - (1+r)S_0)] = 0,
+	\end{align*}
+	by the first marginal utility pricing result.
+\end{proofbox}
+
+%lecture 7
+
+We now prove the convergence of the indifference price to the marginal utility price.
+
+\begin{proofbox}
+	Fix $Y$, and let $\pi_t = \pi(tY)/t$, the average indifference price of $t$ shares. Let
+	\[
+	p= \sup_{t > 0} \pi_t = \lim_{t \to 0} \pi_t,
+	\]
+	from the example sheet, where we show $t \mapsto \pi_t$ is decreasing. This is done by using concavity of $\pi$, and the fact $\pi(0) = 0$. Let $X^{\ast} \in \mathcal{X}$ maximize $\mathbb{E}[U(X)]$, as before. Then
+	\begin{align*}
+		0 &= \frac{V(tY - (1+r)t\pi_t) - V(0)}{t} \\
+		  &\geq \frac{1}{t} \mathbb{E}[U(X^{\ast} + t(Y - (1+r)\pi_t)) - U(X^{\ast})] \\
+		  &\geq \mathbb{E}\biggl[ \frac{U(X^{\ast} + t(Y - (1+r)p)) - U(X^{\ast})}{t} \biggr] \\
+		  &\to \mathbb{E}[U'(X^{\ast})(Y - (1+r)p)],
+	\end{align*}
+	hence we get
+	\[
+	p \geq \pi_0 = \frac{\mathbb{E}[U'(X^{\ast})Y]}{(1+r)\mathbb{E}[U'(X^{\ast})]}.
+	\]
+	But on the other hand,
+	\[
+	\pi_t \leq \pi_0 \implies p \leq \pi_0,
+	\]
+	hence $p = \pi_0$.
+\end{proofbox}
+
+\newpage
+
+\section{Risk Neutral Measures}
+\label{sec:risk_0}
+
+\begin{definition}
+	Consider two probability measures $\mathbb{P}$ and $\mathbb{Q}$, defined on a $\sigma$-algebra $\mathcal{F}$.
+
+	Then $\mathbb{P}$ and $\mathbb{Q}$ are equivalent if and only if $\mathbb{P}(A) = 0 \iff \mathbb{Q}(A) = 0$.
+\end{definition}
+
+\begin{remark}
+ 	Analogously, $\mathbb{P} \sim \mathbb{Q}$ if and only if $\mathbb{P}(A) = 1 \iff \mathbb{Q}(A) = 1$, or $\mathbb{P}(A) > 0 \iff \mathbb{Q}(A) > 0$ or $\mathbb{P}(A) < 1 \iff \mathbb{Q}(A) < 1$.
+\end{remark}
+
+\begin{exbox}
+	Take $\Omega = \{1, 2, 3\}$ and $\mathcal{F} = \mathcal{P}(\Omega)$. Let
+	\[
+	\mathbb{P}(1) = \frac{1}{2}, \qquad \mathbb{P}(2) = \frac{1}{2}, \qquad \mathbb{P}(3) = 0,
+	\]
+	\[
+	\mathbb{Q}(1) = \frac{1}{3}, \qquad \mathbb{Q}(2) = \frac{2}{3}, \qquad \mathbb{Q}(3) = 0.
+	\]
+	Then $\mathbb{P} \sim \mathbb{Q}$.
+
+	Moreover, let $Z$ be a random variable such that $\mathbb{P}(Z > 0) = 1$, and such that $\mathbb{E}[Z] = 1$. Define $\mathbb{Q}(A) = \mathbb{E}[Z \mathbbm{1}_{A}]$.
+
+	Then $\mathbb{Q}$ is a probability measure on $(\Omega, \mathcal{F})$, and $\mathbb{P} \sim \mathbb{Q}$.
+
+	Indeed, if  $\mathbb{P}(A) = 0$, then $\mathbb{E}[\mathbbm{1}_{A}] = 0$, and so $\mathbb{Q}(A) = \mathbb{E}[Z \mathbbm{1}_{A}] = 0$ by MCT.
+
+	Conversely, if $\mathbb{Q}(A) = 0$, then $\mathbb{E}[Z \mathbbm{1}_{A}] = 0$, so $\mathbb{P}(Z \mathbbm{1}_{A} = 0) = 1$. But since $\mathbb{P}(Z = 0) = 0$, we must have $\mathbb{P}(\mathbbm{1}_{A} = 0) = 0$, hence $\mathbb{P}(A) = 0$.
+\end{exbox}
+
+In fact, this is the only such example.
+
+\begin{theorem}[Radon-Nikodym]
+	$\mathbb{P} \sim \mathbb{Q}$ if and only if there exists random variable $Z$ with respect to $\mathbb{P}$ such that $\mathbb{P}(Z > 0) = 1$, $\mathbb{E}[Z] = 1$ and
+	\[
+	\mathbb{Q}(A) = \mathbb{E}[Z \mathbbm{1}_{A}],
+	\]
+	for all $A \in \mathcal{F}$.
+\end{theorem}
+The proof of this is in part III advanced probability.
+
+For such $\mathbb{P}, \mathbb{Q}$, we define
+\[
+\frac{\diff \mathbb{Q}}{\diff \mathbb{P}} = Z.
+\]
+This is the \emph{Radon-Nikodym derivative}\index{Radon-Nikodym derivative}.
+
+In the first example, $Z(1) = 2/3$, $Z(2) = 4/3$ and $Z(3) = e^2 - \pi$ gives $\mathbb{Q}(A) = \mathbb{P}(Z \mathbbm{1}_{A})$.
+
+\begin{remark}
+	If $\mathbb{P} \sim \mathbb{Q}$ and $\frac{\diff \mathbb{Q}}{\diff \mathbb{P}} = Z$, then $\mathbb{E}_{\mathbb{Q}}[X] = \mathbb{E}_{\mathbb{P}}[Z X]$, for any $\mathbb{Q}$-integrable $X$.
+\end{remark}
+
+\begin{exbox}
+	Let $X$ be defined on $(\Omega, \mathcal{F}, \mathbb{P})$ and $X \sim \Exp(\lambda)$ under $\mathbb{P}$. Then let
+	\[
+	Z = \frac{u}{\lambda} e^{(\lambda - u)x}, \qquad \mathbb{E}[Z] = \int_0^{\infty} \frac{u}{\lambda} e^{(\lambda - u)x} \lambda e^{-\lambda x} \diff x = \int_0^{\infty} u e^{-u x} \diff x = 1.
+	\]
+	So if we define $\mathbb{Q}$ by density $Z$, then we want to find the distribution of $X$ under $\mathbb{Q}$. Note that
+	\begin{align*}
+		\mathbb{E}_{\mathbb{Q}}[f(X)] &= \mathbb{E}_{\mathbb{P}}[Z f(X)] = \int_0^{\infty} \frac{u}{\lambda} e^{(\lambda - u)x} f(x) \lambda e^{-\lambda x} \diff x \\
+					      &= \int_0^{\infty} u e^{-u x} f(x) \diff x,
+	\end{align*}
+	so $X \sim \Exp(u)$ under $\mathbb{Q}$.
+\end{exbox}
+
+\begin{definition}
+	In a financial model, any measure $\mathbb{Q}$ equivalent to $\mathbb{P}$ such that
+	\[
+	S_0 = \frac{\mathbb{E}^{\mathbb{Q}}[S_1]}{1 + r},
+	\]
+	is called \emph{risk-neutral}\index{risk-neutral measure}.
+\end{definition}
+
+%lecture 8
+
+\begin{remark}
+	\begin{itemize}
+		\item[]
+		\item The definition of a risk-neutral measure does not depend on the agent's equality.
+		\item It does depend on $\mathbb{P}$.
+		\item Agents with equivalent beliefs (i.e. agree on the probability 0 events) agree on the risk-neutrality of a measure.
+	\end{itemize}
+\end{remark}
+
+\begin{theorem}[Marginal Utility Pricing $Z$]
+	Let $X^{\ast} \in \mathcal{X}$ maximize $\mathbb{E}[U(X)]$ over $X \in \mathcal{X}$, where $U$ is strictly increasing, differentiable and suitably nice. Let $\mathbb{Q}$ be defined by
+	\[
+	\frac{\diff \mathbb{Q}}{\diff \mathbb{P}} = \frac{U'(X^{\ast})}{\mathbb{E}[U'(X^{\ast})]}.
+	\]
+	Then $\mathbb{Q}$ is a risk-neutral measure.
+\end{theorem}
+
+We can also say that
+\[
+\frac{\diff \mathbb{Q}}{\diff \mathbb{P}} \propto U'(X^{\ast}).
+\]
+
+\begin{proofbox}
+	Note that
+	\[
+	\frac{\mathbb{E}_{\mathbb{Q}}[S_1]}{1+r} = \frac{\mathbb{E}_{\mathbb{P}}[U'(X^{\ast})S_1]}{(1+r) \mathbb{E}_{\mathbb{P}}[U'(X^{\ast})]} = S_0,
+	\]
+	by the first marginal utility pricing theorem.
+\end{proofbox}
+
+\subsection{Arbitrage}
+\label{sub:arbitrage}
+
+We define the concept of arbitrage, which will be used in the fundamental theorem of asset pricing: there exists a risk-neutral measure if and only if there does not exist an arbitrage.
+
+\begin{definition}
+	An \emph{arbitrage}\index{arbitrage} $\phi \in \mathbb{R}^{d}$ is such that $\mathbb{P}(\phi^{T}(S_1 - (1+r)S_0) \geq 0) = 1$, and $\mathbb{P}(\phi^{T}(S_1 - (1+r)S_0) > 0) > 0$.
+\end{definition}
+
+\begin{remark}
+	\begin{itemize}
+		\item[]
+		\item The definition of arbitrage does not depend on $U$.
+		\item It depends on $\mathbb{P}$, but only through the events of measure $0$.
+	\end{itemize}
+\end{remark}
+
+Given $X \in \mathcal{X}$, and an arbitrage $\phi$, let
+\[
+X' = X + \phi^{T}(S_1 - (1+r)S_0) \in \mathcal{X}.
+\]
+Then $U(X') \geq U(X)$ almost surely, and $\mathbb{P}(U(X') > U(X)) > 0$. Hence $\mathbb{E}[U(X')] > \mathbb{E}[U(X)]$, so $X'$ is preferred to $X$.
+
+Hence there cannot be a maximiser of $\mathbb{E}[U(X)]$. Indeed, if $\phi$ is an arbitrage, then so is $n \phi$ for all $n \geq 0$.
+
+Hence, if there exists a utility maximiser, then there exists a risk-neutral measure, and if there exists a utility maximiser, then there is no arbitrage.
+
+\begin{theorem}[Fundamental Theorem of Asset Pricing]
+	There exists a risk-neutral measure if and only if there does not exist an arbitrage.
+\end{theorem}
+
+\begin{proofbox}
+	Suppose there exists a risk-neutral measure. To show there is no arbitrage, let $\phi \in \mathbb{R}^{d}$ be such that $\phi^{T}(S_1 - (1+r)S_0) \geq 0$ $\mathbb{P}$-almost surely. Then by equivalence, $\phi^{T}(S_1 - (1+r)S_0) \geq 0$ $\mathbb{Q}$-almost surely. But
+	\[
+	\mathbb{E}_{\mathbb{Q}}[\phi^{T}(S_1 - (1+r)S_0)] = \phi^{T}\mathbb{E}_{\mathbb{Q}}[S_1 - (1+r)S_0] = 0,
+	\]
+	by risk-neutrality. Therefore $\phi^{T}(S_1 - (1+r)S_0) = 0$ $\mathbb{Q}$-almost surely, and hence $\mathbb{P}$-almost surely. So $\phi$ is not an arbitrage.
+
+	Now we show the backwards direction. Assume there is no arbitrage; then we will find a solution to the utility maximisation problem.
+
+	Without loss of generality, assume $\mathbb{E}_{\mathbb{P}}[e^{\theta \cdot S_1}] < \infty$ for all $\theta \in \mathbb{R}^d$. Otherwise, replace $\mathbb{P}$ with $\mathbb{P}'$ where
+	\[
+	\frac{\diff \mathbb{P}'}{\diff \mathbb{P}} \propto e^{- \|S_1\|^2}.
+	\]
+	Let
+	\[
+		f(\theta) = \mathbb{E}[e^{-\theta^T Z}] = - \mathbb{E}[U(X)],
+	\]
+	where $U(x) = -e^{-x}$, $Z = S_1 - (1+r)S_0$ and $X = \theta^{T} Z$. Let $\theta_k$ be a minimizing sequence, so $f(\theta_k) \to \inf f(\theta)$.
+	\begin{enumerate}
+		\item If $(\theta_k)$ is bounded, by Bolzano-Weierstrass, there exists a convergent subsequence. So assume $\theta_k \to \theta^{\ast}$. As $f$ is continuous, $f(\theta_k) \to f(\theta^{\ast})$, so $\theta^{\ast}$ is a minimizer. Then
+			\[
+			\frac{\diff \mathbb{Q}}{\diff \mathbb{P}} \propto e^{-(\theta^{\ast})^{T} (S_1 - (1+r)S_0)}
+			\]
+			is risk-neutral.
+
+			%lecture 9
+		\item Now assume all minimising sequences are unbounded. Recall we assumed there was no arbitrage, meaning if $\phi^{T} Z \geq 0$ almost surely, then $\phi^{T} Z = 0$ almost surely.
+
+			Now I claim we may assume $Z^1, \ldots, Z^d$ are linearly independent, meaning if $\phi^{T}Z = 0$ almost surely, then $\phi = 0$. If not, then we can restrict to a linearly independent submarket, then there is still no arbitrage in the submarket.
+
+			Let $(\theta_k)$ be a minimising sequence with $\|\theta_k\| \to \infty$. Then let $\phi_k = \theta_k/\|\theta_k\|$, so by Bolzano-Weierstrass, we assume $\phi_k \to \phi_0$, where $\|\phi_0\| = 1$. Now we will show that $\phi_0^{T}Z \geq 0$ almost surely. Assuming this, no-arbitrage would imply that $\phi_0^{T}Z = 0$ almost surely, but by linear independence we have $\phi_0 = 0$, which contradicts $\|\phi_0\| = 1$.
+
+			We will now prove this claim. Since $0$ is not a minimiser, $f(0) = 1 \geq f(\theta_k)$ for $k$ large enough. But
+			\[
+				f(\theta_k) = \mathbb{E}[e^{-\theta_k^{T}Z}] \geq \mathbb{E}(e^{-(\phi_k^{T}Z)\|\theta_k\|} \mathbbm{1}_{\{\phi_0^{T}Z < -\eps, \|Z\| < r\}}]
+			\]
+			for arbitrary $\eps > 0$, $r > 0$. Now note
+			\[
+			\phi_k^{T} Z = (\phi_k - \phi_0)^{T} Z + \phi_0^{T} Z \leq \|\phi_k - \phi_0\|r - \eps \leq - \frac{\eps}{2},
+			\]
+			by choosing $k$ large enough. Hence
+			\[
+			1 \geq f(\theta_k) \geq e^{\eps \|\theta_k\|/2} \mathbb{P}(\phi_0^{T} Z < -\eps, \|Z\| < r),
+			\]
+			for all $k \geq N$. Hence
+			\[
+			\mathbb{P}(\phi_0^{T} Z < -\eps, \|Z\| < r) \leq e^{-\eps/2 \|\theta_k\|} \to 0
+			\]
+			as $k \to \infty$. Hence taking $r \to \infty$ and $\eps \to 0$, $\mathbb{P}(\phi_0^{T} Z < 0) = 0$.
+	\end{enumerate}
+\end{proofbox}
+
+\subsection{No-arbitrage Pricing of Contingent Claims}
+\label{sub:no_arb_price}
+
+\begin{theorem}
+	Given a market with prices $S_0, S_1$ and interest $r$, assume there is no arbitrage. Introduce a claim with payout $Y$ and initial price $\pi$.
+
+	There is no arbitrage in the augmented market if and only if there exists $\mathbb{Q}$ risk-neutral for the original market such that
+	\[
+	\pi = \frac{1}{1+r} \mathbb{E}_{\mathbb{Q}}[Y].
+	\]
+	Then the set of all possible no-arbitrage prices $\pi$ is an interval.
+\end{theorem}
+
+\begin{proofbox}
+	The first part is the fundamental theorem of asset pricing.
+
+	For the last part, we show the possible set of prices is convex. Let
+	\[
+	\pi_i = \frac{\mathbb{E}_{\mathbb{Q}_i}[Y]}{1 + r},
+	\]
+	for $i = 0, 1$ and risk-neutral measures $\mathbb{Q}_i$. Let $0 < p < 1$, then let $\mathbb{Q}_p$ have density
+	\[
+	p \frac{\diff \mathbb{Q}_1}{\diff \mathbb{P}} + (1-p) \frac{\diff \mathbb{Q}_0}{\diff \mathbb{P}} = \frac{\diff \mathbb{Q}_p}{\diff \mathbb{P}}.
+	\]
+	Note that
+	\[
+	\frac{\mathbb{E}_{\mathbb{Q}_p}[S_1]}{1 + r} = p \frac{\mathbb{E}_{\mathbb{Q}_1}[S_1]}{1 + r} + (1-p) \frac{\mathbb{E}_{\mathbb{Q}_0}[S_1]}{1+r} = S_0,
+	\]
+	so $\mathbb{Q}_p$ is risk-neutral. Then
+	\[
+		p \pi_1 + (1-p) \pi_0 = \frac{\mathbb{E}_{\mathbb{Q}_p}[Y]}{1 + r}
+	\]
+	is a no-arbitrage price of the claim.
+\end{proofbox}
+
+\begin{remark}
+	The marginal utility price is a no-arbitrage price, since $U'(X_1^{\ast})$ is proportional to the density of a risk-neutral measure.
+\end{remark}
+
+\subsection{Attainable Claims}
+\label{sub:att_claim}
+
+\begin{definition}
+	A claim is \emph{attainable}\index{attainable claim} if there exists $a \in \mathbb{R}$ and $b \in \mathbb{R}^d$ such that
+	\[
+	Y = a + b^{T} S_1 = (1+r)x  + b^{T}(S_1 - (1+r)S_0),
+	\]
+	where
+	\[
+	x = \frac{a}{1 + r} + b^{T}S_0.
+	\]
+\end{definition}
+
+For an attainable claim, the indifference price is $x$, for all $U$ and $X_0$. Hence the marginal utility price is the same for all $U$ and $X_0$.
+
+\begin{theorem}[Uniqueness of No-Arbitrage Price]
+	If $Y$ is an attainable claim, then there is a unique no-arbitrage price.
+
+	Conversely, if $Y$ has a unique no-arbitrage price, then it is attainable.
+\end{theorem}
+
+\begin{proofbox}
+	For the first part, suppose $Y = a + b^{T}S_1$. Then
+	\[
+	\frac{1}{1 + r} \mathbb{E}_{\mathbb{Q}}[Y] = \frac{a}{1 + r} + b^{T}S_0
+	\]
+	for all risk-neutral measures $\mathbb{Q}$.
+
+	The second part is in the example sheets.
+\end{proofbox}
+
+%lecture 10
+
+We look at some examples of attainable claims.
+
+\begin{exbox}
+	Let's look at the forward contract, which is the obligation to buy the stock at time $1$ for a fixed price $K$.
+
+	Then the payout is $Y = S_1 - K$. Therefore the unique no arbitrage price is
+	\[
+	S_0 - \frac{k}{1 + r}.
+	\]
+	In reality, we should account for dividends, which are incorporated in the time $0$ price, but not the time $1$ price.
+
+	Moreover, in real markets, $K$ is set to that the time 0 price is $\pi = 0$, i.e. $K = (1+r)S_0$.
+\end{exbox}
+
+\begin{exbox}
+	Let's look at the one-period binomial model, with $-1 < a < b$, $0 < p < 1$ and interest rate $r$ given. Then
+	\[
+	S_1 =
+	\begin{cases}
+		S_0(1+b) &\text{with probability } p, \\
+		S_0(1+a) &\text{with probability } 1-p.
+	\end{cases}
+	\]
+	Consider a claim with payout $Y = g(S_1)$. This is attainable, since if we let
+	\[
+	X_1 = (1+r) X_0 + \theta(S_1 - (1+r)S_0) = g(S_1),
+	\]
+	then we must have
+	\begin{align*}
+		(1 + r)X_0 + \theta S_0(b - r) = g(S_0(1+b)),\\
+		(1+r)X_0 + \theta S_0(a - r) = g(S_0(1+a)).
+	\end{align*}
+	Hence we can find
+	\[
+	\theta = \frac{g(S_0(1+b)) - g(S_0(1+a))}{S_0(b-a)},
+	\]
+	and also $X_0$. There is only no arbitrage in the model if $a < r < b$. Let $\mathbb{Q}$ be a risk-neutral probability with
+	\[
+	\mathbb{Q}(S_1 = (1+b)S_0) = q = 1 - \mathbb{Q}(S_1 - (1+a)S_0).
+	\]
+	Then we have
+	\[
+	q S_0(1+b) + (1-q)S_0 (1+a) = \mathbb{E}_{\mathbb{Q}}[S_1] = (1+r)S_0,
+	\]
+	hence we get
+	\[
+	q = \frac{r - a}{b - a}.
+	\]
+	Note that $a < r < b \iff 0 < q < 1$. Now to find $X_0$, note that
+	\[
+	\mathbb{E}_{\mathbb{Q}}[g(S_1)] = \mathbb{E}_{\mathbb{Q}}[(1+r)S_0 + \theta(S_1 - (1+r)S_0)] = (1+r)X_0,
+	\]
+	hence the no-arbitrage price is
+	\[
+	\pi = \frac{1}{1 + r} \mathbb{E}_{\mathbb{Q}}[g(S_1)] = \frac{q g(S_0(1+b)) + (1-q) g(S_0(1+a))}{1 + r}.
+	\]
+\end{exbox}
+
+\newpage
+
+\section{Multi-Period Models}
+\label{sec:mult_models}
+
+The challenge for multi-period models is to keep track of the information that is revealed at each time period. To do this, we use a filtered probability space: we will let $\mathcal{F}_0, \mathcal{F}_1, \ldots = (\mathcal{F}_n)$ be the $\sigma$-algebras of information available at time $n$. We assume that $\mathcal{F}_n \subseteq \mathcal{F}_{n+1}$.
+
+To informally motivate why we consider $\sigma$-algebras, we let $\mathcal{G}$ be some set of information. Then we can define $\mathbb{P}(A \mid \mathcal{G})$, which is the conditional probability of $A$ happening given $\mathcal{G}$.
+
+We say that $A$ is $\mathcal{G}$-measurable if $\mathbb{P}(A \mid \mathcal{G}) \in \{0, 1\}$.
+
+\begin{exbox}
+	Let $\Omega = \{HH, HT, TH, TT\}$ be the outcome of two coin flips, and $\mathcal{G}$ be the information available after the first flip.
+
+	Then $A = \{HH, HT\}$ is $\mathcal{G}$-measurable, because we know whether it happened or not after the first flip, whereas $B = \{HH\}$ is not $\mathcal{G}$-measurable. If the first flip is heads, we still have to know about the second flip.
+\end{exbox}
+
+We can then define our $\sigma$-algebra to be the collection of measurable events (we assume it is a $\sigma$-algebra).
+
+\subsection{Measurability}
+\label{sub:meas}
+
+Consider a probability space $(\Omega, \mathcal{F}, \mathbb{P})$ and $\mathcal{G} \subseteq \mathcal{F}$ a sub-$\sigma$-algebra.
+
+\begin{definition}
+	A $\in \mathcal{F}$ is $\mathcal{G}$-measurable $iff A \in \mathcal{G}$.
+
+	A random variable $X$ is $\mathcal{G}$-measurable if and only if $\{X \leq x\}$ is $\mathcal{G}$-measurable for all $x \in \mathbb{R}$.
+\end{definition}
+
+\begin{remark}
+	If $X$ is $\mathcal{G}$-measurable, then given $\mathcal{G}$ we know the value of $X$.
+\end{remark}
+
+\begin{exbox}
+	Let $\Omega$ be our collection of two coin flips again, and $\mathcal{G} = \{\emptyset, \Omega, \{HH, HT\}, \{TT, TH\}\}$. Define
+	\[
+	X(\omega) =
+	\begin{cases}
+		1 & \omega \in \{HH, HT\}, \\
+		0 &\text{else}.
+	\end{cases}
+	\]
+	Then $X$ is $\mathcal{G}$-measurable. However,
+	\[
+	Y(\omega) =
+	\begin{cases}
+		2 & \omega = HH,\\
+		1 & \omega \in \{HT, TH\},\\
+		0 & \omega = TT,
+	\end{cases}
+	\]
+	then $Y$ is not $\mathcal{G}$-measurable.
+\end{exbox}
+
+\begin{definition}
+	The $\sigma$-algebra generated by $X$, denoted $\sigma(X)$, is the smallest $\sigma$-algebra containing $\{X \leq x\}$ for all $x \in \mathbb{R}$.
+\end{definition}
+
+\begin{theorem}
+	$Y$ is $\sigma(X)$-measurable if and only if $Y = f(X)$ for a measurable function $f : \mathbb{R} \to \mathbb{R}$.
+\end{theorem}
+
+
+\newpage
+
+\printindex
+
+\end{document}
