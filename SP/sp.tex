@@ -1839,7 +1839,7 @@ We now check that $\mu_{\mathrm{gas}} = \mu_{\mathrm{liquid}}$. Integrating this
 \[
 \mu(p, T) = \mu_{\mathrm{liquid}} + \int_{p_{liquid}}^p \frac{V(p', T)}{N} \diff p'.
 \]
-Hence for $\mu_{\mathrm{liquid}}$ to equal $\mu_{\mathrm{gas}}$, we need the area of the shaded regions to be equal. (See diagram which I don't) have. For fixed $T$, this means there is a unique $p$ at which liquid and gas coexist. This defines the \emph{co-existence curve}, a parabola sort of thing where for each temperature, we have the pressure at which co-existence exists.
+Hence for $\mu_{\mathrm{liquid}}$ to equal $\mu_{\mathrm{gas}}$, we need the area of the shaded regions to be equal. (See diagram which I don't have). For fixed $T$, this means there is a unique $p$ at which liquid and gas coexist. This defines the \emph{co-existence curve}, a parabola sort of thing where for each temperature, we have the pressure at which co-existence exists.
 
 Inside the co-existence curve, liquid and gas can both coexist. Hence the average density can vary at fixed $p$. For these pressures, we can have a mixture of liquids and gas.
 
@@ -1912,7 +1912,7 @@ Define reduced variables
 \[
 \bar T= \frac{T}{T_C}, \qquad \bar v = \frac{v}{v_C}, \qquad \bar p = \frac{p}{p_C}.
 \]
-Then the van der Waals equation has the same for all gases
+Then the van der Waals equation has the same form for all gases:
 \[
 \bar p = \frac{8}{3} \frac{\bar T}{\bar v - 1/3} - \frac{3}{\bar v^2}.
 \]
@@ -1980,6 +1980,7 @@ and we can express
 	\frac{(\Delta N)^2}{N} &= \frac{1}{\beta} \left( \frac{\partial \langle N \rangle}{\partial V} \right)_{p, T} \left[ -\frac{1}{V} \left( \frac{\partial V}{\partial p}\right)_{N, T} \right].
 \end{align*}
 This last term tends to infinity at the critical point, so the fluctuations are large. Understanding how to deal with this correctly is the subject of critical phenomena.
+
 %lecture 23
 
 \subsection{The Ising Model}
@@ -2042,7 +2043,7 @@ We now look at solutions for $B \neq 0$. Taylor expanding for small $\beta B$ an
 \[
 	m \to \frac{B}{k_B T}\text{ as } T \to \infty.
 \]
-This goes smoothly to zero. Moreover, now there is no ambiguity whether we go to $+m_0$ or $-m_0$ at low temperature, as we always pick he sign of $B$.
+This goes smoothly to zero. Moreover, now there is no ambiguity whether we go to $+m_0$ or $-m_0$ at low temperature, as we always pick the sign of $B$.
 
 However, $m$ changes discontinuously if we vary $B$ from $B > 0$ to $B < 0$, for $T < T_C$. This gives a first order phase transition. Compare this diagram to the $(p, T)$ diagram and boundary between liquid and gas.
 
@@ -2061,8 +2062,96 @@ We now compute the critical exponents.
 			\implies m &\sim B^{1/3},
 		\end{align*}
 		so $\delta = 3$.
+%lecture 24
+	\item How does the magnetic susceptibility
+		\[
+		\chi = N \left( \frac{\partial m}{\partial B} \right)_T
+		\]
+		change as we approach $T \to T_C^+$, at $B = 0$? Taking the derivative of our implicit equation for $m$,
+		\[
+		\chi = \frac{N \beta}{ \cosh^2(\beta J q m )} \left(1 + \frac{Jq}{N} \chi \right).
+		\]
+		For $T > T_C$ we have $m = 0$, so
+		\[
+		\chi = \frac{N \beta}{(1 - J q \beta)} \sim (T - T_C)^{-1},
+		\]
+		hence $\gamma = 1$.
 \end{itemize}
 
+All three of these critical exponents are the same as for the vdW equation. Are they correct?
+
+\subsection{Validity of MFT}
+\label{sub:valid}
+
+This depends on the number of dimensions.
+\begin{itemize}
+	\item[$d = 1$.] This is completely wrong, and there is actually no phase transition. The exact solution is known, and is fairly simple.
+	\item[$d \geq 2$.] Here the phase diagram is correct.
+	\item[$d = 2$.] Here we are quantitatively wrong. The exact solution at $\beta = 0$ is known.
+	\item[$d = 3$.] The exact solution is not known, however the critical exponents have been computed numerically.
+	\item[$d \geq 4$.] Here the MFT critical exponents are correct.
+\end{itemize}
+
+Amazingly, the $d = 3$ critical exponents (computed numerically) are exactly the same as the correct (experimental) critical exponents for the liquid-gas transition seen earlier.
+
+This provides evidence that the theory governing the critical points is the same for liquid-gas transition, and the Ising model, an example of \emph{universality}\index{universality}.
+
+\subsection{Landau Theory}
+\label{sub:lt}
+
+This is a unified way of looking at phase transitions, and is based on the MFT approximations, hence has its limitations. It is illustrated using the Ising model, but it can be applied to many systems. Recall the MFT for the Ising model:
+\begin{align*}
+	F &= - \frac{1}{\beta} \log Z = \frac{1}{2} J N q m^2 - \frac{N}{\beta} \log(2 \cosh \beta B_{\mathrm{eff}}), \\
+	B_{\mathrm{eff}} &= B + Jqm.
+\end{align*}
+To get the free energy, we should substitute the mean energy
+\[
+m = \frac{1}{N \beta} \frac{\partial \log Z}{\partial B}.
+\]
+We will not do that. Landau's idea is to instead treat $F(T, V; m)$ seriously. The equilibrium configuration minimizes $F(m)$, so
+\[
+\frac{\partial F}{\partial m} = 0 \implies m = \tanh \beta B_{\mathrm{eff}}.
+\]
+The magnetisation is an example of an \emph{order parameter}\index{order parameter}, as if $m \neq 0$, we have an ordered phase, and $m = 0$ is an unordered phase.
+
+The general approach to Landau Theory is as follows:
+\begin{itemize}
+	\item Identify the order parameter $m$ (or, e.g. $v_g - v_l$ for the liquid-gas transition).
+	\item Expand the free energy in the vicinity of the critical point, where $m$ is small. This expansion must respect the appropriate symmetries of the system.
+\end{itemize}
+
+We will now look at a general second order phase transition. Consider a general system with order parameter $m$. Suppose the system has a symmetry $m \to -m$. This means that the expansion of the free energy has only even powers of $m$:
+\[
+F(T, m) = F_0(T) + a(T) m^2 + b(T) m^4 + \cdots.
+\]
+This is what happens in the Ising model at $B = 0$:
+\begin{align*}
+	F_0(T) &= - N k_B T \log 2, & a(T) &= \frac{N Jq}{2}(1 - Jq\beta), & b(T) &= \frac{N\beta^3 J^4 q^4}{24}.
+\end{align*}
+The solution depends on the signs of $a(T)$ or $b(T)$. Suppose $b(T) > 0$ for all $T$, for consistency.
+\begin{itemize}
+	\item If $a(T) > 0$, then there is a unique equilibrium value, $m = 0$.
+	\item If $a(T) < 0$, then $m = 0$ is unstable, and we have minima $m = \pm m_0$, which are stable.
+\end{itemize}
+
+As $T$ decreases, we typically go from $a(T) > 0$ to $a(T) < 0$. A second order phase transition occurs at $T = T_C$, where $a(T_C) = 0$. 
+
+The typical behaviour is $b(T_C) = b_0$, $a(T) = a_0(T - T_C)$. Then $m \sim (T_C - T)^{1/2}$ for $T < T_C$, which is the critical exponent derived earlier in the VdW equation and the Ising model.
+
+The underlying dynamics and free energy are symmetric under $m \to -m$. But the ground state for $T < T_C$, but the ground state for $T < T_C$ picks either $m = - m_0$ or $+m_0$. This is \emph{spontaneous symmetry breaking}\index{spontaneous symmetry breaking}, which is important in many other areas.
+
+Now lets look at the system with first order phase transitions. Suppose there are also odd powers of $m$, so
+\[
+F(T, m) = F_0(T) + \alpha(T) m + a(T) m^2 + \gamma(T) m^3 + b(T) m^{4} + \cdots.
+\]
+An example of this is the Ising model when $B \neq 0$. Assume $b(T) > 0$ for all $T$. For low temperatures, as $B$ changes from positive to negative, $\alpha(T)$ and $\gamma(T)$ change sign.
+\begin{itemize}
+	\item For $B < 0$, there are ground states for $m > 0$ and $m < 0$, however the $m > 0$ is meta-stable.
+	\item For $B = 0$, then $m = \pm m_0$ are both ground states.
+	\item For $B > 0$, we have the opposite of the $B < 0$ case.
+\end{itemize}
+
+To minimize $F$, $m$ changes discontinuously as $B$ changes through $0$, which gives a first order phase transition. For large nought $T$, the metastable equilibrium disappears, which gives one minimum.
 
 \newpage
 

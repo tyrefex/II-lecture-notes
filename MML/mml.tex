@@ -1427,12 +1427,12 @@ The key point is that in this ERM example, computing $\tilde g_s$ involves only 
 	for all $\beta$. Thus
 	\begin{align*}
 		f(\beta_s) - f(\hat \beta) &\leq g_s^T(\beta_s - \hat \beta) \\
-					   &= \mathbb{E}[ \tilde g_S^T(\beta_s - \hat \beta) \mid \beta_s] = \cdots \\
+					   &= \mathbb{E}[ \tilde g_s^T(\beta_s - \hat \beta) \mid \beta_s] = \cdots \\
 					   &\leq \frac{1}{2 \eta} \mathbb{E}[\eta^2 \|\tilde g_s\|_2^2 + \|\beta_s - \hat \beta\|_2^2 - \|\beta_{s+1} - \hat \beta\|_2^2 \mid \beta_s],
 	\end{align*}
 	arguing the same way as in the previous proof. Taking expectations and averaging,
 	\begin{align*}
-		\mathbb{E} f(\bar \beta) &\leq \mathbb{E}\left[ \frac{1}{k}\sum_{s = 1}^k f(\beta_s)\right] - f(\hat \beta) \\
+		\mathbb{E} f(\bar \beta) - f(\hat \beta) &\leq \mathbb{E}\left[ \frac{1}{k}\sum_{s = 1}^k f(\beta_s)\right] - f(\hat \beta) \\
 					 &\leq \frac{\eta L^2}{2} + \frac{\|\beta_1 - \hat \beta\|_2^2}{2 \eta k} = \frac{2RL}{\sqrt k},
 	\end{align*}
 	as $\|\beta_1 - \hat \beta\|_2^2 \leq 4R^2$.
@@ -1471,7 +1471,7 @@ We are sort of minimizing a weighted misclassification loss. Let
 \[
 	\mathrm{err}_m(h) = \sum_{i = 1}^n w_i^{(m)} \mathbbm{1}_{\{y_i \neq h(x_i)\}} / \sum_{i = 1}^n w_i^{(m)}.
 \]
-Then $\hat h_m = \mathrm{argmin}_{h \in \beta} \mathrm{err}_m(h)$, so $\hat h_m$ is a weighted ERM over the class $\beta$. If $\mathrm{err}_m(\hat h_m) > 0$, then
+Then $\hat h_m = \mathrm{argmin}_{h \in \mathcal{B}} \mathrm{err}_m(h)$, so $\hat h_m$ is a weighted ERM over the class $\mathcal{B}$. If $\mathrm{err}_m(\hat h_m) > 0$, then
 \[
 	(e^{\hat \beta_m} + e^{-\hat \beta_m}) \mathrm{err}_m(\hat h_m) = e^{- \hat \beta_m}.
 \]
@@ -1494,6 +1494,91 @@ To use Adaboost effectively, we need the weighted ERM step to be computationally
 \end{exbox}
 
 %lecture 16
+
+\subsection{Gradient Boosting}
+\label{sub:gb}
+
+Imagine applying gradient descent directly to minimise $R(h) = \mathbb{E} \ell(h(X), Y)$ over functions $h$.
+
+We start with an initial guess $f_0 : \mathcal{X} \to \mathbb{R}$. Then for $m = 1, \ldots, M$, we compute
+\begin{align*}
+	g_m(x) &= \frac{\partial}{\partial \alpha} \mathbb{E}[ \ell(\alpha, Y) \mid X = x] \biggr|_{f_{m-1}(x)} \\
+	       &= \mathbb{E}\left[ \frac{\partial}{\partial \alpha} \ell(\alpha, Y)\biggr|_{f_{m-1}(x)} \mid X = x \right],
+\end{align*}
+and then let $f_m = f_{m-1} - \eta g_m$ (for some $\eta > 0$). The problem is that we don't have access to this conditional expectation. Recall that
+\[
+x \mapsto \mathbb{E}\left[ \frac{\partial}{\partial \alpha} \ell(\alpha, Y) \biggr|_{f_{m-1}(x)} \mid X = x\right]
+\]
+minimizes
+\[
+\mathbb{E}\left[ \left( \frac{\partial}{\partial \alpha} \ell(\alpha, Y) \biggr|_{f_{m-1}(x)} - g(X) \right)^2 \right],
+\]
+over all functions $g : \mathcal{X} \to \mathbb{R}$. \emph{Gradient boosting}\index{gradient boosting} estimates this conditional expectation function using some bass regression procedure $\hat h$ that takes in training data $\mathcal{D}$ and outputs a hypothesis $\hat h_{\mathcal{D}} : \mathcal{X} \to \mathbb{R}$, which works as follows:
+
+Our input data is $Y_{1:n}$, $X_{1:n}$, and we set $\eta > 0$. The base regression method is $\hat h$, and the number of iterations is $M$. We compute
+\[
+\hat \mu = \mathrm{argmin}_{\mu \in \mathbb{R}} \frac{1}{n} \sum_{i = 1}^n \ell(\mu, Y_i),
+\]
+and set $\hat f_0(x) = \hat \mu$. For $m = 1, \ldots, M$, we find
+\[
+W_i = \frac{\partial \ell(\alpha, Y_i)}{\partial \alpha} \biggr|_{\hat f_{m-1}(X_i)},
+\]
+and then we set $\hat g_m = \hat h(X_{1:n}, W_{1:n})$, i.e. we regress $W_{1:n}$ onto $X_{1:n}$, and then set
+\[
+\hat f_m = \hat f_{m-1} - \eta \hat g_m.
+\]
+We then return $\hat f_M$, or $\sgn \circ \hat f_M$.
+
+\begin{exbox}
+	For least squares, $\ell(\alpha, Y) = (\alpha - Y)^2$, and so
+	\[
+	\frac{\partial \ell(\alpha, Y_i)}{\partial \alpha} \biggr|_{f_{m-1}(X_i)} = -2(Y_i - f_{m-1}(X_i)).
+	\]
+	For least-squares, we can consider $\hat h$ as the ERM of $\{x \mapsto \mu + x_j \beta \mid \mu \in \mathbb{R}, \beta \in \mathbb{R}, j = 1, \ldots, p\}$.
+\end{exbox}
+
+\subsection{Feedforward Neural Networks}
+\label{sub:nn}
+
+\emph{Feedforward neural networks}\index{neural networks} are based on a class of hypotheses $h : \mathbb{R}^p \to \mathbb{R}$ of the form
+\[
+h(x) = A^{(d)} \circ g \circ A^{(d-1)} \circ g \circ \cdots \circ g \circ A^{(2)} \circ g \circ A^{(1)} (x),
+\]
+where we have
+\begin{itemize}
+	\item $d$, the depth.
+	\item $A^{(k)}(v) = \beta^{(k)} v + \mu^{(k)}$, where $v \in \mathbb{R}^{m_k}$, $\beta^{(k)} \in \mathbb{R}^{m_{k+1} \times m_k}$, $\mu^{(k)} \in \mathbb{R}^{m_{k+1}}$.
+	\item $g : \mathbb{R}^m \to \mathbb{R}^m$ (for arbitrary $m$) is
+		\[
+		g(v) = 
+		\begin{pmatrix}
+			\psi(v_1) \\ \cdots \\ \psi(v_m)
+		\end{pmatrix},
+		\]
+		for a non-linear \emph{activation function}\index{activation function} $\psi : \mathbb{R} \to \mathbb{R}$. Usually, $\psi$ is the rectified linear unit (ReLU): $u \mapsto \max(0, u)$, but historically people used the sigmoid $u \mapsto 1/(1 + e^{-u})$.
+\end{itemize}
+
+The parameters $(\beta^{(k)}, \mu^{(k)})$ are learned from the data $(x_1, y_1), \ldots, (x_n, y_n)$ by ``attempting'' to minimise the empirical $\phi$ risk using stochastic gradient descent. Suppose that $\phi$ and $\psi$ are differentiable.
+
+To compute the gradient of $z = \phi(y h(x))$ with respect to the parameters, we use the chain rule as follows. Let $h^{(0)} = x$, the input layer. Define inductively for $k = 1, \ldots, d-1$
+\[
+x^{(k)} = A^{(k)}( h^{(k-1)}), \qquad h^{(k)} = g(x^{(k)}).
+\]
+Hence $h^{(k)}$ is the $k$'th hidden layer. Then $x^{(d)}$ is the output layer. Now,
+\[
+\frac{\partial z}{\partial x^{(d)}} = y \phi' (y x(d)),
+\]
+\[
+\frac{\partial z}{\partial \mu^{(d)}} = \frac{\partial z}{\partial x^{(d)}}, \qquad \frac{\partial z}{\partial \beta^{(d)}_{1k}} = \frac{\partial z}{\partial x^{(d)}} h^{(d-1)}_k,
+\]
+\[
+\frac{\partial z}{\partial h^{(d-1)}_j} = \frac{\partial z}{\partial x^{(d)}} \beta_{1j}^{(d)}, \qquad \frac{\partial z}{\partial x_{j}^{(d-1)}} = \frac{\partial z}{\partial h_j^{(d-1)}} \psi'(x_j^{(d-1)}),
+\]
+\[
+	\frac{\partial z}{\partial \mu^{(d-1)}_j} = \frac{\partial z}{\partial x_j ^{(d-1)}}, \qquad \frac{\partial z}{\partial \beta^{(d-1)}_{jk}} = \frac{\partial z}{\partial x_j^{(d-1)}} h_k^{(d-2)}.
+\]
+
+
 
 \printindex
 
