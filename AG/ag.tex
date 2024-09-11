@@ -99,7 +99,7 @@ This says that the sets of the form $Z(S)$ form the closed sets of a topology on
 		\item If $\mathbb{K} = \mathbb{C}$, the Zariski open or closed subsets are also open or closed in the ``usual'' topology.
 		\item For any $\mathbb{K}$, consider $\mathbb{A}^1$, and $S \subseteq K[x]$ containing a non-zero element. Then $Z(S)$ is finite.
 
-			So the Zariski closed sets are $\mathbb{A}'$ and all finite sets, so this is equivalent to the cofinite topology.
+			So the Zariski closed sets are $\mathbb{A}^1$ and all finite sets, so this is equivalent to the cofinite topology.
 	\end{enumerate}	
 \end{exbox}
 
@@ -306,7 +306,7 @@ We now have a one-to-one correspondence between prime ideals of $A$, and varieti
 	\]
 	But note that $A = \mathbb{K}[x_1, \ldots, x_n]$ is Noetherian by Hilbert's basis theorem, so this is a contradiction.
 
-	Let $X \in \mathcal{S}$ be minimal. Now $X$ is not minimal, as otherwise $X$ is itself a variety. Otherwise, we can write $X = X_1 \cup X_2$ with $X_1 \subset X, X_2 \subset X$ with $X_1, X_2$ algebraic. Thus $X_1, X_2 \not \in \mathcal{S}$, hence they can be written as a union of irreducible sets, so $X$ can also be written as a finite union of irreducibles, so $X \not \in \mathcal{S}$, contradiction.
+	Let $X \in \mathcal{S}$ be minimal. Now $X$ is not irreducible, as otherwise $X$ is itself a variety. Otherwise, we can write $X = X_1 \cup X_2$ with $X_1 \subset X, X_2 \subset X$ with $X_1, X_2$ algebraic. Thus $X_1, X_2 \not \in \mathcal{S}$, hence they can be written as a union of irreducible sets, so $X$ can also be written as a finite union of irreducibles, so $X \not \in \mathcal{S}$, contradiction.
 \end{proofbox}
 
 \begin{definition}
@@ -343,7 +343,7 @@ This naturally gives $f|_X : X \to \mathbb{K}$. Hence if $f, g \in A$ with $f|_X
 \end{definition}
 
 \begin{definition}
-	Let $X \subseteq \mathbb{A}^n$ be an algebraic set, and $I \subseteq X$ an open subset. A function $f : U \to \mathbb{K}$ is \emph{regular}\index{regular} if for all $p \in U$ there exists an open neighbourhood $V \subseteq U$ of $p$ and functions $g, h \in A(X)$ with $h(q) \neq 0$ for any $q \in V$, and $f = g/h$ on $V$.
+	Let $X \subseteq \mathbb{A}^n$ be an algebraic set, and $U \subseteq X$ an open subset. A function $f : U \to \mathbb{K}$ is \emph{regular}\index{regular} if for all $p \in U$ there exists an open neighbourhood $V \subseteq U$ of $p$ and functions $g, h \in A(X)$ with $h(q) \neq 0$ for any $q \in V$, and $f = g/h$ on $V$.
 \end{definition}
 
 A regular function is locally a rational function, but different points may require different representations.
@@ -434,7 +434,7 @@ From now on, we look only at $\mathbb{K}$ algebraically closed. Assuming this, w
 	\begin{align*}
 		A(X) &= \frac{\mathbb{K}[x_1, \ldots, x_n]}{I(X)}, & A(Y) &= \frac{\mathbb{K}[y_1, \ldots, y_m]}{I(Y)}.
 	\end{align*}
-	Suppose we are given $f^{\#} : A(Y) \to A(X)$. Set $f_i = f^{\#}(\bar y_i)$, where $\bar y_i$ is the image of $y_i$ in $A(X)$. Then we define $f : X \to \mathbb{A}^m$ by
+	Suppose we are given $f^{\#} : A(Y) \to A(X)$. Set $f_i = f^{\#}(\bar y_i)$, where $\bar y_i$ is the image of $y_i$ in $A(Y)$. Then we define $f : X \to \mathbb{A}^m$ by
 	\[
 	f(p) = (f_1(p), \ldots, f_m(p)).
 	\]
@@ -456,7 +456,7 @@ From now on, we look only at $\mathbb{K}$ algebraically closed. Assuming this, w
 	\]
 	is an ideal in $A(Y)$. Then we can define
 	\[
-		Z(f^{\#}(\overline{I(Z)})) = \{p \in X \mid \phi(p) = 0 \quad \forall p \in f^{\#}(\overline{I(Z)})\}.
+		Z(f^{\#}(\overline{I(Z)})) = \{p \in X \mid \phi(p) = 0 \quad \forall \phi \in f^{\#}(\overline{I(Z)})\}.
 	\]
 	This is a closed subset of $X$, since it coincides with
 	\[
@@ -486,11 +486,11 @@ f(p) = (f_1(p), \ldots, f_m(p)).
 \]
 
 \begin{exbox}
-	Take $f : \mathbb{A}^1 \to \mathbb{A}^2$ by $t \mapsto (t, t^2)$. The image of this map is $Y = Z(x_1^2 - x_2)$, and this define a morphism $f : \mathbb{A}^1 \to Y$.
+	Take $f : \mathbb{A}^1 \to \mathbb{A}^2$ by $t \mapsto (t, t^2)$. The image of this map is $Y = Z(x_1^2 - x_2)$, and this defines a morphism $f : \mathbb{A}^1 \to Y$.
 
 	Now the inverse map is
 	\[
-		f^{\#} : \frac{\mathbb{K}[x_1, x_2]}{(x_2 - x_1)^2} \to \mathbb{K}[t]
+		f^{\#} : \frac{\mathbb{K}[x_1, x_2]}{(x_2 - x_1^2)} \to \mathbb{K}[t]
 	\]
 	by $f^{\#}(x) = t$, $f^{\#}(y) = t^2$. Then this is an isomorphism.
 \end{exbox}
@@ -503,7 +503,7 @@ f(p) = (f_1(p), \ldots, f_m(p)).
 	If $X, Y$ are affine varieties, then $X$ is isomorphic to $Y$ if and only if $A(X) \cong A(Y)$ as $\mathbb{K}$-algebras.
 \end{theorem}
 
-As seen above, $\mathbb{A}^1 \cong Z(X^2 - 1) \subseteq \mathbb{A}^2$.
+As seen above, $\mathbb{A}^1 \cong Z(X^2 - Y) \subseteq \mathbb{A}^2$.
 
 \begin{remark}
 	A $\mathbb{K}$-algebra $A$ is \emph{finitely generated} if there exists a surjective $\mathbb{K}$-algebra homomorphism $\mathbb{K}[x_1, \ldots, x_n] \to A$ with $x_i \mapsto a_i$. Hence every element of $A$ can be written as a polynomial in $a_1, \ldots, a_n$ with coefficients in $\mathbb{K}$.
@@ -559,7 +559,7 @@ I(Z(I)) = \sqrt I.
 	Write $F = \mathbb{K}(z_1, \ldots, z_N)$. If these are algebraically independent, then $z_1, \ldots, z_N$ is a transcendence basis. Also if they are algebraic over $\mathbb{K}$, then the transcendence basis can be taken to be empty.
 %lecture 6
 	
-	After reordering, assume $\{z_1, \ldots, z_d\}$ is a maximal subset of algebraically independent elements of $\{z_1, \ldots, z_n\}$. Then we will show $\{z_1, \ldots, z_d\}$ is a transcendence basis, i.e $F$ is algebraic over $\mathbb{K}(z_1, \ldots, z_d)$.
+	After reordering, assume $\{z_1, \ldots, z_d\}$ is a maximal subset of algebraically independent elements of $\{z_1, \ldots, z_N\}$. Then we will show $\{z_1, \ldots, z_d\}$ is a transcendence basis, i.e $F$ is algebraic over $\mathbb{K}(z_1, \ldots, z_d)$.
 
 	It is enough to show $z_j$ is algebraic over $\mathbb{K}(z_1, \ldots, z_d)$ for any $j > d$. By assumption, $z_1, \ldots, z_d, z_j$ are not algebraically independent, so there exists $f_j \in \mathbb{K}[x_1, \ldots, x_d, x_j]$ such that $f_j(z_1, \ldots, z_d, z_j) = 0$.
 
@@ -575,7 +575,7 @@ I(Z(I)) = \sqrt I.
 \end{proofbox}
 
 \begin{lemma}
-	Let $M$ be a finitely generated $A$-module, for $A$ a commutative ring. Let $I \subseteq A$ and $f : M \to M$ be an $A$-module homomorphism such that
+	Let $M$ be a finitely generated $A$-module, for $A$ a commutative ring. Let $I \subseteq A$ and $\phi : M \to M$ be an $A$-module homomorphism such that
 	\[
 		\phi(M) \subseteq I \cdot M = \{a \cdot m \mid a \in I, m \in M\}.
 	\]
@@ -610,7 +610,7 @@ I(Z(I)) = \sqrt I.
 	\[
 	\det((\delta_{ij} \phi - a_{ij})) x_j = 0,
 	\]
-	for all $j$. But $\det((\delta_{ij}\phi - a_{ij}))$ is a degree $n$ polynomial in $\phi$ annihilating each $x_j$, hence it annihilated every element in $M$. Moreover the leading term in $\phi$ is $\phi^{n}$, and all the other coefficients are elements in $I$.
+	for all $j$. But $\det((\delta_{ij}\phi - a_{ij}))$ is a degree $n$ polynomial in $\phi$ annihilating each $x_j$, hence it annihilates every element in $M$. Moreover the leading term in $\phi$ is $\phi^{n}$, and all the other coefficients are elements in $I$.
 \end{proofbox}
 
 \subsection{Integrality}
@@ -648,7 +648,7 @@ I(Z(I)) = \sqrt I.
 	This is a monic polynomial in $a_N x$. Substituting $x = b$, this gives a monic polynomial killing $a_N b$. So $a_N b$ is integral over $A$, and we take $p = a_N$.
 \end{proofbox}
 
-\begin{lemma}
+\begin{lemma}[Rational Root Theorem]
 	Let $A$ be a UFD with fraction field $K$. If $\alpha \in K$ is integral over $A$, we have $\alpha \in A$.
 \end{lemma}
 
@@ -693,7 +693,7 @@ I(Z(I)) = \sqrt I.
 
 	Let $S \subseteq F$ be the set of elements of $F$ integral over $R$. Then $S$ is a subring of $F$. But now there exists $p_1, \ldots, p_{d-e} \in R$, with $t_i = p_i w_i$ integral over $R$. In particular, $t_i \in S$.
 
-	Choose $f/g \in \mathbb{K}(z_1, \ldots, z_e) = L$, with $f, g \in R$, $f, g$ relatively prime, and $g$ is relatively prime to $p_1, \ldots, p_{d-e}$. Then $p_1^{n_1} \cdots p_{d-e}^{n_{d-e}} \cdot \frac{f}{g} \not \in \mathbb{K}[z_1, \ldots, z_e]$ for any $n_1, \ldots, n_{d - e} \geq 0$.
+	Choose $f/g \in \mathbb{K}(z_1, \ldots, z_e) = L$, with $f, g \in R$, $f, g$ relatively prime, and $g$ is relatively prime to $p_1, \ldots, p_{d-e}$. Then $p_1^{n_1} \cdots p_{d-e}^{n_{d-e}} \cdot \frac{f}{g} \not \in \mathbb{K}[z_1, \ldots, z_e]$ for any $n_1, \ldots, n_{d - e} \geq 0$. Here, don't think of $f, g$ as polynomials, but rather elements of $R$.
 
 	But since $z_1, \ldots, z_d$ generate $F$ as a $\mathbb{K}$-algebra, there exists $q \in \mathbb{K}[x_1, \ldots, x_d]$ such that
 	\[
@@ -771,11 +771,11 @@ Here we actually go.
 	\[
 	V_g = Z(z g(x_1, \ldots, x_n) - 1) \subseteq \mathbb{A}^{n+1},
 	\]
-	with coordinates $x_1, \ldots, x_n, z$. If we project $V_g$ via $(x_1, \ldots, x_n, z) \mapsto (x_1, \ldots, x_n)$, we get the sat $D(G) = \mathbb{A}^n \setminus Z(g)$.
+	with coordinates $x_1, \ldots, x_n, z$. If we project $V_g$ via $(x_1, \ldots, x_n, z) \mapsto (x_1, \ldots, x_n)$, we get the set $D(g) = \mathbb{A}^n \setminus Z(g)$.
 
 	Now suppose $g \in I(Z(I))$. Then $D(g) \cap Z(I) = \emptyset$. If $I = \langle f_1, \ldots, f_r \rangle$, consider $J = \langle f_1, \ldots, f_r, zg - 1\rangle \subseteq \mathbb{K}[x_1, \ldots, x_n, z]$. Then $Z(J) = \emptyset$, so $J = \mathbb{K}[x_1, \ldots, x_n, z]$ by our previous version of the Nullstellensatz. So we can write
 	\[
-	1 = \sum_{i = 1}^n k_i f_i + h (gz - 1),
+	1 = \sum_{i = 1}^n h_i f_i + h (gz - 1),
 	\]
 	with $h_i, h \in \mathbb{K}[x_1, \ldots, x_n, z]$. Substitute $z = 1/g$, to get
 	\[
@@ -791,12 +791,12 @@ Here we actually go.
 Recall we need the proof of the lemma \ref{lem:rat_alg}. For this, we need the following.
 
 \begin{lemma}
-	Let $f, g : X \to \mathbb{K}$ be regular functions on $X$ an affine variety, and suppose there exists $U \subseteq X$ non-empty with $f|_U = g|_U$.
+	Let $f, g : X \to \mathbb{K}$ be regular functions on $X$ an affine variety, and suppose there exists open $U \subseteq X$ non-empty with $f|_U = g|_U$.
 
 	Then $f = g$.
 \end{lemma}
 
-\begin{proofbox},
+\begin{proofbox}
 	Consider the map $\phi = (f, g) : X \to \mathbb{A}^2$. This is a morphism. Let $\Delta = \{(a, a) \in \mathbb{A}^2 \mid a \in \mathbb{K}\}$. Then $\Delta = Z(x - y)$.
 
 	Since $\phi$ is continuous, $\phi^{-1}(\Delta)$ is closed. But $U \leq \phi^{-1}(0)$, and $U$ is a dense subset of $X$, otherwise $X = \overline{U} \cup (X \setminus U)$ is a union of two proper closed subsets, violating irreducibility of $X$. Hence $U \subseteq \overline{U} = X \subseteq \phi^{-1}(0)$, so $\phi^{-1}(0) = X$.
@@ -819,7 +819,7 @@ We are now ready to prove the proposition.
 	\]
 	Note on $U_i \cap U_j$, $\frac{g_i}{h_i} = \frac{g_j}{h_j}$, so $g_i h_j = g_j h_i$ on $U_i \cap U_j$, so by our previous lemma, $g_i h_j = g_j h_i$ on $X$. Hence $\frac{g_i}{h_i} = \frac{g_j}{h_j}$ on $K(X)$. Thus we have the equality in $K(X)$ 
 	\[
-	f = \sum_i (e_i h_i) \frac{g_i}{h_i} = \sum e_i g_i \in A(X).
+	f = \sum_i (e_i h_i) f = \sum_i (e_i h_i) \frac{g_i}{h_i} = \sum e_i g_i \in A(X).
 	\]
 \end{proofbox}
 
@@ -878,7 +878,7 @@ As we did for $\mathbb{A}^n$, we now look to define a topology via algebraic sub
 \begin{definition}
 	If $T \subseteq S$ is a set of homogeneous polynomials, define
 	\[
-		Z(T) = \{(a_0: \ldots: a_n) \in \mathbb{P}^n \mid f(a_0: \ldots: a_n) = 0 \quad \forall f \in T\}.
+		Z(T) = \{(a_0: \ldots: a_n) \in \mathbb{P}^n \mid f(a_0, \ldots, a_n) = 0 \quad \forall f \in T\}.
 	\]
 	An ideal $I \subseteq S$ is \emph{homogeneous}\index{homogeneous ideal} if $I$ is generated by homogeneous polynomials. For $I$ a homogeneous ideal, we define
 	\[
@@ -898,7 +898,7 @@ We can check that the algebraic set in $\mathbb{P}^n$ form the closed sets of a 
 \begin{definition}
 	A \emph{projective variety}\index{projective variety} is an irreducible closed subset of $\mathbb{P}^n$.
 
-	Define $U_i \subseteq P^n$ to be $U_i = \mathbb{P}^n \setminus Z(x_i)$. This is an open subset of $\mathbb{P}^n$, and moreover
+	Define $U_i \subseteq \mathbb{P}^n$ to be $U_i = \mathbb{P}^n \setminus Z(x_i)$. This is an open subset of $\mathbb{P}^n$, and moreover
 	\[
 	\bigcup_{i = 0}^n U_i = \mathbb{P}^n.
 	\]
@@ -924,7 +924,7 @@ We can check that the algebraic set in $\mathbb{P}^n$ form the closed sets of a 
 	\[
 	x_0^3 \left( \frac{x_2^2}{x_0^2} - \frac{x_1^3}{x_0^3} - \frac{x_1}{x_0} + \frac{x_1x_2}{x_0^2}\right) = x_0x_2^2 - x_1^3 - x_0^2x_1 + x_0x_1x_2.
 	\]
-	If $Y \subseteq U$ is closed, $Y$ is the intersection $\bar Y \cap U$, where $\bar Y \subseteq \mathbb{P}^n$ is a closed subset, which we can take to be the closure of $Y$. Now $\bar Y = Z(T)$ for some $T \subseteq S^h$, and let $T' = \alpha(T)$. Then
+	If $Y \subseteq U$ is closed, $Y$ is the intersection $\bar Y \cap U$, where $\bar Y \subseteq \mathbb{P}^n$ is a closed subset, which we can take to be the closure of $Y$. Now $\bar Y = Z(T)$ for some $T \subseteq S^h$, and let $T' = \alpha(T)$. We will show
 	\[
 	\phi(Y) = Z(\alpha(T)).
 	\]
@@ -932,9 +932,9 @@ We can check that the algebraic set in $\mathbb{P}^n$ form the closed sets of a 
 	\begin{align*}
 		f(a_0 : \ldots : a_n) = 0 &\iff f\left( 1, \frac{a_1}{a_0}, \ldots, \frac{a_n}{a_0}\right) = 0 \\
 					  &\iff \alpha(f) \left( \frac{a_1}{a_0}, \ldots, \frac{a_n}{a_0} \right) = 0  \\
-					  &\iff \alpha(f) \phi(a_0 : \ldots : a_n).
+					  &\iff \alpha(f) \phi(a_0 : \ldots : a_n) = 0.
 	\end{align*}
-	We need to prove that if $W \subseteq \mathbb{A}^n$ is closed, then $\phi^{-1}(W) \subseteq U = U_0$ is closed. We have $W = Z(T')$ for some set $T' \subseteq A = \mathbb{K}[Y_1, \ldots, Y_n]$. Then
+	We need to prove that if $W \subseteq \mathbb{A}^n$ is closed, then $\phi^{-1}(W) \subseteq U = U_0$ is closed. We have $W = Z(T')$ for some set $T' \subseteq A = \mathbb{K}[y_1, \ldots, y_n]$. We will show
 	\[
 	\phi^{-1}(W) = Z(\beta(T')) \cap U.
 	\]
@@ -957,11 +957,11 @@ We can check that the algebraic set in $\mathbb{P}^n$ form the closed sets of a 
 	\[
 		\phi : \mathbb{K}[x_0, \ldots, x_3] \to \mathbb{K}[u, t],
 	\]
-	by $x_0 \mapsto u^3$, $x_1 \mapsto u^2t$, $x_2 \mapsto ut^2$ and $x_3 \mapsto t^3$. Let $I = \ker \phi$. If $g \in I$, then $g$ vanishes on the image of the map $f$. Thus $\Img(f) \leq Z(I)$.
+	by $x_0 \mapsto u^3$, $x_1 \mapsto u^2t$, $x_2 \mapsto ut^2$ and $x_3 \mapsto t^3$. Let $I = \ker \phi$. If $g \in I$, then $g$ vanishes on the image of the map $f$. Thus $\Img(f) \subseteq Z(I)$.
 
-	Conversely, note that $x_0 x_3 - x_1 x_2$, $x_1^2 - x_0x_2$, $x_2^2 - x_1x_3 \in I$. Let $p = (a_0 : a_1 : a_2: a_3) \in Z(I)$. Then we have four cases.
+	Conversely, note that $x_0 x_3 - x_1 x_2$, $x_1^2 - x_0x_2$, $x_2^2 - x_1x_3 \in I$. Now let $p = (a_0 : a_1 : a_2: a_3) \in Z(I)$. Then we have four cases.
 
-	If $a_0 \neq 0$, we can take $a_0 = 1$. Then $a_3 - a_1 a_2 = 0$, $a_1^2 - a_2 = 0$ and $a_2^2 - a_1a_3= 0$. Then $p = (1, a_1, a_2^2, a_3^3) = f(1 : a_1)$. So $p \in \Img(f)$.
+	If $a_0 \neq 0$, we can take $a_0 = 1$. Then $a_3 - a_1 a_2 = 0$, $a_1^2 - a_2 = 0$ and $a_2^2 - a_1a_3= 0$. Then $p = (1, a_1, a_1^2, a_1^3) = f(1 : a_1)$. So $p \in \Img(f)$.
 
 	Similarly, we can check the cases when $a_1 \neq 0$, $a_2 \neq 0$ and $a_3 \neq 0$. The conclusion is that $p \in \Img(f)$ for all four cases, so $\Img f \supseteq Z(I)$. Hence $Z(I) = \Img f$. Thus the twisted cubic is an algebraic set.
 \end{exbox}
@@ -1030,7 +1030,7 @@ Then $X$ is irreducible if and only if $I(X)$ is prime. For the twisted cubic $X
 	\[
 	\Sigma((a:b)(0:1)) = (b:0:a:0).
 	\]
-	So $\Sigma$ is injective. To prove it is surjective, suppose that $(a_0 : a_1 : a_2 : a_3) \in Q$, i.e. $a_0 a_1 - a-2a_3 = 0$. If $a_0 \neq 0$, we can take $a_0 \neq 1$, so $a_1 = a_2 a_3$. Hence
+	So $\Sigma$ is injective. To prove it is surjective, suppose that $(a_0 : a_1 : a_2 : a_3) \in Q$, i.e. $a_0 a_1 - a_2a_3 = 0$. If $a_0 \neq 0$, we can take $a_0 = 1$, so $a_1 = a_2 a_3$. Hence
 	\[
 		(a_0 : a_1 : a_2 : a_3) = (1 : a_2 a_3 : a_2 : a_3) = \Sigma((a_2 : 1), (a_3 : 1)).
 	\]
@@ -1085,7 +1085,7 @@ If $X$ and $Y$ are quasi-projective, i.e. $X \subseteq \bar X \subseteq \mathbb{
 	\]
 	the projection onto $\mathbb{A}^n$. This is a morphism. We make a couple of observations:
 	\begin{enumerate}
-		\item If $p \in \mathbb{A}^n \setminus \{0\}$, then $\phi^{-1}(p)$ consists of one point. Indeed, let $p = (a_1, \ldots, a_n)$ with, say, $a_1 \neq 0$. If
+		\item If $p \in \mathbb{A}^n \setminus \{0\}$, then $\phi^{-1}(p)$ consists of one point. Indeed, let $p = (a_1, \ldots, a_n)$ with, say, $a_i \neq 0$. If
 			\[
 				((a_1, \ldots, a_n)(b_1 : \ldots: b_n)) \in \phi^{-1}(p),
 			\]
@@ -1133,7 +1133,7 @@ The blow-up is a useful tool.
 
 	We work in two coordinate patches: $U_1 = \{y_1 \neq 0\}$, and $U_2 = \{y_2 \neq 0\}$. In $U_2$, we can set $y_2 = 1$ and the equation for $X$ becomes $x_1 = x_2 y_1$. Then
 	\[
-	\phi^{-1}(Y) \cap U_2 = Z(x_2^2 - (x_1^3+x_2^2),x_1-x_2y_1) \subseteq \mathbb{A}^2 \times \mathbb{A}1.
+	\phi^{-1}(Y) \cap U_2 = Z(x_2^2 - (x_1^3+x_2^2),x_1-x_2y_1) \subseteq \mathbb{A}^2 \times \mathbb{A}^1.
 	\]
 	This is isomorphic to $Z(x_2^2 - (x_2^3y_1^3 + x_2^2y_1^2)) \subseteq \mathbb{A}^2$. Indeed, in terms of coordinate rings
 	\begin{align*}
@@ -1176,17 +1176,17 @@ We can check that this is an equivalence relation.
 Note that the ability to compose may depend on the representative for $f, g$. One can show that if $f : X \dashrightarrow Y$ is a birational map, then there exists $U \subseteq X$, $V \subseteq Y$ such that $f$ is defined on $U$, $f(U) \subseteq V$, and $f : U \to V$ is an isomorphism.
 
 \begin{definition}
-	We say varieties $X, Y$ are \emph{birationally equivalent}\index{birationally equivalent} if there exists a birational map $f : X \dashrightarrow Y$. Equivalent, there exists $U \subseteq X$, $V \subseteq Y$ are open subset with $U \cong V$.
+	We say varieties $X, Y$ are \emph{birationally equivalent}\index{birationally equivalent} if there exists a birational map $f : X \dashrightarrow Y$. Equivalent, there exists $U \subseteq X$, $V \subseteq Y$, open subsets with $U \cong V$.
 \end{definition}
 
 \begin{exbox}
-	Take $\varphi : X \to \mathbb{A}^n$, the blow-up of $\mathbb{A}^n$ at $0 \in \mathbb{A}^n$. This is a birational map since it induces an isomorphism $\varphi : \varphi^{-1}(\mathbb{A}^n \setminus \{0\}) \to \mathbb{A}^n \{0\}$.
+	Take $\varphi : X \to \mathbb{A}^n$, the blow-up of $\mathbb{A}^n$ at $0 \in \mathbb{A}^n$. This is a birational map since it induces an isomorphism $\varphi : \varphi^{-1}(\mathbb{A}^n \setminus \{0\}) \to \mathbb{A}^n \setminus \{0\}$.
 
 	However $\varphi^{-1} : \mathbb{A}^n \to X$ is not a morphism, and is only defined on $\mathbb{A}^n \setminus \{0\}$.
 \end{exbox}
 
 \begin{remark}
-	Let $f : X \dashrightarrow Y$ is a \emph{dominant} rational map, i.e. if $U \overset f \to Y$ is a representative for $f$, then $f(U)$ is dense in $Y$.
+	$f : X \dashrightarrow Y$ is a \emph{dominant} rational map, i.e. if $U \overset f \to Y$ is a representative for $f$, then $f(U)$ is dense in $Y$.
 \end{remark}
 
 \begin{definition}
@@ -1199,7 +1199,7 @@ Note that the ability to compose may depend on the representative for $f, g$. On
 	If $f$ is dominant, we obtain a map $f^\# : K(Y) \to K(X)$ by $(V, \varphi) \mapsto (f^{-1}(V) \cap U, \varphi \circ f)$. Note that $f^{-1}(V) \cap U$ is non-empty, since $V \cap f(U) \neq \emptyset$ by density of $f(U)$.
 \end{definition}
 
-If $f : X \dashrightarrow Y$ is a birational map with birational inverse $g : Y \dashrightarrow X$, each are dominnat since they induce isomorphisms between open subsets. Thus we get
+If $f : X \dashrightarrow Y$ is a birational map with birational inverse $g : Y \dashrightarrow X$, each are dominant since they induce isomorphisms between open subsets. Thus we get
 \[
 f^\# : K(Y) \to K(X), \qquad g^\# : K(X) \to K(Y)
 \]
@@ -1216,7 +1216,7 @@ are inverse maps, so $K(X) \cong K(Y)$. In fact the converse is true: if $K(X) \
 
 Recall that given an equation $f(x_1, \ldots, x_n) = 0$ in $\mathbb{R}^n$, where $X$ is the solution set and $p \in X$, the tangent space to $X$ is the orthogonal complement to $(\nabla f)(p)$, i.e. the tangent space to $X$ at $p$ is
 \[
-	T_p X = \left\{(v_1, \ldots, v_n) \in \mathbb{R}^n \mid \sum_{i = 1}^n v_i \frac{\partial E}{\partial x_i}(p) = 0 \right\}.
+	T_p X = \left\{(v_1, \ldots, v_n) \in \mathbb{R}^n \mid \sum_{i = 1}^n v_i \frac{\partial f}{\partial x_i}(p) = 0 \right\}.
 \]
 
 This is a vector subspace of $\mathbb{R}^n$.
@@ -1224,7 +1224,7 @@ This is a vector subspace of $\mathbb{R}^n$.
 \begin{definition}
 	If $X \subseteq \mathbb{A}^n$ is an affine variety with $I = I(X) = \langle f_1, \ldots, f_r \rangle$, $f_1, \ldots, f_r \in \mathbb{K}[x_1, \ldots, x_n]$ we define for $p \in X$, the \emph{tangent space}\index{tangent space} to $X$ at $p$ by
 	\[
-		T_p X = \left\{ (v_1, \ldots, v_n) \in \mathbb{K}^n \mid \sum_{i = 1}^n v_I \frac{\partial f_j}{\partial x_i}(p) = 0, 1 \leq j \leq r \right\}.
+		T_p X = \left\{ (v_1, \ldots, v_n) \in \mathbb{K}^n \mid \sum_{i = 1}^n v_i \frac{\partial f_j}{\partial x_i}(p) = 0, 1 \leq j \leq r \right\}.
 	\]
 	The description is defined using the standard differentiation rules for polynomials.
 \end{definition}
@@ -1242,7 +1242,7 @@ This is a vector subspace of $\mathbb{R}^n$.
 	\[
 		\dim X = \min \{ \dim_{\mathbb{K}} T_p X \mid p \in X\}.
 	\]
-	We say $X$ is \emph{singular}\index{singular} at $p$ if $\dim_{\mathbb{K}} T_p X > d$ in $X$.
+	We say $X$ is \emph{singular}\index{singular} at $p$ if $\dim_{\mathbb{K}} T_p X > \dim X$ in $X$.
 \end{definition}
 
 \begin{lemma}
@@ -1324,7 +1324,7 @@ Let $X$ be an affine variety. For $p \in X$, define $\phi_p : A(X) \to \mathbb{K
 
 	Given $D \in \mathrm{Der}(A(X), p)$, define $v_i = D(x_i)$. By repeated use of the Leibniz rule,
 	\[
-	D(f) = \sum_{i = 1}^n v_i \frac{\partial}{\partial x_i}(p).
+	D(f) = \sum_{i = 1}^n v_i \frac{\partial f}{\partial x_i}(p).
 	\]
 	For example, for $n = 2$,
 	\begin{align*}
@@ -1538,7 +1538,7 @@ We call a divisor $D \in \mathrm{Div} \, C$ \emph{principal}\index{principal div
 \[
 \mathrm{Cl}\, C = \frac{\mathrm{Div}\, C}{\mathrm{Prin}\, C}.
 \]
-we can see that $\mathrm{Cl}\, \mathbb{P}^1 = \mathbb{Z}$.
+We can see that $\mathrm{Cl}\, \mathbb{P}^1 = \mathbb{Z}$.
 
 In order for this definition to be sensible, for any non-singular curve $f \in K(X)$, we want to define the order of $0$ of a pole at $p \in X$.
 
@@ -1563,6 +1563,8 @@ In order for this definition to be sensible, for any non-singular curve $f \in K
 
 	But then $M = x^{-1}( x M) = 0$.
 \end{proofbox}
+
+Note all $x \in A \setminus m$ for a local ring $A$ are invertible.
 
 \begin{corollary}
 	Let $A$ be a local ring with maximal ideal $m$, $M$ a finitely generated $A$-module, and $I \subseteq m$ an ideal. Then if $M = IM + N$ for a submodule $N \subseteq M$, we have $M = N$.
@@ -1662,7 +1664,7 @@ We can extend $\nu$ to a map
 \[
 	\nu : K(C) \setminus \{0\} = K(C)^\ast \to \mathbb{Z},
 \]
-by $\nu(f/g) = \nu(f) = \nu(g)$. $\nu$ is an example of a \emph{discrete valuation}\index{discrete valuation}. It essentially tells us the order of the zero of $f/g$ at $p$.
+by $\nu(f/g) = \nu(f) - \nu(g)$. $\nu$ is an example of a \emph{discrete valuation}\index{discrete valuation}. It essentially tells us the order of the zero of $f/g$ at $p$.
 
 \begin{definition}
 	Let $K$ be a field. A \emph{discrete valuation} on $K$ is a function $\nu : K^\times \to \mathbb{Z}$ such that:
@@ -1709,7 +1711,7 @@ The setup is follows: let $C \subseteq \mathbb{P}^n$ be a projective non-singula
 We need to check this is finite.
 %lecture 18
 
-Note $f$ is represented on some open subset $U \subseteq C$ be $g/h$, for homogeneous polynomials $g, h$. We shrink $U$ be removing $Z(g)$, $Z(h)$. Now if $p \in U$, $f = g/h \in \mathcal{O}_{C, p}$ is a regular function with $f(p) \neq 0$, so $\nu_p(f) = 0$. Thus the sum defining $(f)$ is a sum over points of $C \setminus U$, which is a finite set.
+Note $f$ is represented on some open subset $U \subseteq C$ by $g/h$, for homogeneous polynomials $g, h$. We shrink $U$ by removing $Z(g)$, $Z(h)$. Now if $p \in U$, $f = g/h \in \mathcal{O}_{C, p}$ is a regular function with $f(p) \neq 0$, so $\nu_p(f) = 0$. Thus the sum defining $(f)$ is a sum over points of $C \setminus U$, which is a finite set.
 
 Here, we use the fact that $\dim C = 1$, so the irreducible sets are $C$ and singleton sets.
 
@@ -1759,7 +1761,7 @@ Then we obtain a morphism $f : U \to \mathbb{P}^n$ by $p \mapsto (f_0(p): \ldots
 		\item $f^{-1}(q) \subseteq X$ is closed, and since $\dim X = 1$, either $f^{-1}(q)$ is finite, or $f^{-1}(q) = X$. The latter contradicts $f$ non-constant.
 		\item If $\phi \in K(Y)$, $\phi$ defines a regular function on some open $U \subseteq Y$, i.e. $\phi : U \to \mathbb{K}$.
 
-			Then $\phi \circ f$ makes sense, provided $K(X) \not \subseteq Y \setminus U$. But $f(X)$ is irreducible, so $f$ is constant if $f(X) \subseteq Y \setminus U$. Thus $\phi \circ f$ makes sense as a rational function on $X$. Thus $K(Y) \to K(X)$ exists, and is automatically an injection since both are fields.
+			Then $\phi \circ f$ makes sense, provided $f(X) \not \subseteq Y \setminus U$. But $f(X)$ is irreducible, so $f$ is constant if $f(X) \not \subseteq Y \setminus U$. Thus $\phi \circ f$ makes sense as a rational function on $X$. Thus $K(Y) \to K(X)$ exists, and is automatically an injection since both are fields.
 
 			We omit the proof of finiteness (the idea is to look at the transcendence degrees; both are $1$).
 	\end{enumerate}
@@ -1803,6 +1805,444 @@ The proof is omitted, however the theorem is crucial.
 Let $X$ be a projective non-singular curve, and $f \in K(X)^\times$. This gives a morphism $X \supseteq U \overset{(f, 1)} \to \mathbb{P}^1$, where $U$ is the open set on which $f$ is regular.
 
 This extends to $f : C \to \mathbb{P}^1$, non-constant as long as $f \not \in \mathbb{K}$.
+
+% lecture 19
+
+We can either extend by $p \mapsto (f(p): 1)$ or  $(g(p) : h(p))$, but both can be ill-defined, so we need to use our theorem from last time somewhere. Then note that
+\[
+	(f) = \sum_{p \in f^{-1}((0 : 1))}e_p \cdot p - \sum_{q \in f^{-1}((1 : 0))} e_q \cdot q.
+\]
+Thus if we define
+\[
+\deg \sum_{p \in C} a_p \cdot p = \sum_{p \in C}a_p,
+\]
+then
+\[
+\deg (f) = \deg f - \deg f = 0.
+\]
+Thus every principal divisor is degree 0. So the homomorphism $\deg : \mathrm{Div} C \to \mathbb{Z}$ descends to $\deg : \mathrm{Cl} C \to \mathbb{Z}$, and this is surjective as $\deg p = 1$.
+
+\subsection{Linear Systems}%
+\label{sub:lin_sys}
+
+Let $D \in \mathrm{Div} C$, so
+\[
+D = \sum n_i \cdot p_i.
+\]
+We say that $D$ is \emph{effective}\index{effective} if $n_i \geq 0$, for all $i$. Define
+\[
+	\mathcal{L} (D) = \{ f \in K(C)^{\times} \mid D + (f) \text{ is effective}\} \cup \{0\}.
+\]
+
+\begin{lemma}
+	$\mathcal{L}(D)$ is a vector space.
+\end{lemma}
+
+\begin{proofbox}
+	Note that $f \in \mathcal{L}(D) \implies cf \in \mathcal{L}(D)$ for $c \in K, c \neq 0$ since $(f) = (cf)$.
+
+	If $f, g \in \mathcal{L}(D)$, where $f, g$ are non-zero and $f + g \neq 0$, then
+	\begin{align*}
+		(f + g) &= \sum_{p} \nu_p (f + g) p,
+	\end{align*}
+	and $\nu_p(f + g) \geq \min\{\nu_p(f), \nu_p(g)\}$. Thus if $D + (f)$, $D + (g)$ are effective, then so is $D + (f + g)$.
+\end{proofbox}
+
+\begin{theorem}
+	$\mathcal{L}(D)$ is a finite-dimensional vector space, and $L(0) = \mathbb{K}$. Furthermore, $\dim_{\mathbb{K}}(D) \leq \deg D + 1$, for $\deg D \geq 0$.
+\end{theorem}
+
+\begin{proofbox}
+	We prove this by induction on $\deg D$. If $\deg D < 0$, there are no effective divisors linearly equivalent to $D$ since $\deg (D + (f)) = \deg D < 0$, so $\mathcal{L}(D) = 0$.
+
+	Suppose that $\deg D \geq 0$, and write
+	\[
+	D = \sum_{i = 1}^m n_i p_i.
+	\]
+	Pick $p \in C \setminus \{p_1, \ldots, p_m\}$. Consider the map
+	\begin{align*}
+		\lambda : \mathcal{L}(D) &\to \mathbb{K} \\
+		f &\mapsto f(p),
+	\end{align*}
+	which makes sense since $\nu_p(f) \geq 0$ for $f \in \mathcal{L}(D)$, since otherwise the coefficient of $p$ in $D + (f)$ is negative.
+
+	If $f \in \Ker \lambda$, then $f \in m_p \subseteq \mathcal{O}_{C, p}$, so $\nu_p(f) \geq 1$. Thus $f \in \mathcal{L}(D - p)$. Note also $\mathcal{L}(D - p) \subseteq \mathcal{L}(D)$, since if $D - p + (f)$ is effective, so id $D + (f)$. Thus $\mathcal{L}(D - p) = \Ker \lambda$, and
+	\[
+	\frac{\mathcal{L}(D)}{\mathcal{L}(D - p)} \subseteq \mathbb{K}.
+	\]
+	Thus $\dim_{\mathbb{K}} \mathcal{L}(D) \leq \dim \mathcal{L}(D - p) + 1$. Thus by induction, $\dim_{\mathbb{K}} \mathcal{L}(D) \leq \deg D + 1$.
+
+	Thus $\dim \mathcal{L}(0) \leq 1$, but $\mathbb{K} \subseteq \mathcal{L}(D)$ since $0 + (c) = 0$, so $\dim \mathcal{L}(0) = 1$.
+\end{proofbox}
+
+\begin{remark}
+	$\mathcal{L}(0) = \{f : C \to \mathbb{K} \text{ regular}\}$, and hence the regular functions on $C$ are constants.
+\end{remark}
+
+\begin{definition}
+	Given a divisor $D$, we define the \emph{complete linear system}\index{complete linear system} associated to $D$ to be
+	\begin{align*}
+		|D| &= \{D' \in \mathrm{Div} C \mid D' \text{ effective}, D' \sim D\} &\\
+		    &= \frac{L(\mathcal{D}) \setminus \{0\}}{\sim} &(f \sim \lambda f)\\
+		    &= \mathbb{P}(\mathcal{L}(D)) &.
+	\end{align*}
+\end{definition}
+
+\subsection{Morphisms to Projective Space}%
+\label{sub:morph_proj}
+
+Let $D$ be a divisor, $f_0, \ldots, f_n \in \mathcal{L}(D)$, with not all $f_i$ being 0. This gives a morphism $f : C \to \mathbb{P}^n$ by $p \mapsto (f_0(p): \ldots : f_n(p))$.
+
+\begin{definition}
+	Let $f : C \to \mathbb{P}^n$ be a morphism. Let $H \subseteq \mathbb{P}^n$ be a hyperplane, with $f(C) \subseteq H$.
+
+	We define $f^\ast H \in \mathrm{Div} C$ as follows. Let $H = Z(\phi)$, with $\phi$ a linear homogeneous polynomial, and choose $\psi$ linear homogeneous so that $H' = Z(\psi)$ satisfies
+	\[
+	f^{-1}(H) \cap f^{-1}(H') = \emptyset.
+	\]
+	Define
+	\[
+	f^\ast H = \sum_{p \in f^{-1}(H)} \nu_p\left( \frac{\phi}{\psi} \circ f \right) p.
+	\]
+\end{definition}
+
+Insert cool diagram.
+
+\begin{remark}
+	This is independent of the choice of $\psi$, as
+	\[
+	\frac{\phi}{\psi'} = \frac{\phi}{\psi} \cdot \frac{\psi}{\psi'},
+	\]
+	and the latter does not affect the coefficient of vanishing.
+\end{remark}
+
+Now let's relate this to morphisms. Let $f_0, \ldots, f_n \in \mathcal{L}(D)$ be such that:
+\begin{enumerate}[(i)]
+	\item the $f_i$ aren't all $0$,
+	\item for all $p \in C$, there exists $a_0, \ldots, a_n \in \mathbb{K}$ such that the coefficient of $p$ in $D + (\sum a_i f_i)$ is 0.
+\end{enumerate}
+As above, we get a morphism $f : C \to \mathbb{P}^n$. Let $H \subseteq \mathbb{P}^n$ be given by an equation $\sum a_i x_i = 0$.
+
+\begin{theorem}
+	$f^\ast H = D + (\sum a_i f_i)$.
+\end{theorem}
+
+% lecture 20
+
+\begin{proofbox}
+	Let $p \in f^{-1}(H)$. Suppose the coefficient of $p$ in $D$ is 0. Let $\psi = \sum a_i x_i$. Let $b_0, \ldots, b_n$ be such that $p \not \in Z(\sum b_i x_i)$, then let $\psi = \sum b_i x_i$. Then the coefficient of $p$ in $f^\ast H$ is
+	\[
+	\nu_p \left( \frac{\phi}{\psi} \circ f \right).
+	\]
+	Necessarily, $f_0, \ldots, f_n$ do not have a pole at $p$, since otherwise $D + (f_i)$ has a negative coefficient for $p$. Thus, $f_0, \ldots, f_n$ are regular in a neighbourhood of $p$, so we can write $f = (f_0: \ldots : f_n)$ in this neighbourhood. Now
+	\[
+	\nu_p \left( \frac{\phi}{\psi} \circ f \right) = \nu_p \left( \frac{\sum a_i f_i}{\sum b_i f_i} \right) = \nu_p \left( \sum a_i f_i \right),
+	\]
+	since $\sum b_i f_i$ is non-vanishing and regular at $p$. But this is precisely the coefficient of $p$ in $D + (\sum a_i f_i)$.
+
+	If $p$ appears in $D$ with coefficient $m$, then
+	\[
+	\nu_p \left( \sum_i b_i f_i \right) \geq -m,
+	\]
+	for any $b_0, \ldots, b_n \in \mathbb{K}$. There is also some choice of $b_0, \ldots, b_n$ with equality, by assumption.
+
+	In a neighbourhood of $p$, the morphism $f$ is given by
+	\[
+	f = (t^m f_0 : \ldots : t^m f_n),
+	\]
+	where $t$ is a local parameter of $p$. Thus the coefficient of $p$ in $f^\ast H$ is
+	\begin{align*}
+		\nu_p \left( \frac{\sum a_i t^m f_i}{\sum b_i t^m f_i} \right) = \nu_p \left( \sum a_i t^m f_i \right) = m + \nu_p \left( \sum a_i f_i \right),
+	\end{align*}
+	which is the coefficient of $p$ in $D + (\sum a_i f_i)$. Thus
+	\[
+	f^\ast H = D + \left( \sum a_i f_i \right).
+	\]
+\end{proofbox}
+
+The picture so far: we know $f_0, \ldots, f_n$ span a subspace $V \subseteq \mathcal{L}(D)$ .This gives a linear subspace
+\[
+	\mathcal{D} = \frac{V \setminus \{0\}}{\mathbb{K}^\ast} = \mathbb{P}(V) \subseteq |D| = \mathbb{P}(\mathcal{L}(D)).
+\]
+For a divisor $D = \sum a_i p_i$ with $a_i \neq 0$ and $p_i$ distinct, we define the \emph{support}\index{support} of $D$ to be
+\[
+	\mathrm{Supp}(D) = \{p_1, \ldots, p_n\}.
+\]
+We say $\mathcal{D}$ is \emph{base-point free}\index{base-point free} if for all $p \in C$, there exists $D' \in \mathcal{D}$ with $p \not \in \mathrm{Supp}D'$. This is the same as assumption (ii) in the above.
+
+In this case, the theorem applies and we obtain $f : C \to \mathbb{P}^n$ with the property that $\mathcal{D} = \{f^\ast H \mid H \subseteq \mathbb{P}^n \text{ a hyperplane}\}$.
+
+The converse is as follows. Suppose $f : C \to \mathbb{P}^n$ be a morphism. Set $D = f^\ast Z(x_0)$, assuming $f(C) \not \subseteq Z(x_0)$.
+
+Let $f_1 \in K(C)$ be given by
+\[
+f_1 = \frac{x_1}{x_0} \circ f,
+\]
+which is a rational function on $C$ regular on $C \setminus f^{-1}(Z(x_0))$. Then $f = (f_0 : f_1 : \ldots : f_n)$ on $C \setminus f^{-1}(Z(x_0))$, and hence $f$ is induced by the linear system $\mathcal{D} \subseteq |D|$, $\mathcal{D} = \mathbb{P}(V)$ with $V$ spanned by $f_0, \ldots, f_n \in \mathcal{L}(D)$.
+
+Also by the previous theorem, $f^\ast Z(\sum a_i x_i) = D + (\sum a_i f_i) \in \mathcal{D}$. Also $\mathcal{D}$ is base-point free, since given $p \in C$, we can find a hyperplane $H \subseteq \mathbb{P}^n$ with $f(p) \not \in H$, so $p \not \in \mathrm{Supp} f^\ast H$, while $f^\ast H \in \mathcal{D}$.
+
+\begin{remark}
+	If $f : C \injto \mathbb{P}^n$ is an embedding, then $f^\ast H$ can be viewed as `$H \cap C$ with multiplicity', and then $\mathcal{D} = \{ H \cap C \mid H \subseteq \mathbb{P}^n \text{ a hyperplane}\}$.
+
+	We can also pull-back hypersurfaces $H \subseteq \mathbb{P}^n$ with $H = Z(\phi)$, where $\phi$ is a homogeneous polynomial of degree $d$, as follows. For $p \in f^{-1}(H)$, choose a homogeneous polynomial $\psi$ which doesn't vanish at $f(p)$, and take the coefficient of $p$ in $f^\ast H$ to be
+	\[
+	\nu_p \left( \frac{\phi}{\psi} \circ f \right).
+	\]
+\end{remark}
+
+\begin{definition}
+	Let $f : C \to \mathbb{P}^n$ be a morphism, $L \subseteq \mathbb{P}^n$ a hyperplane, $f(C) \not \subseteq L$. The \emph{degree}\index{degree} of $f$ is the degree of the divisor $f^\ast L$.
+\end{definition}
+
+This is well-defined since $f^\ast L$, $f^\ast L'$ are linearly equivalent, and linearly equivalent divisors have the same degree.
+
+\begin{exbox}
+	Let $f : C \injto \mathbb{P}^2$ identify $C$ with $Z(\phi)$, where $\phi$ has degree $d$. In this case, the degree of $f$ is $d$.
+
+	To check this, we need to compare the coefficients in $f^\ast L$ with the multiplicity of zeroes of $\phi|_L$.
+\end{exbox}
+
+\begin{theorem}
+	Let $f : C \to \mathbb{P}^n$ be a morphism, $H \subseteq \mathbb{P}^n$ a hypersurface with $f(C) \not \subseteq H$, and $H = Z(\phi)$, where $\deg \phi = e$. Then $\deg f^\ast H = (\deg f) \cdot e$.
+\end{theorem}
+
+\begin{proofbox}
+	Choose some $x_i$ such that $f(C) \not \subseteq Z(x_i)$. Then $\phi/x_i^e$ is a rational function in $\mathbb{P}^n$, and
+	\begin{align*}
+		\left( \frac{\phi}{x_i^e} \circ f\right) &= \sum_{p \in f^{-1}(H)} \nu_p \left( \frac{\phi}{x_i^e} \circ f \right) p - \sum_{ p \in f^{-1}(L)} \nu_p \left( \frac{x_i^e}{\phi} \circ f \right) \\
+							 &= f^\ast H - e f^\ast L.
+	\end{align*}
+	Since the degree of a principal divisor is $0$, we get $\deg f^\ast H = e \cdot \deg f^\ast L$.
+\end{proofbox}
+
+% lecture 21
+
+\begin{remark}
+	This is known as \emph{B\'ezout's theorem}. This is usually expressed as follows:
+
+	Let $C, C' \subseteq \mathbb{P}^2$ be curves of degree $d$ and $e$ respectively. Then the number o points in $C \cap C'$, assuming $C \neq C'$, calculated with multiplicity is $d \cdot e$.
+\end{remark}
+
+For example if $C$ is non-singular, $f : C \injto \mathbb{P}^2$ an embedding, then $d = \deg f$, and $'deg f^\ast C' = d \cdot e$. So if $p = C \cap C'$, its multiplicity is the coefficient of $p$ in $f^\ast C'$. If $C$ is singular then we need a more subtle definition of multiplicity.
+
+In general, given a divisor $D$ on a projective non-singular curve $C$, we would like to understand when $|D|$ induces an embedding $C$ in projective space. In other words, suppose $|D|$ is base-point free, i.e. for all $p \in C$, there exists $D' \in |D|$ with $p \not \in \mathrm{Supp}D'$.
+
+Then by choosing $f_0, \ldots, f_n \in \mathcal{L}(D)$ spanning $\mathcal{L}(D)$, we obtain a morphism $f = (f_0, \ldots, f_n) : C \to \mathbb{P}^n$. When is this an embedding?
+
+We can also use a sub-linear system $\mathcal{D} = \mathbb{P}(V) \subseteq |D| = \mathbb{P}(\mathcal{L}(D))$, and choose $f_0, \ldots, f_n \in V$ a spanning set.
+
+\begin{theorem}
+	Suppose a linear system $\mathcal{D} \subseteq |D|$ is base-point free. Then the induced morphism $f : C \to \mathbb{P}^n$ is an embedding, if and only if:
+	\begin{enumerate}[\normalfont(i)]
+		\item $\mathcal{D}$ separates points, i.e. for all $p, q \in C$ distinct, there exists a $D' \in \mathcal{D}$ such that $p \in \mathrm{Supp}D'$, and $q \not \in \mathrm{Supp}D'$.
+		\item $\mathcal{D}$ separates tangent vectors, i.e. for all $p \in C$, there exists $D' \in \mathcal{D}$ such that the coefficient of $p$ in $D'$ is 1.
+	\end{enumerate}
+\end{theorem}
+
+\begin{definition}
+	We say a divisor $D$ is \emph{very ample}\index{very ample} if $D$ induces an embedding into some projective space.
+\end{definition}
+
+We can rewrite the above as follows:
+
+\begin{theorem}
+	$D$ is very ample if, for all $p, q \in C$, not necessarily distinct, we have
+	\[
+	\dim |D - p - q| = \dim |D| - 2.
+	\]
+\end{theorem}
+
+\begin{proofbox}
+	Recall that $\dim |D| = \dim \mathcal{L}(D) - 1$. For any $p \in C$, we have a map $\mathcal{L}(D) \to \mathbb{K}$, which is constructed as follows.
+
+	Suppose the coefficient of $p$ in $D$ is $n$. Then if $f \in \mathcal{L}(D)$, then $\nu_p(t^n \cdot f) = n + \nu_p (f) \geq 0$ by definition of $\mathcal{L}(D)$, where $t$ is uniformizing.
+
+	So $t^n f \in \mathcal{O}_{C, p}$, then we define
+	\begin{align*}
+		\mathrm{ev}_p : \mathcal{L}(D) &\to \mathbb{K} \\
+		f &\mapsto (t^n \cdot f)(p).
+	\end{align*}
+	If $f \in \Ker(\mathrm{ev}_p)$, we have $\nu_p(t^n f) \geq 1$, so $\nu_p (f) > -n$. Hence the coefficient of $p$ in $D + (f)$ is at least one, so $(D - p) + (f)$ is effective, so $f \in \mathcal{L}(D - p)$.
+
+	Conversely, if $f \in \mathcal{L}(D - p)$, then $(D - p) + (f)$ is effective, so $\nu_p(f) \geq -n + 1$, and $\nu_p(t^n \cdot f) \geq 1$, so $f \in \Ker(\mathrm{ev}_p)$. Therefore $\mathcal{L}(D - p) = \Ker(\mathrm{ev}_p)$.
+
+	If $|D|$ is base-point free, then $\mathrm{ev}_p : \mathcal{L}(D) \to \mathbb{K}$ is surjective for all $p$, and conversely. So
+	\[
+	\dim |D - p| = \dim \mathcal{L}(D - p) - 1 = \dim \mathcal{L}(D) - 2 = \dim |D| - 2
+	\]
+	for all $p$, if and only if $|D|$ is base-point free. 
+
+	Now $|D|$ separates point and tangent vectors if and only if $|D - p|$ is base-point free for all $p \in C$. Indeed, if $D' = |D - p|$ does not have $q$ in its support, then $D' + [$ separates $p$ and $q$ if $q \neq p$. If $p = q$, and $p \not \in \mathrm{Supp}D'$, then $D' + [$ has coefficient 1 for $p$.
+
+	Now $\dim |D - p - q| = \dim |D - p| - 1$ if and only if $D - p|$ is base-point free, so $|D|$ is very ample and base-point free if 
+	\[
+	\dim |D - p - q| = \dim |D - p| - 1 = \dim |D| - 2,
+	\]
+	for all $p, q$.
+\end{proofbox}
+
+The moral is, if we can control $\dim \mathcal{L}(D)$, then we know a lot about embeddings.
+
+\newpage
+
+\section{Differentials and Riemann-Roch}%
+\label{sec:diff_rr}
+
+
+\begin{definition}
+	Let $B$ be a ring, and $A \subseteq B$ a subring. We define
+	\[
+		\Omega_{B/A} = \frac{(\text{free $B$-module generated by symbols $\diff b$ for $b \in B$})}{\text{submodule $R$ of relations}},
+	\]
+	where $R$ is the submodule with generators:
+	\begin{itemize}
+		\item $\diff (b b') - b \diff b' - b' \diff b$, for all $b, b' \in B$.
+		\item $\diff (b + b') - \diff b - \diff b'$, for all $b, b' \in B$.
+		\item $\diff a$, for all $a \in A$.
+	\end{itemize}
+	
+\end{definition}
+
+% lecture 22
+
+\begin{exbox}
+	Consider $\Omega_{\mathbb{K}[x]/\mathbb{K}}$. Then for $f \in \mathbb{K}[x]$, we find
+	\[
+	\diff f = f'(x) \diff x.
+	\]
+	Thus $\Omega_{\mathbb{K}[x]/\mathbb{K}}$ is the free $\mathbb{K}[x]$-module with one generator $\diff x$.
+
+	Similarly $\Omega_{\mathbb{K}(x)/\mathbb{K}}$ satisfies $\diff f = f'(x) \diff x$. Thus $\Omega_{\mathbb{K}(x)/\mathbb{K}}$ is the one-dimensional vector space over $\mathbb{K}(x)$ with basis $\diff x$.
+\end{exbox}
+
+\begin{proposition}
+	If $L/K$ is a separable algebraic field extension. Then
+	\[
+	\Omega_{L/K} = 0.
+	\]
+\end{proposition}
+
+Here separable means everything in $L$ is a solution to some irreducible polynomial equation $f(\alpha) = 0$ with $f(\alpha) \in K[x]$, and $f'(\alpha) \neq 0$.
+
+\begin{proofbox}
+	Given $\alpha \in L$, $f(x) \in K[x]$ with $f(\alpha) = 0$, $f'(\alpha) \neq 0$, then
+	\[
+	0 = f(\alpha) \implies 0 = d(f(\alpha)) = f'(\alpha) \diff \alpha,
+	\]
+	do $\diff \alpha = 0$ since $f'(\alpha) \neq 0$.
+\end{proofbox}
+
+\begin{lemma}
+	Let $C$ be a curve, $p \in C$, and $t$ a local (uniformizing) parameter for $C$ at $p$. Then
+	\[
+	\Omega_{K(C)/\mathbb{K}} = K(C) \diff t.
+	\]
+\end{lemma}
+
+\begin{proofbox}
+	Since $t$ is a local parameter, it is not a constant functions, and thus defines a non-constant map $t : C \to \mathbb{P}^1$, inducing a finite field extension
+	\[
+	\mathbb{K}(\mathbb{P}^1) = \mathbb{K}(t) \to K(C).
+	\]
+	This extension is separable. The proof is omitted; for $\chr \mathbb{K} = 0$ it is immediate. For positive characteristic, the idea is that if the extension is not separable, then $\chr \mathbb{K} \mid e_q$ for all $q \in C$. However since $t$ is a local parameter at $p$, $e_p = 1$.
+
+	If $\alpha \in K(C)$, there exists $f \in \mathbb{K}(t)[x]$ such that $f(\alpha) = 0$, $f'(\alpha) \neq 0$. Write
+	\[
+	f(x) = \sum_{i \geq 0}f_i(t) x^i,
+	\]
+	for $f_i(t) \in \mathbb{K}(t)$. Then,
+	\begin{align*}
+		0 &= \diff (f(\alpha)) = \diff \left( \sum_{i \geq 0} f_i(t) \alpha^i \right) \\
+		  &= \left( \sum_{i \geq 0} f_i'(t) x^i \right) \diff t + \left( \sum_{ i \geq 1} i f_i(t) x_{i-1} \right) \diff \alpha,
+	\end{align*}
+	where $f'(\alpha) \neq 0$. So dividing, we can solve for $\diff \alpha$, getting
+	\[
+	\diff \alpha = g \diff t \in K(C) \diff t.
+	\]
+\end{proofbox}
+
+\begin{definition}
+	Let $C$ be a projective non-singular curve, and $\omega \in \Omega_{K(C)/\mathbb{K}}$, $p \in C$. We define $\nu_p(\omega)$ as follows: let $t \in \mathcal{O}_{C, p}$ be a local parameter, and write $\omega = f \diff t$, for $f \in K(C)$. Define
+	\[
+	\nu_p(\omega) = \nu_p(f).
+	\]
+	We also define
+	\[
+	\mathrm{div} (\omega) = \sum_{p \in C} \nu_p(\omega) \cdot p \in \mathrm{Div}C.
+	\]
+\end{definition}
+
+We say that $\omega$ is \emph{regular}\index{regular} at $p$ if $\nu_p(\omega) \geq 0$.
+
+To show this is a sensible definition we need a few lemmas.
+
+\begin{lemma}
+	\begin{enumerate}[\normalfont(i)]
+		\item[]
+		\item $f \in \mathcal{O}_{C, p} \implies \nu_p(\diff f) \geq 0$.
+		\item If $t'$ is another local parameter at $p$, then $\nu_p(\diff t') = 0$ and $\nu_p(f \diff t') = \nu_p(f) + \nu_p(\diff t')$ is independent of $t$.
+		\item If $f \in K(C)$ and $\nu_p(f) \neq 0$ in $\mathbb{K}$, then $\nu_p(\diff f) = \nu_p(f) - 1$.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proofbox}
+	(i) We let $p \in C \subseteq \mathbb{P}^n$, $p \in C \cap U_i$, where $U_i = \mathbb{P}^n \setminus Z(x_i)$. Work on $U_1 \cap C, $ where rational functions are just ratios of polynomials. If $f = g/h$, $h(p) \neq 0$, we have
+	\[
+	\diff f = \frac{h \diff g - g \diff h}{h^2} = \sum \gamma_i \diff x_i,
+	\]
+	with $\gamma_i \in \mathcal{O}_{C, p}$. So,
+	\begin{align*}
+		\nu_p(\diff f) & \geq \min\{ \nu_p(\gamma_i \diff x_i) \mid 1 \leq i \leq n\} \\
+			       &\geq \min \{ \nu_p(\diff x_i) \mid 1 \leq i \leq n \}.
+	\end{align*}
+	Thus $\nu_p(\diff f)$ is bounded below, independently of $f$.
+
+	Choose $f \in \mathcal{O}_{C, p}$ such that $\nu_p(\diff f)$ is minimal, $t$ a local parameter at $p \in C$. Then $\nu_p(f - f(p)) \geq 1$, so we can write $f - f(p) = t f_1$, for some $f_1 \in \mathcal{O}_{C, p}$, so
+	\[
+	\diff f=  \diff(f - f(p)) = \diff (t f_1) = f_1 \diff t + t \diff f_1.
+	\]
+	If $\nu_p(\diff f) < 0$, then note $\nu_p(f_i \diff t) \geq 0$, and hence this implies
+	\begin{align*}
+		\nu_p(\diff f) &= \nu_p(\diff f - f_1 \diff t) = \nu_p(t \diff f_1) \\
+			       &= \nu_p(t) + \nu_p(\diff f_1) = 1 + \nu_p(\diff f_1).
+	\end{align*}
+	So $\nu_p( \diff f_1) < \nu_p (\diff f)$, which contradicts the minimality of $\nu_p(\diff f)$. Thus $\nu_p(\diff f) \geq 0$.
+
+	(ii) Any two local parameters are related by a unit, so we may write $t' = u \cdot t$, for $u$ a unit, $u \in \mathcal{O}_{C, p}^\ast$, the group of units in $\mathcal{O}_{C, p}$. Then,
+	\[
+	\diff t' = u \diff t + t \diff u,
+	\]
+	and note $\diff u = g \cdot \diff t$ for some $g$ with $\nu_p(g) \geq 0$, by the above. So
+	\[
+	\diff t' = (u + t g) \diff t,
+	\]
+	where $\nu_p(u + tg) = 0$, so $\nu_p(\diff t') = 0$ by definition.
+
+	If $f \diff t = h \diff t' = h(u + tg) \diff t$, then note
+	\[
+	\nu_p(h(u + tg)) = \nu_p(h) + \nu_p(u + tg) = \nu_p(h).
+	\]
+	So this is independent of choice of local parameter.
+
+	(iii) Suppose $f = t^n u$, where $n = \nu_p(f)$, $u \in \mathcal{O}_{C, p}^\ast$. Then
+	\[
+	\diff f = n t^{n-1} u \diff t + t^n \diff u.
+	\]
+	If $\chr \mathbb{K} \nmid n$, then
+	\begin{align*}
+		\nu_p(f) &\geq \min \{ \nu_p(n t^{n-1} u \diff t), t^n \diff u \} = \min\{n-1, n\} = n-1,
+	\end{align*}
+	and equality holds. Hence $\nu_p(\diff f) = \nu_p(f) - 1$.
+\end{proofbox}
+
+\begin{proposition}
+	If $\omega \in \Omega_{K(C)/\mathbb{K}}$, then $\nu_p(\omega) = 0$ for all but a finite number of $p$.
+\end{proposition}
+
+The proof is omitted. Thus, $\mathrm{div}(\omega) \subseteq \mathrm{Div}(C)$.
+
+% lecture 23
 
 \newpage
 
