@@ -189,7 +189,7 @@ In the following let $I = [0, 1]$.
 
 	For the first equivalence, if $H$ is a homotopy from $f_0$ to $f_1$, then $g_0 \circ H : X \times I \to Z$ is a homotopy of $g_0 \circ f_0$ to $g_0 \circ f_1$.
 
-	Now if $G$ is a homotopy from $g_0$ to $g_1$, then $G \circ (f+1 \times \id_I) : X \times I \to Z$ is a homotopy of $g_0 \circ f_1$ to $g_1 \circ f_1$.
+	Now if $G$ is a homotopy from $g_0$ to $g_1$, then $G \circ (f_1 \times \id_I) : X \times I \to Z$ is a homotopy of $g_0 \circ f_1$ to $g_1 \circ f_1$.
 \end{proofbox}
 
 %lecture 2
@@ -457,7 +457,7 @@ From now on, we let $\pi_1(f) = f_\ast$.
 
 	For (iv), note
 	\begin{align*}
-		((f \circ u)_{\#})([\upg]) &= (f \circ u)_{\#}([f \circ \upg]) = [(f \circ u)^{-1} \cdot f \circ \upg \cdot f \circ u] \\
+		((f \circ u)_{\#})(f_\ast[\upg]) &= (f \circ u)_{\#}([f \circ \upg]) = [(f \circ u)^{-1} \cdot f \circ \upg \cdot f \circ u] \\
 					   &= [f \circ (u^{-1} \cdot \upg \cdot u)] = f_\ast([u^{-1} \cdot \upg \cdot u]) \\
 					   &= (f_\ast \circ u_{\#})([\upg]).
 	\end{align*}
@@ -516,7 +516,7 @@ From now on, we let $\pi_1(f) = f_\ast$.
 \end{exbox}
 
 \begin{lemma}
-	$X$ is simply connected if and only if, for all $x_0, x_1 \in X$, there is a unique homotopy class of points from $x_0$ to $x_1$.
+	$X$ is simply connected if and only if, for all $x_0, x_1 \in X$, there is a unique homotopy class of paths from $x_0$ to $x_1$.
 \end{lemma}
 
 \begin{proofbox}
@@ -564,7 +564,7 @@ From now on, we let $\pi_1(f) = f_\ast$.
 		p : \mathbb{R} & \to S^1 \\
 		t &\mapsto e^{2\pi i t} = (\cos(2 \pi t), \sin(2 \pi t)).
 	\end{align*}
-	Let $U_{y > 0} = \{x + iu \in S^1 \mid y > 0\}$. Then,
+	Let $U_{y > 0} = \{x + iy \in S^1 \mid y > 0\}$. Then,
 	\[
 	p^{-1}(U_{y > 0}) = \bigsqcup_{j \in \mathbb{Z}}(j, j + 1/2).
 	\]
@@ -805,7 +805,7 @@ Spelling this out, this is given by:
 \end{theorem}
 
 \begin{proofbox}
-	We have $[ : \mathbb{R} \to S^1$ by $t \mapsto e^{2 \pi i t}$ is a covering map. Note $\mathbb{R}$ is contractible so it is simply-connected. Hence this is a universal cover, so
+	We have $p : \mathbb{R} \to S^1$ by $t \mapsto e^{2 \pi i t}$ is a covering map. Note $\mathbb{R}$ is contractible so it is simply-connected. Hence this is a universal cover, so
 	\[
 	\pi_1(S^1, 1) \leftrightarrow p^{-1}(1) = \mathbb{Z} \subset \mathbb{R}
 	\]
@@ -1071,7 +1071,7 @@ Now we just need to show injectivity.
 
 Let $S = \{s_\alpha\}_{\alpha \in I}$ be a set, called the \emph{alphabet}\index{alphabet}. Then $S^{-1} = \{s_\alpha^{-1}\}_{\alpha \in I}$. We suppose that $S \cap S^{-1} = \emptyset$.
 
-A \emph{word}\index{word} in the alphabet $S$ is a (possibly empty( finite sequence $(x_1, x_2, \ldots, x_n)$ of elements in $S \cup S^{-1}$. A word is called \emph{reduced}\index{reduced word} if it does not contain $(s_\alpha, s_\alpha^{-1})$ or $(s_\alpha^{-1}, s_\alpha)$ as a subword.
+A \emph{word}\index{word} in the alphabet $S$ is a (possibly empty) finite sequence $(x_1, x_2, \ldots, x_n)$ of elements in $S \cup S^{-1}$. A word is called \emph{reduced}\index{reduced word} if it does not contain $(s_\alpha, s_\alpha^{-1})$ or $(s_\alpha^{-1}, s_\alpha)$ as a subword.
 
 An elementary reduction of the word $(x_1, x_2, \ldots, x_i, s_\alpha, s_\alpha^{-1}, x_{i+1}, \ldots, x_n)$ (or $s_\alpha^{-1}, s_\alpha$) is $(x_1, x_2, \ldots, x_i, x_{i+1}, \ldots, x_n)$.
 
@@ -1220,7 +1220,7 @@ commutes.
 	\end{align*}
 	This is by
 	\[
-		\phi \mapsto [G_i \overset{j_i}{\to} G_1 \ast_H G_2 \overset{\phi}{\to} H].
+		\phi \mapsto [G_i \overset{j_i}{\to} G_1 \ast_H G_2 \overset{\phi}{\to} K].
 	\]
 \end{lemma}
 
@@ -1391,9 +1391,9 @@ Y = X \cup_f D^n = \frac{X \sqcup D^n}{f(x) \sim x \in \partial D^n = S^{n-1}}.
 	\[
 	\pi_1(V, y_1) = \pi_1(U, y_1) \ast_{\pi_1(U \cap V, y_1)} \pi_1(V, y_1) \cong \pi_1(Y, y_1)
 	\]
-	Now by a change of basepoint isomorphism, we get $\pi_1(Y, y_0) \cong \pi_1(V, y_0)$. But $V$ strongly derogation retracts to $X$, so this is $\pi_1(X, y_0)$.
+	Now by a change of basepoint isomorphism, we get $\pi_1(Y, y_0) \cong \pi_1(V, y_0)$. But $V$ strongly deformation retracts to $X$, so this is $\pi_1(X, y_0)$.
 
-	If instead $n - 2$, then $U \simeq \ast$, and $U \cap V \simeq S^1 \times (0, 1)$, so Seifer-Van Kampen says
+	If instead $n = 2$, then $U \simeq \ast$, and $U \cap V \simeq S^1 \times (0, 1)$, so Seifer-Van Kampen says
 	\[
 		\{e\} \ast_{\mathbb{Z}} \pi_1(V, y_1) \cong  \pi_1(Y, y_1) \ast_{\pi_1(U \cap V, y_1)} \pi_1(V, y_1) \cong \pi_1(Y, y_1),
 	\]
@@ -1585,7 +1585,7 @@ I.e. a simplicial complex is what we get when we are allowed to glue a bunch of 
 
 The \emph{dimension}\index{dimension} of a simplicial complex $K$ is the largest $p$ such that $K$ contains a $p$-simplex. The \emph{polyhedron}\index{polyhedron} of $K$ is the space
 \[
-|K| = \bigcap_{\sigma \in K}\sigma \subseteq \mathbb{R}^m.
+|K| = \bigcup_{\sigma \in K}\sigma \subseteq \mathbb{R}^m.
 \]
 
 The $d$-\emph{skeleton}\index{$d$-skeleton} $K_{(d)}$ of $K$ is the sub-simplicial complex containing all simplices of $K$ of dimension at most $d$.
@@ -1645,11 +1645,11 @@ We can recover $f$ from $|f|$ and the distinct sets and the discrete sets $V_K \
 \begin{definition}
 	For a $x \in |K|$,
 	\begin{enumerate}[(i)]
-		\item The (open) \emph{star}\index{star} of $x$ is the union of the interiors of the simplicies which contain $x$:
+		\item The (open) \emph{star}\index{star} of $x$ is the union of the interiors of the simplices which contain $x$:
 			\[
 			\mathrm{St}_K(x) = \bigcup_{\substack{\sigma \in K\\ x \in \sigma}} \mathring \sigma \subseteq \mathbb{R}^n.
 			\]
-			The complement of $\mathrm{St}_K(x)$ is the union of all simplices which do not contain $x$, a polyhedron, so it is closed. Thus $\mathrm{St}_K9x)$ is open.
+			The complement of $\mathrm{St}_K(x)$ is the union of all simplices which do not contain $x$, a polyhedron, so it is closed. Thus $\mathrm{St}_K(x)$ is open.
 		\item The \emph{link}\index{link} of $(x)$, $\mathrm{Lk}_K(x)$, is the union of those simplices which do not contain $x$, but are faces of a simplex which does contain $x$.
 	\end{enumerate}
 \end{definition}
@@ -1749,7 +1749,7 @@ We can reorder the $a_i$ so that $t_0 \geq t_1 \geq \cdots \geq t_p$, so
 \end{align*}
 \end{proofbox}
 
-The vertices of $K$ are in bijection with the simplices of $K$. Choose a function $K \to V_K$ which assigns to $\sigma$ some vertex of $\sigma$. Then we can take $g : V_{K'} \cong K \to V_K$.
+The vertices of $K'$ are in bijection with the simplices of $K$. Choose a function $K \to V_K$ which assigns to $\sigma$ some vertex of $\sigma$. Then we can take $g : V_{K'} \cong K \to V_K$.
 
 If $\langle \hat \sigma_0, \ldots, \hat \sigma_p \rangle$ is a simplex of $K'$, then $\sigma_0 \leq \cdots \leq \sigma_p$, and $g(\hat \sigma_i)$ is some vertex of $\sigma_i$, so is a vertex of $\sigma_p$. Thus $\{g(\hat \sigma_i)\}$ spans a face of $\sigma$, so is a simplex of $K$. So $g$ is a simplicial map.
 
@@ -1882,7 +1882,7 @@ Define a homomorphism
 		&= \sum_{i = 0}^n (-1)^{i}[v_0, \ldots, \hat v_i, \ldots, v_n] \\
 											      &- \sum_{i = 0}^n (-1)^i \sgn(\sigma) [v_{\sigma(0)}, \ldots, \hat v_{\sigma(i)}, \ldots, v_{\sigma(n)}].
 	\end{align*}
-	We need to show that this is trivial?? in $\mathcal{O}_{n-1}(K) / T_{n-1}(K)$. Suppose first $\sigma=  (j, j+1)$, so $\sgn(\sigma) = -1$. Then
+	We need to show that this is trivial in $\mathcal{O}_{n-1}(K) / T_{n-1}(K)$. Suppose first $\sigma=  (j, j+1)$, so $\sgn(\sigma) = -1$. Then
 	\begin{align*}
 		\sum_{i = 0}^n(-1)^i &\sgn(\sigma) [v_{\sigma(0)}, \ldots, \hat v_{\sigma(i)}, \ldots, v_{\sigma(n)}] \\
 		&= \sum_{i = 0}^{n} (-1)^{j-1} [v_0, \ldots, \hat v_i, \ldots, v_{j+1}, v_j, v_{j+2}, \ldots, v_n] \\
@@ -1970,7 +1970,7 @@ This means that
 	Then,
 	\begin{align*}
 		C_0(L) &= \mathbb{Z}\{[e_1], [e_2], [e_3]\}, \\
-		C_1(L) &= \mathbb{Z}\{[e_1, e_2], [e_2, e_3], [e_1, e_3]\},
+		C_1(L) &= \mathbb{Z}\{[e_1, e_2], [e_2, e_3], [e_1, e_3]\}, \\
 		C_2(L) &= \mathbb{Z}\{[e_1, e_2, e_3]\}.
 	\end{align*}
 	So,
@@ -2163,7 +2163,7 @@ Return to the chain complexes $C_\bullet(K)$ associated to a simplicial complex 
 		C_0(K) \arrow[u, equal] & C_1(K) \arrow[l, "d_0^L"] \arrow[u, equal] & \cdots \arrow[l, "d_1^K"] & C_{n-1}(K) \arrow[l, "d_{n-1}^K"] \arrow[u, equal] & 0 \arrow[l] \arrow[u] & 0 \arrow[l]
 	\end{tikzcd}
 	\]
-	For $i \leq n-2$, $H_i(K) = H_i(K)$. For $i > n-1$, $H_i(K) = 0$ as there are no $i$-simplices. Hence
+	For $i \leq n-2$, $H_i(K) = H_i(L)$. For $i > n-1$, $H_i(K) = 0$ as there are no $i$-simplices. Hence
 	\[
 	H_{n-1}(K) = \frac{\Ker(d_{n-1}^K)}{\Img(d_n^K)} = \Ker(d_{n-1}^K) = \Ker(d_{n-1}^L).
 	\]
@@ -2203,10 +2203,10 @@ Return to the chain complexes $C_\bullet(K)$ associated to a simplicial complex 
 	is \emph{exact}\index{exact} if $\Img f = \Ker g$. More generally, a collection of homomorphisms
 	 \[
 	\begin{tikzcd}
-		\cdot \arrow[r] & A_i \arrow[r] & A_{i+1} \arrow[r] & A_{i+2} \arrow[r] & A_{i+3} \arrow[r] & \cdots
+		\cdots \arrow[r] & A_i \arrow[r] & A_{i+1} \arrow[r] & A_{i+2} \arrow[r] & A_{i+3} \arrow[r] & \cdots
 	\end{tikzcd}
 	\]
-	is \emph{exact}if it is exact at each $A_j$, where $A_j$ has a homomorphism in and out.
+	is \emph{exact} if it is exact at each $A_j$, where $A_j$ has a homomorphism in and out.
 
 	A \emph{short exact sequence}\index{short exact sequence} is an exact sequence
 	\[
@@ -2254,11 +2254,11 @@ Return to the chain complexes $C_\bullet(K)$ associated to a simplicial complex 
 
 	Applying $d_n y$ gives us an element of $B_{n-1}$. But by commutativity, $j_{n-1}(d_n y) = 0$. But by exactness, this means there is $z \in A_{n-1}$ that maps to $d_{n} y$.
 
-	What can we say about $z$? Well $i_{n-2} d_{n-1}(z) = d_{n-1} i_{n-1}(z) = d_{n-1} d_n (y) = 0$. But as $i_{n-1}$ is injective, this shows $d_{n-1}(z) = 0$. Hence $z$ is a cycle, and so we can let $\partial_\ast[x] = [z]$.
+	What can we say about $z$? Well $i_{n-2} d_{n-1}(z) = d_{n-1} i_{n-1}(z) = d_{n-1} d_n (y) = 0$. But as $i_{n-2}$ is injective, this shows $d_{n-1}(z) = 0$. Hence $z$ is a cycle, and so we can let $\partial_\ast[x] = [z]$.
 
 	Now we check $\partial_\ast$ is well-defined. Suppose $[x] = [x'] \in H_n(C_\bullet)$. Then $x - x' = d_{n+1}(a)$ for some $a \in C_{n+1}$. The same process for $x'$ gives a $y' \in B_n$, and as $j_{n+1}$ is surjective, we can write $a = j_{n+1}(b)$. Then
 	\[
-	j_n(y - y') = x- x' = j_n d_{n+1}(b),
+	j_n(y - y') = x- x' =  d_{n+1}j_{n+1}(b) = j_n d_{n+1}(b),
 	\]
 	so by exactness at $B_n$,
 	\[
@@ -2271,7 +2271,7 @@ Return to the chain complexes $C_\bullet(K)$ associated to a simplicial complex 
 	\end{align*}
 	The injectivity of $i_{n-1}$ shows that $z - z' \in d_n(c)$, so $[z] = [z'] \in H_{n-1}(A_\bullet)$.
 
-	Now we show that $\partial_\ast$ is a homomorphism. Given $[x_1], [x_2] \in H_n(C_\bullet)$ with components $y_1, y_2, z_1, z_2$, we choose $y_1 + y_2$ to be the lift of $x_1 + x+2$. This gives $z_1 + z_2$ as the result, so
+	Now we show that $\partial_\ast$ is a homomorphism. Given $[x_1], [x_2] \in H_n(C_\bullet)$ with components $y_1, y_2, z_1, z_2$, we choose $y_1 + y_2$ to be the lift of $x_1 + x_2$. This gives $z_1 + z_2$ as the result, so
 	\[
 		\partial_\ast[x_1 + x_2] = [z_1 + z_2] = [z_1] + [z_2].
 	\]
@@ -2293,8 +2293,610 @@ Return to the chain complexes $C_\bullet(K)$ associated to a simplicial complex 
 	\[
 		[y] = [y - d_{n+1}(b)] = [i_n(t)] = i_\ast[t],
 	\]
-	as required. Finally we want exactness at $H_n(A_\bullet)$. Let $[z] = \partial_\ast[x]$. Then $i_n(z) = d_{n+1}(g),$ so $i_\ast[z] = 0$. Conversely let $[z]$ be such that $i_\ast[z] = 0$. Then $i_n(z) = d_{n+1}(g)$ for some $g$, so $[z] = \partial_\ast[j_{n+1}(y)]$.
+	as required. Finally we want exactness at $H_n(A_\bullet)$. Let $[z] = \partial_\ast[x]$. Then $i_n(z) = d_{n+1}(y),$ so $i_\ast[z] = 0$. Conversely let $[z]$ be such that $i_\ast[z] = 0$. Then $i_n(z) = d_{n+1}(y)$ for some $y$, so $[z] = \partial_\ast[j_{n+1}(y)]$.
+
+	Note $d_{n+1} j_{n+1}(y) = j_n d_{n+1}(y) = j_n i_n(z) = 0$, so this works.
 \end{proofbox}
+
+% lecture 20
+
+\begin{theorem}[Mayer-Vietoris Theorem]
+	Let $K$ be a simplicial complex, $M, N$ be subcomplexes, and $L = M \cap N$. Suppose also that $M$ and $N$ cover $K$, i.e. every simplex of $K$ is in $M$ or $N$. Write
+	\begin{equation*}
+	\begin{tikzcd}
+		L \arrow[r, "j", hook] \arrow[d, "i", hook] & N \arrow[d, "\ell", hook] \\
+		M \arrow[r, "k", hook] & K  \\
+	\end{tikzcd}
+	\end{equation*}
+	for the inclusion maps. There are natural homomorphisms $\partial_\ast : H_n(K) \to H_{n-1}(L)$ such that
+	\begin{equation*}
+	\begin{tikzcd}
+			& \vdots \arrow[dl] & \\
+		H_n(L) \arrow[r, "{(i_\ast, j_\ast)}"'] & H_n(M) \oplus H_n(N) \arrow[r, "k_\ast - l_\ast"] & H_n(K) \arrow[dll, "\partial_\ast"] \\
+					    H_{n-1}(L) \arrow[r, "{(i_\ast, j_\ast)}"'] & H_{n-1}(M) \oplus H_{n-1}(N) \arrow[r, "k_\ast - l_\ast"] & H_{n-1}(K) \arrow[dl] \\
+						    & \vdots &
+	\end{tikzcd}
+	\end{equation*}
+	is a long exact sequence.
+\end{theorem}
+
+\begin{proofbox}
+	We have a short exact sequence of chain complexes
+	\begin{equation*}
+		\begin{tikzcd}
+			0  \arrow[r] & C_\bullet(L) \arrow[r, "{(i_\bullet, j_\bullet)}", hook] & C_\bullet(M) \oplus C_\bullet(N) \arrow[r, "k_\bullet - l_\bullet", two heads] & C_\bullet(K) \arrow[r] & 0
+		\end{tikzcd}
+	\end{equation*}
+	This is because:
+	\begin{itemize}
+		\item $i_\bullet$ and $j_\bullet$ are both injective, so the first is injective.
+		\item $k_\bullet$ and $l_\bullet$ are jointly surjective, as $M$ and $N$ cover $K$.
+		\item Suppose $(x, y) \in C_n(M) \oplus C_n(N)$ is in $\Ker(k_n - l_n)$, i.e. $k_n(x) = l_n(y)$. So both sides are a linear combination of simplices in $M \cap N = L$, i.e. there exists $z \in C_n(L)$ such that $x = i_n(z), y = j_n(z)$.
+
+			So $\Ker(k_n - l_n) \subseteq \Img ((i_n, j_n))$. The other direction is clear.
+	\end{itemize}
+	Then we apply the algebraic theorem.
+\end{proofbox}
+
+Here's how to think about the map $\partial_\ast$. Start with a cycle in $K$. Some of the simplices are in $M$, some are in $N$, some are in both; for these we make an arbitrary choice.
+
+Suppose $[x] \in H_n(K)$. Then we may write $x = u + v$, where $u \in C_n(M)$, $v \in C_n(N)$. We then see that $x = (k_n - l_n)(u, -v)$.
+
+The theorem says to look at the boundary of $(u, -v)$, i.e. $d_n(u, -v) = (d_n u, -d_n v)$. These are the same, since $u + v$ is a cycle, so $d_n u + d_n v = 0$. The map $\partial_\ast[x]$ is then just $[d_nu] \in C_{n-1}(L)$.
+
+\subsection{Continuous Maps and Homotopy Invariance}%
+\label{sub:cont_map_hom_inv}
+
+\begin{definition}
+	Simplicial maps $f, g : K \to L$ are \emph{contiguous}\index{contiguous} if for each $\sigma \in K$, $f(\sigma)$ and $g(\sigma)$ are faces of some simplex $\tau$ of $L$.
+\end{definition}
+
+\begin{lemma}
+	If $f$ and $g$ are both simplicial approximations to $F : |K| \to |L|$, then $f$ and $g$ are contiguous.
+\end{lemma}
+
+\begin{proofbox}
+	If $x \in \mathring \sigma \subset |K|$, and  $F(x) \in \mathring \tau \subset |L|$, then as in the proof of ``simplicial approximations are simplicial maps'', $f(\sigma)$ and $g(\sigma)$ are both faces of $\tau$.
+\end{proofbox}
+
+\begin{lemma}
+	If $f, g : K \to L$ are contiguous, then $f_\bullet \simeq g_\bullet : C_\bullet(K) \to C_\bullet(L)$, and so $f_\ast = g_\ast$.
+\end{lemma}
+
+\begin{proofbox}
+	Choose an ordering $\prec$ of $V_K$, and represent a basis of $C_n(K)$ by $[a_0, \ldots, a_n]$ with $a_0 \prec \cdots \prec a_n$. Define a homomorphism
+	\begin{align*}
+		h_n : C_n(K) &\to C_{n+1}(L) \\
+		[a_0, \ldots, a_n] &\mapsto \sum_{i = 0}^n (-1)^i [f(a_0), \ldots, f(a_i), g(a_i), \ldots, g(a_n)].
+	\end{align*}
+	Direct calculation shows that $d_{n+1} \circ h_n + h_{n-1} \circ d_n = g_n - f_n$, so this is the chain homotopy.
+\end{proofbox}
+
+\begin{lemma}
+	Let $K'$ be the barycentric subdivision, and choose $a : K = V_{K'} \to K$, any function sending $\hat \sigma$ to any vertex of $\sigma$.
+
+	Then such an $a : V_{K'} \to V_K$ is a simplicial approximation to the identity map on $|K| = |K'|$. Furthermore, all simplicial approximation to the identity are of this form.
+\end{lemma}
+
+\begin{proofbox}
+	We have seen the first part.
+
+	For the second part, if $g : V_{K'} \to V_K$ is a simplicial approximation to the identity, then
+	\[
+		\mathring \sigma = \id(\mathrm{St}_{K'}(\hat \sigma)) = \mathrm{St}_K(g(\hat \sigma)).
+	\]
+	So, $g(\hat \sigma)$ must be a vertex of $\sigma$.
+\end{proofbox}
+
+\begin{proposition}
+	If $a : K' \to K$ is a simplicial approximation to the identity, then $a_\ast : H_n(K') \to H_n(K)$ is an isomorphism, for all $n$.
+
+	Furthermore, this isomorphism does not depend on $a$.
+\end{proposition}
+
+\begin{proofbox}
+	First suppose $K$ is a simplex $\Delta^n \subset \mathbb{R}^{n+1}$. Then $K'$ is a cone, with cone point $\hat \sigma$. Also $K$ is a cone, with any vertex as a cone point.
+
+	So, $a_\ast : H_n(K') \to H_n(K)$ is an isomorphism for $n > 0$, since both sides are 0, and $a_\ast : H_0(K') \to H_0(K)$ is an isomorphism too, as $a_\ast[\hat \sigma] = [a(\hat \sigma)]$.
+
+	For the general case, we will do a double induction on the dimension of $K$, and the number of simplices of $K$.
+
+	Let $\sigma \in K$ be a simplex of maximal dimension. Then $L = K - \{\sigma\}$ is a simplicial complex. Let  $S = \{\sigma \text { and its faces}\}$, $T = S \cap L$, the proper faces of $\sigma$.
+
+	THen any simplicial approximation $a : K' \to K$ to the identity sends $L'$ into $L$, $S'$ into $S$ and $T'$ into $T$. Thus, we get a map of MV sequences:
+	\begin{equation*}
+		\begin{tikzcd}[column sep = tiny]
+			H_n(T') \arrow[r] \arrow[d, "{(a|_{T'})_\ast}"] & H_n(S') \oplus H_n(L') \arrow[r] \arrow[d, "{(a|_{S'})_\ast \oplus (a|_{L'})_\ast}"] & H_n(K') \arrow[r, "\partial_\ast"] \arrow[d, "{a_\ast}"] & H_{n-1}(T') \arrow[r] \arrow[d, "{(a|_{T'})_\ast}"] & H_{n-1}(S') \oplus H_{n-1}(L') \\
+H_n(T) \arrow[r] & H_n(S) \oplus H_n(L) \arrow[r] & H_n(K) \arrow[r, "\partial_\ast"] & H_{n-1}(T) \arrow[r] & H_{n-1}(S) \oplus H_{n-1}(L)
+		\end{tikzcd}
+	\end{equation*}
+	We continue as follows: $T$ is the boundary of a simplex $\sigma$, so the dimension of $T$ is strictly less than $K$. Therefore these maps $H_n(T') \to H_n(T)$ is an isomorphism.
+
+	Now, we may also suppose the other two non-central maps are isomorphisms. Firstly because $S$ is a simplex, and also since $L$ has strictly less simplices than $K$.
+
+	Now, the outer four maps are isomorphisms. This implies the inner map is an isomorphism, by the apt five-lemma.
+\end{proofbox}
+
+%lecture 21
+
+Call $\nu_K: H_n(K') \to H_n(K)$, and similarly $\nu_{K, r} : H_(K^{(r)}) \to H_n(K)$, and $\nu_{K, r, s} : H_n(K^{(r)}) \to H_n(K^{(s)})$, for the respective isomorphisms.
+
+\begin{proposition}
+	To each continuous $f : |K| \to |L|$, there is an associated homomorphism $f_\ast : H_n(K) \to H_n(L)$ given by $f_\ast = s_\ast \circ \nu_{K, r}^{-1}$, where $s : K^{(r)} \to L$ is a simplicial approximation to $f$. Then,
+	\begin{enumerate}[\normalfont(i)]
+		\item This does not depends on the choice of $s$ and $r$.
+		\item If $g : |M| \to |K|$ is another map, then $(f \circ g)_\ast = f_\ast \circ g_\ast$.
+	\end{enumerate}
+\end{proposition}
+
+\begin{proofbox}
+	For (i), let $s : K^{(r)} \to L$, and $t : K^{(q)} \to L$ be simiplicial approximations to $f$, and suppose $r \geq q$. Let $a : K^{(r)} \to K^{(q)}$ be a simplicial approximation to $\id$.
+
+	Now $t \circ a$, $s : K^{(r)} \to L$ are both simplicial approximations to $f$, so they are continguous, so $s_\ast = (t \circ a)_\ast = t_\ast \circ a_\ast$. But $a_\ast = \nu_{K, r, q}$, so
+	\[
+	s_\ast \circ \nu_{K, r}^{-1} = t_\ast \circ \nu_{K, r, q} \circ \nu_{K, r}^{-1} = t_\ast \circ \nu_{K, q}^{-1}.
+	\]
+	For (ii), let $s :  K^{(r)} \to L$ approximate $f$, and let $t : M^{(q)} \to K^{(r)}$ approximate $g$. Then $s \circ t$ approximates $f \circ g$, and
+	\[
+		(f \circ g)_\ast = (s \circ t)_\ast \circ \nu_{M, q}^{-1} = (s_\ast \circ \nu_{K, r}^{-1}) \circ (\nu_{K, r} \circ t_\ast \circ \nu_{M, q}^{-1}) = f_\ast \circ g_\ast.
+	\]
+\end{proofbox}
+
+\begin{corollary}
+	If $f : |K| \to |L|$ is a homeomorphism, then $f_\ast : H_n(K) \to H_n(L)$ is an isomorphism.
+\end{corollary}
+
+\begin{proofbox}
+	We know
+	\[
+	\id = (f \circ f^{-1})_\ast = f_\ast \circ (f^{-1})_\ast,
+	\]
+	and
+	\[
+	\id = (f^{-1} \circ f)_\ast = (f^{-1})_\ast \circ f_\ast,
+	\]
+	so $f_\ast$ is invertible.
+\end{proofbox}
+
+Let's show uniqueness of homology, up to homotopy. We will get started with this lemma.
+
+\begin{lemma}
+	For a simplicial complex $L$ in $\mathbb{R}^m$, there is an $\varepsilon = \varepsilon(L) > 0$, such that if $f, g : |K| \to |K|$ satisfy $|f(x) - g(x)| < \epsilon$ for all $x \in |K|$, then $f_\ast = g_\ast : H_n(K) \to H_n(L)$.
+\end{lemma}
+
+\begin{proofbox}
+	The $\{\mathrm{St}_L(w)\}$ give an open cover of $|L|$, so by the Lebesgue number lemma there exists $\varepsilon > 0$ such that $B_\varepsilon(x)$ lies in some $\mathrm{St}_L(w)$.
+
+	Let $f, g : |K| \to |L|$ be as in the statement, using this $\varepsilon$. Then $\{f^{-1}(B_\varepsilon(y))\}$ is an open cover of $|K|$, so there is a $\delta > 0$ such that each $f(B_{\delta}(x)) \subseteq B_{\varepsilon}(y)$. Then also $g(B_{\delta}(x)) \subseteq B_{2 \epsilon}(y)$.
+
+	Let $r \gg 0$ be such that $\mu(K^{(r)}) < \delta/2$. Then for each $v \in V_{K^{(r)}}$, the diameter of $\mathrm{St}_{K^{(r)}}(v)$ is less than $\delta$. So $f(\mathrm{St}_{K^{(r)}}(v)), g(\mathrm{St}_{K^{(r)}}(v))$ are in a common $B_{2 \varepsilon}(y)$, which is in a $\mathrm{St}_L(w)$.
+
+	Let $s(v) = w$. Then $s$ is a simplicial approximation to both $f$ and $g$, so $f_\ast = s_\ast \circ \nu_{K, r}^{-1} = g_\ast$.
+\end{proofbox}
+
+\begin{theorem}
+	If $f \simeq g : |K| \to |L|$, then $f_\ast = g_\ast$.
+\end{theorem}
+
+\begin{proofbox}
+	Let $H : |K| \times I \to |L|$ be a homotopy between $f$ and $g$. As $K$ is compact, $|K| \times I$ is compact, so $H$ is uniformly continuous.
+
+	For the $\varepsilon = \varepsilon(L) > 0$ from the lemma, there is a $\delta > 0$ such that $|s - t| < \delta \implies |H(x, s) - H(x, t)| < \varepsilon$, for all $x \in |K|$. Choose $0 = t_0 < t_1 < \cdots < t_k =1$ such that $|t_{i+1} - t_i| < \delta$.
+
+	Then the $f_i(x) = H(x, t_i)$, with $f_0 = f$, $f_k = g$ are $\varepsilon$-close. So $(f_i)_\ast = (f_{i+1})_\ast$, and so $f_\ast = g_\ast$.
+\end{proofbox}
+
+\begin{definition}
+	An \emph{h-triangulation}\index{h-triangulation} of a space $X$ is a simplicial complex $K$ and a homotopy equivalence $g : |K| \to X$. We define $H_n(X) = H_n(K)$.
+\end{definition}
+
+\begin{lemma}
+	The homology of a h-triangulated space does not depend on the choice of h-triangulation.
+\end{lemma}
+
+\begin{proofbox}
+	Let $\bar g : |\bar K| \to X$ be another h-triangulation. Then
+	\[
+		|\bar K| \overset{\bar g}{\to} X \to |K|.
+	\]
+	The composition is a homotopy equivalence, so induces an isomorphism $H_n(\bar K) \to H_n(K)$.
+\end{proofbox}
+
+If $g : |K| \to X$, $\bar g : |\bar K| \to X$ are h-triangulations with homotopy inverses $f, \bar f$, and $h : X \to \bar X$ is a map,
+\begin{equation*}
+	\begin{tikzcd}
+		H_n(K) \arrow[r] \arrow[d, equals] & H_n(\bar X) \arrow[d, equals] \\
+		H_n(K) \arrow[r, bend right, "(\bar f \circ h \circ g)_\ast"] & H_n(\bar K)
+	\end{tikzcd}
+\end{equation*}
+defines induces maps on the homology, for any map of h-triangulable spaces.
+
+% lecture 22
+
+\begin{lemma}
+	The sphere $S^{n-1}$ is triangulable, and for $n = 1 \geq 1$, we have
+	\[
+	H_i(S^{n-1}) =
+	\begin{cases}
+		\mathbb{Z} & i = 0, n-1, \\
+		0 &\text{else}.
+	\end{cases}
+	\]
+\end{lemma}
+
+\begin{proofbox}
+	$\partial D^n$ has polyhedron homeomorphic to $S^{n-1}$, and we have calculated its $H_i$.
+\end{proofbox}
+
+\begin{theorem}[Brouwer]
+	\begin{enumerate}[\normalfont(i)]
+		\item[]
+		\item There is no retraction of $D^n$ to $\partial D^n = S^{n-1}$.
+		\item Any $f : D^n \to D^n$ has a fixed point.
+	\end{enumerate}
+\end{theorem}
+
+\begin{proofbox}
+	(i) implies (ii) by the same shooting procedure as in the case $n = 2$.
+
+	For (i), let $r : D^n \to S^{n-1}$ be a retraction, and consider $\id_{S^{n-1}} = r \circ i$. Then,
+	\[
+		\id = (r \circ i)_\ast : H_{n-1}(S^{n-1}) = \mathbb{Z} \overset{i_\ast}{\to} H_{n-1}(D^n) = 0 \overset{r_\ast}{\to} H_{n-1}(S^{n-1}) = \mathbb{Z}.
+	\]
+	This is impossible.
+\end{proofbox}
+
+We have seen a different triangulation of $S^n$, vie the simplicial complex $K$ in $\mathbb{R}^{n=1}$ with simplices $\langle \pm e_1, \ldots, \pm e_{n=1} \rangle$ and their faces. We must have
+\[
+H_i(K) =
+\begin{cases}
+	\mathbb{Z} & i = 0, n \\
+	0 &\text{else},
+\end{cases}
+\]
+by independence of triangulation.
+
+\begin{lemma}
+	The element
+	\[
+		x = \sum_{a \in \{\pm1\}^{n+1}} a_1 a_2 \cdots a_{n+1} [a_1 e_1, a_2e_2, \ldots, a_{n+1} e_{n+1}]
+	\]
+	is a cycle, and generates $H_n(K) \cong \mathbb{Z}$.
+\end{lemma}
+
+\begin{proofbox}
+	When we apply $d_n$ to $x$, the simplex $[a_1 e_1, \ldots, \hat{a_i e_i}, \ldots, a_{n+1} e_{n+1}]$ shows up twice, corresponding to $a_i = +1$, $a_i = -1$. So the coefficients cancel out.
+
+	It generates as it is clearly not divisible in $C_n(K)$, as the coefficients are $\pm1$. The reflection  $r : \mathbb{R}^{n+1} \to \mathbb{R}^{n+1}$ in the $i$'th coordinate is
+	\[
+		(r_i)_\ast(x) = \sum a_1 \cdots a_{n+1} [a_1e_1, \ldots, -a_i e_i, \ldots, a_{n+1} e_{n+1}] = -x.
+	\]
+	So $(r_i)_\ast$ is multiplication by $-1$. The antipodal map $a : S^n \to S^n$ is $r_1 r_2 \cdots r_{n+1}$, so acts as multiplication by $(-1)^{n+1}$.
+\end{proofbox}
+
+\begin{corollary}
+	If $n$ is even, then $a : S^n \to S^n$ is not homotopic to $\id$.
+\end{corollary}
+
+\subsection{Homology of Surfaces}%
+\label{sub:surf_hom}
+
+\begin{exbox}
+	Consider $X$, the torus with a triangle cut out of it. Now create a $3 \times 3$ grid on a torus, half each square to form triangles, and remove one triangle.
+
+	Say $X = |K|$. Consider many copies of $K$, with boundary $L$, and now consider the cone on $L$.
+\end{exbox}
+
+First we find the homology of $K$. Consider $W$, the deformation retraction of $K$ onto the outer square, which is just the join of two triangles.
+
+Apply Mayer-Vietoris to the two triangles independetly, to get
+\[
+	H_0(K) = \mathbb{Z}\{[1]\}, \qquad H_1(K) = \mathbb{Z}\{a, b\},
+\]
+where $a = [1, 2] + [2, 3] + [3, 1]$, and $b = [1, 4] + [4, 5] + [5, 6]$. Note $r = [5, 6] + [6, 9] + [9, 5] \sim a  + b - a - b = 0$.
+
+Now we look to find the homology of $K_g$. We can decompose $K_g = K_{g-1} \cup K$, where $K_{g-1} \cap K = \Delta'$. Mayer-Vietoris gives
+\begin{equation*}
+	\begin{tikzcd}
+		0 \arrow[r] & H_2(K_{g-1}) \oplus H_2(K) \arrow[r, hook, two heads] & H_2(K_g) \arrow[dll, "\partial_\ast"] \\
+ 	H_1(\Delta') = 0 \arrow[r] & H_1(K_{g-1}) \oplus H_1(K) \arrow[r, hook, two heads] & H_1(K_g) \arrow[dll, "\partial_\ast = 0"] \\
+ H_0(\Delta') = \mathbb{Z} \arrow[r, hook] & H_0(K_{g-1}) \oplus H_0(K) \arrow[r] & H_0(K_g)
+	\end{tikzcd}
+\end{equation*}
+
+By diagram chasing and exactness, we get that the second map is injective and surjective, that the second-to-last map is injective, the previous map is 0, and hence the map before is surjective. But the previous space is 0, so it is also injective.
+
+We then see that $H_1(K_g) = \mathbb{Z}^{2g}$, and $H_2(K_g) = 0$, by induction. The only non-trivial thing in $H_0(K_g) = \mathbb{Z}$. This is done on the last line, by induction.
+
+Note that $L = \partial K_g$ is the cycle $r_1 + r_2 + \cdots + r_g = 0$.
+
+Now we want to find the homology of $K_g \cup CL$. Apply Mayer-Vietoris, using $K_g \cap CL = L$, a triangulation of $S^1$. Hence
+\begin{equation*}
+	\begin{tikzcd}
+		0 \arrow[r] & 0 \oplus 0 \arrow[r] & H_2(K_g \cup CL) \arrow[dll, "\partial_\ast", hook, two heads] \\
+ 	H_1(L) = \mathbb{Z}\arrow[r, "0"'] & H_1(K_g) \oplus H_1(CL) = \mathbb{Z}^{2g} \arrow[r, hook, two heads] & H_1(K_g \cup CL) \arrow[dll, "\partial_\ast = 0"] \\
+ H_0(L) = \mathbb{Z}\arrow[r, hook] & H_0(K_g) \oplus H_0(CL) = \mathbb{Z}^2 \arrow[r, two heads] & H_0(K_g \cup CL)
+	\end{tikzcd}
+\end{equation*}
+
+This gives $H_0(K_g \cup CL) = \mathbb{Z}$, $H_1(K_g \cup CL) = \mathbb{Z}^{2g}$ and $H_2(K_g \cup CL) = \mathbb{Z}$.
+
+% lecture 23
+
+Let's do the same thing for non-orientable surfaces.
+
+\begin{exbox}
+	Consider the projective plane. First, construct it as square with boundaries joined in a particular way, and cut a triangle out of the middle. Say $Y$ is this space, with triangulation $|K|$. We also have $K_n$, $n$ of these $K$'s glued together, and moreover if $L = \partial K_n$, we can get a cone by gluing $L$, $CL$, then let $S_n = |K_n \cup CL|$.
+
+	The subcomplex $|W| = |K|$, where $W$ is simply just a triangle, is such that $|K|$ deformation retracts to it. So $H_0(K) = \mathbb{Z}\{\text{vector}\}$, $H_1(K) = \mathbb{Z}\{a\}$ where $a = [1, 2] + [2, 3] + [3, 1]$, and $H_n(K) = 0$ for larger $n$.
+
+	Note that the boundary $r = [4, 5] + [5, 6] + [6, 4]$ is homologous to $2a$.
+
+	Now if $K_n = K_{n-1} \cup K$, where $K_{n-1} \cap K = \Delta^1$, then by Mayer-Vietoris, we get this
+\begin{equation*}
+	\begin{tikzcd}
+		0 \arrow[r] & H_2(K_{n-1}) \oplus H_2(K) \arrow[r, hook, two heads] & H_2(K_n) \arrow[dll, "\partial_\ast"] \\
+ 	H_1(\Delta') = 0 \arrow[r] & H_1(K_{n-1}) \oplus H_1(K) \arrow[r, hook, two heads] & H_1(K_n) \arrow[dll, "\partial_\ast = 0"] \\
+ H_0(\Delta^1) = \mathbb{Z} \arrow[r, hook] & H_0(K_{n-1}) \oplus H_0(K) \arrow[r] & H_0(K_n)
+	\end{tikzcd}
+\end{equation*}
+	This gives $H_0(K_n) = \mathbb{Z}$, $H_1(K_n) = \mathbb{Z}^n$ and $H_2(K_n) = H_i(K_n) = 0$ for $i \geq 2$.
+
+	The boundary of $K_n$ is the cycle $r_1 + r_2 + \cdots + r_n$, which is homologous to $2(a_1 + a_2 + \cdots + a_n)$.
+
+	Finally we look at the Homology of $K_n \cup CL$. Using Mayer-Vietoris once again,
+\begin{equation*}
+	\begin{tikzcd}
+		0 \arrow[r] & 0 \oplus 0 \arrow[r] & H_2(K_n \cup CL) \arrow[dll, "\partial_\ast = 0"] \\
+ 	H_1(L) = \mathbb{Z}\arrow[r, "(\ast)"', hook] & H_1(K_n) \oplus H_1(CL) = \mathbb{Z}^{n} \arrow[r, two heads] & H_1(K_n \cup CL) \arrow[dll, "\partial_\ast = 0"] \\
+ H_0(L) = \mathbb{Z}\arrow[r, hook] & H_0(K_n) \oplus H_0(CL) = \mathbb{Z} \arrow[r, two heads] & H_0(K_n \cup CL)
+	\end{tikzcd}
+\end{equation*}
+Note that $(\ast)$ sends the generator $r_1 + \cdots + r_n$ to $2(a_1 + \cdots + a_n)$, hence $H_0(K_n \cup CL) = \mathbb{Z}$, $H_1(K_n \cup CL) = \mathbb{Z}\{a_1, \ldots, a_n\} / \langle 2(a_1 + \cdots + a_n) \rangle \cong \mathbb{Z}/2 \oplus \mathbb{Z}^n$, and $H_2(K_n \cup CL) = H_i(K_n \cup CL) = 0$.
+\end{exbox}
+
+Hence none of the surfaces $S^2, \Sigma_{1, g}$ or $S_n$ are homotopy equivalent to each other, as they have different homotopy groups.
+
+\begin{theorem}
+	Every triangulable surface is homeomorphic to one of these.
+\end{theorem}
+
+\section{Rational Homology, Euler and Lefschetz Numbers}%
+\label{sec:rational_hom}
+
+\begin{definition}
+	For a simplicial complex $K$, let $\mathcal{O}_n(K, \mathbb{Q})$ be the $\mathbb{Q}$-vector space with basis the ordered simplices of $K$.
+
+	Define $T_n(K, \mathbb{Q})$ as usual, and so we get $C_n(K, \mathbb{Q})$. Define $d_n$ by the same formula, and define
+	\[
+	H_n(K ; \mathbb{Q}) = \frac{\Ker(d_n : C_n(K; \mathbb{Q}) \to C_{n-1}(K; \mathbb{Q}))}{\Img(d_{n+1}: C_{n+1}(K, \mathbb{Q}) \to C_n(K, \mathbb{Q})}.
+	\]
+\end{definition}
+
+\begin{lemma}
+	If $H_n(K) = \mathbb{Z}^r \oplus G$, where $G$ is a finite abelian group, then $H_n(K, \mathbb{Q}) = \mathbb{Q}^r$.
+\end{lemma}
+
+\begin{exbox}
+	We have
+	\[
+	H_i(S^n; \mathbb{Q}) =
+	\begin{cases}
+		\mathbb{Q} & i = 0, n,\\
+		0 &\text{else}.
+	\end{cases}
+	\]
+	\[
+	H_i(\Sigma_g; \mathbb{Q}) =
+	\begin{cases}
+		\mathbb{Q} & i = 0,\\
+		\mathbb{Q}^{2g} & i = 1, \\
+		\mathbb{Q} & i = 2,\\
+		0 &\text{else}.
+	\end{cases}
+	\]
+	\[
+	H_i(S_n; \mathbb{Q}) =
+	\begin{cases}
+		\mathbb{Q} & i = 0,\\
+		\mathbb{Q}^{n-1} & i = 1, \\
+		0 &\text{else}.
+	\end{cases}
+	\]
+\end{exbox}
+
+\begin{definition}
+	Let $X$ be a polyhedron, and $f : X \to X$ be a continuous map. The \emph{Lefschetz number}\index{Lefschetz number} of $f$ is
+	\[
+	L(f) = \sum_{i = 0}^\infty (-1)^i \Tr(f_\ast : H_i(X; \mathbb{Q}) \to H_i(X, \mathbb{Q})).
+	\]
+	The \emph{Euler characteristic}\index{Euler characteristic} is 
+	\[
+		\chi(X) = L(\id) = \sum_{i = 0}^\infty (-1)^i \dim_{\mathbb{Q}} H_i(X; \mathbb{Q}).
+	\]
+\end{definition}
+
+\begin{exbox}
+	We have
+	\[
+	\chi(S^n) = 1 + (-1)^n =
+	\begin{cases}
+		2 & n \text{ even},\\
+		0 & n \text{ odd}.
+	\end{cases}
+	\]
+	Similarly $\chi(\Sigma_g) = 2 - 2g$, and $\chi(S_n) = 2 - n$.
+\end{exbox}
+
+\begin{exbox}
+	The antipodal map $a : S^n \to S^n$ induces the identity map of $H_0(S^n, \mathbb{Q})$, and multiplication by $(-1)^n$ on $H_n(S^n; \mathbb{Q})$. So,
+	\[
+	L(a) = 1 + (-1)^n (-1)^{n+1} = 0.
+	\]
+\end{exbox}
+
+We build up to Lefschetz fixed point theorem.
+
+\begin{lemma}
+	Let $V$ be a finite-dimensional vector space, $W \leq V$ a subspace, and $A : V \to V$ a linear map such that $A(W) = W$.
+
+	Let $B = A|_W : W \to W$, and $C : V/W \to V/W$ the map induced by $A$. Then,
+	\[
+	\Tr(A) = \Tr(B) + \Tr(C).
+	\]
+\end{lemma}
+
+\begin{proofbox}
+	Let $e_1, \ldots, e_r$ be a basis for $W$, and extend it to a basis of $V$. In this basis,
+	\[
+	A = 
+	\begin{pmatrix}
+		B & * \\
+		0 & C
+	\end{pmatrix}.
+	\]
+	So $\Tr(A) = \Tr(B) + \Tr(C)$.
+\end{proofbox}
+
+\begin{corollary}
+	For a chain map $f_\bullet : C_\bullet(K; \mathbb{Q}) \to C_\bullet(K; \mathbb{Q})$, we have
+	\[
+	\sum_i (-1)^i \Tr(f_\ast : H_i(K; \mathbb{Q}) \to H_i(K, \mathbb{Q})) = \sum_i (-1)^i \Tr(f_i : C_i(K; \mathbb{Q}) \to C_i(K; \mathbb{Q})).
+	\]
+\end{corollary}
+
+
+\begin{proofbox}
+	Consider exact sequences
+	\begin{equation*}
+		\begin{tikzcd}
+			0 \arrow[r] & {B_i(K; \mathbb{Q})} \arrow[r] & {Z_i(K; \mathbb{Q})} \arrow[r] & {H_i(K; \mathbb{Q})} \arrow[r] & 0 \\
+0 \arrow[r] & {Z_i(K; \mathbb{Q})} \arrow[r] & {C_i(K; \mathbb{Q})} \arrow[r, "d_i"] & {B_{i-1}(K; \mathbb{Q})} \arrow[r] & 0
+%		0 \arrow[r] & 0 \oplus 0 \arrow[r] & H_2(K_n \cup CL) \\
+		\end{tikzcd}	
+	\end{equation*}
+	Let $f^C, f^Z, f^B, f^H$ be the induced maps on chains/cycles/boundaries/homologies. Then,
+	\begin{align*}
+		\sum (-1)^i \Tr(f_i^H) &= \sum (-1)^i [\Tr(f_i^Z) - \Tr(f_i^B)] \\
+				       &= \sum (-1)^i [\Tr(f_i^C) - \Tr(f_{i-1}^B) - \Tr(f_i^B)] \\
+				       &= \sum(-1)^i \Tr(f_i^C).
+	\end{align*}
+\end{proofbox}
+
+\begin{corollary}
+	$\chi(|K|) = \sum (-1)^i |\{\text{$i$-simplices of $K$}\}|$
+\end{corollary}
+
+% lecture 24
+
+\begin{lemma}
+	There is a chain map $s_\bullet : C_\bullet(K) \to C_\bullet(K')$ given by sending a simplex $\sigma$ to an appropriate linear combination of the simplices of $K'$, which compose $\sigma$.
+
+	On $H_\ast$, it induces $\nu_K^{-1} : H_n(K) \to H_n(K')$.
+\end{lemma}
+
+\begin{proofbox}
+	We start by $s_0([v_0]) = [\hat v_0]$. Suppose $s_0, \ldots, s_{n-1}$ have been defined, and satisfy $d_i \circ s_i = s_{i-1} \circ d_i$, for all $i < n$.
+
+	Then, we define
+	\[
+		s_n(\sigma) = [\hat \sigma, s_{n-1} d_n(\sigma)],
+	\]
+	interpreted linearly in the second variable. For example,
+	\[
+		s_1([v_0, v_1]) = [\langle v_0, v_1\rangle, \langle v_1 \rangle - \langle v_0 \rangle] = [\hat{\langle v_0, v_1 \rangle}, \langle \hat v_1 \rangle] - [\hat{\langle v_0, v_1 \rangle}, \langle \hat v_0 \rangle].
+	\]
+	This can be drawn as splitting a line in to. We can calculate that
+	\begin{align*}
+		d_n s_n([v_0, \ldots, v_n]) &= d_n[ \hat{\langle v_0, \ldots, v_n \rangle}, s_{n-1} d_n [v_0, \ldots, v_n] ] \\
+					    &= s_{n-1} d_n [v_0, \ldots, v_n] - [ \hat{\langle v_0, \ldots, v_n \rangle}, d_{n-1} s_{n-1} d_n [v_0, \ldots, v_n] ] \\
+					    &= s_{n-1} d_n [v_0, \ldots, v_n],
+	\end{align*}
+	using induction and the fact $d_{n-1} \circ d_n = 0$. So $s_\bullet$ is a chain map. Let $\prec$ be an ordering of $V_K$, and $a : K = V_{K'} \to V_K$ such that $\hat \sigma$ is sent to the smallest vertex of $\sigma$, with respect to $\prec$. This is some simplicial approximation to $\id$.
+
+	Now note $a_0 \circ s_0 = \id$, so suppose $a_i \circ s_i = \id$. If $[v_0, \ldots, v_n]$ are with $v_0 \prec \cdots \prec v_n$, then
+	\begin{align*}
+		a_n s_n ( [v_0, \ldots, v_n]) &= a_n ( [ \hat{\langle v_0, \ldots, v_n \rangle}, s_{n-1} d_n [v_0, \ldots, v_n]]) \\
+					      &= [v_0, a_{n-1} s_{n-1} d_n [v_0, \ldots, v_n] = [v_{0}, d_n [v_0, \ldots, v_n]] \\
+					      &= [v_0, \langle v_1, \ldots, v_n \rangle - \sum_i (-1)^i \langle v_0, \ldots, \hat v_i, \ldots, v_n \rangle ] \\
+					      &= [v_0, \ldots, v_n].
+	\end{align*}
+	So $a_\ast \circ s_\ast = \id$, hence $\nu_k \circ s_\ast = \id$, and $s_\ast = \nu_K^{-1}$.
+\end{proofbox}
+
+\begin{theorem}[Lefschetz Fixed Point Theorem]
+	Let $f : X \to X$ be a map of a polyhedron. If $L(f) \neq 0$, then $f$ has a fixed point.
+\end{theorem}
+
+\begin{proofbox}
+	Suppose $f$ does not have a fixed point. Let $\delta = \inf(|x - f(x)|, x \in X)$, by letting $X = |K| \subseteq \mathbb{R}^N$. As $X$ is compact, $\delta > 0$.
+
+	Let $K$ be a triangulation of $X$ with $\mu(K) < \delta/2$, and choose a simplicial approximation $g : K^{(r)} \to K$ to $f$. For a vertex $v \in V_{K^{(r)}}$, we have
+	\[
+		f(v) \in f(\mathrm{St}_{K^{(r)}}(v)) \subset \mathrm{St}_K(g(v)),
+	\]
+	so $|f(v) - g(v)| < \delta/2$. But $|f(v) - v| > \delta$, so $|g(v) - v| > \delta/2$. So if $v \in \sigma \in K$, then $g(v) \not \in \sigma$.
+
+	The map $f_\ast$ is defined as $g_\ast \circ \nu_{K, r} = g_\ast \circ s_\ast^{(r)}$, where $s_\ast^{(r)}$ is the $r$-fold iteration of the map in the previous lemma. So,
+	\begin{align*}
+		L(f) &= \sum_i (-1)^i \Tr(f_\ast : H_i(X) \to H_i(X)) \\
+		     &= \sum_i (-1)^i \Tr(g_i \circ s_i^{(r)} : C_i(K) \to C_i(K)),
+	\end{align*}
+	by the last lemma. But now if $\sigma \in K$ is an $i$-simplex, then $s_i^{(r)}(\sigma)$ is a sum of simplices inside $\sigma$, so $g_i s_i^{(r)}(\sigma)$ is a sum of simplicies not including $\sigma$. So the matrix for $g_i \circ s_i^{(r)}$ has zeroes on its diagonal, hence it has trace 0.
+\end{proofbox}
+
+\begin{exbox}
+	If $X$ is a contractible polyhedron, then
+	 \[
+		 H_n(X) =
+		 \begin{cases}
+			 \mathbb{Z} & n = 0,\\
+			 0 & \text{else}.
+		 \end{cases}
+	\]
+	So any $f : X \to X$ has $L(f) = 1$, hence it has a fixed point.
+\end{exbox}
+
+\begin{exbox}
+	Note that $S_1 = \mathbb{RP}^2$ has
+	\[
+	H_n(\mathbb{RP}^2) = 
+	\begin{cases}
+		\mathbb{Z} & n = 0,\\
+		\mathbb{Z}/2 & n = 1,\\
+		0 &\text{else}
+	\end{cases} \implies H_n(\mathbb{RP}^2; \mathbb{Q}) =
+	\begin{cases}
+		\mathbb{Q} & n = 0, \\
+		0 & \text{else}.
+	\end{cases}
+	\]
+	So any $f : \mathbb{RP}^2 \to \mathbb{RP}^2$ has $L(f) = 1$, so has a fixed point.
+\end{exbox}
+
+\begin{exbox}
+	Let $G$ be a topologial group, which is path-connected and non-trivial. Suppose it is a polyhedron. If $g \neq 1 \in G$, then $g \cdot : G \to G$ has no fixed points, so
+	\[
+	0 = L(g \cdot) = L(1 \cdot) = L(\id) = \chi(G).
+	\]
+\end{exbox}
+
+\begin{exbox}
+	Consider $S_3$, the connected sum of three $\mathbb{RP}^2$. Let $f : S_3 \to S_3$ be such that $f \circ f = \id$. We have:
+	\[
+	H_n(S_3; \mathbb{Q}) =
+	\begin{cases}
+		\mathbb{Q} & n = 0,\\
+		\mathbb{Q}^2 & n = 1,\\
+		0 & \text{else}.
+	\end{cases}
+	\]
+	So $L(f) = 1 - \Tr(f_\ast : H_1(S_3; \mathbb{Q}) \to H_1(S_3; \mathbb{Q}))$.
+
+	As $f \circ f = \id$, $f_\ast \circ f_\ast = \id$, so $f_\ast : H_1(S_3; \mathbb{Q}) \to H_1(S_3; \mathbb{Q})$ squares to the identity. Hence its minimal polynomial must divide $x^2 - 1$, so it is diagonalizable with eigenvalues $\pm 1$.
+
+	So its trace is $2, 0$ or $-2$. But then $L(f) \in \{-1, 1, 3\}$, so non-zero, so $f$ has a fixed point.
+\end{exbox}
 
 
 \newpage
