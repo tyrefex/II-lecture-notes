@@ -1399,7 +1399,7 @@ Let $X$ be an affine variety. For $p \in X$, define $\phi_p : A(X) \to \mathbb{K
 	\[
 		(f + m_p) \cdot (g + m_p^2) = (f \cdot g + m_p^2).
 	\]
-	We will show that $\mathrm{Der}(A(X), p) \subseteq (m_p/ m_p^2)^\ast$. Given $D \in \mathrm{Der}(A(X), p)$, we define $\phi_D : m_p / m_p^2 \to \mathbb{K}$ defined as follows: for $f, g \in A(X)$, $g(p) \neq 0$ and $f(p) = 0$, with
+	We will show that $\mathrm{Der}(A(X), p) \subseteq (m_p/ m_p^2)^\ast$. Given $D \in \mathrm{Der}(A(X), p)$, we define $\phi_D : m_p / m_p^2 \to \mathbb{K}$ as follows: for $f, g \in A(X)$, $g(p) \neq 0$ and $f(p) = 0$, with
 	\[
 		\left( X \setminus Z(g), \frac{f}{g} \right) \in m_p \subseteq \mathcal{O}_{X, p},
 	\]
@@ -1729,7 +1729,7 @@ Here, we use the fact that $\dim C = 1$, so the irreducible sets are $C$ and sin
 	If $D, D' \in \mathrm{Div} C$ satisfy $D - D' = (f)$ for some $f \in K(C)^\times$, then we say $D$ is \emph{linearly equivalent}\index{linearly equivalent} to $D'$, and we write $D \sim D'$.
 \end{definition}
 
-Extending morphisms to projective space: let $C$ is a projective non-singular curve, and $\emptyset \neq U \subseteq C$ is an open subset, and $f_0, \ldots, f_n$ being regular functions on $U$ without a common zero.
+Extending morphisms to projective space: let $C$ be a projective non-singular curve, and $\emptyset \neq U \subseteq C$ is an open subset, and $f_0, \ldots, f_n$ being regular functions on $U$ without a common zero.
 
 Then we obtain a morphism $f : U \to \mathbb{P}^n$ by $p \mapsto (f_0(p): \ldots: f_n(p))$.
 
@@ -1849,7 +1849,7 @@ We say that $D$ is \emph{effective}\index{effective} if $n_i \geq 0$, for all $i
 \end{proofbox}
 
 \begin{theorem}
-	$\mathcal{L}(D)$ is a finite-dimensional vector space, and $L(0) = \mathbb{K}$. Furthermore, $\dim_{\mathbb{K}}(D) \leq \deg D + 1$, for $\deg D \geq 0$.
+	$\mathcal{L}(D)$ is a finite-dimensional vector space, and $L(0) = \mathbb{K}$. Furthermore, $\dim_{\mathbb{K}} \mathcal{L}(D) \leq \deg D + 1$, for $\deg D \geq 0$.
 \end{theorem}
 
 \begin{proofbox}
@@ -1866,7 +1866,7 @@ We say that $D$ is \emph{effective}\index{effective} if $n_i \geq 0$, for all $i
 	\end{align*}
 	which makes sense since $\nu_p(f) \geq 0$ for $f \in \mathcal{L}(D)$, since otherwise the coefficient of $p$ in $D + (f)$ is negative.
 
-	If $f \in \Ker \lambda$, then $f \in m_p \subseteq \mathcal{O}_{C, p}$, so $\nu_p(f) \geq 1$. Thus $f \in \mathcal{L}(D - p)$. Note also $\mathcal{L}(D - p) \subseteq \mathcal{L}(D)$, since if $D - p + (f)$ is effective, so id $D + (f)$. Thus $\mathcal{L}(D - p) = \Ker \lambda$, and
+	If $f \in \Ker \lambda$, then $f \in m_p \subseteq \mathcal{O}_{C, p}$, so $\nu_p(f) \geq 1$. Thus $f \in \mathcal{L}(D - p)$. Note also $\mathcal{L}(D - p) \subseteq \mathcal{L}(D)$, since if $D - p + (f)$ is effective, so is $D + (f)$. Thus $\mathcal{L}(D - p) = \Ker \lambda$, and
 	\[
 	\frac{\mathcal{L}(D)}{\mathcal{L}(D - p)} \subseteq \mathbb{K}.
 	\]
@@ -1894,7 +1894,7 @@ We say that $D$ is \emph{effective}\index{effective} if $n_i \geq 0$, for all $i
 Let $D$ be a divisor, $f_0, \ldots, f_n \in \mathcal{L}(D)$, with not all $f_i$ being 0. This gives a morphism $f : C \to \mathbb{P}^n$ by $p \mapsto (f_0(p): \ldots : f_n(p))$.
 
 \begin{definition}
-	Let $f : C \to \mathbb{P}^n$ be a morphism. Let $H \subseteq \mathbb{P}^n$ be a hyperplane, with $f(C) \subseteq H$.
+	Let $f : C \to \mathbb{P}^n$ be a morphism. Let $H \subseteq \mathbb{P}^n$ be a hyperplane, with $f(C) \not\subseteq H$.
 
 	We define $f^\ast H \in \mathrm{Div} C$ as follows. Let $H = Z(\phi)$, with $\phi$ a linear homogeneous polynomial, and choose $\psi$ linear homogeneous so that $H' = Z(\psi)$ satisfies
 	\[
@@ -2024,7 +2024,7 @@ This is well-defined since $f^\ast L$, $f^\ast L'$ are linearly equivalent, and 
 	Let $C, C' \subseteq \mathbb{P}^2$ be curves of degree $d$ and $e$ respectively. Then the number o points in $C \cap C'$, assuming $C \neq C'$, calculated with multiplicity is $d \cdot e$.
 \end{remark}
 
-For example if $C$ is non-singular, $f : C \injto \mathbb{P}^2$ an embedding, then $d = \deg f$, and $'deg f^\ast C' = d \cdot e$. So if $p = C \cap C'$, its multiplicity is the coefficient of $p$ in $f^\ast C'$. If $C$ is singular then we need a more subtle definition of multiplicity.
+For example if $C$ is non-singular, $f : C \injto \mathbb{P}^2$ an embedding, then $d = \deg f$, and $\deg f^\ast C' = d \cdot e$. So if $p = C \cap C'$, its multiplicity is the coefficient of $p$ in $f^\ast C'$. If $C$ is singular then we need a more subtle definition of multiplicity.
 
 In general, given a divisor $D$ on a projective non-singular curve $C$, we would like to understand when $|D|$ induces an embedding $C$ in projective space. In other words, suppose $|D|$ is base-point free, i.e. for all $p \in C$, there exists $D' \in |D|$ with $p \not \in \mathrm{Supp}D'$.
 
@@ -2130,7 +2130,7 @@ Here separable means everything in $L$ is a solution to some irreducible polynom
 	\[
 	0 = f(\alpha) \implies 0 = d(f(\alpha)) = f'(\alpha) \diff \alpha,
 	\]
-	do $\diff \alpha = 0$ since $f'(\alpha) \neq 0$.
+	so $\diff \alpha = 0$ since $f'(\alpha) \neq 0$.
 \end{proofbox}
 
 \begin{lemma}
@@ -2243,6 +2243,232 @@ To show this is a sensible definition we need a few lemmas.
 The proof is omitted. Thus, $\mathrm{div}(\omega) \subseteq \mathrm{Div}(C)$.
 
 % lecture 23
+
+\begin{proposition}
+	Let $\omega, \omega' \in \Omega_{K(C)/\mathbb{K}}$. Then $\mathrm{div}(\omega)$ and $\mathrm{div}(\omega')$ are linearly equivalent.
+\end{proposition}
+
+\begin{proofbox}
+	For $t$ a local parameter at some point $p \in C$, we have $\omega = f \diff t$, $\omega\ = f' \diff t$, so
+	\[
+	\omega' = \frac{f'}{f} \cdot \omega,
+	\]
+	and so we get
+	\[
+	\mathrm{div}(\omega') = \mathrm{div}(\omega) + \left( \frac{f'}{f} \right).
+	\]
+\end{proofbox}
+
+\begin{definition}
+	The \emph{canonical class}\index{canonical class} of a proper, non-singular curve $C$ is the linear equivalence class of $\mathrm{div}(\omega)$ in $\mathrm{Cl} C$, for any $0 \neq \omega \in \Omega_{K(C)/\mathbb{K}}$.
+
+	We write the canonical class as $K_C$.
+\end{definition}
+
+\begin{definition}
+	The \emph{genus}\index{genus} of $C$ is $\dim_{\mathbb{K}} \mathcal{L}(K_C)$.
+\end{definition}
+
+If $\mathbb{K} = \mathbb{C}$, any one uses the Euclidean topology rather than the Zariski topology, then this is the usual notion of genus.
+
+\begin{exbox}
+	Consider $C = \mathbb{P}^1$. Then $K(C) = \mathbb{K}(t)$, where $t = x_0/x_1$.
+
+	Note when $x_1 = 1$, $t - p_0$ is a local parameter for $C$ at $p_0 = (p_0 : 1) \in \mathbb{P}^1$. Thus $\diff t  = \diff (t - p_0)$, and $\nu_{p_0}(\diff (t - p_0)) = 0$. Thus $\nu_{p_0}(\diff t) = 0$, for all $p_0 \in \mathbb{P}^1 \setminus Z(x_1)$.
+
+	At $t = \infty$, we look at $\mathbb{A}^1 = \mathbb{P}^1 \setminus Z(x_0)$, so $s = x_1/x_0$ is a local parameter at $q = (1 : 0)$. Note that $t = s^{-1}$, so
+	\[
+	\diff t = \diff(1/s) = \frac{\diff s}{s^2},
+	\]
+	so $\nu_q( \diff t) = -2$. Thus $K_C \sim -2 \cdot q$. Thus $\mathcal{L}(K_C) = \mathcal{L}(-2 q) = 0$, and so $g(C) = \dim \mathcal{L}(K_C) = 0$.
+\end{exbox}
+
+\begin{exbox}
+	Consider the plane cubic, which in $\mathbb{A}^2$ is
+	\[
+	y^2 = (x - \lambda_1)(x-\lambda_2)(x-\lambda_3) = f(x),
+	\]
+	and in $\mathbb{P}^2$ is
+	\[
+	y^2 z = (x - \lambda_1z)(x - \lambda_2z)(x - \lambda_3z),
+	\]
+	where $\lambda_1, \lambda_2, \lambda_3 \in \mathbb{K}$ are distinct. Take a differential
+	\[
+	\omega = \frac{\diff x}{y}.
+	\]
+	Differentiating the equation for a plane cubic we get that
+	\[
+	2y \diff y = f'(x) \diff x,
+	\]
+	so
+	\[
+	\frac{2 \diff x}{f'(x)} = \frac{\diff x}{y}.
+	\]
+	In fact $\mathrm{div}(\omega) = 0$. The hardest part is checking the point at infinity, $q = (0 : 1 : 0)$. Thus $K_C \sim 0$, and $\mathcal{L}(K_C) = \mathcal{L}(0) = \mathbb{K}$, so $g(C) = 1$.
+\end{exbox}
+
+\subsection{Riemann-Roch}%
+\label{sub:rr}
+
+Write $\ell(D)$ for $\dim_{\mathbb{K}} \mathcal{L}(D)$ for $D \in \mathrm{Div}C$.
+
+\begin{theorem}[Riemann-Roch Theorem]
+	\[
+	\ell(D) - \ell(K_C - D) = \deg D + 1 - g,
+	\]
+	where $g$ is the genus of $C$.
+\end{theorem}
+
+As a corollary, we get the following:
+\begin{itemize}
+	\item If $D = 0$, then $\ell(D) = 1$, so
+	\[
+	1 - \ell(K_C) = 0 + 1 - g,
+	\]
+	or $\ell(K_C) = g$, the definition of $g$.
+	\item If $D = K_C$, then
+		\[
+		\ell(K_C) - \ell(0) = \deg K_C + 1 - g,
+		\]
+		so $\deg K_C = 2g - 2$.
+	\item If $\deg D > 2g - 2$, then $\deg (K_C - D) = 2g - 2 - \deg D < 0$, thus $\ell(K_C - D) = 0$, and
+		\[
+		\ell(D) = \deg D + 1 - g.
+		\]
+	\item If $\deg D > 2g$, then for all $p, q \in C$,
+		\[
+		\ell(D - p - q) = \ell(D) - 2,
+		\]
+		by the above. Hence $|D|$ induces an embedding of $C$ in some $\mathbb{P}^n$.
+\end{itemize}
+
+\begin{remark}
+	For $0 \leq \deg D \leq 2g - 2$, the behaviour of $\ell(D)$ can be complicated and unpredictable.
+\end{remark}
+
+\begin{exbox}
+	If $C$ has genus 0, then every positive degree divisor induces an embedding. For example if $p \in C$, then $|p|$ is very ample, $\ell(p) = 2$, so we get an embedding of $C$ in $\mathbb{P}^1$. Thus $C \simeq \mathbb{P}^1$.
+\end{exbox}
+
+\begin{exbox}
+	Take $g = 1$. If $\deg D = 3$, then $D$ is very ample, and $\ell(D) = 3 + 1 - 1 = 3$. So $|D|$ induces an embedding of $C$ in $\mathbb{P}^2$.
+
+	Thus in particular $C$ is isomorphic to a curve of degree 3 in $\mathbb{P}^2$. We can show that $C \simeq Z(f)$ for some homogeneous polynomial of degree $3$.
+
+	More specifically, fix $p_0 \in C$, and embedding $|3p_0|$. Let $D \in \mathrm{Div} C$ be degree 0. Then,
+	\[
+	\ell(D + p_0) - \ell(K_C - D - p_0) = \deg (D + p_0) + 1 - g,
+	\]
+	which simplifies to $\ell(D + p_0) = 1$. So there exists an effective divisor linearly equivalent to $D + p_0$, which necessarily must be $D + p_0 \sim p$. Thus $p - p_0 \sim D$.
+
+	Moreover $p$ is unique, as if $p - p_0 \sim p' - p_0$, then $p \sim p'$, so if $p \neq p'$, $\dim |p| = \geq 1$, so $\ell(p) \geq 2$. But $\ell(p) = 1$ by Riemann-Roch.
+
+	Hence every divisor class in $C$ of degree 0 can be represented uniquely by $p - p_0$, for some $p \in C$. So
+	\begin{align*}
+		C &\to \Ker(\deg : \mathrm{Cl} C \to \mathbb{Z}) \\
+		p &\mapsto p - p_0
+	\end{align*}
+	is a bijection. This gives a group structure on $C$.
+% lecture 24
+	Hence we can say that $p + q = r$ for $p, q, r \in C$ if
+	\[
+		(p - p_0) + (q - p_0) \sim (r - p_0).
+	\]
+\end{exbox}
+
+Let's talk about this group structure a bit more, with a geometric description. Consider $p, q \in C \overset{i}{\injto} \mathbb{P}^2$. Let $L$ be the line joining $p$ and $q$, tangent to $C$ at $p$ if $p = q$.
+
+Then we can take the intersection $L \cap C$, which is formally $i^\ast L = p + q + s$. Now $p + q + s \sim 3 p_0$, or
+\[
+	(p - p_0) + (q - p_0) + (s - p_0) \sim 0.
+\]
+Next let $L'$ be the line joining $S$ with $p_0$, which intersects at $r$. Then $s + p_0 + r \sim 3 p_0$. So
+\[
+	(s - p_0) \sim -(r - p_0).
+\]
+Therefore $(p - p_0) + (q - p_0) \sim (r - p_0)$, so $p + q = r$.
+
+In terms of geometric description, we need a diagram. First take $y^2 = (x - \lambda_1)(x-\lambda_2)(x-\lambda_3)$, taking $p_0 = (0 : 1 : 0)$.
+
+The sum $p + q$ is first by taking the line through $p, q$ to intersect again at $s$, then taking the intersection of the vertical line through $s$ with the curve again to get $r = p + q$.
+
+\begin{exbox}
+	Let $C$ have genus $2$. Then
+	\[
+	\deg K_C = 2g - 2 = 2,
+	\]
+	so $\ell(K_C) = 2$. We claim that $|K_C|$ is base-point free, so induces a morphism $f : C \to \mathbb{P}^1$.
+\end{exbox}
+
+\begin{lemma}
+	Let $C$ be a projective non-singular curve. If there exists $p, q \in C$, $p \neq q$, $p \sim q$, then $C \cong \mathbb{P}^1$.
+\end{lemma}
+
+\begin{proofbox}
+	Consider the linear system $|p|$. Since $q \in |p|$, $\dim |p| \geq 1$, so $\ell(p) \geq 2$. But we have an upper bound $\dim \mathcal{L}(D) \leq \deg D + 1$. So $\ell(p) = 2$.
+
+	Hence if $q, r \in C$, then $\dim \mathcal{L}(p - q - r) = 0$, since its degree is $-1$. Thus $|p|$ induces an embedding of $C$ into $\mathbb{P}^1$, so $C \cong \mathbb{P}^1$.
+\end{proofbox}
+
+We now return to our proof of the claim in the above example.
+
+\begin{proofbox}
+	If $|K_C|$ is not base-point free, then there exists $p \in C$ such that $\ell(K_C - p) = \ell(K_C) = 2$.
+
+	However, since $\deg (K_C - p) = 1$, this says there exists $q, r \in |K_C - p|$,  $q \neq r$ with $q \sim r$. Hence $C \cong \mathbb{P}^1$.
+\end{proofbox}
+
+Thus if $g = 2$, we obtain a degree 2 morphism $f : C \to \mathbb{P}^1$, induced by $|K_C|$.
+
+\begin{definition}
+	A projective non-singular curve $C$ is \emph{hyperelliptic}\index{hyperelliptic} if there exists a degree 2 morphism $f : C \to \mathbb{P}^1$.
+
+	Thus all genus 2 curves are hyperelliptic.
+\end{definition}
+
+\begin{theorem}
+	Let $C$ be a projective non-singular curve of genus $g \geq 3$. Then either:
+	\begin{itemize}
+		\item $C$ is hyperelliptic, or
+		\item $|K_C|$ induces an embedding $C \injto \mathbb{P}^{g-1}$.
+	\end{itemize}
+\end{theorem}
+
+\begin{proofbox}
+	$|K_C|$ induces an embedding in $\mathbb{P}^{\ell(K_C) - 1} = \mathbb{P}^{g - 1}$ if and only if, for all $p, q \in C$,
+	\[
+	\ell(K_C - p - q) = \ell(K_C) - 2 = g - 2.
+	\]
+	In any event,
+	\[
+	\ell(p + q) - \ell(K_C - p - q) = \deg(p + q) + 1 - g = 3 - g.
+	\]
+	Thus $|K_C|$ induces an embedding if and only if $\ell(p + q) = 1$ for all $p, q \in C$.
+
+	Now suppose that $K_C$ does not induce an embedding. Then there exists $p, q \in C$ such that $\ell(p + q) > 1$. If $\ell(p + q) \geq 3$, then for any $r \in C$, $\ell(p + q - r) \geq 2$, so there exists $p_1, p_2 \in |p + q - r|$ distinct. But then $C \cong \mathbb{P}^1$ by our lemma.
+
+	Thus $\ell(p + q) = 2$. Note similarly $\ell(p + q - r) = 1$, for all $r \in C$. Thus $|p + q|$ is base-point free and induces a degree 2 morphism $f : C \to \mathbb{P}^1$. So $C$ is hyperelliptic.
+\end{proofbox}
+
+\begin{theorem}[Riemann-Hurwitz Formula]
+	Let $f : X \to Y$ be a non-constant morphism between projective non-singular curves, with $\chr \mathbb{K} = 0$ (or $K(Y) \subseteq K(X)$ is a separable field extension). Then:
+	\[
+	2 - 2 g(X) = (\deg f)(2 - 2 g(Y)) - \sum_{p \in X} (e_p - 1).
+	\]
+\end{theorem}
+
+\begin{exbox}
+	Take $X = C$ hyperelliptic, $Y = \mathbb{P}^1$, and $f : C \to \mathbb{P}^1$, with degree 2. Then
+	\[
+	2 - 2 g(C) = 2 (2 - 2 \cdot 0) - \sum_{p \in C}(e_p - 1).
+	\]
+	THus,
+	\[
+	\sum_{p \in C} (e_p - 1) = 2 g(C) + 2.
+	\]
+	Therefore, $2 g(C) + 2$ is the number of points $p \in C$ with $e_p > 1$, known as \emph{branch points}.
+\end{exbox}
+
 
 \newpage
 
